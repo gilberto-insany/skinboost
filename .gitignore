@@ -1,0 +1,7 @@
+node_modules/
+dist/
+qa/
+references/
+.DS_Store
+.env
+.env.*
