@@ -63,3 +63,6 @@ Não restam achados P0/P1/P2 na revisão final. A atualização do catálogo foi
 - Conferido em desktop e 390px: sem overflow horizontal; espaços reservados presentes.
 - Fluxo do prompt abre o formulário; comparador preservado.
 - Build e quatro testes Sites aprovados.
+
+## Restauração dos produtos — 17/09/2026
+Frasco 3D original e imagens de produtos no bento, catálogo e modal restaurados. Hero, vídeo de pele e antes/depois continuam como placeholders. Build e quatro testes Sites aprovados; referências ativas verificadas sem imagens de pessoas.

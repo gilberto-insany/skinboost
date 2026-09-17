@@ -43,5 +43,5 @@ Referências complementares observadas: [Oura](https://ouraring.com/), [MyHealth
 
 Validação e evidências: `design-qa.md` e `qa/`.
 
-## Wireframe sem imagens — 17/09/2026
-A versão atual usa espaços reservados para fotos, vídeo, 3D e comparação. Nenhuma mídia é carregada na página; os arquivos originais e `src/bottle.js` foram preservados para a etapa visual. Interações e hierarquia continuam disponíveis.
+## Mídia no wireframe — 17/09/2026
+Imagens dos produtos e frasco 3D estão presentes. Somente áreas com pessoas ou pele (hero, explicação, vídeo editorial e antes/depois) usam espaços reservados. A foto opcional anexada é representada pelo nome do arquivo.
