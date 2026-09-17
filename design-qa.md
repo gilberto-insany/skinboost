@@ -57,3 +57,9 @@ Não restam achados P0/P1/P2 na revisão final. A atualização do catálogo foi
 - [x] Fluxo principal e controles testados.
 - [x] Desktop e mobile verificados.
 - [x] Achados P1/P2 corrigidos e recapturados.
+
+## Revisão sem imagens — 17/09/2026
+- Zero elementos img, video ou canvas na página. Sem referências a arquivos de mídia no HTML, CSS e JS ativos.
+- Conferido em desktop e 390px: sem overflow horizontal; espaços reservados presentes.
+- Fluxo do prompt abre o formulário; comparador preservado.
+- Build e quatro testes Sites aprovados.

@@ -42,3 +42,6 @@ Referências complementares observadas: [Oura](https://ouraring.com/), [MyHealth
 `npm run build` gera a página HTML e seus assets em `dist/client`, além dos metadados do template. Nenhum site foi publicado.
 
 Validação e evidências: `design-qa.md` e `qa/`.
+
+## Wireframe sem imagens — 17/09/2026
+A versão atual usa espaços reservados para fotos, vídeo, 3D e comparação. Nenhuma mídia é carregada na página; os arquivos originais e `src/bottle.js` foram preservados para a etapa visual. Interações e hierarquia continuam disponíveis.

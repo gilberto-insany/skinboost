@@ -10,3 +10,6 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## SkinBoost direction — 15 September 2026
 User requested an HTML prototype, not an image. Primary references: Nolla home and skincare. Supporting references: Oura, MyHealthPrac, Superpower, Institute of Health, Luminous Labs, Sofi and four supplied screenshots. Main action is a prompt to understand skin context, optional photo. Keep clean minimal functional layout, generous typography, editorial skin photos, bento grid, product/how-it-works, simulated before/after and clearly fictional persona stories. Include background video driven by scrolling and an actual 3D bottle section inspired by Sofi. Follow SkinBoost v2 product/copy sources. This is a conceptual demo with no real AI diagnosis, purchases, customer claims or clinical evidence. Keep user input local and ephemeral.
+
+## Image-free wireframe — 17 September 2026
+User clarified that the wireframe must not contain images. Preserve high-fidelity hierarchy, spacing and interactions, but use labeled neutral placeholders for editorial photography, video, product photography, the 3D bottle and before/after. Keep original assets and bottle source available for a later visual-design phase; do not load them in this wireframe. Photo attachment shows filename only.
