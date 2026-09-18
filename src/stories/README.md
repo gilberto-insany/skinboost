@@ -2,10 +2,10 @@
 
 Os Storybooks usam os mesmos arquivos `*.stories.js` e o mesmo `mountExperience` da página. Cada canvas recebe uma instância independente e chama `destroy()` ao sair. Não há componente fictício paralelo.
 
-| Catálogo | Status | Fonte visual | Comando independente | Saída |
-| --- | --- | --- | --- | --- |
-| Wireframe | Implementado | `src/styles.css` + `src/experience.css` | `npm run build:storybook:wireframe` | `dist/client/storybook/wireframe/` |
-| Alta fidelidade | Proposta em revisão | Mesma UI + `.storybook-hifi/proposed-theme.css`, baseado em `brandbook.html` | `npm run build:storybook:hifi` | `dist/client/storybook/alta-fidelidade/` |
+| Catálogo        | Status              | Fonte visual                                                                 | Comando independente                | Saída                                    |
+| --------------- | ------------------- | ---------------------------------------------------------------------------- | ----------------------------------- | ---------------------------------------- |
+| Wireframe       | Implementado        | `src/styles.css` + `src/experience.css`                                      | `npm run build:storybook:wireframe` | `dist/client/storybook/wireframe/`       |
+| Alta fidelidade | Proposta em revisão | Mesma UI + `.storybook-hifi/proposed-theme.css`, baseado em `brandbook.html` | `npm run build:storybook:hifi`      | `dist/client/storybook/alta-fidelidade/` |
 
 `npm run storybook:wireframe` usa a porta 6006; `npm run storybook:hifi`, 6007. `npm run build:review` compila o site primeiro e os dois catálogos depois, preservando o empacotamento Sites. Vercel publica `dist/client`.
 

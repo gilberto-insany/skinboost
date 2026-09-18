@@ -12,12 +12,17 @@ const fileInput = $("#photo");
 let attachmentName = "";
 const chat = initChat({
   onPhotoChange: (name) => {
-    attachmentName=name;
-    $("#attachment").hidden=!name;
-    $("#attachment span").textContent=name;
-    if(!name)fileInput.value='';
+    attachmentName = name;
+    $("#attachment").hidden = !name;
+    $("#attachment span").textContent = name;
+    if (!name) fileInput.value = "";
   },
-  onReset: () => {prompt.value='';attachmentName='';fileInput.value='';$("#attachment").hidden=true;}
+  onReset: () => {
+    prompt.value = "";
+    attachmentName = "";
+    fileInput.value = "";
+    $("#attachment").hidden = true;
+  },
 });
 function openChat(goal, attachment = "") {
   closeDialog();
@@ -58,27 +63,37 @@ $$(".start").forEach((button) =>
     prompt.focus({ preventScroll: true });
   }),
 );
-$$("[data-demo]").forEach(button=>button.addEventListener('click',()=>{closeDialog();chat.demo();}));
-$$("[data-checkin]").forEach(button=>button.addEventListener('click',()=>{closeDialog();chat.checkin();}));
+$$("[data-demo]").forEach((button) =>
+  button.addEventListener("click", () => {
+    closeDialog();
+    chat.demo();
+  }),
+);
+$$("[data-checkin]").forEach((button) =>
+  button.addEventListener("click", () => {
+    closeDialog();
+    chat.checkin();
+  }),
+);
 fileInput.addEventListener("change", () => {
   const file = fileInput.files?.[0];
   if (!file) return;
-  const validationError=validatePhoto(file);
-  if(validationError){
-    $("#prompt-error").textContent=validationError;
+  const validationError = validatePhoto(file);
+  if (validationError) {
+    $("#prompt-error").textContent = validationError;
     $("#prompt-error").hidden = false;
     fileInput.value = "";
     return;
   }
   attachmentName = file.name;
-  chat.state.photoName=file.name;
+  chat.state.photoName = file.name;
   $("#attachment").hidden = false;
   $("#attachment span").textContent = attachmentName;
   $("#prompt-error").hidden = true;
 });
 $("#remove-photo").addEventListener("click", () => {
   attachmentName = "";
-  chat.state.photoName="";
+  chat.state.photoName = "";
   fileInput.value = "";
   $("#attachment").hidden = true;
 });

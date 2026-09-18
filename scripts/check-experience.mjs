@@ -1,5 +1,5 @@
 /** Run against the local app: node scripts/check-experience.mjs --base=http://127.0.0.1:4173
- * Optional --only=flow,uploads,zero,draft,keyboard --viewport=desktop|mobile.
+ * Optional --only=flow,uploads,zero,draft,keyboard,routing --viewport=desktop|mobile.
  * Synthetic fixtures only. Screenshots and reports stay in ignored qa/.
  */
 import { chromium } from '@playwright/test';
@@ -35,16 +35,16 @@ async function screenshot(name) {
 }
 async function inspectLayout(stage) {
   const result = await page.locator('.sb-experience').evaluate(el => {
-    const dialog = el.closest('dialog');
+    const shell = el.closest('.composer-shell') || el;
     const main = el.querySelector('.sx-main');
-    const rect = dialog?.getBoundingClientRect() || el.getBoundingClientRect();
+    const rect = shell.getBoundingClientRect();
     const outside = [...el.querySelectorAll('button,input,textarea,select')].filter(n => {
       const s = getComputedStyle(n), r = n.getBoundingClientRect();
       return r.width > 2 && r.height > 2 && s.visibility !== 'hidden' && (r.left < rect.left - 2 || r.right > rect.right + 2);
     }).map(n => ({ label: n.getAttribute('aria-label') || n.textContent.trim() || n.getAttribute('name'), width: n.getBoundingClientRect().width }));
-    return { experienceOverflow: el.scrollWidth > el.clientWidth + 2, mainOverflow: !!main && main.scrollWidth > main.clientWidth + 2, dialogOverflow: !!dialog && dialog.scrollWidth > dialog.clientWidth + 2, outside, pageOverflow: document.documentElement.scrollWidth > innerWidth + 2 };
+    return { experienceOverflow: el.scrollWidth > el.clientWidth + 2, mainOverflow: !!main && main.scrollWidth > main.clientWidth + 2, shellOverflow: shell.scrollWidth > shell.clientWidth + 2, outside, pageOverflow: document.documentElement.scrollWidth > innerWidth + 2 };
   });
-  check(`${stage}: no horizontal overflow`, !result.experienceOverflow && !result.mainOverflow && !result.dialogOverflow && !result.outside.length, result);
+  check(`${stage}: no horizontal overflow`, !result.experienceOverflow && !result.mainOverflow && !result.shellOverflow && !result.outside.length, result);
 }
 const main = () => page.locator('.sb-experience .sx-main');
 const action = (name, scope = main()) => scope.locator(`[data-action="${name}"]`).first();
@@ -52,7 +52,8 @@ async function openWelcome() {
   await page.goto(baseURL, { waitUntil: 'networkidle' });
   await page.locator('#skin-prompt').fill(intent);
   await page.locator('#prompt-form button[type="submit"]').click();
-  await page.locator('.sb-experience').waitFor({ state: 'visible' });
+  await page.locator('.composer-shell').waitFor({ state: 'visible' });
+  await page.waitForURL(url => url.pathname === '/chat');
   if (!await page.locator('#sx-intent').count()) {
     if (await action('back-question').count()) await action('back-question').click();
     else if (await action('edit-intent').count()) await action('edit-intent').click();
@@ -89,6 +90,9 @@ async function completeQuestions({ budget = 'Até R$ 250', customBudget, back = 
 async function generateRoutine() {
   await action('generate').click();
   await main().locator('.sx-cost').waitFor();
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const heading = await main().locator('h2').boundingBox();
+  check('New routine starts with its heading in view', !!heading && heading.y >= 0 && heading.y < viewports[viewport].height - 30, { heading });
 }
 async function runCase(name, fn) {
   if (only && !only.includes(name)) return;
@@ -140,7 +144,7 @@ for (const [name, size] of Object.entries(viewports)) {
     check('Cart contains3 reviewable items', await boxes.count() === 3);
     for (let i=0; i<await boxes.count(); i++) await boxes.nth(i).uncheck();
     check('Empty cart disables checkout', await action('checkout').isDisabled());
-    await boxes.first().check();
+    await main().locator('[data-cart-item][value="comfort"]').check();
     const selectedTotal = await main().locator('[data-cart-total]').innerText();
     check('Cart total recalculates toComfort69', /69,00/.test(selectedTotal), { selectedTotal });
     await inspectLayout('cart'); await screenshot('06-cart');
@@ -212,20 +216,39 @@ for (const [name, size] of Object.entries(viewports)) {
   });
   await runCase('keyboard', async () => {
     await openWelcome();
-    const dialog = page.locator('dialog[open]');
-    check('Dialog announces a title', !!await dialog.getAttribute('aria-labelledby'));
+    const shell = page.locator('.composer-shell');
+    check('Chat route has accessible landmark name', !!await shell.getAttribute('aria-label'));
+    check('Dedicated chat route has useful page title', /conversa.*SkinBoost/i.test(await page.title()));
     check('Data controls are reachable at this viewport', await page.locator('.sb-experience [data-action="privacy"]:visible').count() > 0);
     const resumeDraft = 'Rascunho para continuar depois de fechar.';
     await page.locator('#sx-intent').fill(resumeDraft);
     for (let i=0;i<15;i++) await page.keyboard.press('Tab');
-    check('Native modal traps Tab focus', await dialog.evaluate(e=>e.contains(document.activeElement)));
+    check('Hidden landing cannot receive keyboard focus', await shell.evaluate(e=>e.contains(document.activeElement)));
     await page.keyboard.press('Escape');
-    check('Escape closes experience', await page.locator('dialog[open]').count() === 0);
+    await page.waitForURL(url=>url.pathname !== '/chat');
+    check('Escape returns to site and hides chat', !await shell.isVisible());
     check('Closing restores useful page focus', await page.evaluate(()=>document.activeElement !== document.body));
     await page.locator('#resume-experience').click();
+    await page.waitForURL(url=>url.pathname === '/chat');
     check('Reopening preserves latest typed draft', await page.locator('#sx-intent').inputValue() === resumeDraft);
     const privacy = page.locator('.sb-experience [data-action="privacy"]:visible').first();
     if(await privacy.count()) { await privacy.click(); await action('reset').click(); check('Reset clears current text and photo', await page.locator('#sx-intent').inputValue() === '' && !await page.locator('.sb-experience [data-action="remove-photo"]:visible').count()); }
+  });
+  await runCase('routing', async () => {
+    await startIntent();
+    await selectAnswer('hidratação'); await nextQuestion();
+    await page.goBack();
+    check('Browser Back returns to landing', new URL(page.url()).pathname === '/' && !await page.locator('.composer-shell').isVisible());
+    await page.goForward();
+    await page.locator('.composer-shell').waitFor({state:'visible'});
+    check('Browser Forward restores current question', /Como o cuidado cabe/.test(await main().locator('h2').innerText()));
+    await page.reload({waitUntil:'networkidle'});
+    await page.locator('#sx-intent').waitFor();
+    check('Reload on direct chat starts an empty ephemeral session', new URL(page.url()).pathname === '/chat' && await page.locator('#sx-intent').inputValue() === '');
+    await page.keyboard.press('Escape');
+    await page.waitForURL(url=>url.pathname === '/');
+    check('Direct chat can return to site without browser history', await page.locator('#skin-prompt').isVisible());
+    await screenshot('route-back-to-landing');
   });
   await context.close();
 }
