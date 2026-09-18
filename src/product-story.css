@@ -1,0 +1,84 @@
+/* A light editorial stage for the Blender asset. */
+.product-story {
+  background: #f0efe7;
+  color: #263d30;
+  height: 240vh;
+  min-height: 1700px;
+}
+.product-sticky {
+  min-height: min(750px, 100svh);
+  background: #f0efe7;
+}
+.product-head .eyebrow {
+  color: #53674e;
+}
+.product-note::before {
+  background: #b2bcac;
+}
+.product-note p {
+  color: #626f60;
+}
+.product-story-footer {
+  color: #60715b;
+  z-index: 2;
+}
+.product-story-footer a {
+  color: #263d30;
+}
+#bottle-fallback {
+  mix-blend-mode: multiply;
+}
+@media (max-width: 700px) {
+  .product-story {
+    height: 220svh;
+    min-height: 1500px;
+  }
+  .product-sticky {
+    height: 100svh;
+    min-height: 760px;
+  }
+  .product-head {
+    top: 36px;
+  }
+  .product-head h2 {
+    font-size: clamp(34px, 9.8vw, 44px);
+  }
+  .product-head .eyebrow {
+    margin-bottom: 16px;
+    font-size: 9px;
+  }
+  #bottle-canvas {
+    top: 175px;
+    bottom: 205px;
+  }
+  #bottle-fallback {
+    width: 78%;
+    height: 100%;
+    top: 0;
+    right: 11%;
+  }
+  .product-note {
+    top: auto;
+    bottom: 76px;
+  }
+  .product-note h3 {
+    font-size: 18px;
+  }
+  .product-note p {
+    font-size: 11px;
+    margin-top: 10px;
+  }
+  .product-story-footer {
+    bottom: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-story {
+    height: auto;
+    min-height: 0;
+  }
+  .product-sticky {
+    position: relative;
+    height: 900px;
+  }
+}

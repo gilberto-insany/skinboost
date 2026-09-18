@@ -13,3 +13,19 @@ User requested an HTML prototype, not an image. Primary references: Nolla home a
 
 ## Wireframe media direction — 17 September 2026
 User clarified: restore product images and the 3D bottle; only imagery of people must be placeholders. Keep editorial faces, skin video and before/after as labeled neutral placeholders. Restore product photography in bento, catalog and product modal, plus the original scroll-driven Three.js bottle. Photo attachment shows filename only. Preserve high-fidelity hierarchy, spacing and interactions.
+
+## Product 3D direction — 18 September 2026
+Replace the procedural bottle with the lightweight Comfort 50 ml Blender asset. Use a light ivory section with dark green type, green translucent acrylic cap, and an actual scroll-linked turn and cap removal. Keep the cap separate and reverse the motion when scrolling back. Do not render a video for this interaction. Preserve the rest of the page and respect reduced motion.
+Use the supplied `assets/branding/logo_colored.svg` artwork on the packaging instead of font approximations. The hollow acrylic cap has a 1 mm wall: transmission thickness is in local meters, before the model's scale of 20, to avoid magnifying the pump.
+
+## Conversational flow — 18 September 2026
+The landing prompt opens a dedicated /chat experience inspired by Nolla and GPT-style conversations. Collect context progressively, allow answer corrections, require review, then show an illustrative proposal. Keep state transitions in src/chat/conversation.js separate from DOM rendering. This remains a local ephemeral demonstration without real AI or clinical recommendations. Preserve product imagery and 3D; people remain placeholders. Do not reintroduce the unused React scaffold or archived media into public/. Run npm test, npm run build and npm run format:check after changes.
+
+## Context bento — 18 September 2026
+Remove the fingerprint icon. Use six context phrases that fall sequentially and stack at the bottom when the card enters view. Keep every phrase legible and use a static settled stack for reduced motion.
+
+## Story portraits — 18 September 2026
+User requested a person photo in the stories card. Exception to the people-placeholder rule: use local AI-generated fictional portraits for Lucas, Marina and Denise, synchronized with the carousel, with visible fictional/AI attribution. Other people imagery remains placeholders.
+
+## Footer direction — 18 September 2026
+Use a SkinBoost text wordmark spanning the full content grid and one shallow full-bleed editorial image placeholder. References: large New Studio wordmark and Carolyn Lee footer with image area. Preserve the sage/ivory brand palette and existing footer navigation.

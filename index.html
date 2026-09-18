@@ -1,20 +1,682 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="theme-color" content="#202a24"/><meta name="description" content="SkinBoost — uma rotina que começa por você. Protótipo de descoberta de skincare."/><title>SkinBoost — Sua pele. Seu próximo passo.</title></head>
-<body><a class="skip" href="#main">Pular para o conteúdo</a>
-<header class="nav"><a href="#inicio" class="wordmark" aria-label="SkinBoost início">skinboost<span>®</span></a><nav aria-label="Principal"><a href="#como-funciona">Como funciona</a><a href="#produtos">Nossos produtos</a><a href="#evolucao">Sua evolução</a><a href="/brandbook.html">Brandbook</a></nav><div class="nav-actions"><button class="start nav-cta">Conhecer minha rotina <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button><button class="menu-toggle icon-btn" aria-label="Abrir menu" aria-expanded="false"><i class="ph ph-list" aria-hidden="true"></i></button></div></header>
-<main id="main">
-<section class="hero" id="inicio"><div class="wire-media hero-placeholder"><span>Imagem editorial</span><small>ESPAÇO RESERVADO</small></div><div class="hero-content"><p class="eyebrow light">CIÊNCIA SENSÍVEL. CUIDADO PESSOAL.</p><h1>Sua pele.<br>Seu próximo passo.</h1><p class="hero-sub">Uma rotina que começa por entender você.</p><form id="prompt-form" class="prompt"><label class="sr-only" for="skin-prompt">Conte sobre sua pele e sua rotina</label><textarea id="skin-prompt" rows="2" placeholder="O que você quer cuidar na sua pele?" maxlength="800"></textarea><div id="attachment" hidden><i class="ph ph-file-image" aria-hidden="true"></i><span></span><button type="button" id="remove-photo" aria-label="Remover foto"><i class="ph ph-x" aria-hidden="true"></i></button></div><div class="prompt-bottom"><label class="attach" for="photo"><i class="ph ph-camera" aria-hidden="true"></i> Adicionar foto <span>opcional</span></label><input class="sr-only" type="file" id="photo" accept="image/jpeg,image/png,image/webp"/><button type="submit" class="send" aria-label="Conhecer minha rotina a partir do prompt"><i class="ph ph-arrow-up" aria-hidden="true"></i></button></div><p id="prompt-error" role="alert" hidden></p></form><div class="suggestions" aria-label="Sugestões para começar"><button data-prompt="Quero começar a cuidar da minha pele com poucos passos.">Quero começar <i class="ph ph-plus" aria-hidden="true"></i></button><button data-prompt="Quero simplificar minha rotina de skincare.">Simplificar a rotina <i class="ph ph-plus" aria-hidden="true"></i></button><button data-prompt="Quero entender melhor a oleosidade que percebo na minha pele.">Entender minha pele <i class="ph ph-plus" aria-hidden="true"></i></button></div><button class="demo-link" data-demo>Prefere explorar primeiro? <span>Veja um exemplo <i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></button></div><div class="hero-footer"><span><i class="ph ph-lock-simple" aria-hidden="true"></i> Seu contexto. Suas escolhas.</span><a href="#intro">O cuidado começa aqui <i class="ph ph-arrow-down" aria-hidden="true"></i></a><span>SKINBOOST / 01</span></div></section>
-<section class="intro section" id="intro"><p class="eyebrow">MENOS TENTATIVA. MAIS CLAREZA.</p><h2>Você não precisa de<br>mais uma rotina.<br><span>Precisa da sua.</span></h2><div class="intro-bottom"><span class="index">01 — UM NOVO JEITO DE CUIDAR</span><p>Seus hábitos, suas preferências e o que você quer cuidar. Tudo isso vem antes de um produto. A SkinBoost conecta esse contexto a uma rotina explicada, que cabe na sua vida.</p></div></section>
-<section class="how section" id="como-funciona"><div class="section-head"><div><p class="eyebrow">DO SEU CONTEXTO AO SEU CUIDADO</p><h2>Simples por fora.<br>Atento a você.</h2></div><p>Você conta. A gente organiza.<br>Cada escolha vem com um porquê.</p></div><div class="how-grid"><div class="step-list" role="tablist" aria-label="Como funciona"><button class="step active" id="step-0" role="tab" aria-selected="true" aria-controls="step-panel" data-step="0"><span>01</span><div><h3>Comece com uma conversa.</h3><p>Conte seus objetivos e sua rotina. Uma foto pode complementar. Você decide.</p></div><i class="ph ph-arrow-up-right" aria-hidden="true"></i></button><button class="step" id="step-1" role="tab" aria-selected="false" aria-controls="step-panel" data-step="1" tabindex="-1"><span>02</span><div><h3>Entenda cada escolha.</h3><p>Conheça o papel dos produtos, o motivo da indicação e os próximos passos.</p></div><i class="ph ph-arrow-up-right" aria-hidden="true"></i></button><button class="step" id="step-2" role="tab" aria-selected="false" aria-controls="step-panel" data-step="2" tabindex="-1"><span>03</span><div><h3>Encontre seu ritmo.</h3><p>Volte, conte como foi o uso e ajuste o que já não faz sentido.</p></div><i class="ph ph-arrow-up-right" aria-hidden="true"></i></button></div><div class="step-visual" id="step-panel" role="tabpanel" aria-labelledby="step-0"><div class="wire-media step-placeholder"><span>Imagem de pele</span><small>ESPAÇO RESERVADO</small></div><div class="glass-card"><span class="tiny"><i class="ph ph-sparkle" aria-hidden="true"></i> SKINBOOST · EXEMPLO</span><h3 id="step-title">Vamos entender você.</h3><p id="step-text">“Quero uma rotina simples que caiba nas minhas manhãs.”</p><div class="chat-reply" id="step-reply">O que você já usa hoje?</div><div class="card-foot"><span>Contexto antes da escolha</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i></div></div></div></div></section>
-<section class="film-section" id="manifesto" aria-label="Manifesto SkinBoost"><div class="film-sticky"><div class="wire-media film-placeholder"><span>Vídeo de fundo · controlado pelo scroll</span><small>ESPAÇO RESERVADO</small></div><div class="film-shade"></div><div class="film-copy"><p class="eyebrow light">PELE DE VERDADE. VIDA DE VERDADE.</p><h2><span>O cuidado muda.</span><br><span>A sua essência,</span><br><em>permanece.</em></h2><p>Para cada fase, um próximo passo.</p></div><div class="film-footer"><span>NO SEU TEMPO.</span><div class="film-track"><span></span></div><span class="film-toggle">ROLE PARA EXPLORAR</span></div></div></section>
-<section class="benefits section" id="diferenciais"><div class="section-head"><div><p class="eyebrow">FEITO PARA A SUA VIDA</p><h2>Um pouco de ciência.<br>Muito de você.</h2></div><p>Tecnologia para deixar a escolha<br>mais simples. E o cuidado mais seu.</p></div><div class="bento"><article class="bento-context"><span class="tiny">CONTEXTO, NÃO RÓTULOS</span><h3>Você é mais do que<br>um tipo de pele.</h3><p>Tempo, preferências e orçamento.<br>A sua vida faz parte da conversa.</p><div class="context-tags"><span>Minha rotina é corrida</span><span>Prefiro poucos passos</span><span>Quero entender o que uso</span></div><i class="ph ph-fingerprint bento-symbol" aria-hidden="true"></i></article><article class="bento-reason"><i class="ph ph-sparkle" aria-hidden="true"></i><div><span class="tiny">ESCOLHAS EXPLICADAS</span><h3>O porquê vem junto.</h3><p>Entenda a função de cada produto antes de decidir.</p></div><button data-demo class="circle-link" aria-label="Ver recomendação explicada"><i class="ph ph-arrow-up-right" aria-hidden="true"></i></button></article><article class="bento-photo"><img src="/media/produtos-skinboost.png" alt="Família conceitual de produtos SkinBoost" loading="lazy"/><div><span class="tiny">MENOS, COM INTENÇÃO</span><h3>Espaço para o essencial.</h3></div></article><article class="bento-privacy"><i class="ph ph-lock-simple" aria-hidden="true"></i><h3>Sua foto.<br>Sua escolha.</h3><p>Continue sem imagem.<br>Reveja o que compartilha.</p><button data-info="privacy" class="text-link">Entenda seus dados <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button></article><article class="bento-checkin"><div><span class="tiny">CONTINUIDADE</span><h3>O cuidado não termina<br>na primeira escolha.</h3></div><div class="checkin-preview"><span><i class="ph ph-sun" aria-hidden="true"></i> Seu check-in</span><p>Como foi cuidar de você hoje?</p><button data-checkin>Contar como foi <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button></div></article></div></section>
-<section class="product-story" id="produtos"><div class="product-sticky"><div class="product-head"><p class="eyebrow light">CONHEÇA A LINHA SKINBOOST</p><h2>Seu ritual.<br>Em cada detalhe.</h2></div><div id="bottle-canvas" role="img" aria-label="Frasco 3D SkinBoost Balance, com tampa verde translúcida e corpo marfim"><img id="bottle-fallback" src="/media/produtos-skinboost.png" alt="Frascos SkinBoost"/></div><div class="product-note note-one"><span class="tiny">01 / DESIGN ESSENCIAL</span><h3>Simples de usar.<br>Fácil de continuar.</h3><p>Uma família pensada para ocupar<br>menos espaço na sua rotina.</p></div><div class="product-note note-two"><span class="tiny">02 / CADA ESCOLHA, UM MOTIVO</span><h3>O que faz parte.<br>E por que faz.</h3><p>Conheça a função de cada item<br>antes de montar seu cuidado.</p></div><div class="product-story-footer"><span>BALANCE / 30 ML · EMBALAGEM CONCEITUAL</span><a href="#catalogo">Explore a linha <i class="ph ph-arrow-down" aria-hidden="true"></i></a></div></div></section>
-<section class="catalog section" id="catalogo"><div class="section-head"><div><p class="eyebrow">POUCOS PRODUTOS. ESCOLHAS COM SENTIDO.</p><h2>Conheça seu próximo passo.</h2></div><span class="subtle">Linha conceitual · produtos demonstrativos</span></div><div class="catalog-photo"><img src="/media/produtos-skinboost.png" alt="Cleanse 150 ml, Balance 30 ml e Comfort 50 ml — embalagens conceituais SkinBoost" loading="lazy"/><div class="catalog-caption"><p>O essencial.<br>Bem escolhido.</p><span>CIÊNCIA SENSÍVEL / SKINBOOST</span></div></div><div class="catalog-items"><button data-product="0"><span class="tiny">01 / LIMPEZA · 150 ML</span><h3>Cleanse <i class="ph ph-arrow-up-right" aria-hidden="true"></i></h3><p>O começo do ritual.</p></button><button data-product="1"><span class="tiny">02 / SÉRUM · 30 ML</span><h3>Balance <i class="ph ph-arrow-up-right" aria-hidden="true"></i></h3><p>Uma escolha com propósito.</p></button><button data-product="2"><span class="tiny">03 / HIDRATAÇÃO · 50 ML</span><h3>Comfort <i class="ph ph-arrow-up-right" aria-hidden="true"></i></h3><p>Seu momento de cuidado.</p></button></div></section>
-<section class="evolution section" id="evolucao"><div class="evolution-copy"><p class="eyebrow">SEU CUIDADO, AO LONGO DO TEMPO</p><h2>Cada pele<br>tem seu tempo.</h2><p>Observar, entender, ajustar.<br>Acompanhe a sua experiência além do espelho — da constância ao conforto no dia a dia.</p><button class="pill dark" data-checkin>Conhecer o check-in <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button><small>Espaço reservado para comparação antes e depois.<br>Sem imagens ou resultados clínicos nesta etapa.</small></div><div><div class="comparison" style="--split:50%"><div class="compare-half after-image"><div class="wire-media "><span>Depois</span><small>ESPAÇO RESERVADO</small></div></div><div class="compare-half before-image"><div class="wire-media "><span>Antes</span><small>ESPAÇO RESERVADO</small></div></div><span class="compare-label before-label">Antes</span><span class="compare-label after-label">Depois</span><div class="compare-divider"><span><i class="ph ph-arrows-left-right" aria-hidden="true"></i></span></div><input id="compare-range" type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois: percentual da área anterior"/></div><div class="comparison-foot"><span>COMPARADOR / ESTRUTURA</span><span>Arraste para comparar <i class="ph ph-arrows-left-right" aria-hidden="true"></i></span></div></div></section>
-<section class="stories section" id="historias"><div class="section-head"><div><p class="eyebrow">HISTÓRIAS QUE GUIAM A PROPOSTA</p><h2>O cuidado faz parte<br>da vida.</h2></div><div class="story-controls"><button id="prev-story" class="icon-btn" aria-label="Relato anterior"><i class="ph ph-arrow-left" aria-hidden="true"></i></button><button id="next-story" class="icon-btn" aria-label="Próximo relato"><i class="ph ph-arrow-right" aria-hidden="true"></i></button></div></div><div class="story" aria-live="polite"><span class="quote-mark" aria-hidden="true">“</span><blockquote id="story-quote">Quero começar com poucos passos e entender onde meu dinheiro está indo.</blockquote><div class="story-person"><span id="story-name">Lucas, 26</span><span id="story-desc">Começar sem complicar.</span></div><div class="story-bottom"><span>RELATO ILUSTRATIVO · PERSONA FICTÍCIA, NÃO DEPOIMENTO DE CLIENTE</span><span id="story-count">01 / 03</span></div></div></section>
-<section class="trust section" id="confianca"><p class="eyebrow">CLAREZA TAMBÉM É CUIDADO</p><div class="section-head"><h2>Confiança não é um selo.<br>É poder entender.</h2><button class="pill outline" data-info="trust">Nossa proposta <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button></div><div class="trust-columns"><div><i class="ph ph-flask" aria-hidden="true"></i><h3>O que está no produto.</h3><p>Origem, composição e evidências acessíveis para uma escolha informada.</p></div><div><i class="ph ph-sparkle" aria-hidden="true"></i><h3>O que orienta a escolha.</h3><p>A IA organiza e explica. O catálogo e regras revisadas delimitam a recomendação proposta.</p></div><div><i class="ph ph-hand-heart" aria-hidden="true"></i><h3>Onde estão os limites.</h3><p>Skincare com contexto. Sem diagnósticos, fórmulas inventadas ou promessas de pele perfeita.</p></div></div></section>
-<section class="faq section" id="duvidas"><div><p class="eyebrow">VAMOS DEIXAR MAIS CLARO</p><h2>Boas perguntas.<br>Um bom começo.</h2></div><div class="faq-list"><details><summary>Preciso enviar uma foto?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Não. A foto é opcional e você pode começar apenas contando sobre seus objetivos e sua rotina. Neste protótipo, a imagem fica somente na memória do seu navegador.</p></details><details><summary>Como a SkinBoost sugere uma rotina?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>A proposta combina seu contexto com um catálogo revisado e explica cada escolha. Aqui você pode explorar uma simulação com produtos conceituais; nenhuma análise real de IA é executada.</p></details><details><summary>A SkinBoost faz diagnóstico?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Não. A proposta se limita à orientação cosmética e não substitui uma consulta com um profissional de saúde.</p></details><details><summary>Posso mudar minhas escolhas depois?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Sim. Na demonstração, você pode editar o contexto e explorar o check-in. Na experiência proposta, a rotina acompanha mudanças no seu dia a dia.</p></details><details><summary>Já posso comprar os produtos?<i class="ph ph-plus" aria-hidden="true"></i></summary><p>Esta é uma experiência conceitual. Produtos, embalagens e jornadas são demonstrativos. Ainda não há venda, cobrança, envio ou preços definidos.</p></details></div></section>
-<section class="final-cta"><p class="eyebrow">O CUIDADO COMEÇA POR VOCÊ</p><h2>Sua pele.<br><span>Sua próxima conversa.</span></h2><button class="pill dark start">Vamos começar <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button><span class="final-note">Sem complicar. No seu tempo.</span></section>
-</main><footer><div class="footer-top"><a href="#inicio" class="wordmark">skinboost<span>®</span></a><span>Ciência sensível.<br>Cuidado pessoal.</span><div><a href="#como-funciona">Como funciona</a><a href="#produtos">Produtos</a><a href="#confianca">Confiança</a><a href="#duvidas">Dúvidas</a></div></div><div class="footer-bottom"><span>© 2026 SkinBoost · Projeto conceitual</span><button data-info="privacy">Privacidade</button><button data-info="about">Sobre a demonstração</button><a href="#inicio">Voltar ao topo <i class="ph ph-arrow-up" aria-hidden="true"></i></a></div></footer>
-<dialog id="experience" aria-labelledby="dialog-title"><button id="close-dialog" class="icon-btn" aria-label="Fechar"><i class="ph ph-x" aria-hidden="true"></i></button><div id="dialog-content"></div></dialog><div id="toast" role="status"></div><script type="module" src="/src/main.js"></script></body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#202a24" />
+    <meta
+      name="description"
+      content="SkinBoost — uma rotina que começa por você. Protótipo de descoberta de skincare."
+    />
+    <title>SkinBoost — Sua pele. Seu próximo passo.</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+    <header class="nav">
+      <a href="#inicio" class="wordmark" aria-label="SkinBoost início"
+        >skinboost<span>®</span></a
+      >
+      <nav aria-label="Principal">
+        <a href="#como-funciona">Como funciona</a
+        ><a href="#produtos">Nossos produtos</a
+        ><a href="#evolucao">Sua evolução</a
+        ><a href="/brandbook.html">Brandbook</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="start nav-cta">
+          Conhecer minha rotina
+          <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
+        ><button
+          class="menu-toggle icon-btn"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <i class="ph ph-list" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero" id="inicio">
+        <div class="wire-media hero-placeholder">
+          <span>Imagem editorial</span><small>ESPAÇO RESERVADO</small>
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow light">CIÊNCIA SENSÍVEL. CUIDADO PESSOAL.</p>
+          <h1>Sua pele.<br />Seu próximo passo.</h1>
+          <p class="hero-sub">Uma rotina que começa por entender você.</p>
+          <form id="prompt-form" class="prompt">
+            <label class="sr-only" for="skin-prompt"
+              >Conte sobre sua pele e sua rotina</label
+            ><textarea
+              id="skin-prompt"
+              rows="2"
+              placeholder="O que você quer cuidar na sua pele?"
+              maxlength="800"
+            ></textarea>
+            <div id="attachment" hidden>
+              <i class="ph ph-file-image" aria-hidden="true"></i><span></span
+              ><button
+                type="button"
+                id="remove-photo"
+                aria-label="Remover foto"
+              >
+                <i class="ph ph-x" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="prompt-bottom">
+              <label class="attach" for="photo"
+                ><i class="ph ph-camera" aria-hidden="true"></i> Adicionar foto
+                <span>opcional</span></label
+              ><input
+                class="sr-only"
+                type="file"
+                id="photo"
+                accept="image/jpeg,image/png,image/webp"
+              /><button
+                type="submit"
+                class="send"
+                aria-label="Conhecer minha rotina a partir do prompt"
+              >
+                <i class="ph ph-arrow-up" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p id="prompt-error" role="alert" hidden></p>
+          </form>
+          <div class="suggestions" aria-label="Sugestões para começar">
+            <button
+              data-prompt="Quero começar a cuidar da minha pele com poucos passos."
+            >
+              Quero começar
+              <i class="ph ph-plus" aria-hidden="true"></i></button
+            ><button data-prompt="Quero simplificar minha rotina de skincare.">
+              Simplificar a rotina
+              <i class="ph ph-plus" aria-hidden="true"></i></button
+            ><button
+              data-prompt="Quero entender melhor a oleosidade que percebo na minha pele."
+            >
+              Entender minha pele <i class="ph ph-plus" aria-hidden="true"></i>
+            </button>
+          </div>
+          <button class="demo-link" data-demo>
+            Prefere explorar primeiro?
+            <span
+              >Veja um exemplo
+              <i class="ph ph-arrow-up-right" aria-hidden="true"></i
+            ></span>
+          </button>
+        </div>
+        <div class="hero-footer">
+          <span
+            ><i class="ph ph-lock-simple" aria-hidden="true"></i> Seu contexto.
+            Suas escolhas.</span
+          ><a href="#intro"
+            >O cuidado começa aqui
+            <i class="ph ph-arrow-down" aria-hidden="true"></i></a
+          ><span>SKINBOOST / 01</span>
+        </div>
+      </section>
+      <section class="intro section" id="intro">
+        <p class="eyebrow">MENOS TENTATIVA. MAIS CLAREZA.</p>
+        <h2>
+          Você não precisa de<br />mais uma rotina.<br /><span
+            >Precisa da sua.</span
+          >
+        </h2>
+        <div class="intro-bottom">
+          <span class="index">01 — UM NOVO JEITO DE CUIDAR</span>
+          <p>
+            Seus hábitos, suas preferências e o que você quer cuidar. Tudo isso
+            vem antes de um produto. A SkinBoost conecta esse contexto a uma
+            rotina explicada, que cabe na sua vida.
+          </p>
+        </div>
+      </section>
+      <section class="how section" id="como-funciona">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">DO SEU CONTEXTO AO SEU CUIDADO</p>
+            <h2>Simples por fora.<br />Atento a você.</h2>
+          </div>
+          <p>
+            Você conta. A gente organiza.<br />Cada escolha vem com um porquê.
+          </p>
+        </div>
+        <div class="how-grid">
+          <div class="step-list" role="tablist" aria-label="Como funciona">
+            <button
+              class="step active"
+              id="step-0"
+              role="tab"
+              aria-selected="true"
+              aria-controls="step-panel"
+              data-step="0"
+            >
+              <span>01</span>
+              <div>
+                <h3>Comece com uma conversa.</h3>
+                <p>
+                  Conte seus objetivos e sua rotina. Uma foto pode complementar.
+                  Você decide.
+                </p>
+              </div>
+              <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
+            ><button
+              class="step"
+              id="step-1"
+              role="tab"
+              aria-selected="false"
+              aria-controls="step-panel"
+              data-step="1"
+              tabindex="-1"
+            >
+              <span>02</span>
+              <div>
+                <h3>Entenda cada escolha.</h3>
+                <p>
+                  Conheça o papel dos produtos, o motivo da indicação e os
+                  próximos passos.
+                </p>
+              </div>
+              <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
+            ><button
+              class="step"
+              id="step-2"
+              role="tab"
+              aria-selected="false"
+              aria-controls="step-panel"
+              data-step="2"
+              tabindex="-1"
+            >
+              <span>03</span>
+              <div>
+                <h3>Encontre seu ritmo.</h3>
+                <p>
+                  Volte, conte como foi o uso e ajuste o que já não faz sentido.
+                </p>
+              </div>
+              <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div
+            class="step-visual"
+            id="step-panel"
+            role="tabpanel"
+            aria-labelledby="step-0"
+          >
+            <div class="wire-media step-placeholder">
+              <span>Imagem de pele</span><small>ESPAÇO RESERVADO</small>
+            </div>
+            <div class="glass-card">
+              <span class="tiny"
+                ><i class="ph ph-sparkle" aria-hidden="true"></i> SKINBOOST ·
+                EXEMPLO</span
+              >
+              <h3 id="step-title">Vamos entender você.</h3>
+              <p id="step-text">
+                “Quero uma rotina simples que caiba nas minhas manhãs.”
+              </p>
+              <div class="chat-reply" id="step-reply">
+                O que você já usa hoje?
+              </div>
+              <div class="card-foot">
+                <span>Contexto antes da escolha</span
+                ><i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="film-section"
+        id="manifesto"
+        aria-label="Manifesto SkinBoost"
+      >
+        <div class="film-sticky">
+          <div class="wire-media film-placeholder">
+            <span>Vídeo de fundo · controlado pelo scroll</span
+            ><small>ESPAÇO RESERVADO</small>
+          </div>
+          <div class="film-shade"></div>
+          <div class="film-copy">
+            <p class="eyebrow light">PELE DE VERDADE. VIDA DE VERDADE.</p>
+            <h2>
+              <span>O cuidado muda.</span><br /><span>A sua essência,</span
+              ><br /><em>permanece.</em>
+            </h2>
+            <p>Para cada fase, um próximo passo.</p>
+          </div>
+          <div class="film-footer">
+            <span>NO SEU TEMPO.</span>
+            <div class="film-track"><span></span></div>
+            <span class="film-toggle">ROLE PARA EXPLORAR</span>
+          </div>
+        </div>
+      </section>
+      <section class="benefits section" id="diferenciais">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">FEITO PARA A SUA VIDA</p>
+            <h2>Um pouco de ciência.<br />Muito de você.</h2>
+          </div>
+          <p>
+            Tecnologia para deixar a escolha<br />mais simples. E o cuidado mais
+            seu.
+          </p>
+        </div>
+        <div class="bento">
+          <article class="bento-context">
+            <span class="tiny">CONTEXTO, NÃO RÓTULOS</span>
+            <h3>Você é mais do que<br />um tipo de pele.</h3>
+            <p>
+              Tempo, preferências e orçamento.<br />A sua vida faz parte da
+              conversa.
+            </p>
+            <div class="context-tags" aria-label="Cada rotina tem seu contexto">
+              <span>Minha rotina é corrida</span>
+              <span>Prefiro poucos passos</span>
+              <span>Quero entender o que uso</span>
+              <span>Meu cuidado, no meu tempo</span>
+              <span>Precisa caber no meu bolso</span>
+              <span>Quero criar constância</span>
+            </div>
+          </article>
+          <article class="bento-reason">
+            <i class="ph ph-sparkle" aria-hidden="true"></i>
+            <div>
+              <span class="tiny">ESCOLHAS EXPLICADAS</span>
+              <h3>O porquê vem junto.</h3>
+              <p>Entenda a função de cada produto antes de decidir.</p>
+            </div>
+            <button
+              data-demo
+              class="circle-link"
+              aria-label="Ver recomendação explicada"
+            >
+              <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </button>
+          </article>
+          <article class="bento-photo">
+            <img
+              src="/media/produtos-skinboost.png"
+              alt="Família conceitual de produtos SkinBoost"
+              loading="lazy"
+            />
+            <div>
+              <span class="tiny">MENOS, COM INTENÇÃO</span>
+              <h3>Espaço para o essencial.</h3>
+            </div>
+          </article>
+          <article class="bento-privacy">
+            <i class="ph ph-lock-simple" aria-hidden="true"></i>
+            <h3>Sua foto.<br />Sua escolha.</h3>
+            <p>Continue sem imagem.<br />Reveja o que compartilha.</p>
+            <button data-info="privacy" class="text-link">
+              Entenda seus dados
+              <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </button>
+          </article>
+          <article class="bento-checkin">
+            <div>
+              <span class="tiny">CONTINUIDADE</span>
+              <h3>O cuidado não termina<br />na primeira escolha.</h3>
+            </div>
+            <div class="checkin-preview">
+              <span
+                ><i class="ph ph-sun" aria-hidden="true"></i> Seu check-in</span
+              >
+              <p>Como foi cuidar de você hoje?</p>
+              <button data-checkin>
+                Contar como foi
+                <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="product-story" id="produtos">
+        <div class="product-sticky">
+          <div class="product-head">
+            <p class="eyebrow light">CONHEÇA A LINHA SKINBOOST</p>
+            <h2>Seu ritual.<br />Em cada detalhe.</h2>
+          </div>
+          <div
+            id="bottle-canvas"
+            role="img"
+            aria-label="Frasco 3D SkinBoost Comfort, com tampa verde translúcida que se separa durante o scroll"
+          >
+            <img
+              id="bottle-fallback"
+              src="/media/produtos-skinboost.png"
+              alt="Frascos SkinBoost"
+            />
+          </div>
+          <div class="product-note note-one">
+            <span class="tiny">01 / DESIGN ESSENCIAL</span>
+            <h3>Simples de usar.<br />Fácil de continuar.</h3>
+            <p>
+              Uma família pensada para ocupar<br />menos espaço na sua rotina.
+            </p>
+          </div>
+          <div class="product-note note-two">
+            <span class="tiny">02 / CADA ESCOLHA, UM MOTIVO</span>
+            <h3>O que faz parte.<br />E por que faz.</h3>
+            <p>
+              Conheça a função de cada item<br />antes de montar seu cuidado.
+            </p>
+          </div>
+          <div class="product-story-footer">
+            <span>COMFORT / 50 ML · EMBALAGEM CONCEITUAL</span
+            ><a href="#catalogo"
+              >Explore a linha
+              <i class="ph ph-arrow-down" aria-hidden="true"></i
+            ></a>
+          </div>
+        </div>
+      </section>
+      <section class="catalog section" id="catalogo">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">POUCOS PRODUTOS. ESCOLHAS COM SENTIDO.</p>
+            <h2>Conheça seu próximo passo.</h2>
+          </div>
+          <span class="subtle">Linha conceitual · produtos demonstrativos</span>
+        </div>
+        <div class="catalog-photo">
+          <img
+            src="/media/produtos-skinboost.png"
+            alt="Cleanse 150 ml, Balance 30 ml e Comfort 50 ml — embalagens conceituais SkinBoost"
+            loading="lazy"
+          />
+          <div class="catalog-caption">
+            <p>O essencial.<br />Bem escolhido.</p>
+            <span>CIÊNCIA SENSÍVEL / SKINBOOST</span>
+          </div>
+        </div>
+        <div class="catalog-items">
+          <button data-product="0">
+            <span class="tiny">01 / LIMPEZA · 150 ML</span>
+            <h3>
+              Cleanse <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </h3>
+            <p>O começo do ritual.</p></button
+          ><button data-product="1">
+            <span class="tiny">02 / SÉRUM · 30 ML</span>
+            <h3>
+              Balance <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </h3>
+            <p>Uma escolha com propósito.</p></button
+          ><button data-product="2">
+            <span class="tiny">03 / HIDRATAÇÃO · 50 ML</span>
+            <h3>
+              Comfort <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+            </h3>
+            <p>Seu momento de cuidado.</p>
+          </button>
+        </div>
+      </section>
+      <section class="evolution section" id="evolucao">
+        <div class="evolution-copy">
+          <p class="eyebrow">SEU CUIDADO, AO LONGO DO TEMPO</p>
+          <h2>Cada pele<br />tem seu tempo.</h2>
+          <p>
+            Observar, entender, ajustar.<br />Acompanhe a sua experiência além
+            do espelho — da constância ao conforto no dia a dia.
+          </p>
+          <button class="pill dark" data-checkin>
+            Conhecer o check-in
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
+          ><small
+            >Espaço reservado para comparação antes e depois.<br />Sem imagens
+            ou resultados clínicos nesta etapa.</small
+          >
+        </div>
+        <div>
+          <div class="comparison" style="--split: 50%">
+            <div class="compare-half after-image">
+              <div class="wire-media">
+                <span>Depois</span><small>ESPAÇO RESERVADO</small>
+              </div>
+            </div>
+            <div class="compare-half before-image">
+              <div class="wire-media">
+                <span>Antes</span><small>ESPAÇO RESERVADO</small>
+              </div>
+            </div>
+            <span class="compare-label before-label">Antes</span
+            ><span class="compare-label after-label">Depois</span>
+            <div class="compare-divider">
+              <span
+                ><i class="ph ph-arrows-left-right" aria-hidden="true"></i
+              ></span>
+            </div>
+            <input
+              id="compare-range"
+              type="range"
+              min="0"
+              max="100"
+              value="50"
+              aria-label="Comparar antes e depois: percentual da área anterior"
+            />
+          </div>
+          <div class="comparison-foot">
+            <span>COMPARADOR / ESTRUTURA</span
+            ><span
+              >Arraste para comparar
+              <i class="ph ph-arrows-left-right" aria-hidden="true"></i
+            ></span>
+          </div>
+        </div>
+      </section>
+      <section class="stories section" id="historias">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">HISTÓRIAS QUE GUIAM A PROPOSTA</p>
+            <h2>O cuidado faz parte<br />da vida.</h2>
+          </div>
+          <div class="story-controls">
+            <button
+              id="prev-story"
+              class="icon-btn"
+              aria-label="Relato anterior"
+            >
+              <i class="ph ph-arrow-left" aria-hidden="true"></i></button
+            ><button
+              id="next-story"
+              class="icon-btn"
+              aria-label="Próximo relato"
+            >
+              <i class="ph ph-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="story" aria-live="polite">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <blockquote id="story-quote">
+            Quero começar com poucos passos e entender onde meu dinheiro está
+            indo.
+          </blockquote>
+          <div class="story-person">
+            <img
+              id="story-portrait"
+              src="/media/persona-lucas.jpg"
+              alt="Retrato ilustrativo de Lucas, persona fictícia"
+              width="80"
+              height="80"
+              loading="lazy"
+            />
+            <div class="story-person-details">
+              <span id="story-name">Lucas, 26</span
+              ><span id="story-desc">Começar sem complicar.</span>
+            </div>
+          </div>
+          <div class="story-bottom">
+            <span
+              >RETRATO GERADO POR IA · RELATO FICTÍCIO, NÃO DEPOIMENTO DE
+              CLIENTE</span
+            ><span id="story-count">01 / 03</span>
+          </div>
+        </div>
+      </section>
+      <section class="trust section" id="confianca">
+        <p class="eyebrow">CLAREZA TAMBÉM É CUIDADO</p>
+        <div class="section-head">
+          <h2>Confiança não é um selo.<br />É poder entender.</h2>
+          <button class="pill outline" data-info="trust">
+            Nossa proposta
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="trust-columns">
+          <div>
+            <i class="ph ph-flask" aria-hidden="true"></i>
+            <h3>O que está no produto.</h3>
+            <p>
+              Origem, composição e evidências acessíveis para uma escolha
+              informada.
+            </p>
+          </div>
+          <div>
+            <i class="ph ph-sparkle" aria-hidden="true"></i>
+            <h3>O que orienta a escolha.</h3>
+            <p>
+              A IA organiza e explica. O catálogo e regras revisadas delimitam a
+              recomendação proposta.
+            </p>
+          </div>
+          <div>
+            <i class="ph ph-hand-heart" aria-hidden="true"></i>
+            <h3>Onde estão os limites.</h3>
+            <p>
+              Skincare com contexto. Sem diagnósticos, fórmulas inventadas ou
+              promessas de pele perfeita.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="faq section" id="duvidas">
+        <div>
+          <p class="eyebrow">VAMOS DEIXAR MAIS CLARO</p>
+          <h2>Boas perguntas.<br />Um bom começo.</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>
+              Preciso enviar uma foto?<i
+                class="ph ph-plus"
+                aria-hidden="true"
+              ></i>
+            </summary>
+            <p>
+              Não. A foto é opcional e você pode começar apenas contando sobre
+              seus objetivos e sua rotina. Neste protótipo, a imagem fica
+              somente na memória do seu navegador.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Como a SkinBoost sugere uma rotina?<i
+                class="ph ph-plus"
+                aria-hidden="true"
+              ></i>
+            </summary>
+            <p>
+              A proposta combina seu contexto com um catálogo revisado e explica
+              cada escolha. Aqui você pode explorar uma simulação com produtos
+              conceituais; nenhuma análise real de IA é executada.
+            </p>
+          </details>
+          <details>
+            <summary>
+              A SkinBoost faz diagnóstico?<i
+                class="ph ph-plus"
+                aria-hidden="true"
+              ></i>
+            </summary>
+            <p>
+              Não. A proposta se limita à orientação cosmética e não substitui
+              uma consulta com um profissional de saúde.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Posso mudar minhas escolhas depois?<i
+                class="ph ph-plus"
+                aria-hidden="true"
+              ></i>
+            </summary>
+            <p>
+              Sim. Na demonstração, você pode editar o contexto e explorar o
+              check-in. Na experiência proposta, a rotina acompanha mudanças no
+              seu dia a dia.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Já posso comprar os produtos?<i
+                class="ph ph-plus"
+                aria-hidden="true"
+              ></i>
+            </summary>
+            <p>
+              Esta é uma experiência conceitual. Produtos, embalagens e jornadas
+              são demonstrativos. Ainda não há venda, cobrança, envio ou preços
+              definidos.
+            </p>
+          </details>
+        </div>
+      </section>
+      <section class="final-cta">
+        <p class="eyebrow">O CUIDADO COMEÇA POR VOCÊ</p>
+        <h2>Sua pele.<br /><span>Sua próxima conversa.</span></h2>
+        <button class="pill dark start">
+          Vamos começar
+          <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
+        ><span class="final-note">Sem complicar. No seu tempo.</span>
+      </section>
+    </main>
+    <footer id="footer">
+      <div class="footer-top">
+        <span class="footer-signature"
+          >Ciência sensível.<br />Cuidado pessoal.</span
+        >
+        <div>
+          <a href="#como-funciona">Como funciona</a
+          ><a href="#produtos">Produtos</a><a href="#confianca">Confiança</a
+          ><a href="#duvidas">Dúvidas</a>
+        </div>
+      </div>
+      <div
+        class="footer-image"
+        aria-label="Espaço reservado para imagem panorâmica da marca"
+      >
+        <span class="tiny">VIDA REAL / UNIVERSO SKINBOOST</span>
+        <span>Imagem editorial<small>ESPAÇO RESERVADO</small></span>
+      </div>
+      <a
+        class="footer-wordmark"
+        href="#inicio"
+        aria-label="SkinBoost — voltar ao início"
+        ><svg viewBox="0 0 1000 220" aria-hidden="true" focusable="false">
+          <text x="0" y="185" textLength="1000" lengthAdjust="spacingAndGlyphs">
+            SkinBoost
+          </text>
+        </svg></a
+      >
+      <div class="footer-bottom">
+        <span>© 2026 SkinBoost · Projeto conceitual</span
+        ><button data-info="privacy">Privacidade</button
+        ><button data-info="about">Sobre a demonstração</button
+        ><a href="#inicio"
+          >Voltar ao topo <i class="ph ph-arrow-up" aria-hidden="true"></i
+        ></a>
+      </div>
+    </footer>
+    <dialog id="experience" aria-labelledby="dialog-title">
+      <button id="close-dialog" class="icon-btn" aria-label="Fechar">
+        <i class="ph ph-x" aria-hidden="true"></i>
+      </button>
+      <div id="dialog-content"></div>
+    </dialog>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

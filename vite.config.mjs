@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import { resolve } from "node:path";
-import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   build: {
@@ -13,14 +12,19 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ["react", "react-dom/client"],
+    include: [
+      "gsap",
+      "gsap/ScrollTrigger",
+      "three",
+      "three/addons/loaders/GLTFLoader.js",
+      "three/addons/environments/RoomEnvironment.js",
+    ],
   },
   server: {
     host: "0.0.0.0",
     allowedHosts: ["terminal.local"],
     warmup: {
-      clientFiles: ["./src/main.jsx"],
+      clientFiles: ["./src/main.js"],
     },
   },
-  plugins: [react()],
 });

@@ -1,30 +1,205 @@
-import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-export function initBottle(){
-const container=document.querySelector('#bottle-canvas');
-let renderer;
-try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'low-power'});}catch{return;}
-renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;container.appendChild(renderer.domElement);document.querySelector('#bottle-fallback').hidden=true;
-const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(31,1,.1,100);camera.position.set(0,0,11.3);
-const pmrem=new THREE.PMREMGenerator(renderer);const room=new RoomEnvironment();const env=pmrem.fromScene(room,.04);scene.environment=env.texture;room.dispose();pmrem.dispose();
-scene.add(new THREE.HemisphereLight(0xf0f5df,0x26331d,2.2));const area=new THREE.DirectionalLight(0xfffae9,4);area.position.set(-3,4,5);scene.add(area);const rim=new THREE.DirectionalLight(0xd8edbd,3);rim.position.set(4,1,-2);scene.add(rim);
-const bodyTexture=document.createElement('canvas');bodyTexture.width=2048;bodyTexture.height=2048;const ctx=bodyTexture.getContext('2d');ctx.fillStyle='#ecebdc';ctx.fillRect(0,0,2048,2048);ctx.textAlign='center';ctx.fillStyle='#263527';ctx.font='500 128px Arial';ctx.fillText('skinboost',1024,700);ctx.fillStyle='#9daf4e';ctx.fillRect(949,825,150,9);ctx.fillStyle='#29372b';ctx.font='55px Arial';ctx.fillText('Balance',1024,1010);ctx.font='22px Arial';ctx.fillText('CIÊNCIA SENSÍVEL',1024,1110);ctx.fillText('CUIDADO PESSOAL',1024,1154);ctx.font='38px Arial';ctx.fillText('30 ml',1024,1640);
-const texture=new THREE.CanvasTexture(bodyTexture);texture.colorSpace=THREE.SRGBColorSpace;texture.anisotropy=renderer.capabilities.getMaxAnisotropy();
-const bodyMat=new THREE.MeshStandardMaterial({map:texture,roughness:.42,metalness:.05});const ivory=new THREE.MeshStandardMaterial({color:0xeaeadd,roughness:.33,metalness:.1});const sage=new THREE.MeshStandardMaterial({color:0x8d9b72,roughness:.25,metalness:.18});const greenGlass=new THREE.MeshPhysicalMaterial({color:0xb8c4a1,metalness:.05,roughness:.09,transmission:.6,thickness:.12,ior:1.45,transparent:true,opacity:.6,clearcoat:1});const metal=new THREE.MeshStandardMaterial({color:0xc4c9b5,metalness:.85,roughness:.18});const lime=new THREE.MeshStandardMaterial({color:0xbbce6c,metalness:.35,roughness:.22});
-const bottle=new THREE.Group();scene.add(bottle);
-function cyl(rt,rb,h,y,mat,seg=96){const mesh=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg,1,false),mat);mesh.position.y=y;bottle.add(mesh);return mesh;}
-// Geometry is a real editable WebGL product model, not a flat CSS illustration.
-const body=cyl(.63,.63,2.7,-.35,bodyMat);body.rotation.y=Math.PI;
-cyl(.62,.59,.12,-1.755,ivory);cyl(.627,.627,.045,-1.65,lime);cyl(.625,.625,.035,-1.7,metal);
-cyl(.61,.63,.12,1.06,ivory);cyl(.58,.61,.16,1.18,sage);cyl(.5,.54,.2,1.32,sage);cyl(.22,.24,.22,1.51,sage);cyl(.34,.34,.16,1.7,sage);
-const nozzle=new THREE.Mesh(new THREE.BoxGeometry(.5,.12,.3),sage);nozzle.position.set(.15,1.7,.02);bottle.add(nozzle);const outlet=new THREE.Mesh(new THREE.BoxGeometry(.013,.048,.11),new THREE.MeshStandardMaterial({color:0x34402c,roughness:.6}));outlet.position.set(.402,1.7,.02);bottle.add(outlet);
-const cap=cyl(.647,.647,1.01,1.625,greenGlass);cyl(.65,.65,.028,2.143,metal);cyl(.65,.65,.025,1.11,metal);
-bottle.rotation.z=-.35;bottle.rotation.y=-.15;bottle.position.set(.55,-.05,0);
-let progress=0,visible=true;function render(){if(visible)renderer.render(scene,camera);}function update(){const mobile=innerWidth<701;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const p=reduce?.45:progress;bottle.rotation.z=-.36+p*.5;bottle.rotation.y=-.2+p*.9;bottle.rotation.x=.08*Math.sin(p*Math.PI);bottle.position.x=mobile?.15:.45+p*.25;bottle.position.y=mobile?.38:-.13;const scale=mobile?.48:1.02;bottle.scale.setScalar(scale);cap.position.y=1.625+Math.max(0,p-.5)*1.1;render();}
-function resize(){const w=container.clientWidth,h=container.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.position.z=innerWidth<701?10.3:10.5;camera.updateProjectionMatrix();update();}const resizeObserver=new ResizeObserver(resize);resizeObserver.observe(container);resize();
-const visibilityObserver=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible)render();});visibilityObserver.observe(container);
-const scroll=ScrollTrigger.create({trigger:'.product-story',start:'top top',end:'bottom bottom',onUpdate:self=>{progress=self.progress;update();}});
-container.addEventListener('webglcontextlost',()=>{document.querySelector('#bottle-fallback').hidden=false;},{once:true});
-window.addEventListener('pagehide',()=>{resizeObserver.disconnect();visibilityObserver.disconnect();scroll.kill();scene.traverse(obj=>{obj.geometry?.dispose();if(obj.material){const mats=Array.isArray(obj.material)?obj.material:[obj.material];mats.forEach(m=>m.dispose());}});texture.dispose();env.dispose();renderer.dispose();},{once:true});
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export async function initBottle() {
+  const container = document.querySelector("#bottle-canvas");
+  const fallback = document.querySelector("#bottle-fallback");
+  if (!container || container.querySelector("canvas")) return;
+  container.dataset.status = "initializing";
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "low-power",
+    });
+  } catch (error) {
+    container.dataset.status = "webgl-unavailable";
+    console.warn("WebGL unavailable.", error);
+    return;
+  }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1;
+  renderer.setClearColor(0x000000, 0);
+  renderer.domElement.setAttribute("aria-hidden", "true");
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  // Transmission needs an actual scene background, not the transparent canvas.
+  scene.background = new THREE.Color(0xf0efe7);
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.1, 50);
+  camera.position.set(0, 0, 10);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const room = new RoomEnvironment();
+  const environment = pmrem.fromScene(room, 0.04);
+  scene.environment = environment.texture;
+  scene.environmentIntensity = 0.7;
+  room.dispose();
+  pmrem.dispose();
+  scene.add(new THREE.HemisphereLight(0xfffcf3, 0x9fae98, 1.3));
+  const key = new THREE.DirectionalLight(0xfff7e6, 2.4);
+  key.position.set(-3, 4, 5);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xeaf1e4, 1);
+  fill.position.set(4, 1, 3);
+  scene.add(fill);
+  const pose = new THREE.Group();
+  scene.add(pose);
+
+  let visible = true;
+  let disposed = false;
+  let model;
+  let cap;
+  let closedCapY = 0;
+  const motion = { progress: 0 };
+  const media = gsap.matchMedia();
+  const render = () => {
+    if (visible && !disposed && model) renderer.render(scene, camera);
+  };
+  function update() {
+    if (!model || !cap) return;
+    const p = motion.progress;
+    const mobile = window.innerWidth < 701;
+    const lift = THREE.MathUtils.smoothstep(p, 0.32, 0.78);
+    // glTF is Y-up. Cap translates in meters inside the exported root (scale 20).
+    cap.position.y = closedCapY + 0.065 * lift;
+    cap.rotation.z = -0.065 * lift;
+    pose.rotation.set(0.055, -0.22 + p * Math.PI * 2, -0.19 + 0.31 * p);
+    pose.position.set(mobile ? 0 : 0.78, -0.1 - lift * 0.44, 0);
+    pose.scale.setScalar(1.12 - lift * 0.24);
+    container.dataset.phase =
+      lift < 0.01 ? "closed" : lift > 0.99 ? "open" : "opening";
+    container.dataset.progress = p.toFixed(3);
+    render();
+  }
+  function resize() {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    if (!width || !height || disposed) return;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    update();
+  }
+  const sizeObserver = new ResizeObserver(resize);
+  sizeObserver.observe(container);
+  const visibilityObserver = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) render();
+  });
+  visibilityObserver.observe(container);
+
+  function disposeModel(object) {
+    const geometries = new Set();
+    const materials = new Set();
+    object?.traverse((node) => {
+      if (node.geometry) geometries.add(node.geometry);
+      for (const material of node.material
+        ? Array.isArray(node.material)
+          ? node.material
+          : [node.material]
+        : [])
+        materials.add(material);
+    });
+    geometries.forEach((geometry) => geometry.dispose());
+    materials.forEach((material) => material.dispose());
+  }
+  function cleanup() {
+    if (disposed) return;
+    disposed = true;
+    media.revert();
+    sizeObserver.disconnect();
+    visibilityObserver.disconnect();
+    window.removeEventListener("pagehide", onPageHide);
+    disposeModel(model);
+    environment.dispose();
+    renderer.dispose();
+    renderer.domElement.remove();
+  }
+  function onPageHide(event) {
+    if (!event.persisted) cleanup();
+  }
+  window.addEventListener("pagehide", onPageHide);
+  renderer.domElement.addEventListener(
+    "webglcontextlost",
+    (event) => {
+      event.preventDefault();
+      fallback.hidden = false;
+      cleanup();
+    },
+    { once: true },
+  );
+
+  try {
+    const gltf = await new GLTFLoader().loadAsync(
+      "/models/skinboost-comfort.glb",
+    );
+    if (disposed) {
+      disposeModel(gltf.scene);
+      return;
+    }
+    model = gltf.scene;
+    cap = model.getObjectByName("Cap");
+    if (!cap?.isMesh)
+      throw new Error("The model must contain a separate Cap mesh.");
+    closedCapY = cap.position.y;
+    // Transmission thickness is local-space: match the 1 mm hollow shell.
+    // The exported root scales it by 20; using the cap diameter magnifies the pump.
+    const oldCapMaterial = cap.material;
+    cap.material = new THREE.MeshPhysicalMaterial({
+      color: 0xe4eedc,
+      roughness: 0.025,
+      metalness: 0,
+      transmission: 1,
+      opacity: 1,
+      ior: 1.49,
+      thickness: 0.001,
+      attenuationColor: 0x658260,
+      attenuationDistance: 0.15,
+      envMapIntensity: 0.8,
+    });
+    oldCapMaterial.dispose();
+    pose.add(model);
+    media.add(
+      {
+        reduce: "(prefers-reduced-motion: reduce)",
+        animate: "(prefers-reduced-motion: no-preference)",
+      },
+      (context) => {
+        motion.progress = 0;
+        if (!context.conditions.reduce) {
+          gsap.to(motion, {
+            progress: 1,
+            ease: "none",
+            onUpdate: update,
+            scrollTrigger: {
+              trigger: ".product-story",
+              start: "top top",
+              end: "bottom bottom",
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+        update();
+      },
+    );
+    resize();
+    fallback.hidden = true;
+    container.dataset.status = "ready";
+    container.dataset.model = "comfort";
+    ScrollTrigger.refresh();
+  } catch (error) {
+    console.warn("The product preview is unavailable.", error);
+    container.dataset.status = "unavailable";
+    fallback.hidden = false;
+    cleanup();
+  }
 }
