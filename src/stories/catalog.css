@@ -1,0 +1,26 @@
+.sb-catalog{min-height:100vh;background:var(--paper);color:var(--ink);font-family:inherit}
+.sb-catalog-status{display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;padding:16px 28px;border-bottom:1px solid var(--line);font-size:12px;line-height:1.5;background:var(--sage)}
+.sb-catalog-status strong{font-size:12px;letter-spacing:.025em}
+.sb-catalog-status span{max-width:750px}
+.sb-catalog-canvas{padding:28px;max-width:1240px;margin:auto}
+.sb-story-host{width:100%;min-height:580px}
+.sb-foundation{max-width:1000px;margin:auto;padding:24px 0 40px}
+.sb-foundation>h1{font-size:44px;line-height:1.08;margin-bottom:18px}
+.sb-foundation>h2{font-size:30px;margin:30px 0 18px}
+.sb-foundation>p{max-width:720px;font-size:16px;margin-bottom:24px;color:var(--muted)}
+.sb-token-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.sb-token{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--paper)}
+.sb-token-color{height:105px;border-bottom:1px solid var(--line)}
+.sb-token-meta{display:flex;flex-direction:column;gap:8px;padding:18px;font-size:14px}
+.sb-token-meta code{font-size:12px;color:var(--muted)}
+.sb-type-sample{display:flex;flex-direction:column;gap:10px;padding:24px 0;border-bottom:1px solid var(--line)}
+.sb-type-sample small{font-size:12px;color:var(--muted)}
+.sb-type-sample p{margin:0}
+.sb-button-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:28px 0}
+.sb-button-row button:disabled{opacity:.45;cursor:not-allowed}
+.sb-story-close{padding:60px 30px;text-align:center;border:1px solid var(--line);border-radius:24px;background:var(--paper)}
+.sb-story-close p{margin:14px 0 20px}
+.sb-state-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.5}
+.sb-state-table th,.sb-state-table td{padding:16px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.sb-state-table th{font-weight:600}
+@media(max-width:700px){.sb-catalog-status{padding:14px 18px}.sb-catalog-canvas{padding:16px}.sb-token-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sb-foundation>h1{font-size:34px}.sb-state-table th,.sb-state-table td{padding:12px 6px;font-size:12px}}
