@@ -461,7 +461,7 @@ export const ComparacaoIlustrativa = {
     docs: {
       description: {
         story:
-          "O mesmo retrato fictício ocupa os dois lados, no contexto do conceito Comfort. Este estado testa arraste direto na foto com toque ou mouse, controle por teclado e limites visíveis; não simula melhora nem afirma um resultado gerado.",
+          "O mesmo retrato fictício ocupa os dois lados, no contexto do conceito Comfort. Este estado testa arraste direto na foto com toque ou mouse, controle por teclado e limites visíveis; não simula melhora nem afirma um resultado gerado. Depois da comparação, o convite para continuar a compra abre o checkout externo de exemplo da Design Engineer, sem enviar dados da conversa.",
       },
     },
   },

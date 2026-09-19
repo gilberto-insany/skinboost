@@ -1,5 +1,10 @@
 import "./experience.css";
-import { CATALOG, validatePhoto, formatMoney } from "./routine.js";
+import {
+  CATALOG,
+  CHECKOUT_EXAMPLE_URL,
+  validatePhoto,
+  formatMoney,
+} from "./routine.js";
 import {
   createThreadState,
   createThreadFixture,
@@ -326,7 +331,10 @@ export function mountExperience(element, options = {}) {
       content =
         `<div class="sx-context-diff"><span>${icon("pencil-simple")} O que mudou</span>${m.contextChanges.map((c) => `<p><strong>${fields[c.key]}</strong><s>${esc(c.before)}</s><b>${esc(c.after)}</b></p>`).join("")}<small>As outras respostas foram preservadas.</small></div>` +
         content;
-    if (m.kind === "simulation") content = renderPhotoComparison(m);
+    if (m.kind === "simulation")
+      content = renderPhotoComparison(m, {
+        canCheckout: !m.inherited && state.step !== "care",
+      });
     content += renderPhotoEvidence(m, {
       canSimulate:
         active &&
@@ -404,7 +412,7 @@ export function mountExperience(element, options = {}) {
     const r = m.routine || state.routine;
     const selected = m.snapshot?.selected || m.selected || state.selected;
     const products = r?.products.filter((p) => selected.includes(p.id)) || [];
-    return `<div class="sx-card sx-checkout"><span class="sx-mini-orbit">${icon("bag")}</span><h3>Seleção revisada.</h3><p>${products.map((p) => esc(p.name)).join(" + ") || "Nenhum produto selecionado"}</p><strong>${money(products.reduce((n, p) => n + p.price, 0))}</strong><p>Checkout demonstrativo. Nenhuma compra foi realizada.</p>${button("Continuar a conversa", "checkin", "secondary")}</div>`;
+    return `<div class="sx-card sx-checkout"><span class="sx-mini-orbit">${icon("bag")}</span><h3>Seleção revisada.</h3><p>${products.map((p) => esc(p.name)).join(" + ") || "Nenhum produto selecionado"}</p><strong>${money(products.reduce((n, p) => n + p.price, 0))}</strong><p>Checkout demonstrativo. Nenhuma compra foi realizada.</p>${products.length && !m.inherited && state.step !== "care" ? `<a class="sx-button sx-primary" data-example-checkout href="${CHECKOUT_EXAMPLE_URL}" target="_blank" rel="noopener noreferrer">Continuar para compra ${icon("arrow-up-right")}<span class="sr-only"> — checkout de exemplo, abre em nova aba</span></a><small>Checkout de exemplo da Design Engineer. Não é uma oferta de produtos SkinBoost.</small>` : ""}${button("Continuar a conversa", "checkin", "secondary")}</div>`;
   }
   function apiHistory() {
     const rows = state.messages
