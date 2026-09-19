@@ -1268,7 +1268,7 @@ footer {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: var(--brand);
+  color: var(--muted);
 }
 .footer-top nav {
   display: flex;
