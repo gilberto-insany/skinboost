@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import sharp from "sharp";
 import {
   CHAT_SCHEMA,
   CONTEXT_KEYS,
@@ -27,11 +28,20 @@ import {
 // All provider calls in this file are mocked. No credential or paid request is used.
 const MOCK_SECRET = "unit-test-secret-not-a-real-key";
 const env = { OPENAI_API_KEY: MOCK_SECRET, NODE_ENV: "test" };
-const photo =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aA9sAAAAASUVORK5CYII=";
-const jpeg = Buffer.from([
-  255, 216, 255, 224, 0, 16, 74, 70, 73, 70, 0, 255, 217,
-]).toString("base64");
+const photo = `data:image/png;base64,${(
+  await sharp({
+    create: { width: 1, height: 1, channels: 3, background: "#fff" },
+  })
+    .png()
+    .toBuffer()
+).toString("base64")}`;
+const jpeg = (
+  await sharp({
+    create: { width: 1024, height: 1024, channels: 3, background: "#fff" },
+  })
+    .jpeg()
+    .toBuffer()
+).toString("base64");
 const nullPatch = () =>
   Object.fromEntries(CONTEXT_KEYS.map((key) => [key, null]));
 const fullContext = {
@@ -210,7 +220,14 @@ test("missing server credential returns a clear configuration error without fetc
   const { service, calls } = harness({ environment: {} });
   errorIs(await service("chat", request()), 503, "not_configured");
   errorIs(
-    await service("simulate", request({ consent: true, photoDataUrl: photo })),
+    await service(
+      "simulate",
+      request({
+        consent: true,
+        photoDataUrl: photo,
+        selectedProductId: "balance",
+      }),
+    ),
     503,
     "not_configured",
   );
@@ -577,7 +594,14 @@ test("configured server models override defaults without exposing their credenti
       ),
   });
   await service("chat", request());
-  await service("simulate", request({ consent: true, photoDataUrl: photo }));
+  await service(
+    "simulate",
+    request({
+      consent: true,
+      photoDataUrl: photo,
+      selectedProductId: "balance",
+    }),
+  );
   assert.deepEqual(
     calls.map((call) => call.body.model),
     ["chat-configured", "image-configured"],
@@ -679,26 +703,50 @@ test("simulation uses current image edits JSON contract and always returns illus
       consent: true,
       photoDataUrl: photo,
       concern: "Textura superficial",
+      selectedProductId: "balance",
     }),
   );
   assert.equal(result.status, 200);
   assert.equal(calls[0].url, "https://api.openai.com/v1/images/edits");
   assert.equal(calls[0].body.model, DEFAULT_IMAGE_MODEL);
-  assert.deepEqual(calls[0].body.images, [{ image_url: photo }]);
+  assert.match(calls[0].body.images[0].image_url, /^data:image\/jpeg;base64,/);
   assert.equal(calls[0].body.output_format, "jpeg");
   assert.equal(calls[0].body.n, 1);
   assert.equal(Object.hasOwn(calls[0].body, "input_fidelity"), false);
   assert.match(calls[0].body.prompt, /Preserve rigorosamente identidade/);
-  assert.match(calls[0].body.prompt, /NÃO É PREVISÃO/);
+  assert.match(calls[0].body.prompt, /Não desenhe texto, legenda/);
+  assert.match(calls[0].body.prompt, /exposição, contraste, balanço de branco/);
+  assert.match(
+    calls[0].body.prompt,
+    /Preserve todas as demais pessoas integralmente/,
+  );
+  assert.match(calls[0].body.prompt, /SkinBoost Balance/);
+  assert.match(calls[0].body.prompt, /não desenvolvidas/);
+  const returned = await sharp(
+    Buffer.from(result.body.imageDataUrl.split(",")[1], "base64"),
+  ).metadata();
+  assert.equal(returned.width, 1);
+  assert.equal(returned.height, 1);
   assert.deepEqual(result.body, {
-    imageDataUrl: `data:image/jpeg;base64,${jpeg}`,
+    imageDataUrl: result.body.imageDataUrl,
+    imageGeometry: {
+      width: 1,
+      height: 1,
+      aspectRatio: 1,
+      sourceWidth: 1,
+      sourceHeight: 1,
+      sourceOrientation: 1,
+      orientation: "normalized",
+      alignment: "approximate",
+    },
+    selectedProduct: { id: "balance", name: "Balance", status: "concept" },
     label: IMAGE_LABEL,
     disclaimer: IMAGE_DISCLAIMER,
     kind: "illustration",
     originalLabel: "Foto enviada",
     generatedLabel: "Simulação ilustrativa",
     comparisonLabel: "Foto enviada × ilustração · não é previsão de resultado",
-    sources: resolveSources(["skinboost-p26"]),
+    sources: resolveSources(["skinboost-p13", "skinboost-p26"]),
   });
 });
 
@@ -713,12 +761,107 @@ test("simulation rejects malformed and oversized provider image responses", asyn
     errorIs(
       await harness({ result: invalid }).service(
         "simulate",
-        request({ consent: true, photoDataUrl: photo }),
+        request({
+          consent: true,
+          photoDataUrl: photo,
+          selectedProductId: "balance",
+        }),
       ),
       502,
       "invalid_image_response",
     );
   }
+});
+
+test("simulation requires an allowlisted explicit concept and ignores forged product claims", async () => {
+  const { service, calls } = harness({
+    result: { data: [{ b64_json: jpeg }] },
+  });
+  for (const selectedProductId of [
+    undefined,
+    null,
+    "",
+    "retinol",
+    "Balance",
+    { id: "balance" },
+  ]) {
+    errorIs(
+      await service(
+        "simulate",
+        request({ consent: true, photoDataUrl: photo, selectedProductId }),
+      ),
+      400,
+      "product_selection_required",
+    );
+  }
+  assert.equal(calls.length, 0);
+  for (const [selectedProductId, name] of [
+    ["cleanse", "Cleanse"],
+    ["balance", "Balance"],
+    ["comfort", "Comfort"],
+  ]) {
+    const result = await service(
+      "simulate",
+      request({
+        consent: true,
+        photoDataUrl: photo,
+        selectedProductId,
+        productName: "Injected drug",
+        productClaim: "A cure in three days",
+      }),
+    );
+    assert.equal(result.status, 200);
+    assert.deepEqual(result.body.selectedProduct, {
+      id: selectedProductId,
+      name,
+      status: "concept",
+    });
+    assert.match(calls.at(-1).body.prompt, new RegExp(`SkinBoost ${name}`));
+    assert.equal(calls.at(-1).body.prompt.includes("Injected drug"), false);
+    assert.equal(
+      calls.at(-1).body.prompt.includes("A cure in three days"),
+      false,
+    );
+    assert.deepEqual(
+      result.body.sources,
+      resolveSources(["skinboost-p13", "skinboost-p26"]),
+    );
+  }
+});
+
+test("undecodable or unsupported simulation photos are rejected before contacting OpenAI", async () => {
+  const { service, calls } = harness();
+  const corrupt = "data:image/jpeg;base64,/9j/AA==";
+  errorIs(
+    await service(
+      "simulate",
+      request({
+        consent: true,
+        photoDataUrl: corrupt,
+        selectedProductId: "balance",
+      }),
+    ),
+    400,
+    "invalid_photo",
+  );
+  const wide = await sharp({
+    create: { width: 2000, height: 400, channels: 3, background: "#fff" },
+  })
+    .png()
+    .toBuffer();
+  errorIs(
+    await service(
+      "simulate",
+      request({
+        consent: true,
+        photoDataUrl: `data:image/png;base64,${wide.toString("base64")}`,
+        selectedProductId: "balance",
+      }),
+    ),
+    400,
+    "photo_aspect_ratio",
+  );
+  assert.equal(calls.length, 0);
 });
 
 test("image editing remains compatible with providers that reject the legacy fidelity knob", async () => {
@@ -737,12 +880,19 @@ test("image editing remains compatible with providers that reject the legacy fid
     });
     const result = await service(
       "simulate",
-      request({ consent: true, photoDataUrl: photo }),
+      request({
+        consent: true,
+        photoDataUrl: photo,
+        selectedProductId: "balance",
+      }),
     );
     assert.equal(result.status, 200);
     assert.equal(calls.length, 1);
     assert.equal(calls[0].body.model, model);
-    assert.deepEqual(calls[0].body.images, [{ image_url: photo }]);
+    assert.match(
+      calls[0].body.images[0].image_url,
+      /^data:image\/jpeg;base64,/,
+    );
     assert.match(calls[0].body.prompt, /Preserve rigorosamente identidade/);
     assert.match(calls[0].body.prompt, /mesma pessoa/);
     assert.equal(result.body.kind, "illustration");
@@ -781,13 +931,24 @@ test("rate-limited image requests cannot call the provider and bucket memory sta
       (
         await service(
           "simulate",
-          request({ consent: true, photoDataUrl: photo }),
+          request({
+            consent: true,
+            photoDataUrl: photo,
+            selectedProductId: "balance",
+          }),
         )
       ).status,
       200,
     );
   errorIs(
-    await service("simulate", request({ consent: true, photoDataUrl: photo })),
+    await service(
+      "simulate",
+      request({
+        consent: true,
+        photoDataUrl: photo,
+        selectedProductId: "balance",
+      }),
+    ),
     429,
     "rate_limited",
   );
@@ -1193,7 +1354,11 @@ test("cancelling a generation also aborts the paid upstream image request", asyn
   });
   const result = service(
     "simulate",
-    request({ consent: true, photoDataUrl: photo }),
+    request({
+      consent: true,
+      photoDataUrl: photo,
+      selectedProductId: "balance",
+    }),
     { signal: controller.signal },
   );
   await pending;

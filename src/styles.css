@@ -224,6 +224,7 @@ h3 {
   gap: 10px;
 }
 .nav-cta {
+  white-space: nowrap;
   background: #ffffffec;
   color: var(--ink);
   padding: 12px 18px;

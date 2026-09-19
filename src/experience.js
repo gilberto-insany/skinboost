@@ -15,6 +15,11 @@ import {
   safePhoto,
 } from "./chat/photo-experience.js";
 import { preparePhoto } from "./chat/photo.js";
+import {
+  currentPhotoAnalysis,
+  productChoiceFromText,
+} from "./chat/photo-product-choice.js";
+import { mountPhotoComparisonController } from "./chat/photo-comparison.js";
 import { createVoiceInput } from "./chat/voice-input.js";
 import { readChatResponse } from "./chat/response-stream.js";
 import {
@@ -233,6 +238,7 @@ export function mountExperience(element, options = {}) {
       }
     }
     for (const node of [...thread.children]) if (!kept.has(node)) node.remove();
+    photoComparison.refresh();
     thread.classList.toggle(
       "sx-empty",
       !state.messages.some((m) => m.role === "user"),
@@ -453,10 +459,17 @@ export function mountExperience(element, options = {}) {
     }
     followLatest = true;
     state.error = "";
+    const choice =
+      !analyzePhoto && !retry
+        ? productChoiceFromText(text, currentPhotoAnalysis(state))
+        : "";
+    if (choice && state.awaitingPhotoProduct)
+      return simulate({
+        selectedProductId: choice,
+        clearDraft: !preserveDraft,
+      });
     if (intent.simulation && !analyzePhoto && !retry)
       return simulate({ clearDraft: !preserveDraft });
-    const illustrateAfter = intent.simulation && analyzePhoto;
-    let analysisAccepted = false;
     if (!preserveDraft) {
       state.draft = "";
       input.value = "";
@@ -485,6 +498,11 @@ export function mountExperience(element, options = {}) {
     }
     state.failedText = text;
     state.failedAnalyzePhoto = analyzePhoto;
+    if (analyzePhoto) {
+      state.photoAnalysisId = null;
+      state.selectedPhotoProductId = "";
+      state.awaitingPhotoProduct = false;
+    }
     const requestEpoch = ++epoch;
     if (preserveDraft) state.draft = draft;
     pending = true;
@@ -519,10 +537,14 @@ export function mountExperience(element, options = {}) {
       if (disposed || requestEpoch !== epoch) return;
       state.streamText = "";
       update(acceptAssistantResponse(state, result));
-      analysisAccepted =
-        result.photoAnalysis?.status === "observed" &&
-        !result.care &&
-        state.step !== "care";
+      if (analyzePhoto) {
+        state.photoAnalysisId = state.messages.at(-1).id;
+        state.awaitingPhotoProduct =
+          result.photoAnalysis?.status === "observed" &&
+          !!state.messages.at(-1).productMatches?.length &&
+          state.step !== "care";
+        if (state.awaitingPhotoProduct) state.messages.at(-1).choices = [];
+      }
       recordContextChanges(
         state,
         contextBefore,
@@ -546,15 +568,12 @@ export function mountExperience(element, options = {}) {
         if (!disposed) render();
       }
     }
-    if (
-      illustrateAfter &&
-      analysisAccepted &&
-      !disposed &&
-      requestEpoch === epoch
-    )
-      await simulate();
   }
-  async function simulate({ clearDraft = false, retry = false } = {}) {
+  async function simulate({
+    clearDraft = false,
+    retry = false,
+    selectedProductId = "",
+  } = {}) {
     if (pending) return;
     if (mode !== "live") {
       state.error =
@@ -586,14 +605,58 @@ export function mountExperience(element, options = {}) {
       input.value = "";
       resizeInput();
     }
+    const analysis = currentPhotoAnalysis(state);
+    if (!analysis) {
+      return submit(
+        "Analise minha foto e sugira conceitos de produtos para eu escolher uma comparação ilustrativa.",
+        { analyzePhoto: true, preserveDraft: true },
+      );
+    }
+    if (
+      analysis.photoAnalysis?.status !== "observed" ||
+      !analysis.productMatches?.length
+    ) {
+      state.error =
+        "Precisamos de uma foto mais clara ou de mais contexto antes de escolher um produto para explorar.";
+      render({ scrollToEnd: false });
+      return;
+    }
+    const productId = retry ? state.selectedPhotoProductId : selectedProductId;
+    const match = analysis.productMatches.find(
+      (product) => product.productId === productId,
+    );
+    const product = CATALOG.find((product) => product.id === match?.productId);
+    if (!product) {
+      state.awaitingPhotoProduct = true;
+      if (state.messages.at(-1)?.kind !== "photo-product-choice")
+        append(
+          "assistant",
+          "Qual produto você quer explorar na comparação? Toque em uma opção ou escreva o nome.",
+          "photo-product-choice",
+          {
+            productMatches: analysis.productMatches,
+            sources: analysis.sources,
+          },
+        );
+      render();
+      return;
+    }
+    state.selectedPhotoProductId = product.id;
+    state.awaitingPhotoProduct = false;
     const original = state.photoDataUrl;
     const requestEpoch = ++epoch;
     if (!retry)
       append(
         "user",
-        "Quero criar uma simulação visual ilustrativa com minha foto.",
+        `Quero explorar ${product.name} em uma ilustração com minha foto.`,
         "text",
         { photo: original },
+      );
+    if (!retry)
+      append(
+        "assistant",
+        `Você escolheu ${product.name}. ${match.reason} Vou manter o enquadramento da sua foto e criar uma possibilidade ilustrativa. Como o catálogo ainda não tem fórmula ou estudos de eficácia, a imagem não representa um resultado comprovado desse produto.`,
+        "photo-selection",
       );
     state.photoSubmitted = true;
     pending = true;
@@ -611,6 +674,7 @@ export function mountExperience(element, options = {}) {
         body: JSON.stringify({
           photoDataUrl: original,
           consent: true,
+          selectedProductId: product.id,
           concern:
             state.context.detail || state.context.intent || "aparência da pele",
         }),
@@ -627,7 +691,12 @@ export function mountExperience(element, options = {}) {
           "assistant",
           "Aqui está uma possibilidade visual criada por IA. Ela não prevê como sua pele vai responder a um produto.",
           "simulation",
-          { original, image: result.imageDataUrl },
+          {
+            original: result.originalDataUrl || original,
+            image: result.imageDataUrl,
+            selectedProductId: product.id,
+            imageGeometry: result.imageGeometry,
+          },
         );
       }
     } catch (error) {
@@ -942,6 +1011,9 @@ export function mountExperience(element, options = {}) {
       state.photoDataUrl = "";
       state.photoSubmitted = false;
       state.photoConsent = false;
+      state.photoAnalysisId = null;
+      state.selectedPhotoProductId = "";
+      state.awaitingPhotoProduct = false;
       options.onPhotoChange?.("");
       render({ scrollToEnd: false });
       return;
@@ -976,6 +1048,8 @@ export function mountExperience(element, options = {}) {
         { analyzePhoto: true },
       );
     if (action === "simulate") return simulate();
+    if (action === "select-photo-product")
+      return simulate({ selectedProductId: target.dataset.productId });
     if (action === "edit" && mode === "live") {
       state.editingKey = target.dataset.key;
       append(
@@ -1022,6 +1096,9 @@ export function mountExperience(element, options = {}) {
         state.photoName = file.name;
         state.photoDataUrl = data;
         state.photoConsent = false;
+        state.photoAnalysisId = null;
+        state.selectedPhotoProductId = "";
+        state.awaitingPhotoProduct = false;
         options.onPhotoChange?.(file.name);
       } catch {
         if (photoEpoch !== epoch) return;
@@ -1057,15 +1134,6 @@ export function mountExperience(element, options = {}) {
     input.style.height = `${Math.min(input.scrollHeight, 128)}px`;
   }
   function onInput(event) {
-    if (event.target.matches("[data-photo-compare]")) {
-      const value = Math.max(0, Math.min(100, Number(event.target.value) || 0));
-      event.target
-        .closest(".sx-simulation")
-        .querySelector(".sx-photo-compare")
-        .style.setProperty("--reveal", `${value}%`);
-      event.target.setAttribute("aria-valuetext", `${value}% da foto original`);
-      return;
-    }
     if (event.target === input) {
       voice?.handleTypedInput();
       state.draft = input.value;
@@ -1092,6 +1160,7 @@ export function mountExperience(element, options = {}) {
   element.addEventListener("submit", onSubmit);
   element.addEventListener("input", onInput);
   element.addEventListener("keydown", onKey);
+  const photoComparison = mountPhotoComparisonController(element);
   render();
   resizeInput();
   if (options.liveApi) {
@@ -1119,6 +1188,7 @@ export function mountExperience(element, options = {}) {
     refreshSessions: renderSessions,
     refreshSaveStatus: saveStatus,
     destroy() {
+      photoComparison.destroy();
       voice?.destroy();
       if (dialog.open) dialog.close();
       disposed = true;

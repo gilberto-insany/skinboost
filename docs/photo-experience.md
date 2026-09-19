@@ -58,7 +58,7 @@ Referências: [photo-contract.mjs](../server/photo-contract.mjs), `photoResponse
 
 ### 5. Relacionar o pedido ao catálogo sem inventar uma fórmula
 
-Quando houver uma relação útil entre o pedido declarado e os conceitos da linha, `productMatches` pode produzir até três cards. Cada card tem ID conhecido, nome, razão contextual e uma fonte obrigatória na página 13. A interface usa os rótulos **Conceitos para explorar juntos** e **etapa ilustrativa**, informa que isso ainda não comprova adequação à pele e oferece o PDF diretamente no card.
+Quando houver uma relação útil entre o pedido declarado e os conceitos da linha, `productMatches` pode produzir até três cards. Cada card tem ID conhecido, nome, razão contextual e uma fonte obrigatória na página 13. A interface pergunta **Qual produto você quer explorar?**, identifica uma **etapa ilustrativa**, informa que isso ainda não comprova adequação à pele e oferece o PDF diretamente no card. A imagem fica acima do texto no celular e ao lado no desktop.
 
 Esses cards são diferentes de uma rotina confirmada com seleção, total e carrinho. Eles explicam uma possibilidade dentro do protótipo. Não autorizam dizer que a foto comprovou a necessidade de um produto ou que uma categoria ilustrativa equivale a uma fórmula eficaz.
 
@@ -81,17 +81,21 @@ Referências educativas da AAD continuam com outro papel: orientação geral de 
 
 ### 7. Pedir uma ilustração e comparar
 
-Observar uma foto não gera uma imagem automaticamente. A pessoa pode acionar **Criar ilustração**, usar a ação após uma observação ou pedir isso explicitamente na mensagem. Se o pedido reúne análise e simulação, a implementação faz a observação primeiro e só continua para a ilustração quando o resultado é `observed`, sem encaminhamento de cuidado e sem uma solicitação mais recente que tenha invalidado aquela operação. Esse encadeamento depende do pedido de simulação; não é uma ação implícita em todo upload.
+Observar uma foto não gera uma imagem automaticamente. Depois de uma observação `observed` com produtos relacionados, a pessoa escolhe **Explorar Cleanse**, **Explorar Balance** ou **Explorar Comfort** entre as opções disponíveis. Também pode escrever uma escolha explícita, como “Quero o Comfort”. Mencionar um produto numa pergunta ou rejeitá-lo não deve disparar geração.
+
+Pedir “antes e depois” sem escolher um produto apresenta as opções, sem chamar `/api/simulate`. Num pedido combinado, a observação acontece primeiro e a interface aguarda a escolha. Se ainda não existe análise da foto corrente, o pedido de ilustração solicita essa análise antes de prosseguir. Uma imagem limitada, ausência de relação com produto ou encaminhamento de cuidado interrompe a geração e oferece um próximo passo.
+
+A escolha pertence à análise válida da foto atual, não a qualquer card antigo. Uma nova foto limpa a análise e o produto selecionado. A tentativa de geração envia `selectedProductId`; o servidor exige um ID permitido. Esse identificador torna o conceito escolhido rastreável, mas não transforma a ilustração em prova de efeito do produto.
 
 A geração exige conexão com a OpenAI, foto e autorização. Ela usa `/api/simulate`, que chama a API de edição de imagens com a foto de referência. O prompt pede preservação de identidade, traços, tom de pele, textura, pose, luz e enquadramento; proíbe previsões clínicas e solicita um aviso visual. Essas são restrições de geração, não uma garantia automática de que cada imagem produzida cumprirá perfeitamente todos os critérios.
 
-O resultado aparece em **Original e possibilidade ilustrada**. Um controle deslizante, operável também pelo teclado, alterna quanto da foto original fica visível sobre a imagem criada. Os rótulos distinguem **Original** e **Ilustração com IA**. A legenda fixa informa **ILUSTRAÇÃO COM IA · NÃO É PREVISÃO**, não promete prazo ou resultado e aponta para a página 26.
+O resultado aparece em **Original e possibilidade ilustrada**. A pessoa pode arrastar diretamente sobre a imagem com mouse ou toque, inclusive a partir do centro, ou usar o controle e o teclado. As duas imagens ocupam a mesma caixa, cuja proporção acompanha a foto original. Os rótulos distinguem **Original** e **Ilustração com IA**. A legenda fixa informa **ILUSTRAÇÃO COM IA · NÃO É PREVISÃO**, não promete prazo ou resultado e aponta para a página 26.
 
 O backend verifica o formato do retorno de imagem; ele não mede melhora clínica nem valida a fidelidade estética do resultado. Uma captura de componente com resposta controlada também não deve ser apresentada como prova de uma geração real pelo provedor.
 
 ### 8. Parar, corrigir e continuar
 
-O estado de espera mantém o pedido na conversa. Parar cancela a solicitação corrente e permite tentar novamente. Erros de conexão, imagem ou resposta incompleta não devem exigir que a pessoa redigite o pedido; o estado guarda a tentativa e a intenção de analisar a foto. Uma nova tentativa evita duplicar o turno já registrado.
+O estado de espera mantém o pedido na conversa. Parar cancela a solicitação corrente e permite tentar novamente. Erros de conexão, imagem ou resposta incompleta não devem exigir que a pessoa redigite o pedido; o estado guarda a tentativa e a intenção de analisar a foto. Uma nova tentativa evita duplicar o turno já registrado e preserva o produto escolhido quando a falha ocorreu na ilustração.
 
 O histórico é local ao navegador e inclui as imagens anexadas e os artefatos gerados. Reabrir uma conversa ou explorar uma alternativa reinicia o consentimento de envio da foto. A exclusão local não equivale à exclusão em sistemas do provedor.
 
@@ -113,11 +117,14 @@ Na p26, antes/depois é uma imagem sintética para demonstrar a interface. O avi
 - Relato declarado e aparência observada permanecem distintos.
 - Cards usam apenas os três IDs existentes e levam à página 13; não contêm ingredientes ou efeitos inventados.
 - Uma análise sem pedido de ilustração não chama a geração de imagens.
-- O pedido combinado só avança após uma observação aceita; um erro ou retorno de cuidado não gera uma imagem por consequência.
-- A comparação mantém rótulos, legenda, fonte e controle acessível; não sugere previsão clínica.
+- O pedido combinado observa primeiro e espera uma escolha; sem produto selecionado não existe chamada de geração.
+- Card e escolha explícita por texto enviam o mesmo ID permitido; nova foto exige nova análise e escolha.
+- A comparação mantém proporção original, camadas alinhadas, arraste por toque/mouse e alternativa por teclado; rótulos e fonte não sugerem previsão clínica.
 - Parar, retentar e reabrir a conversa preservam trabalho útil; restaurar não reativa consentimento.
 
-O contrato do backend é exercitado em [openai-api.test.mjs](../tests/openai-api.test.mjs), incluindo consentimento, entrada real de imagem, observação antes do contexto completo e fontes permitidas. O histórico e as alternativas têm testes próprios. Esta revisão documental leu os caminhos de código e os testes; não executou uma nova sessão paga, medição clínica ou teste de todos os dispositivos.
+O contrato do backend é exercitado em [openai-api.test.mjs](../tests/openai-api.test.mjs), incluindo consentimento, entrada real de imagem, observação antes do contexto completo e fontes permitidas. O histórico e as alternativas têm testes próprios.
+
+Em 18/09/2026, [check-photo-experience.mjs](../scripts/check-photo-experience.mjs) passou 17 critérios em desktop e 17 em mobile, com APIs e imagens controladas. Verificou seleção por card e texto, ausência de geração sem escolha, repetição com o mesmo produto, layout responsivo dos cards, CTA em uma linha, arraste por mouse e toque real simulado no Chromium, proporção e alinhamento das camadas. Também preservou consentimento, fontes, recuperação e restauração; não encontrou erro de JavaScript, overflow horizontal ou violações axe graves/críticas no estado de observação. Relatório e capturas: `qa/photo-experience/`. Isso não é uma nova sessão paga, teste em aparelho físico ou avaliação clínica.
 
 ## Auditoria inicial da apresentação e do roteiro de implementação
 

@@ -77,6 +77,14 @@ async function fixtureState(args) {
           : PHOTO_CHAT_RESPONSE,
       ),
     );
+    if (args.fixture === "photo-observed") {
+      // Controlled local fixture: expose the same choices without a live API.
+      state.photoConsent = true;
+      state.photoSubmitted = true;
+      state.photoAnalysisId = state.messages.at(-1).id;
+      state.awaitingPhotoProduct = true;
+      state.messages.at(-1).choices = [];
+    }
     if (args.fixture === "photo-comparison")
       state.messages.push({
         id: "story-photo-comparison",
@@ -85,6 +93,7 @@ async function fixtureState(args) {
         text: "Demonstração do comparador: o mesmo retrato fictício aparece dos dois lados, sem alteração estética. Nenhuma imagem nova foi gerada neste exemplo.",
         original: portrait,
         image: portrait,
+        selectedProductId: "comfort",
       });
     return state;
   }
@@ -419,7 +428,7 @@ export const FotoObservada = {
     docs: {
       description: {
         story:
-          "Fixture de contrato aplicada por acceptAssistantResponse. Retrato de persona fictícia; não é análise de uma pessoa. Mostra observações limitadas, produtos conceituais e fontes do PDF, sem chamar a IA.",
+          "Fixture de contrato aplicada por acceptAssistantResponse. Retrato de persona fictícia; não é análise de uma pessoa. Mostra observações, escolha de produto antes da geração e fontes do PDF, sem chamar a IA. No celular, a imagem do produto fica acima do texto.",
       },
     },
   },
@@ -429,7 +438,10 @@ export const FotoObservada = {
     ).toBeVisible();
     await expect(
       canvas.getByRole("region", { name: "Relação com o catálogo" }),
-    ).toHaveTextContent("Conceitos para explorar juntos");
+    ).toHaveTextContent("Qual produto você quer explorar?");
+    await expect(
+      canvas.getByRole("button", { name: "Explorar Cleanse ↗" }),
+    ).toBeVisible();
   },
 };
 export const FotoLimitada = {
@@ -449,7 +461,7 @@ export const ComparacaoIlustrativa = {
     docs: {
       description: {
         story:
-          "O mesmo retrato fictício ocupa os dois lados. Este estado testa apenas anatomia, controle de arraste e limites visíveis; não simula melhora nem afirma um resultado gerado.",
+          "O mesmo retrato fictício ocupa os dois lados, no contexto do conceito Comfort. Este estado testa arraste direto na foto com toque ou mouse, controle por teclado e limites visíveis; não simula melhora nem afirma um resultado gerado.",
       },
     },
   },

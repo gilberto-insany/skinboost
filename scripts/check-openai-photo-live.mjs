@@ -1,12 +1,13 @@
-/** Opt-in PAID smoke test. Exactly one photo chat and one image edit, no retries.
+/** Opt-in PAID smoke test. At most one photo chat and one image edit, no retries.
  * Only the project's attributed synthetic portrait is used. No API key is read.
  * node scripts/check-openai-photo-live.mjs --execute-paid
+ * One portrait image only: --execute-paid --simulation-only --portrait
  * Optional: --base=https://skinboost-design-review.vercel.app
+ * Every run writes a new timestamped subdirectory; earlier reports stay intact.
  * Run only after the parent has confirmed the deployment is ready.
  */
 import { readFile, writeFile, mkdir, chmod } from "node:fs/promises";
-import { existsSync } from "node:fs";
-import { execFileSync } from "node:child_process";
+import sharp from "sharp";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -16,13 +17,16 @@ import {
 } from "../server/skinboost-grounding.mjs";
 
 const args = process.argv.slice(2);
+const simulationOnly = args.includes("--simulation-only");
+const usePortrait = args.includes("--portrait");
+const paidCallBudget = simulationOnly ? 1 : 2;
 const expectedOrigin = "https://skinboost-design-review.vercel.app";
 const baseArg =
   args.find((value) => value.startsWith("--base="))?.slice(7) ||
   (args.includes("--base") ? args[args.indexOf("--base") + 1] : expectedOrigin);
 if (!args.includes("--execute-paid")) {
   console.error(
-    "This test makes two paid API calls. Add --execute-paid only after deployment approval.",
+    `This test makes ${paidCallBudget} paid API call(s). Add --execute-paid only after deployment approval.`,
   );
   process.exit(2);
 }
@@ -47,7 +51,8 @@ if (
   process.exit(2);
 }
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const directory = path.join(root, "qa", "openai-photo-live");
+const runName = `${simulationOnly ? "simulation" : "photo-chat"}-${usePortrait ? "portrait" : "square"}-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+const directory = path.join(root, "qa", "openai-photo-live", runName);
 await mkdir(directory, { recursive: true, mode: 0o700 });
 await chmod(directory, 0o700);
 const registry = new Map(
@@ -57,7 +62,11 @@ const report = {
   startedAt: new Date().toISOString(),
   origin: base.origin,
   syntheticDataOnly: true,
-  paidCallBudget: 2,
+  paidCallBudget,
+  simulationOnly,
+  fixture: usePortrait
+    ? "synthetic-persona-lucas-centered-portrait-crop"
+    : "synthetic-persona-lucas-original",
   checks: [],
   requests: [],
   contentReviewRequired: true,
@@ -86,7 +95,10 @@ const canonicalSources = (sources) =>
     );
   });
 const cited = new Set();
+let paidCallsStarted = 0;
 async function post(route, body, timeout) {
+  if (++paidCallsStarted > paidCallBudget)
+    throw new Error("paid_budget_exceeded");
   const start = Date.now();
   try {
     const response = await fetch(new URL(route, base), {
@@ -141,7 +153,7 @@ try {
     !/RETRATO GERADO POR IA/.test(html)
   )
     throw new Error("synthetic_attribution_missing");
-  const portrait = await readFile(
+  let portrait = await readFile(
     path.join(root, "public/media/persona-lucas.jpg"),
   );
   if (
@@ -151,95 +163,116 @@ try {
     portrait[2] !== 255
   )
     throw new Error("synthetic_portrait_invalid");
+  const originalMeta = await sharp(portrait).metadata();
+  if (usePortrait) {
+    // Mechanical centered crop of the existing attributed AI portrait, solely
+    // for a non-square geometry test. No real person's image is used.
+    const width = Math.round((originalMeta.height * 3) / 4);
+    portrait = await sharp(portrait)
+      .extract({
+        left: Math.floor((originalMeta.width - width) / 2),
+        top: 0,
+        width,
+        height: originalMeta.height,
+      })
+      .jpeg({ quality: 95 })
+      .toBuffer();
+  }
+  const inputMeta = await sharp(portrait).metadata();
+  report.inputDimensions = { width: inputMeta.width, height: inputMeta.height };
+  await save("input-synthetic.jpg", portrait);
   const photoDataUrl = `data:image/jpeg;base64,${portrait.toString("base64")}`;
-  const chat = await post(
-    "/api/chat",
-    {
-      messages: [
-        {
-          role: "user",
-          text: "Observe a aparência desta foto autorizada, com uma descrição do que está visível e dos limites da imagem, sem diagnóstico. Quero poucos passos e custo claro. Relacione Cleanse, Balance e Comfort ao papel ilustrativo de cada um no protótipo, usando as fontes do PDF e explicando o que ainda não está documentado. Não espero previsão de resultado.",
-        },
-      ],
-      context: { approach: "Poucos passos" },
-      photoDataUrl,
-      photoConsent: true,
-      analyzePhoto: true,
-    },
-    65_000,
-  );
-  await save(
-    "chat-response.json",
-    chat.data || { error: { code: "unreadable_response" } },
-  );
-  const photo = chat.data?.photoAnalysis;
-  check(
-    "explicit photo request returns the revised structured contract",
-    chat.status === 200 &&
-      typeof chat.data?.text === "string" &&
-      Array.isArray(chat.data?.choices) &&
-      typeof chat.data?.ready === "boolean" &&
-      typeof chat.data?.care === "boolean",
-  );
-  check(
-    "vision produces observations or an honest image limitation",
-    ["observed", "limited"].includes(photo?.status) &&
-      typeof photo?.summary === "string" &&
-      photo.summary.length > 0 &&
-      Array.isArray(photo?.limitations) &&
-      photo.limitations.length > 0 &&
-      (photo.status === "limited" || photo.observations?.length > 0),
-    {
-      status: photo?.status || null,
-      observationCount: photo?.observations?.length || 0,
-      limitationCount: photo?.limitations?.length || 0,
-    },
-  );
-  check(
-    "photo references use canonical document pages and URLs",
-    canonicalSources(chat.data?.sources) &&
-      chat.data.sources.some((source) => source.id === "skinboost-p6"),
-    { sourceIds: chat.data?.sources?.map((source) => source.id) || [] },
-  );
-  const matches = chat.data?.productMatches;
-  check(
-    "product explanations are grounded and carry the document limitation",
-    Array.isArray(matches) &&
-      matches.length > 0 &&
-      matches.every(
-        (match) =>
-          PRODUCT_IDS.includes(match.productId) &&
-          typeof match.reason === "string" &&
-          match.reason.length > 0 &&
-          match.limitation === PRODUCT_LIMITATION &&
-          match.sourceIds?.includes("skinboost-p13"),
-      ),
-    {
-      productIds: Array.isArray(matches)
-        ? matches.map((match) => match.productId)
-        : [],
-    },
-  );
-  check(
-    "the synthetic cosmetic request does not become a clinical care result",
-    chat.data?.care === false,
-  );
-  console.log(
-    JSON.stringify({
-      phase: "chat",
-      status: chat.status,
-      analysisStatus: photo?.status || null,
-      products: matches?.length || 0,
-      sources: chat.data?.sources?.length || 0,
-    }),
-  );
-  if (chat.status === 429) throw new Error("quota_stopped_no_retry");
+  if (!simulationOnly) {
+    const chat = await post(
+      "/api/chat",
+      {
+        messages: [
+          {
+            role: "user",
+            text: "Observe a aparência desta foto autorizada, com uma descrição do que está visível e dos limites da imagem, sem diagnóstico. Quero poucos passos e custo claro. Relacione Cleanse, Balance e Comfort ao papel ilustrativo de cada um no protótipo, usando as fontes do PDF e explicando o que ainda não está documentado. Não espero previsão de resultado.",
+          },
+        ],
+        context: { approach: "Poucos passos" },
+        photoDataUrl,
+        photoConsent: true,
+        analyzePhoto: true,
+      },
+      65_000,
+    );
+    await save(
+      "chat-response.json",
+      chat.data || { error: { code: "unreadable_response" } },
+    );
+    const photo = chat.data?.photoAnalysis;
+    check(
+      "explicit photo request returns the revised structured contract",
+      chat.status === 200 &&
+        typeof chat.data?.text === "string" &&
+        Array.isArray(chat.data?.choices) &&
+        typeof chat.data?.ready === "boolean" &&
+        typeof chat.data?.care === "boolean",
+    );
+    check(
+      "vision produces observations or an honest image limitation",
+      ["observed", "limited"].includes(photo?.status) &&
+        typeof photo?.summary === "string" &&
+        photo.summary.length > 0 &&
+        Array.isArray(photo?.limitations) &&
+        photo.limitations.length > 0 &&
+        (photo.status === "limited" || photo.observations?.length > 0),
+      {
+        status: photo?.status || null,
+        observationCount: photo?.observations?.length || 0,
+        limitationCount: photo?.limitations?.length || 0,
+      },
+    );
+    check(
+      "photo references use canonical document pages and URLs",
+      canonicalSources(chat.data?.sources) &&
+        chat.data.sources.some((source) => source.id === "skinboost-p6"),
+      { sourceIds: chat.data?.sources?.map((source) => source.id) || [] },
+    );
+    const matches = chat.data?.productMatches;
+    check(
+      "product explanations are grounded and carry the document limitation",
+      Array.isArray(matches) &&
+        matches.length > 0 &&
+        matches.every(
+          (match) =>
+            PRODUCT_IDS.includes(match.productId) &&
+            typeof match.reason === "string" &&
+            match.reason.length > 0 &&
+            match.limitation === PRODUCT_LIMITATION &&
+            match.sourceIds?.includes("skinboost-p13"),
+        ),
+      {
+        productIds: Array.isArray(matches)
+          ? matches.map((match) => match.productId)
+          : [],
+      },
+    );
+    check(
+      "the synthetic cosmetic request does not become a clinical care result",
+      chat.data?.care === false,
+    );
+    console.log(
+      JSON.stringify({
+        phase: "chat",
+        status: chat.status,
+        analysisStatus: photo?.status || null,
+        products: matches?.length || 0,
+        sources: chat.data?.sources?.length || 0,
+      }),
+    );
+    if (chat.status === 429) throw new Error("quota_stopped_no_retry");
+  }
 
   const simulation = await post(
     "/api/simulate",
     {
       photoDataUrl,
       consent: true,
+      selectedProductId: "balance",
       concern:
         "Retrato fictício gerado por IA para teste autorizado. Crie uma variação cosmética conceitual e sutil da aparência superficial, preservando identidade, traços, textura real, cabelo, roupa, luz, fundo e enquadramento. Não represente efeito de produto, diagnóstico, cura ou prazo de melhora.",
     },
@@ -270,33 +303,19 @@ try {
       image = bytes;
       filename = match[1] === "jpeg" ? "simulation.jpg" : "simulation.png";
       await save(filename, bytes);
-      if (existsSync("/opt/homebrew/bin/ffprobe")) {
-        try {
-          const decoded = JSON.parse(
-            execFileSync(
-              "/opt/homebrew/bin/ffprobe",
-              [
-                "-v",
-                "error",
-                "-select_streams",
-                "v:0",
-                "-show_entries",
-                "stream=codec_name,width,height",
-                "-of",
-                "json",
-                path.join(directory, filename),
-              ],
-              { stdio: ["ignore", "pipe", "ignore"] },
-            ).toString(),
-          ).streams?.[0];
-          if (
-            ["mjpeg", "png"].includes(decoded?.codec_name) &&
-            decoded.width > 0 &&
-            decoded.height > 0
-          )
-            dimensions = { width: decoded.width, height: decoded.height };
-        } catch {}
-      }
+      try {
+        const decoded = await sharp(bytes, {
+          failOn: "error",
+          limitInputPixels: 25_000_000,
+        })
+          .raw()
+          .toBuffer({ resolveWithObject: true });
+        if (decoded.info.width > 0 && decoded.info.height > 0)
+          dimensions = {
+            width: decoded.info.width,
+            height: decoded.info.height,
+          };
+      } catch {}
     }
   }
   await save("simulation-response.json", { ...metadata, imageFile: filename });
@@ -304,6 +323,28 @@ try {
     "simulation returns a valid, decodable JPEG or PNG",
     simulation.status === 200 && image && dimensions,
     { decodedBytes: image?.length || 0, dimensions },
+  );
+  check(
+    "generated canvas has exactly the original portrait dimensions without forced square scaling",
+    dimensions?.width === inputMeta.width &&
+      dimensions?.height === inputMeta.height &&
+      metadata.imageGeometry?.width === inputMeta.width &&
+      metadata.imageGeometry?.height === inputMeta.height &&
+      metadata.imageGeometry?.sourceWidth === inputMeta.width &&
+      metadata.imageGeometry?.sourceHeight === inputMeta.height &&
+      metadata.imageGeometry?.orientation === "normalized" &&
+      metadata.imageGeometry?.alignment === "approximate",
+    {
+      inputDimensions: report.inputDimensions,
+      dimensions,
+      geometry: metadata.imageGeometry || null,
+    },
+  );
+  check(
+    "selected concept is preserved without a clinical claim",
+    metadata.selectedProduct?.id === "balance" &&
+      metadata.selectedProduct?.name === "Balance" &&
+      metadata.selectedProduct?.status === "concept",
   );
   check(
     "comparison labels distinguish input photo from generated illustration",
@@ -314,9 +355,10 @@ try {
       /Não é previsão clínica/.test(metadata.disclaimer || ""),
   );
   check(
-    "simulation policy points to the original page26 excerpt",
+    "simulation policy cites both conceptual products and illustration limits",
     canonicalSources(metadata.sources) &&
-      metadata.sources.some((source) => source.id === "skinboost-p26"),
+      metadata.sources.some((source) => source.id === "skinboost-p26") &&
+      metadata.sources.some((source) => source.id === "skinboost-p13"),
   );
   console.log(
     JSON.stringify({
@@ -359,6 +401,7 @@ try {
     "synthetic_attribution_missing",
     "synthetic_portrait_invalid",
     "quota_stopped_no_retry",
+    "paid_budget_exceeded",
   ];
   report.failure = allowed.includes(error?.message)
     ? error.message
@@ -387,7 +430,7 @@ try {
           elapsedMs,
         }),
       ),
-      report: "qa/openai-photo-live/report.json",
+      report: path.relative(root, path.join(directory, "report.json")),
     }),
   );
   process.exitCode = report.failed ? 1 : 0;
