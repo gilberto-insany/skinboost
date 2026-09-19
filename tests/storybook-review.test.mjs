@@ -136,7 +136,10 @@ test(
           const family = await frame
             .locator(".sb-catalog")
             .evaluate((el) => getComputedStyle(el).fontFamily);
-          assert.match(family, mode === "wireframe" ? /^Arial/ : /Avenir Next/);
+          assert.match(
+            family,
+            mode === "wireframe" ? /Manrope Variable/ : /Avenir Next/,
+          );
         }
         if (id === "botoes")
           assert.equal(
@@ -245,7 +248,7 @@ test(
             .getPropertyValue("--ink")
             .trim(),
         );
-        assert.equal(ink, mode === "wireframe" ? "#202a24" : "#183e31");
+        assert.equal(ink, mode === "wireframe" ? "#121f21" : "#183e31");
         const label = await page
           .locator(".sb-catalog-status strong")
           .innerText();

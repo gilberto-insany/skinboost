@@ -27,7 +27,7 @@ export const Paleta = {
       "Cor com função.",
       proposed
         ? "Proposta: cores extraídas do brandbook, aplicadas apenas neste catálogo. A página continua usando a identidade atual."
-        : "Valores ativos de src/styles.css. As amostras consultam as mesmas variáveis que a experiência implementada.",
+        : "Identidade atualizada a partir do Figma: valores ativos de src/styles.css. As amostras consultam as mesmas variáveis que a experiência implementada.",
     );
     const grid = document.createElement("div");
     grid.className = "sb-token-grid";
@@ -43,7 +43,10 @@ export const Paleta = {
             ["--forest", "Forest · apoio"],
             ["--mist", "Mist · apoio"],
           ]
-        : []),
+        : [
+            ["--brand", "Marca · sálvia"],
+            ["--brand-strong", "Marca · ênfase"],
+          ]),
     ];
     tokens.forEach(([token, label]) => {
       const card = document.createElement("article");
@@ -73,7 +76,7 @@ export const Tipografia = {
       "Clareza antes do excesso.",
       proposed
         ? "Avenir Next / Avenir, com fallback Helvetica e Arial. A fonte depende da disponibilidade local; nenhum arquivo proprietário foi distribuído."
-        : "Arial / Helvetica / sans-serif. Escala, peso regular e respiro editorial da interface atual.",
+        : "Manrope Variable / Arial / sans-serif. Fonte local distribuída com o projeto, com pesos variáveis e a escala da identidade atualizada no Figma.",
     );
     const samples = [
       ["Display", "h1", "Sua pele. Seu próximo passo."],

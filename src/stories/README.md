@@ -13,6 +13,8 @@ Os Storybooks usam os mesmos arquivos `*.stories.js` e o mesmo `mountExperience`
 
 Alta fidelidade não significa identidade final aprovada. A proposta aplica cores e a família tipográfica do brandbook sem mudar os tokens da página. Avenir Next/Avenir são fontes locais, com fallback Helvetica/Arial; nenhuma fonte proprietária foi copiada. Produtos e o frasco 3D da página são preservados. As referências de pessoas e pele da landing continuam placeholders; qualquer simulação visual no chat deve ser identificada como ilustração, nunca como previsão clínica ou antes/depois comprovado.
 
+O catálogo Wireframe acompanha a identidade implementada, incluindo a atualização do Figma integrada em 19 de setembro: Manrope Variable distribuída pelo pacote local, texto `#121f21`, superfície `#fbfbf7` e sálvia `#e3ece4`. O nome da rota foi preservado; ela não congela a versão antiga em Arial. O tema proposto continua isolado com Avenir Next e texto `#183e31`.
+
 ## Atualização
 
 Mudanças de comportamento são feitas no controlador real. Mudanças nos estados da API devem atualizar `Experience.stories.js`. Novos componentes devem ser exportados da implementação para serem usados diretamente, nunca reconstruídos dentro do catálogo. Em ambas as versões, verificar teclado, foco, viewport móvel, conteúdo longo, erros, estado vazio e movimento reduzido. O addon de acessibilidade fica disponível nos dois catálogos.
