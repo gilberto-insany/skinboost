@@ -24,13 +24,18 @@ const types = {
 };
 let server, browser, origin;
 
-async function auditAccessibility(page) {
+async function auditAccessibility(page, { landing = false } = {}) {
   // The Storybook a11y addon may be finishing its own post-play audit.
   // Serialize with that runner; never suppress a rule violation.
   for (let attempt = 0; attempt < 3; attempt++) {
     await page.waitForFunction(() => !window.axe?._running);
     try {
-      return await new AxeBuilder({ page }).include(".sb-catalog").analyze();
+      const builder = new AxeBuilder({ page }).include(
+        landing ? ".sb-landing-surface" : ".sb-catalog",
+      );
+      // WCAG text contrast excludes the decorative brand logotype itself.
+      if (landing) builder.exclude(".footer-wordmark");
+      return await builder.analyze();
     } catch (error) {
       if (!error.message.includes("Axe is already running") || attempt === 2)
         throw error;
@@ -81,7 +86,7 @@ after(async () => {
   await new Promise((resolve) => (server ? server.close(resolve) : resolve()));
 });
 
-test("two independent builds expose the same CSF3 inventory", async () => {
+test("both catalogs share conversation stories; the current landing belongs to wireframe", async () => {
   const [wireframe, hifi] = await Promise.all(
     ["wireframe", "alta-fidelidade"].map(async (name) => {
       const response = await fetch(`${origin}/storybook/${name}/index.json`);
@@ -90,7 +95,51 @@ test("two independent builds expose the same CSF3 inventory", async () => {
       return Object.keys(data.entries).sort();
     }),
   );
-  assert.deepEqual(hifi, wireframe);
+  assert.deepEqual(
+    hifi,
+    wireframe.filter((id) => !id.startsWith("landing-componentes--")),
+  );
+  for (const id of [
+    "home",
+    "cabecalho",
+    "hero-prompt",
+    "prompt-erro",
+    "prompt-sugestao",
+    "prompt-foto",
+    "introducao",
+    "como-funciona",
+    "escolha-explicada",
+    "continuidade",
+    "manifesto",
+    "bento-completo",
+    "bento-contexto",
+    "bento-motivo",
+    "bento-produtos",
+    "bento-privacidade",
+    "bento-checkin",
+    "produto-3-d",
+    "catalogo",
+    "cleanse",
+    "balance",
+    "comfort",
+    "comparador",
+    "relato-lucas",
+    "relato-marina",
+    "relato-denise",
+    "confianca",
+    "perguntas-frequentes",
+    "pergunta-aberta",
+    "chamada-final",
+    "rodape",
+    "privacidade",
+    "sobre",
+    "redes",
+  ]) {
+    assert.ok(
+      wireframe.includes(`landing-componentes--${id}`),
+      `Missing real landing component ${id}`,
+    );
+  }
   for (const name of [
     "boas-vindas",
     "contexto",
@@ -109,6 +158,9 @@ test("two independent builds expose the same CSF3 inventory", async () => {
     "alternativa",
     "feedback-registrado",
     "voz-revisavel",
+    "foto-observada",
+    "foto-limitada",
+    "comparacao-ilustrativa",
   ]) {
     assert.ok(
       wireframe.includes(`experiencia-jornada-guiada--${name}`),
@@ -197,6 +249,9 @@ test(
         "alternativa",
         "feedback-registrado",
         "voz-revisavel",
+        "foto-observada",
+        "foto-limitada",
+        "comparacao-ilustrativa",
       ]) {
         await page.goto(story(id), { waitUntil: "networkidle" });
         await page.getByRole("log").waitFor();
@@ -384,5 +439,158 @@ test(
         assert.ok((await page.getByRole("log").innerText()).includes(text));
       await page.close();
     }
+  },
+);
+
+test(
+  "wireframe landing stories reuse current markup, behavior and assets",
+  { timeout: 180000 },
+  async () => {
+    const index = await (
+      await fetch(`${origin}/storybook/wireframe/index.json`)
+    ).json();
+    const ids = Object.keys(index.entries).filter((id) =>
+      id.startsWith("landing-componentes--"),
+    );
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 1000 },
+      reducedMotion: "reduce",
+    });
+    const page = await context.newPage();
+    const errors = [],
+      apiRequests = [],
+      report = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    page.on("request", (request) => {
+      if (new URL(request.url()).pathname.startsWith("/api/"))
+        apiRequests.push(request.url());
+    });
+    try {
+      for (const id of ids) {
+        await page.goto(
+          `${origin}/storybook/wireframe/iframe.html?id=${id}&viewMode=story`,
+          { waitUntil: "networkidle" },
+        );
+        await page.locator('.sb-landing-surface[data-ready="true"]').waitFor();
+        if (id.endsWith("--prompt-foto"))
+          await page.getByRole("button", { name: "Remover foto" }).waitFor();
+        if (
+          [
+            "cleanse",
+            "balance",
+            "comfort",
+            "privacidade",
+            "sobre",
+            "redes",
+          ].some((name) => id.endsWith(`--${name}`))
+        )
+          await page.locator("dialog[open]").waitFor();
+        if (id.endsWith("--produto-3-d")) {
+          await page.waitForFunction(
+            () =>
+              ["ready", "webgl-unavailable", "unavailable"].includes(
+                document.querySelector("#bottle-canvas")?.dataset.status,
+              ),
+            { timeout: 30000 },
+          );
+          assert.equal(
+            await page.locator("#bottle-canvas").getAttribute("data-status"),
+            "ready",
+            "The real GLB should render with WebGL in Chromium.",
+          );
+          assert.equal(await page.locator("#bottle-canvas canvas").count(), 1);
+        }
+        await page.waitForFunction(() =>
+          [...document.querySelectorAll(".sb-landing-surface img")]
+            .filter((image) => {
+              const rect = image.getBoundingClientRect();
+              return (
+                image.loading !== "lazy" ||
+                (rect.bottom > 0 && rect.top < innerHeight)
+              );
+            })
+            .every((image) => image.complete && image.naturalWidth > 0),
+        );
+        const accessibility = await auditAccessibility(page, { landing: true });
+        const violations = accessibility.violations.map((v) => ({
+          id: v.id,
+          impact: v.impact,
+          nodes: v.nodes.map((n) => ({
+            target: n.target,
+            summary: n.failureSummary,
+          })),
+        }));
+        if (id.endsWith("--comparador")) {
+          const slider = page.getByRole("slider");
+          await slider.fill("72");
+          assert.equal(
+            await page
+              .locator(".comparison")
+              .evaluate((el) => el.style.getPropertyValue("--split")),
+            "72%",
+          );
+        }
+        if (id.endsWith("--como-funciona")) {
+          await page.getByRole("tab").first().focus();
+          await page.keyboard.press("ArrowRight");
+          assert.equal(
+            await page.getByRole("tab").nth(1).getAttribute("aria-selected"),
+            "true",
+          );
+        }
+        if (id.endsWith("--prompt-sugestao"))
+          assert.equal(
+            await page.locator("#skin-prompt").inputValue(),
+            "Quero começar a cuidar da minha pele com poucos passos.",
+          );
+        if (id.endsWith("--prompt-erro"))
+          assert.equal(await page.locator("#prompt-error").isVisible(), true);
+        if (id.endsWith("--rodape"))
+          assert.equal(await page.locator(".footer-image").count(), 0);
+        if (id.endsWith("--pergunta-aberta"))
+          assert.equal(
+            await page.locator("details").first().getAttribute("open"),
+            "",
+          );
+        if (await page.locator("dialog[open]").count()) {
+          await page.keyboard.press("Escape");
+          assert.equal(await page.locator("dialog[open]").count(), 0);
+        }
+        const desktopOverflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth + 1,
+        );
+        await page.setViewportSize({ width: 390, height: 844 });
+        const mobileOverflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth + 1,
+        );
+        if (id.endsWith("--cabecalho")) {
+          await page.getByRole("button", { name: "Abrir menu" }).click();
+          assert.equal(
+            await page
+              .getByRole("button", { name: "Fechar menu" })
+              .getAttribute("aria-expanded"),
+            "true",
+          );
+        }
+        report.push({ id, desktopOverflow, mobileOverflow, violations });
+        await page.setViewportSize({ width: 1440, height: 1000 });
+      }
+    } finally {
+      await writeFile(
+        resolve(artifacts, "landing-review.json"),
+        JSON.stringify({ report, errors, apiRequests }, null, 2),
+      );
+      await context.close();
+    }
+    assert.deepEqual(errors, []);
+    assert.deepEqual(apiRequests, []);
+    assert.deepEqual(
+      report.filter(
+        (row) =>
+          row.desktopOverflow || row.mobileOverflow || row.violations.length,
+      ),
+      [],
+      "Inspect qa/storybook/landing-review.json",
+    );
   },
 );

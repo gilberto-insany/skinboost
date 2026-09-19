@@ -9,7 +9,7 @@
 :root {
   --ink: #121f21;
 
-  --muted: #707872;
+  --muted: #5f6b62;
   --paper: #fbfbf7;
 
   --sage: #e3ece4;
@@ -310,7 +310,7 @@ h1 {
 }
 .attach span {
   font-size: 14px;
-  color: #767d77;
+  color: var(--muted);
   margin-left: 2px;
 }
 .send {
@@ -631,7 +631,7 @@ h1 {
 }
 .bento-context p {
   margin-top: 18px;
-  color: #65705f;
+  color: var(--muted);
 }
 .context-tags {
   display: flex;
@@ -685,7 +685,7 @@ h1 {
 .bento-reason p {
   margin-top: 9px;
   max-width: 210px;
-  color: #71756b;
+  color: var(--muted);
 }
 .circle-link {
   position: absolute;
@@ -952,7 +952,7 @@ h1 {
 .evolution-copy > p:not(.eyebrow) {
   font-size: 20px;
   max-width: 380px;
-  color: #6c7465;
+  color: var(--muted);
   margin-top: 28px;
   font-weight: 600;
   line-height: 1.3;
@@ -964,7 +964,7 @@ h1 {
   display: block;
   font-size: 14px;
   line-height: 1.6;
-  color: #76816d;
+  color: var(--muted);
   max-width: 350px;
   margin-top: 32px;
 }
@@ -1064,7 +1064,7 @@ h1 {
 
   font-size: 14px;
   margin-top: 18px;
-  color: #737d6b;
+  color: var(--muted);
 }
 .comparison-foot span:last-child {
   display: flex;
@@ -1136,7 +1136,7 @@ blockquote {
   gap: 6px;
 }
 .story-person span + span {
-  color: #6b7662;
+  color: var(--muted);
 
   font-size: 14px;
 }
@@ -1228,15 +1228,18 @@ blockquote {
 .final-cta .pill {
   margin-top: 37px;
   background: white;
-  color: var(--brand);
+  color: var(--brand-strong);
   font-size: 14px;
+}
+.final-cta > .eyebrow {
+  color: #ffffff;
 }
 .final-note {
   display: block;
 
   font-size: 14px;
 
-  color: var(--sage);
+  color: #ffffff;
   margin-top: 20px;
 }
 footer {
@@ -2171,7 +2174,7 @@ dialog .actions .pill {
 }
 .glass-card {
   background: #96988f;
-  color: white;
+  color: var(--ink);
   border: 1px solid white;
   backdrop-filter: none;
 }

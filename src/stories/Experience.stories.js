@@ -5,12 +5,37 @@ import {
   createThreadFixture,
   sendMessage,
   act,
+  appendUserMessage,
+  acceptAssistantResponse,
 } from "../chat/thread-state.js";
 import {
   createAlternative,
   recordContextChanges,
   makeConversationNote,
 } from "../chat/conversation-tools.js";
+
+import {
+  PHOTO_CHAT_RESPONSE,
+  LIMITED_PHOTO_CHAT_RESPONSE,
+} from "../../tests/fixtures/photo-chat.mjs";
+
+let portraitPromise;
+function fixturePortrait() {
+  portraitPromise ||= fetch("/media/persona-lucas.jpg").then(
+    async (response) => {
+      if (!response.ok)
+        throw new Error("The local fictional portrait is missing.");
+      const blob = await response.blob();
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    },
+  );
+  return portraitPromise;
+}
 
 // Each canvas has its own instance; removal destroys event listeners and timers.
 const mounts = new Map();
@@ -32,8 +57,37 @@ function stateWithOrigins(scenario = "general") {
   return act(state, "confirm");
 }
 
-function fixtureState(args) {
+async function fixtureState(args) {
   if (!args.fixture) return undefined;
+  if (args.fixture.startsWith("photo-")) {
+    const portrait = await fixturePortrait();
+    let state = appendUserMessage(
+      createThreadState(),
+      "Exemplo de componente com retrato fictício gerado por IA. A observação abaixo é uma fixture didática, não uma avaliação da imagem.",
+    );
+    state.photoDataUrl = portrait;
+    state.photoName = "Lucas · persona fictícia gerada por IA";
+    state.photoConsent = false;
+    state.messages.at(-1).photo = portrait;
+    state = acceptAssistantResponse(
+      state,
+      structuredClone(
+        args.fixture === "photo-limited"
+          ? LIMITED_PHOTO_CHAT_RESPONSE
+          : PHOTO_CHAT_RESPONSE,
+      ),
+    );
+    if (args.fixture === "photo-comparison")
+      state.messages.push({
+        id: "story-photo-comparison",
+        role: "assistant",
+        kind: "simulation",
+        text: "Demonstração do comparador: o mesmo retrato fictício aparece dos dois lados, sem alteração estética. Nenhuma imagem nova foi gerada neste exemplo.",
+        original: portrait,
+        image: portrait,
+      });
+    return state;
+  }
   const state = stateWithOrigins(args.scenario);
   if (args.fixture === "alternative")
     return createAlternative(state, {
@@ -101,14 +155,16 @@ function renderExperience(args) {
     instance?.destroy();
     mounts.delete(host);
   };
-  const mount = () => {
+  const mount = async () => {
     if (stopped || !host.isConnected) return;
     attached = true;
+    const state = await fixtureState(args);
+    if (stopped || !host.isConnected) return;
     instance = mountExperience(host, {
       initialStep: args.initialStep,
       scenario: args.scenario,
       liveApi: false,
-      state: fixtureState(args),
+      state,
       ...(args.voiceDemo
         ? {
             voiceFactory: demonstrationVoice,
@@ -353,5 +409,59 @@ export const VozRevisavel = {
     await expect(
       canvas.getByRole("log").querySelectorAll('[data-role="user"]').length,
     ).toBe(0);
+  },
+};
+
+export const FotoObservada = {
+  name: "Foto · observações e fontes",
+  args: { fixture: "photo-observed" },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Fixture de contrato aplicada por acceptAssistantResponse. Retrato de persona fictícia; não é análise de uma pessoa. Mostra observações limitadas, produtos conceituais e fontes do PDF, sem chamar a IA.",
+      },
+    },
+  },
+  play: async ({ canvas }) => {
+    await expect(
+      await canvas.findByRole("region", { name: "Observações da foto" }),
+    ).toBeVisible();
+    await expect(
+      canvas.getByRole("region", { name: "Relação com o catálogo" }),
+    ).toHaveTextContent("Conceitos para explorar juntos");
+  },
+};
+export const FotoLimitada = {
+  name: "Foto · observação limitada",
+  args: { fixture: "photo-limited" },
+  play: async ({ canvas }) => {
+    await expect(await canvas.findByText("Imagem limitada")).toBeVisible();
+    await expect(
+      canvas.queryByRole("region", { name: "Relação com o catálogo" }),
+    ).not.toBeInTheDocument();
+  },
+};
+export const ComparacaoIlustrativa = {
+  name: "Foto · comparador ilustrativo",
+  args: { fixture: "photo-comparison" },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "O mesmo retrato fictício ocupa os dois lados. Este estado testa apenas anatomia, controle de arraste e limites visíveis; não simula melhora nem afirma um resultado gerado.",
+      },
+    },
+  },
+  play: async ({ canvas, userEvent }) => {
+    const slider = await canvas.findByRole("slider", {
+      name: "Quanto da foto original mostrar",
+    });
+    slider.focus();
+    await userEvent.keyboard("{ArrowRight}");
+    await expect(slider).toHaveAttribute(
+      "aria-valuetext",
+      "51% da foto original",
+    );
   },
 };

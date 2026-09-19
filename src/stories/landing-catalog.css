@@ -1,0 +1,38 @@
+.sb-catalog-canvas--landing {
+  max-width: none;
+  padding: 0;
+}
+.sb-landing-surface {
+  position: relative;
+  width: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  --gutter: max(4.45vw, calc((100vw - 1440px) / 2 + 64px));
+}
+.sb-landing-surface[data-component="header"] {
+  min-height: 270px;
+  background: #3b403c;
+}
+.sb-landing-single-card {
+  display: block;
+  width: min(100%, 560px);
+  padding: 28px;
+  margin: auto;
+}
+.sb-landing-single-card > article {
+  min-height: 300px;
+}
+.sb-landing-single-card > .bento-context {
+  min-height: 570px;
+}
+.sb-landing-single-card > .bento-photo {
+  height: 420px;
+}
+@media (max-width: 700px) {
+  .sb-landing-surface[data-component="header"] {
+    min-height: 380px;
+  }
+  .sb-landing-single-card {
+    padding: 20px;
+  }
+}

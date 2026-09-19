@@ -1,12 +1,25 @@
-import { $, $$, icon } from "../ui/dom.js";
-import { openDialog, closeDialog } from "../ui/dialog.js";
-export function initLanding({ openChat }) {
+import { icon } from "../ui/dom.js";
+
+/** Same landing interactions in the app and isolated component catalogs. */
+export function initLanding({
+  root = document,
+  openChat,
+  openDialog,
+  closeDialog,
+}) {
+  const $ = (selector) => root.querySelector(selector);
+  const $$ = (selector) => [...root.querySelectorAll(selector)];
+  const events = new AbortController();
   const navToggle = $(".menu-toggle");
-  navToggle.onclick = () => {
-    const isOpen = $(".nav nav").classList.toggle("open");
-    navToggle.setAttribute("aria-expanded", String(isOpen));
-    navToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
-  };
+  if (navToggle)
+    navToggle.onclick = () => {
+      const isOpen = $(".nav nav").classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+      navToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Fechar menu" : "Abrir menu",
+      );
+    };
   $$(".nav nav a").forEach(
     (el) =>
       (el.onclick = () => {
@@ -75,8 +88,10 @@ export function initLanding({ openChat }) {
       }
     };
   });
-  $("#compare-range").addEventListener("input", (e) =>
-    $(".comparison").style.setProperty("--split", `${e.target.value}%`),
+  $("#compare-range")?.addEventListener(
+    "input",
+    (e) => $(".comparison").style.setProperty("--split", `${e.target.value}%`),
+    { signal: events.signal },
   );
   const stories = [
     [
@@ -109,8 +124,8 @@ export function initLanding({ openChat }) {
       `Retrato ilustrativo de ${stories[storyIndex][1].split(",")[0]}, persona fictícia`;
     $("#story-count").textContent = `0${storyIndex + 1} / 03`;
   }
-  $("#prev-story").onclick = () => showStory(-1);
-  $("#next-story").onclick = () => showStory(1);
+  if ($("#prev-story")) $("#prev-story").onclick = () => showStory(-1);
+  if ($("#next-story")) $("#next-story").onclick = () => showStory(1);
   const products = [
     ["Cleanse", "Limpeza · 150 ml", "O começo do ritual."],
     ["Balance", "Sérum · 30 ml", "Uma escolha com propósito."],
@@ -157,4 +172,15 @@ export function initLanding({ openChat }) {
         $("#info-close").onclick = closeDialog;
       }),
   );
+  return {
+    destroy() {
+      events.abort();
+      $$(
+        ".menu-toggle, .nav nav a, [data-step], #prev-story, #next-story, [data-product], [data-info]",
+      ).forEach((node) => {
+        node.onclick = null;
+        node.onkeydown = null;
+      });
+    },
+  };
 }

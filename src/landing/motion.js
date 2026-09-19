@@ -1,97 +1,133 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { $ } from "../ui/dom.js";
 gsap.registerPlugin(ScrollTrigger);
-export function initMotion() {
-  const mm = gsap.matchMedia();
-  mm.add("(prefers-reduced-motion: no-preference)", () => {
-    const filmTween = gsap.fromTo(
-      ".film-copy h2 span",
-      { opacity: 0.38 },
-      {
-        opacity: 1,
-        stagger: 0.25,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".film-section",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: true,
+
+/** Real landing motion, scoped and disposable for app or component preview. */
+export function initMotion({ root = document } = {}) {
+  const $ = (selector) => root.querySelector(selector);
+  const scope = root === document ? document.body : root;
+  const media = gsap.matchMedia(scope);
+  const events = new AbortController();
+  let disposed = false;
+  let bottleCleanup;
+  const refresh = () => {
+    if (!disposed) ScrollTrigger.refresh();
+  };
+  media.add("(prefers-reduced-motion: no-preference)", () => {
+    const film = $(".film-section");
+    const toggle = $(".film-toggle");
+    let filmTween;
+    let pauseFilm;
+    if (film) {
+      filmTween = gsap.fromTo(
+        film.querySelectorAll(".film-copy h2 span"),
+        { opacity: 0.38 },
+        {
+          opacity: 1,
+          stagger: 0.25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: film,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: true,
+          },
         },
-      },
-    );
-    ScrollTrigger.create({
-      trigger: ".film-section",
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: (self) => {
-        $(".film-track span").style.transform = `scaleX(${self.progress})`;
-      },
-    });
-    const toggle = $(".film-toggle");
-    const pauseFilm = () => {
-      const paused = toggle.getAttribute("aria-pressed") !== "true";
-      toggle.setAttribute("aria-pressed", String(paused));
-      toggle.querySelector("span").textContent = paused
-        ? "Retomar movimento"
-        : "Pausar movimento";
-      toggle.querySelector("i").className = paused
-        ? "ph ph-play"
-        : "ph ph-pause";
-      if (paused) {
-        filmTween.scrollTrigger.disable(false);
-        filmTween.progress(1);
-      } else {
-        filmTween.scrollTrigger.enable();
-        ScrollTrigger.refresh();
-      }
-    };
-    toggle.addEventListener("click", pauseFilm);
-    const tags = gsap.utils.toArray(".context-tags span").reverse();
-    gsap.from(tags, {
-      y: -125,
-      rotation: (index) => (index % 2 ? -14 : 14),
-      opacity: 0,
-      duration: 0.7,
-      stagger: 0.16,
-      ease: "bounce.out",
-      scrollTrigger: {
-        trigger: ".context-tags",
-        start: "top 88%",
-        toggleActions: "play none none reset",
-      },
-    });
-    return () => toggle.removeEventListener("click", pauseFilm);
-  });
-  mm.add("(prefers-reduced-motion: reduce)", () => {
-    const toggle = $(".film-toggle");
-    toggle.hidden = true;
+      );
+      ScrollTrigger.create({
+        trigger: film,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          const track = $(".film-track span");
+          if (track) track.style.transform = `scaleX(${self.progress})`;
+        },
+      });
+      pauseFilm = () => {
+        const paused = toggle.getAttribute("aria-pressed") !== "true";
+        toggle.setAttribute("aria-pressed", String(paused));
+        toggle.querySelector("span").textContent = paused
+          ? "Retomar movimento"
+          : "Pausar movimento";
+        toggle.querySelector("i").className = paused
+          ? "ph ph-play"
+          : "ph ph-pause";
+        if (paused) {
+          filmTween.scrollTrigger.disable(false);
+          filmTween.progress(1);
+        } else {
+          filmTween.scrollTrigger.enable();
+          refresh();
+        }
+      };
+      toggle?.addEventListener("click", pauseFilm);
+    }
+    const tags = [...root.querySelectorAll(".context-tags span")].reverse();
+    if (tags.length)
+      gsap.from(tags, {
+        y: -125,
+        rotation: (index) => (index % 2 ? -14 : 14),
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.16,
+        ease: "bounce.out",
+        scrollTrigger: {
+          trigger: $(".context-tags"),
+          start: "top 88%",
+          toggleActions: "play none none reset",
+        },
+      });
     return () => {
-      toggle.hidden = false;
+      if (pauseFilm) toggle?.removeEventListener("click", pauseFilm);
     };
   });
-  window.addEventListener("load", () => ScrollTrigger.refresh());
-  document.fonts.ready.then(() => ScrollTrigger.refresh());
+  media.add("(prefers-reduced-motion: reduce)", () => {
+    const toggle = $(".film-toggle");
+    if (toggle) toggle.hidden = true;
+    return () => {
+      if (toggle) toggle.hidden = false;
+    };
+  });
+  window.addEventListener("load", refresh, { signal: events.signal });
+  document.fonts.ready.then(refresh);
   const bottleObserver = new IntersectionObserver(
     (entries) => {
-      if (entries.some((e) => e.isIntersecting)) {
-        import("../bottle.js")
-          .then((m) => m.initBottle())
-          .catch((error) => {
-            console.warn("Could not initialize the product preview.", error);
-            $("#bottle-fallback").hidden = false;
-          });
-        bottleObserver.disconnect();
-      }
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      bottleObserver.disconnect();
+      import("../bottle.js")
+        .then((module) => {
+          if (!disposed)
+            return module.initBottle({ root, signal: events.signal });
+        })
+        .then((cleanup) => {
+          bottleCleanup = cleanup;
+          if (disposed) bottleCleanup?.();
+        })
+        .catch((error) => {
+          if (disposed) return;
+          console.warn("Could not initialize the product preview.", error);
+          const fallback = $("#bottle-fallback");
+          if (fallback) fallback.hidden = false;
+        });
     },
     { rootMargin: "800px" },
   );
-  bottleObserver.observe($("#produtos"));
-
-  window.addEventListener("pagehide", (event) => {
-    if (!event.persisted) {
-      mm.revert();
-      bottleObserver.disconnect();
-    }
-  });
+  const product = $("#produtos");
+  if (product) bottleObserver.observe(product);
+  function destroy() {
+    if (disposed) return;
+    disposed = true;
+    events.abort();
+    media.revert();
+    bottleObserver.disconnect();
+    bottleCleanup?.();
+  }
+  window.addEventListener(
+    "pagehide",
+    (event) => {
+      if (!event.persisted) destroy();
+    },
+    { signal: events.signal },
+  );
+  return { destroy };
 }

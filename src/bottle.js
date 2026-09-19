@@ -90,9 +90,9 @@ function addMoldedFinish(material, pump) {
   material.needsUpdate = true;
 }
 
-export async function initBottle() {
-  const container = document.querySelector("#bottle-canvas");
-  const fallback = document.querySelector("#bottle-fallback");
+export async function initBottle({ root = document, signal } = {}) {
+  const container = root.querySelector("#bottle-canvas");
+  const fallback = root.querySelector("#bottle-fallback");
   if (!container || container.querySelector("canvas")) return;
   container.dataset.status = "initializing";
   let renderer;
@@ -266,6 +266,7 @@ export async function initBottle() {
     window.removeEventListener("resize", resize);
     visibilityObserver.disconnect();
     window.removeEventListener("pagehide", onPageHide);
+    signal?.removeEventListener("abort", cleanup);
     disposeModel(model);
     environment.dispose();
     key.shadow.map?.dispose();
@@ -286,6 +287,12 @@ export async function initBottle() {
     },
     { once: true },
   );
+
+  signal?.addEventListener("abort", cleanup, { once: true });
+  if (signal?.aborted) {
+    cleanup();
+    return cleanup;
+  }
 
   try {
     const gltf = await new GLTFLoader().loadAsync(
@@ -372,7 +379,7 @@ export async function initBottle() {
             update();
           };
           ScrollTrigger.create({
-            trigger: ".product-story",
+            trigger: root.querySelector(".product-story"),
             start: "top top",
             end: "bottom bottom",
             onUpdate: syncScroll,
@@ -393,4 +400,5 @@ export async function initBottle() {
     fallback.hidden = false;
     cleanup();
   }
+  return cleanup;
 }
