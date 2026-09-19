@@ -9,6 +9,14 @@ import {
   acceptAssistantResponse,
 } from "./chat/thread-state.js";
 import { preparePhoto } from "./chat/photo.js";
+import { createVoiceInput } from "./chat/voice-input.js";
+import { readChatResponse } from "./chat/response-stream.js";
+import {
+  ALTERNATIVES,
+  createAlternative,
+  recordContextChanges,
+  makeConversationNote,
+} from "./chat/conversation-tools.js";
 export const createExperienceState = createThreadState;
 const esc = (v = "") =>
   String(v).replace(
@@ -58,8 +66,18 @@ export function mountExperience(element, options = {}) {
     photoPending = false,
     epoch = 0;
   let mode = options.liveApi ? "checking" : "demo";
+  let voiceStatus = "idle",
+    voiceConsent = false,
+    voice,
+    panelReturnFocus;
+  let followLatest = true,
+    unseenMessages = false;
+  const voiceBusy = () =>
+    ["requesting", "connecting", "listening", "stopping"].includes(voiceStatus);
   const local = (q) => element.querySelector(q);
   const update = (next) => {
+    for (const key of Object.keys(state))
+      if (!Object.hasOwn(next, key)) delete state[key];
     Object.assign(state, next);
     options.onChange?.(state);
   };
@@ -82,11 +100,84 @@ export function mountExperience(element, options = {}) {
       ],
     });
   element.classList.add("sb-experience");
-  element.innerHTML = `<aside class="sx-sidebar"><a class="sx-wordmark" href="/" data-action="home">skinboost<span>®</span></a>${button(icon("plus") + " Nova conversa", "reset", "new")}<div class="sx-sidebar-label">CONVERSAS SALVAS</div><nav class="sx-session-list" data-session-list aria-label="Conversas salvas"></nav><div class="sx-session" data-current-session>${icon("chat-circle-text")}<span data-session-title>Seu próximo cuidado</span></div><div class="sx-sidebar-bottom"><span class="sx-mini-orbit">${icon("sparkle")}</span><p>Boas escolhas<br>começam com uma<br><strong>boa conversa.</strong></p>${button(icon("shield-check") + " Sobre seus dados", "privacy", "text")}<a href="/guia.html" target="_blank" rel="noopener">Conheça a experiência ${icon("arrow-up-right")}</a></div></aside><button class="sx-history-scrim" data-action="close-history" aria-label="Fechar histórico"></button><div class="sx-chat"><header class="sx-top"><div>${button(icon("sidebar-simple") + '<span class="sr-only">Conversas salvas</span>', "history", "icon sx-mobile-only")}<a href="/" data-action="home" class="sx-mobile-brand">skinboost<span>®</span></a><span class="sx-top-title">Sua conversa</span><span class="sx-mode" data-mode>Preparando…</span></div><div class="sx-top-actions">${button(icon("notebook") + '<span class="sx-hide-small">Seu contexto</span>', "context", "text", 'aria-label="Seu contexto"')}${button(icon("plus") + '<span class="sr-only">Nova conversa</span>', "reset", "icon sx-mobile-only")}${options.onClose ? button(icon("x") + '<span class="sr-only">Fechar experiência</span>', "close", "icon") : ""}</div></header><div class="sx-scroll"><section class="sx-thread" role="log" aria-label="Conversa com SkinBoost" aria-live="polite" aria-relevant="additions text"></section></div><div class="sx-dock"><div class="sx-error" role="alert" data-error hidden></div><form data-form="message" class="sx-composer"><div data-file></div><label class="sr-only" for="sx-message">Sua mensagem</label><textarea id="sx-message" rows="1" maxlength="2000" placeholder="Conte o que sua pele precisa…"></textarea><div class="sx-composer-tools"><label class="sx-attach" title="Adicionar foto">${icon("plus")}<span>Foto</span><input class="sr-only" type="file" data-photo accept="image/jpeg,image/png,image/webp"></label><span class="sx-composer-caption">No seu tempo. Do seu jeito.</span><button type="submit" class="sx-send" aria-label="Enviar mensagem">${icon("arrow-up")}</button></div></form><p class="sx-disclaimer" data-disclaimer></p></div></div>`;
+  element.innerHTML = `<aside class="sx-sidebar"><a class="sx-wordmark" href="/" data-action="home">skinboost<span>®</span></a>${button(icon("plus") + " Nova conversa", "reset", "new")}<div class="sx-sidebar-label">CONVERSAS SALVAS</div><nav class="sx-session-list" data-session-list aria-label="Conversas salvas"></nav><div class="sx-session" data-current-session>${icon("chat-circle-text")}<span data-session-title>Seu próximo cuidado</span></div><div class="sx-sidebar-bottom"><span class="sx-mini-orbit">${icon("sparkle")}</span><p>Boas escolhas<br>começam com uma<br><strong>boa conversa.</strong></p>${button(icon("shield-check") + " Sobre seus dados", "privacy", "text")}<a href="/guia.html" target="_blank" rel="noopener">Conheça a experiência ${icon("arrow-up-right")}</a></div></aside><button class="sx-history-scrim" data-action="close-history" aria-label="Fechar histórico"></button><div class="sx-chat"><header class="sx-top"><div>${button(icon("sidebar-simple") + '<span class="sr-only">Conversas salvas</span>', "history", "icon sx-mobile-only")}<a href="/" data-action="home" class="sx-mobile-brand">skinboost<span>®</span></a><span class="sx-top-title">Sua conversa</span><span class="sx-mode" data-mode>Preparando…</span></div><div class="sx-top-actions">${button(icon("path") + '<span class="sx-hide-small">Outra opção</span>', "alternative", "text", 'aria-label="Explorar outra opção" data-alternative-control')}${button(icon("notebook") + '<span class="sx-hide-small">Seu contexto</span>', "context", "text", 'aria-label="Seu contexto"')}${button(icon("plus") + '<span class="sr-only">Nova conversa</span>', "reset", "icon sx-mobile-only")}${options.onClose ? button(icon("x") + '<span class="sr-only">Fechar experiência</span>', "close", "icon") : ""}</div></header><div data-branch-banner></div><div class="sx-scroll"><section class="sx-thread" role="log" aria-label="Conversa com SkinBoost" aria-live="polite" aria-relevant="additions text"></section></div><button type="button" class="sx-new-messages" data-action="latest" hidden>Ver mensagem mais recente ↓</button><div class="sx-dock"><div class="sx-voice-status" role="status" data-voice-status hidden></div><div class="sx-error" role="alert" data-error hidden></div><form data-form="message" class="sx-composer"><div data-file></div><label class="sr-only" for="sx-message">Sua mensagem</label><textarea id="sx-message" rows="1" maxlength="2000" placeholder="Conte o que sua pele precisa…"></textarea><div class="sx-composer-tools"><label class="sx-attach" title="Adicionar foto">${icon("plus")}<span>Foto</span><input class="sr-only" type="file" data-photo accept="image/jpeg,image/png,image/webp"></label><span class="sx-composer-caption" data-save-status>No seu tempo. Do seu jeito.</span><button type="button" class="sx-mic" data-action="voice" aria-label="Ditar mensagem" title="Ditar mensagem">${icon("microphone")}</button><button type="submit" class="sx-send" aria-label="Enviar mensagem">${icon("arrow-up")}</button></div></form><p class="sx-disclaimer" data-disclaimer></p></div></div><dialog class="sx-dialog" aria-labelledby="sx-dialog-title"><div data-dialog-body></div></dialog>`;
   const thread = local(".sx-thread"),
     scroll = local(".sx-scroll"),
     input = local("#sx-message");
   input.value = state.draft || "";
+  const dialog = local(".sx-dialog");
+  function openPanel(title, body) {
+    panelReturnFocus = document.activeElement;
+    local("[data-dialog-body]").innerHTML =
+      `<header><h2 id="sx-dialog-title">${title}</h2>${button(icon("x"), "close-panel", "icon", 'aria-label="Fechar painel"')}</header>${body}`;
+    if (!dialog.open) dialog.showModal();
+  }
+  function closePanel() {
+    dialog.close();
+    panelReturnFocus?.focus?.({ preventScroll: true });
+  }
+  function saveStatus() {
+    const caption = local("[data-save-status]");
+    if (caption)
+      caption.textContent =
+        options.getSaveStatus?.() || "No seu tempo. Do seu jeito.";
+  }
+  function renderVoice() {
+    if (disposed) return;
+    const labels = {
+      requesting: "Aguardando acesso ao microfone…",
+      connecting: "Conectando a transcrição…",
+      listening: "Ouvindo e transcrevendo…",
+      stopping: "Concluindo a transcrição…",
+    };
+    const status = local("[data-voice-status]");
+    status.hidden = !voiceBusy();
+    status.innerHTML = voiceBusy()
+      ? `<span class="sx-recording-dot"></span><span>${labels[voiceStatus]}<small>O texto fica no rascunho. Revise antes de enviar.</small></span>${button(voiceStatus === "listening" ? "Concluir" : "Cancelar", voiceStatus === "listening" ? "voice-stop" : "voice-cancel", "text")}`
+      : "";
+    const mic = local(".sx-mic");
+    mic.classList.toggle("is-recording", voiceBusy());
+    mic.innerHTML = icon(voiceBusy() ? "stop" : "microphone");
+    mic.setAttribute(
+      "aria-label",
+      voiceBusy() ? "Concluir ditado" : "Ditar mensagem",
+    );
+    mic.setAttribute("aria-pressed", String(voiceBusy()));
+    mic.disabled = pending || photoPending || mode === "checking";
+    local(".sx-send").disabled =
+      !pending && (photoPending || mode === "checking" || voiceBusy());
+    saveStatus();
+  }
+  voice = (options.voiceFactory || createVoiceInput)({
+    getDraft: () => state.draft || "",
+    onDraft: (text) => {
+      if (disposed) return;
+      state.draft = text;
+      input.value = text;
+      resizeInput();
+      options.onChange?.(state);
+      saveStatus();
+    },
+    onState: ({ status }) => {
+      voiceStatus = status;
+      renderVoice();
+    },
+    onError: (message) => {
+      if (disposed) return;
+      state.error = message;
+      render({ scrollToEnd: false });
+    },
+    maxChars: 2000,
+  });
+  function onScroll() {
+    followLatest =
+      scroll.scrollHeight - scroll.scrollTop - scroll.clientHeight < 100;
+    if (followLatest) {
+      unseenMessages = false;
+      local(".sx-new-messages").hidden = true;
+    }
+  }
+  scroll.addEventListener("scroll", onScroll, { passive: true });
 
   function renderSessions() {
     const sessions = options.getSessions?.() || [];
@@ -105,13 +196,15 @@ export function mountExperience(element, options = {}) {
     if (disposed) return;
     renderSessions();
     options.onChange?.(state);
-    const nearEnd =
-      scroll.scrollHeight - scroll.scrollTop - scroll.clientHeight < 160;
+    const nearEnd = followLatest;
     const last = state.messages.at(-1);
+    const streaming = state.streamText
+      ? `<div class="sx-message-text" aria-live="off">${esc(state.streamText)}</div><small class="sx-thinking-label">Resposta em andamento · ainda não terminou</small>`
+      : "";
     const markup =
       state.messages.map((m) => message(m, m === last)).join("") +
       (pending
-        ? `<article class="sx-message sx-assistant sx-thinking"><span class="sx-avatar">${icon("sparkle")}</span><div><span class="sx-typing"><b></b><b></b><b></b></span><span class="sx-thinking-label">${state.generatingImage ? "Criando uma ilustração. Pode levar alguns minutos…" : mode === "live" ? "SkinBoost está preparando a resposta…" : "Preparando o próximo passo…"}</span></div></article>`
+        ? `<article class="sx-message sx-assistant sx-thinking" data-message-id="pending-response" aria-label="SkinBoost · resposta em andamento"><span class="sx-avatar">${icon("sparkle")}</span><div>${streaming || `<span class="sx-typing"><b></b><b></b><b></b></span><span class="sx-thinking-label">${state.generatingImage ? "Criando uma ilustração. Pode levar alguns minutos…" : mode === "live" ? "SkinBoost está preparando a resposta…" : "Preparando o próximo passo…"}</span>`}</div></article>`
         : "");
     // Keep existing message nodes stable; animate only genuinely new messages.
     const template = document.createElement("template");
@@ -147,11 +240,20 @@ export function mountExperience(element, options = {}) {
           ? "Conectando…"
           : "Demonstração";
     local("[data-disclaimer]").innerHTML =
-      mode === "live"
-        ? "IA pode errar. Cuidados educativos; não substituem avaliação profissional."
-        : "Demonstração conversacional · produtos e preços ilustrativos.";
+      `A IA pode cometer erros. ${button("Confira as informações", "verify", "text")}`;
+    local("[data-alternative-control]").hidden = !state.context.intent;
+    local("[data-branch-banner]").innerHTML = state.branch
+      ? `<div class="sx-branch-banner">${icon("path")}<span><strong>${esc(state.branch.choice)}</strong> · partiu de ${esc(state.branch.sourceTitle)}</span>${state.branch.sourceId ? button("Ver original", "parent-session", "text") : ""}</div>`
+      : "";
     local("[data-file]").innerHTML = photoMarkup();
-    local(".sx-send").disabled = pending || photoPending || mode === "checking";
+    local(".sx-send").disabled =
+      !pending && (photoPending || mode === "checking" || voiceBusy());
+    local(".sx-send").innerHTML = icon(pending ? "stop" : "arrow-up");
+    local(".sx-send").setAttribute(
+      "aria-label",
+      pending ? "Parar resposta" : "Enviar mensagem",
+    );
+    renderVoice();
     local(".sx-send").setAttribute("aria-busy", String(pending));
     const error = state.error || statusError;
     local("[data-error]").hidden = !error;
@@ -159,7 +261,11 @@ export function mountExperience(element, options = {}) {
       ? esc(error) +
         (state.failedRequest ? button("Tentar novamente", "retry", "text") : "")
       : "";
-    if (scrollToEnd && (nearEnd || !pending))
+    if (scrollToEnd && !nearEnd) {
+      unseenMessages = true;
+      local(".sx-new-messages").hidden = false;
+    }
+    if (scrollToEnd && nearEnd)
       requestAnimationFrame(() => {
         if (!disposed) scroll.scrollTop = scroll.scrollHeight;
       });
@@ -174,7 +280,11 @@ export function mountExperience(element, options = {}) {
       m.role === "assistant" && !state.messages.some((x) => x.role === "user");
     let content = "";
     if (m.kind === "review")
-      content = review(m.snapshot || state.context, active);
+      content = review(
+        m.snapshot || state.context,
+        active,
+        m.contextOrigins || {},
+      );
     if (m.kind === "routine")
       content = routine(
         m.routine || state.routine,
@@ -188,29 +298,45 @@ export function mountExperience(element, options = {}) {
     if (m.kind === "checkin")
       content = `<div class="sx-chip-row">${["Consegui manter", "Preciso simplificar", "Quero rever o custo", "Ainda não comecei"].map((x) => reply(x, x, active)).join("")}</div>`;
     if (m.kind === "privacy")
-      content = `<div class="sx-card"><h3>Você controla o que compartilha</h3><p>As conversas e imagens são salvas neste navegador, para você retomá-las pela lateral. No modo com OpenAI, o histórico recente é enviado ao servidor para gerar cada resposta. A foto só é enviada com sua autorização. Não há conta nem sincronização de conversas entre dispositivos nesta prévia.</p><p>A OpenAI processa os dados conforme suas políticas. Você pode excluir uma conversa na lateral ou apagar todo o histórico abaixo. A exclusão local não equivale à exclusão nos sistemas do provedor.</p><a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">Política de privacidade da OpenAI ${icon("arrow-up-right")}</a>${button("Apagar todas as conversas deste navegador", "clear-sessions", "secondary")}</div>`;
+      content = `<div class="sx-card"><h3>Você controla o que compartilha</h3><p>As conversas e imagens são salvas neste navegador, para você retomá-las pela lateral. No modo com OpenAI, o histórico recente é enviado ao servidor para gerar cada resposta. A foto só é enviada com sua autorização. Ao ativar o microfone, o áudio é enviado à OpenAI para transcrição. O SkinBoost guarda o texto revisável, sem salvar a gravação. Feedbacks ficam locais e não treinam o modelo. Não há conta nem sincronização de conversas entre dispositivos nesta prévia.</p><p>A OpenAI processa os dados conforme suas políticas. Você pode excluir uma conversa na lateral ou apagar todo o histórico abaixo. A exclusão local não equivale à exclusão nos sistemas do provedor.</p><a href="https://openai.com/policies/privacy-policy/" target="_blank" rel="noopener">Política de privacidade da OpenAI ${icon("arrow-up-right")}</a>${button("Apagar todas as conversas deste navegador", "clear-sessions", "secondary")}</div>`;
+    if (m.kind === "alternative")
+      content = `<div class="sx-card sx-inherited"><span class="sx-card-eyebrow">UM NOVO CAMINHO, COM SEU CONTEXTO</span><p>O que você contou sobre sua pele continua disponível. A foto precisa de uma nova autorização. Revise o pedido no campo abaixo antes de enviar.</p>${button("Conferir respostas aproveitadas", "context", "secondary")}</div>`;
+    if (m.kind === "note")
+      content = `<div class="sx-card"><span class="sx-card-eyebrow">SEU RESUMO · REVISÁVEL</span><pre class="sx-note-text">${esc(m.note)}</pre>${button("Copiar resumo", "copy-note", "secondary", `data-message-id="${esc(m.id)}"`)}<small class="sx-copy-status" role="status"></small></div>`;
+    if (m.kind === "partial")
+      content +=
+        '<small class="sx-evidence-note">Resposta interrompida · conteúdo incompleto, confira antes de usar.</small>';
+    if (m.contextChanges?.length)
+      content =
+        `<div class="sx-context-diff"><span>${icon("pencil-simple")} O que mudou</span>${m.contextChanges.map((c) => `<p><strong>${fields[c.key]}</strong><s>${esc(c.before)}</s><b>${esc(c.after)}</b></p>`).join("")}<small>As outras respostas foram preservadas.</small></div>` +
+        content;
     if (m.kind === "simulation")
       content = `<figure class="sx-simulation"><div class="sx-image-pair"><div><img src="${m.original}" alt="Foto original enviada por você"><span>Foto original</span></div><div><img src="${m.image}" alt="Simulação visual ilustrativa gerada por inteligência artificial"><span>ILUSTRAÇÃO COM IA · NÃO É PREVISÃO</span></div></div><figcaption>Exercício visual sobre aparência, sem prazo ou resultado garantido. Não demonstra o efeito de nenhum produto nem mede melhora clínica.</figcaption></figure>`;
+    if (m.inherited)
+      content = content.replaceAll(
+        "<button ",
+        '<button disabled aria-disabled="true" ',
+      );
     const choices =
-      m.choices?.length && active && !pending
+      m.choices?.length && active && !pending && !m.inherited
         ? `<div class="sx-chip-row">${m.choices.map((c) => reply(c.label, c.value, true)).join("")}</div>`
         : "";
-    return `<article class="sx-message sx-${m.role}" data-message-id="${esc(m.id)}" data-role="${m.role}">${m.role === "assistant" ? `<span class="sx-avatar">${icon("sparkle")}</span>` : ""}<div class="sx-message-body">${welcome ? `<div class="sx-welcome-kicker">SEU CUIDADO, EM CONVERSA</div><h1>Vamos entender<br>o que sua pele precisa?</h1>` : ""}${m.text ? `<div class="sx-message-text">${esc(m.text)}</div>` : ""}${content}${choices}</div></article>`;
+    return `<article class="sx-message sx-${m.role}" data-message-id="${esc(m.id)}" data-role="${m.role}" aria-label="${m.role === "user" ? "Você" : "SkinBoost · assistente de IA"}">${m.role === "assistant" ? `<span class="sx-avatar">${icon("sparkle")}</span>` : ""}<div class="sx-message-body">${welcome ? `<div class="sx-welcome-kicker">SEU CUIDADO, EM CONVERSA</div><h1>Vamos entender<br>o que sua pele precisa?</h1>` : ""}${m.text ? `<div class="sx-message-text">${esc(m.text)}</div>` : ""}${content}${choices}${m.role === "assistant" && !welcome && m.kind !== "partial" && !m.inherited ? `<div class="sx-response-tools">${button(icon("thumbs-up") + '<span class="sr-only">Esta resposta ajudou</span>', "helpful", "icon", `data-message-id="${esc(m.id)}" aria-pressed="${m.feedback?.reason === "Ajudou"}"`)}${button(icon("chat-centered-dots") + "Sinalizar um problema", "feedback", "text", `data-message-id="${esc(m.id)}"`)}${active && state.context.intent ? button(icon("path") + "Explorar outra opção", "alternative", "text") : ""}${m.feedback ? "<small>Feedback salvo nesta conversa</small>" : ""}</div>` : ""}</div></article>`;
   }
   const reply = (label, value, active = true) =>
     `<button type="button" class="sx-reply" data-reply="${esc(value)}" ${!active || pending ? "disabled" : ""}>${esc(label)}${icon("arrow-up-left")}</button>`;
-  function review(context, active = true) {
+  function review(context, active = true, origins = {}) {
     return `<div class="sx-card sx-context-card"><div class="sx-card-eyebrow">${icon("notebook")} O QUE ENTENDI ATÉ AQUI</div><dl>${Object.entries(
       fields,
     )
       .filter(([k]) => context[k])
       .map(
         ([k, v]) =>
-          `<div><dt>${v}</dt><dd>${esc(context[k])}</dd><dd>${button("Editar", "edit", "text", `data-key="${k}"`)}</dd></div>`,
+          `<div><dt>${v}</dt><dd>${esc(context[k])}${origins[k] ? `<details class="sx-origin"><summary>Ver de onde veio</summary><blockquote>${esc(origins[k].text)}</blockquote><small>Interpretado da sua mensagem. Você pode corrigir.</small></details>` : ""}</dd><dd>${button("Editar", "edit", "text", `data-key="${k}"`)}</dd></div>`,
       )
       .join(
         "",
-      )}</dl><p class="sx-footnote">Você pode corrigir qualquer detalhe antes de explorar uma rotina.</p>${button("Sobre seus dados", "privacy", "text")}${active ? button("É isso, pode montar minha rotina " + icon("arrow-right"), "confirm", "primary") : ""}</div>`;
+      )}</dl><p class="sx-footnote">Este resumo interpreta suas respostas. Confira e corrija qualquer detalhe antes de explorar uma rotina.</p>${button("Guardar um resumo", "note", "text")}${button("Sobre seus dados", "privacy", "text")}${active ? button("É isso, pode montar minha rotina " + icon("arrow-right"), "confirm", "primary") : ""}</div>`;
   }
   function routine(r, context = {}) {
     if (!r) return "";
@@ -245,7 +371,7 @@ export function mountExperience(element, options = {}) {
       )
       .join(
         "",
-      )}</div><div class="sx-cost"><span>Diferença neste exemplo<strong>${money(r.savings)}</strong></span></div><p class="sx-footnote">Comparação didática por embalagem. Não representa economia real de mercado nem custo mensal.</p>${button("Revisar produtos", "cart", "primary")}</div>`;
+      )}</div><div class="sx-table-wrap"><table class="sx-comparison-table"><caption>Valores fictícios por embalagem · mesmos produtos</caption><thead><tr><th>Produto</th><th>Referência</th><th>Seleção</th></tr></thead><tbody>${r.products.map((p) => `<tr><th scope="row">${esc(p.name)}</th><td>${money(CATALOG.find((item) => item.id === p.id)?.referencePrice || p.price)}</td><td>${money(p.price)}</td></tr>`).join("")}</tbody></table></div><div class="sx-cost"><span>Diferença neste exemplo<strong>${money(r.savings)}</strong></span></div><p class="sx-footnote">Comparação didática por embalagem. Não representa economia real de mercado nem custo mensal.</p>${button("Revisar produtos", "cart", "primary")}</div>`;
   }
   function cart(r, active) {
     if (!r) return "";
@@ -270,7 +396,7 @@ export function mountExperience(element, options = {}) {
     return rows;
   }
   async function submit(text, { preserveDraft = false, retry = false } = {}) {
-    if (pending || mode === "checking") return;
+    if (pending || mode === "checking" || voiceBusy()) return;
     text = String(text || "").trim();
     if (!text) {
       state.error = "Escreva uma mensagem para começarmos.";
@@ -278,6 +404,7 @@ export function mountExperience(element, options = {}) {
       input.focus();
       return;
     }
+    followLatest = true;
     state.error = "";
     if (
       /simula[cç][aã]o|simular|ger(?:ar|e) (?:uma )?imagem|ver como.*ficar/i.test(
@@ -297,8 +424,14 @@ export function mountExperience(element, options = {}) {
       input.value = "";
       resizeInput();
     }
+    const contextBefore = structuredClone(state.context);
     if (mode !== "live") {
       update(sendMessage(state, text));
+      recordContextChanges(
+        state,
+        contextBefore,
+        state.messages.findLast((m) => m.role === "user"),
+      );
       render();
       return;
     }
@@ -308,12 +441,18 @@ export function mountExperience(element, options = {}) {
     const requestEpoch = ++epoch;
     if (preserveDraft) state.draft = draft;
     pending = true;
+    state.requestKind = "chat";
+    state.requestInterrupted = true;
+    state.streamText = "";
     render();
     controller = new AbortController();
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "text/event-stream",
+        },
         signal: controller.signal,
         body: JSON.stringify({
           messages: apiHistory(),
@@ -322,15 +461,23 @@ export function mountExperience(element, options = {}) {
           photoConsent: !!state.photoConsent,
         }),
       });
-      const result = await response.json();
-      if (!response.ok)
-        throw new Error(
-          result.error?.message ||
-            "Não foi possível receber a resposta. Tente novamente.",
-        );
+      const result = await readChatResponse(response, {
+        onDelta: (text) => {
+          if (disposed || requestEpoch !== epoch) return;
+          state.streamText = (state.streamText || "") + text;
+          render();
+        },
+      });
       if (disposed || requestEpoch !== epoch) return;
+      state.streamText = "";
       update(acceptAssistantResponse(state, result));
+      recordContextChanges(
+        state,
+        contextBefore,
+        state.messages.findLast((m) => m.role === "user"),
+      );
       state.failedRequest = false;
+      state.requestInterrupted = false;
     } catch (error) {
       if (requestEpoch === epoch && error.name !== "AbortError") {
         state.error =
@@ -338,6 +485,8 @@ export function mountExperience(element, options = {}) {
             ? "A conexão falhou. Sua mensagem continua aqui; tente novamente."
             : error.message;
         state.failedRequest = true;
+        if (state.streamText) append("assistant", state.streamText, "partial");
+        state.streamText = "";
       }
     } finally {
       if (requestEpoch === epoch) {
@@ -375,6 +524,8 @@ export function mountExperience(element, options = {}) {
     );
     pending = true;
     state.generatingImage = true;
+    state.requestKind = "image";
+    state.requestInterrupted = true;
     state.error = "";
     render();
     controller = new AbortController();
@@ -395,13 +546,16 @@ export function mountExperience(element, options = {}) {
         throw new Error(
           result.error?.message || "Não foi possível criar a ilustração.",
         );
-      if (!disposed && requestEpoch === epoch)
+      if (!disposed && requestEpoch === epoch) {
+        state.requestInterrupted = false;
+        state.failedRequest = false;
         append(
           "assistant",
           "Aqui está uma possibilidade visual criada por IA. Ela não prevê como sua pele vai responder a um produto.",
           "simulation",
           { original, image: result.imageDataUrl },
         );
+      }
     } catch (error) {
       if (requestEpoch === epoch && error.name !== "AbortError")
         state.error = error.message;
@@ -413,6 +567,48 @@ export function mountExperience(element, options = {}) {
       }
     }
   }
+  function stopResponse() {
+    if (!pending) return;
+    const imageRequest = state.generatingImage;
+    epoch++;
+    controller?.abort();
+    pending = false;
+    state.generatingImage = false;
+    state.failedRequest = true;
+    state.error = imageRequest
+      ? "Parei de aguardar a imagem. O processamento já enviado ao provedor pode continuar. Você pode pedir uma nova tentativa."
+      : "Resposta interrompida. Seu pedido e seu rascunho foram preservados.";
+    if (state.streamText) append("assistant", state.streamText, "partial");
+    state.streamText = "";
+    render({ scrollToEnd: false });
+  }
+  function openAlternatives() {
+    openPanel(
+      "Vamos explorar outra opção?",
+      `<p>Uma nova conversa começa com suas respostas atuais. A original fica guardada para você comparar depois.</p><div class="sx-alternative-options">${ALTERNATIVES.map((option) => `<button type="button" data-action="new-alternative" data-choice="${option.id}"><span>${icon(option.id === "budget" ? "wallet" : option.id === "simple" ? "leaf" : option.id === "focus" ? "target" : "path")}</span><span><strong>${option.label}</strong><small>${option.description}</small></span>${icon("arrow-right")}</button>`).join("")}</div><p class="sx-footnote">Se houver uma foto, você autoriza novamente antes de enviá-la à IA.</p>`,
+    );
+  }
+  function openVerification() {
+    openPanel(
+      "Uma resposta boa também pode ser conferida.",
+      `<p>A IA pode entender algo errado ou apresentar uma informação imprecisa. Você tem como revisar cada parte.</p><div class="sx-verify-list"><article><span>01</span><div><h3>Confira o que foi entendido</h3><p>Objetivo, cuidados atuais e orçamento vieram da sua conversa. Veja a mensagem de origem e ajuste o resumo.</p>${button("Revisar meu contexto", "context", "secondary")}</div></article><article><span>02</span><div><h3>Abra as fontes e os critérios</h3><p>Orientações gerais não são estudos do catálogo SkinBoost. Confira o que cada referência sustenta.</p>${button("Ler fontes e limites", "sources-panel", "secondary")}</div></article><article><span>03</span><div><h3>Corrija ou siga por outro caminho</h3><p>Sinalize um problema na resposta ou explore outra opção preservando a conversa original.</p>${button("Explorar outra opção", "alternative", "secondary", state.context.intent ? "" : "disabled")}</div></article></div><div class="sx-evidence-note">Esta experiência organiza cuidados educativos. Não diagnostica, não prescreve e não prevê resultados de produtos. Se uma questão de pele precisa de avaliação, procure um profissional qualificado.</div>`,
+    );
+  }
+  function openSources() {
+    openPanel(
+      "Fontes, critérios e limites",
+      `<p>São três coisas diferentes: o que você contou, uma orientação educativa e um produto do catálogo demonstrativo.</p><div class="sx-source-links">${Object.values(
+        sources,
+      )
+        .map(
+          (source) =>
+            `<article><h3>${source.name}</h3><p>${source.text}</p><a href="${source.url}" target="_blank" rel="noopener">Conferir na fonte ${icon("arrow-up-right")}</a></article>`,
+        )
+        .join(
+          "",
+        )}</div><div class="sx-evidence-note">Os produtos SkinBoost ainda não têm fórmula ou estudos validados nesta prévia. Não existe nota de eficácia, previsão de rejuvenescimento ou prova clínica gerada a partir da sua foto.</div>`,
+    );
+  }
   async function onClick(event) {
     const target = event.target.closest("[data-action],[data-reply]");
     if (!target || !element.contains(target)) return;
@@ -420,12 +616,178 @@ export function mountExperience(element, options = {}) {
     if (target.hasAttribute("data-reply"))
       return submit(target.dataset.reply, { preserveDraft: true });
     const action = target.dataset.action;
+    if (action === "close-panel") {
+      closePanel();
+      return;
+    }
+    if (action === "latest") {
+      followLatest = true;
+      unseenMessages = false;
+      local(".sx-new-messages").hidden = true;
+      scroll.scrollTo({
+        top: scroll.scrollHeight,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+      return;
+    }
+    if (action === "voice-stop") {
+      voice.stop();
+      return;
+    }
+    if (action === "voice-cancel") {
+      voice.cancel();
+      return;
+    }
+    if (action === "voice") {
+      if (voiceBusy()) {
+        voice.stop();
+        return;
+      }
+      if (!options.liveApi && !options.voiceFactory) {
+        state.error =
+          "O microfone funciona no chat publicado. Este catálogo mostra os componentes sem enviar áudio.";
+        render({ scrollToEnd: false });
+        return;
+      }
+      if (!voice.supported) {
+        state.error =
+          "Este navegador não oferece acesso compatível ao microfone. Você pode continuar digitando ou abrir em um navegador atualizado.";
+        render({ scrollToEnd: false });
+        return;
+      }
+      if (voiceConsent) {
+        state.error = "";
+        await voice.start({ consent: true });
+        return;
+      }
+      openPanel(
+        "Conte do seu jeito.",
+        `<span class="sx-voice-orbit">${icon("microphone")}</span><p>Sua fala aparece como texto no campo da mensagem. Você pode revisar e editar antes de enviar.</p><p class="sx-footnote">Ao ativar, seu áudio é enviado à OpenAI para transcrição. O SkinBoost salva o texto neste navegador, sem guardar a gravação. O ditado para ao sair desta conversa ou colocar a página em segundo plano.</p>${button("Ativar microfone", "voice-start", "primary")}${button("Continuar digitando", "close-panel", "text")}`,
+      );
+      return;
+    }
+    if (action === "voice-start") {
+      voiceConsent = true;
+      closePanel();
+      state.error = "";
+      await voice.start({ consent: true });
+      return;
+    }
+    if (action === "verify") {
+      openVerification();
+      return;
+    }
+    if (action === "sources-panel") {
+      openSources();
+      return;
+    }
+    if (action === "alternative") {
+      if (!pending && !voiceBusy()) openAlternatives();
+      return;
+    }
+    if (action === "new-alternative") {
+      closePanel();
+      voice?.cancel();
+      if (options.onAlternative)
+        await options.onAlternative(target.dataset.choice);
+      else {
+        update(
+          createAlternative(state, {
+            title: state.context.intent,
+            choice: target.dataset.choice,
+          }),
+        );
+        input.value = state.draft;
+        followLatest = true;
+        render();
+        resizeInput();
+        input.focus();
+      }
+      return;
+    }
+    if (action === "parent-session") {
+      const original = options
+        .getSessions?.()
+        .find((session) => session.id === state.branch?.sourceId);
+      if (original) await options.onSessionSelect?.(original.id);
+      else {
+        state.error =
+          "A conversa original já não está neste navegador. Suas respostas aproveitadas continuam nesta opção.";
+        render({ scrollToEnd: false });
+      }
+      return;
+    }
+    if (action === "note") {
+      if (pending) return;
+      append(
+        "assistant",
+        "Guarde uma síntese para retomar depois. Ela organiza suas respostas e não substitui a conversa original.",
+        "note",
+        { note: makeConversationNote(state) },
+      );
+      followLatest = true;
+      render();
+      return;
+    }
+    if (action === "copy-note") {
+      const note = state.messages.find(
+        (message) => message.id === target.dataset.messageId,
+      )?.note;
+      try {
+        await navigator.clipboard.writeText(note);
+        target.nextElementSibling.textContent =
+          "Resumo copiado. Nenhuma foto foi incluída.";
+      } catch {
+        target.nextElementSibling.textContent =
+          "Não foi possível copiar automaticamente. Você pode selecionar o texto acima.";
+      }
+      return;
+    }
+    if (action === "feedback") {
+      openPanel(
+        "O que precisa melhorar?",
+        `<p>Sua avaliação fica nesta conversa, neste navegador. Ela não é enviada à equipe nem usada para treinar o modelo.</p><div class="sx-feedback-options">${["Não entendeu meu pedido", "Informação parece incorreta", "Explicação confusa", "Fonte insuficiente"].map((reason) => button(reason, "feedback-save", "secondary", `data-reason="${esc(reason)}" data-message-id="${esc(target.dataset.messageId)}"`)).join("")}</div>`,
+      );
+      return;
+    }
+    if (action === "feedback-save" || action === "helpful") {
+      const message = state.messages.find(
+        (item) => item.id === target.dataset.messageId,
+      );
+      if (!message) return;
+      message.feedback = {
+        reason: action === "helpful" ? "Ajudou" : target.dataset.reason,
+      };
+      render({ scrollToEnd: false });
+      if (action === "feedback-save")
+        openPanel(
+          "Anotado nesta conversa.",
+          `<p>${esc(message.feedback.reason)}. Você pode conferir as informações agora, sem perder suas respostas.</p>${button("Rever meu contexto", "context", "primary")}${button("Conferir fontes", "sources-panel", "secondary")}${button("Pedir uma explicação mais clara", "explain", "secondary")}${button("Continuar a conversa", "close-panel", "text")}`,
+        );
+      return;
+    }
+    if (action === "explain") {
+      closePanel();
+      state.draft =
+        "Pode explicar sua última resposta de um jeito mais simples e mostrar os critérios que usou?";
+      input.value = state.draft;
+      resizeInput();
+      options.onChange?.(state);
+      input.focus();
+      return;
+    }
+    if (dialog.open && action === "context") closePanel();
+
     if (action === "close" || action === "home") {
       options.onClose?.();
       return;
     }
-    if (action === "retry")
+    if (action === "retry") {
+      if (state.requestKind === "image") return simulate();
       return submit(state.failedText, { preserveDraft: true, retry: true });
+    }
     if (action === "history" || action === "close-history") {
       const open = action === "history";
       local(".sx-sidebar").classList.toggle("is-open", open);
@@ -438,14 +800,32 @@ export function mountExperience(element, options = {}) {
       return;
     }
     if (action === "delete-session") {
-      await options.onDeleteSession?.(target.dataset.sessionId);
+      openPanel(
+        "Excluir esta conversa?",
+        `<p>As mensagens e imagens desta conversa serão removidas deste navegador.</p>${button("Excluir conversa", "delete-confirm", "primary", `data-session-id="${esc(target.dataset.sessionId)}"`)}${button("Manter conversa", "close-panel", "secondary")}`,
+      );
+      return;
+    }
+    if (action === "delete-confirm") {
+      const sessionId = target.dataset.sessionId;
+      closePanel();
+      await options.onDeleteSession?.(sessionId);
       return;
     }
     if (action === "clear-sessions") {
+      openPanel(
+        "Apagar o histórico deste navegador?",
+        `<p>Isso remove todas as conversas, rascunhos e imagens salvos aqui. Não altera a retenção de dados pelo provedor.</p>${button("Apagar todo o histórico", "clear-confirm", "primary")}${button("Manter meu histórico", "close-panel", "secondary")}`,
+      );
+      return;
+    }
+    if (action === "clear-confirm") {
+      closePanel();
       await options.onClearSessions?.();
       return;
     }
     if (action === "reset") {
+      voice?.cancel();
       if (options.onNewConversation) {
         await options.onNewConversation();
         return;
@@ -504,7 +884,10 @@ export function mountExperience(element, options = {}) {
         "assistant",
         "Este é o contexto que você compartilhou. Podemos ajustar qualquer detalhe.",
         "review",
-        { snapshot: { ...state.context } },
+        {
+          snapshot: { ...state.context },
+          contextOrigins: structuredClone(state.contextOrigins || {}),
+        },
       );
       render();
       return;
@@ -581,7 +964,8 @@ export function mountExperience(element, options = {}) {
   function onSubmit(event) {
     if (event.target.matches('[data-form="message"]')) {
       event.preventDefault();
-      submit(input.value);
+      if (pending) stopResponse();
+      else submit(input.value);
     }
   }
   function resizeInput() {
@@ -590,6 +974,7 @@ export function mountExperience(element, options = {}) {
   }
   function onInput(event) {
     if (event.target === input) {
+      voice?.handleTypedInput();
       state.draft = input.value;
       options.onChange?.(state);
       state.error = "";
@@ -639,7 +1024,10 @@ export function mountExperience(element, options = {}) {
     },
     send: submit,
     refreshSessions: renderSessions,
+    refreshSaveStatus: saveStatus,
     destroy() {
+      voice?.destroy();
+      if (dialog.open) dialog.close();
       disposed = true;
       epoch++;
       if (pending && !state.generatingImage) {
@@ -653,6 +1041,7 @@ export function mountExperience(element, options = {}) {
       element.removeEventListener("submit", onSubmit);
       element.removeEventListener("input", onInput);
       element.removeEventListener("keydown", onKey);
+      scroll.removeEventListener("scroll", onScroll);
     },
   };
 }

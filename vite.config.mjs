@@ -10,7 +10,7 @@ export default defineConfig({
         server.middlewares.use((request, response, next) => {
           const route = request.url
             ?.split("?")[0]
-            .match(/^\/api\/(status|chat|simulate)$/)?.[1];
+            .match(/^\/api\/(status|chat|simulate|voice-session)$/)?.[1];
           if (route) return handleNodeRequest(route, request, response);
           next();
         });

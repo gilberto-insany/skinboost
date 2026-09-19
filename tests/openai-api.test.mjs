@@ -5,6 +5,7 @@ import {
   CONTEXT_KEYS,
   DEFAULT_CHAT_MODEL,
   DEFAULT_IMAGE_MODEL,
+  DEFAULT_TRANSCRIPTION_MODEL,
   IMAGE_DISCLAIMER,
   IMAGE_LABEL,
   MAX_BODY_BYTES,
@@ -106,6 +107,7 @@ test("status reports capabilities without disclosing a credential or making a pr
       available,
       chatAvailable: available,
       simulationAvailable: available,
+      voiceAvailable: available,
       photoUploadMaxBytes: MAX_PHOTO_BYTES,
     });
     assert.equal(result.headers["CDN-Cache-Control"], "no-store");
@@ -766,4 +768,161 @@ test("rate-limited image requests cannot call the provider and bucket memory sta
       request(undefined, { socket: { remoteAddress: "127.0.0.2" } }),
     ),
   );
+});
+
+const voiceSession = (overrides = {}) => ({
+  value: "ek_mock_ephemeral_credential",
+  expires_at: Math.floor(Date.now() / 1000) + 60,
+  session: { type: "transcription" },
+  ...overrides,
+});
+test("voice sessions require explicit consent, same origin and server credentials", async () => {
+  const { service, calls } = harness();
+  errorIs(
+    await service("voice-session", request({})),
+    400,
+    "voice_consent_required",
+  );
+  errorIs(
+    await service("voice-session", request({ consent: false })),
+    400,
+    "voice_consent_required",
+  );
+  errorIs(
+    await service(
+      "voice-session",
+      request({ consent: true, model: "client-chosen" }),
+    ),
+    400,
+    "invalid_request",
+  );
+  errorIs(
+    await service(
+      "voice-session",
+      request(
+        { consent: true },
+        {
+          headers: {
+            origin: "https://evil.example",
+            host: "localhost:4173",
+            "content-type": "application/json",
+          },
+        },
+      ),
+    ),
+    403,
+    "origin_not_allowed",
+  );
+  errorIs(
+    await service("voice-session", request({}, { method: "GET" })),
+    405,
+    "method_not_allowed",
+  );
+  assert.equal(calls.length, 0);
+  const missing = harness({ environment: {} });
+  errorIs(
+    await missing.service("voice-session", request({ consent: true })),
+    503,
+    "not_configured",
+  );
+  assert.equal(missing.calls.length, 0);
+});
+test("voice config mints only a short-lived transcription session and forwards only required fields", async () => {
+  const data = voiceSession({ unrelated: MOCK_SECRET });
+  const { service, calls } = harness({ result: data });
+  const result = await service("voice-session", request({ consent: true }));
+  assert.equal(result.status, 200);
+  assert.equal(
+    calls[0].url,
+    "https://api.openai.com/v1/realtime/client_secrets",
+  );
+  assert.deepEqual(calls[0].body, {
+    expires_after: { anchor: "created_at", seconds: 60 },
+    session: {
+      type: "transcription",
+      audio: {
+        input: {
+          transcription: {
+            model: DEFAULT_TRANSCRIPTION_MODEL,
+            languages: ["pt"],
+          },
+          noise_reduction: { type: "near_field" },
+          turn_detection: null,
+        },
+      },
+    },
+  });
+  assert.deepEqual(result.body, {
+    clientSecret: data.value,
+    expiresAt: data.expires_at,
+    maxDurationMs: 120_000,
+  });
+  assert.equal(result.headers["Cache-Control"], "no-store, private");
+  assert.equal(JSON.stringify(result).includes(MOCK_SECRET), false);
+  const legacy = harness({
+    result: data,
+    environment: {
+      ...env,
+      OPENAI_TRANSCRIPTION_MODEL: "gpt-4o-mini-transcribe",
+    },
+  });
+  assert.equal(
+    (await legacy.service("voice-session", request({ consent: true }))).status,
+    200,
+  );
+  assert.deepEqual(legacy.calls[0].body.session.audio.input.transcription, {
+    model: "gpt-4o-mini-transcribe",
+    language: "pt",
+  });
+});
+test("voice rejects expired, malformed or non-transcription ephemeral responses", async () => {
+  for (const value of [
+    voiceSession({ value: "sk_private_value" }),
+    voiceSession({ expires_at: 1 }),
+    voiceSession({ session: { type: "realtime" } }),
+    {},
+    voiceSession({ value: "ek_" }),
+  ]) {
+    errorIs(
+      await harness({ result: value }).service(
+        "voice-session",
+        request({ consent: true }),
+      ),
+      502,
+      "invalid_voice_session",
+    );
+  }
+});
+test("voice quota rejects a seventh session without creating another provider credential", async () => {
+  const { service, calls } = harness({ result: voiceSession() });
+  for (let i = 0; i < 6; i++)
+    assert.equal(
+      (await service("voice-session", request({ consent: true }))).status,
+      200,
+    );
+  errorIs(
+    await service("voice-session", request({ consent: true })),
+    429,
+    "rate_limited",
+  );
+  assert.equal(calls.length, 6);
+});
+test("voice provider timeouts abort without exposing provider errors or credentials", async () => {
+  let aborted = false;
+  const { service } = harness({
+    timeouts: { voice: 5 },
+    fetchImpl: async (_, { signal }) =>
+      new Promise((resolve, reject) =>
+        signal.addEventListener("abort", () => {
+          aborted = true;
+          reject(new DOMException(MOCK_SECRET, "AbortError"));
+        }),
+      ),
+  });
+  errorIs(
+    await service("voice-session", request({ consent: true })),
+    504,
+    "timeout",
+  );
+  assert.equal(aborted, true);
 });

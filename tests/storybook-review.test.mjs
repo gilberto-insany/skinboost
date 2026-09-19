@@ -24,6 +24,20 @@ const types = {
 };
 let server, browser, origin;
 
+async function auditAccessibility(page) {
+  // The Storybook a11y addon may be finishing its own post-play audit.
+  // Serialize with that runner; never suppress a rule violation.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await page.waitForFunction(() => !window.axe?._running);
+    try {
+      return await new AxeBuilder({ page }).include(".sb-catalog").analyze();
+    } catch (error) {
+      if (!error.message.includes("Axe is already running") || attempt === 2)
+        throw error;
+    }
+  }
+}
+
 before(async () => {
   assert.ok(
     existsSync(resolve(output, "storybook/wireframe/index.html")),
@@ -90,6 +104,11 @@ test("two independent builds expose the same CSF3 inventory", async () => {
     "ressecamento",
     "mensagem-livre",
     "sugestao-como-mensagem",
+    "origem-do-contexto",
+    "resumo-da-conversa",
+    "alternativa",
+    "feedback-registrado",
+    "voz-revisavel",
   ]) {
     assert.ok(
       wireframe.includes(`experiencia-jornada-guiada--${name}`),
@@ -170,6 +189,11 @@ test(
         "mensagem-livre",
         "sugestao-como-mensagem",
         "carrinho-vazio",
+        "origem-do-contexto",
+        "resumo-da-conversa",
+        "alternativa",
+        "feedback-registrado",
+        "voz-revisavel",
       ]) {
         await page.goto(story(id), { waitUntil: "networkidle" });
         await page.getByRole("log").waitFor();
@@ -187,9 +211,29 @@ test(
           await page.waitForFunction(
             () => document.querySelector('[data-action="checkout"]')?.disabled,
           );
-        const accessibility = await new AxeBuilder({ page })
-          .include(".sb-catalog")
-          .analyze();
+        if (id === "voz-revisavel") {
+          await page.waitForFunction(
+            () =>
+              document.querySelector("#sx-message")?.value ===
+              "Meu rascunho inicial. Quero uma rotina com poucos passos.",
+          );
+          assert.equal(await page.locator('[data-role="user"]').count(), 0);
+          assert.match(
+            await page.locator("[data-save-status]").innerText(),
+            /sem microfone nem envio de áudio/,
+          );
+        }
+        if (id === "resumo-da-conversa")
+          assert.match(
+            await page.locator(".sx-note-text").innerText(),
+            /não é diagnóstico nem prescrição/,
+          );
+        if (id === "alternativa")
+          assert.match(
+            await page.getByRole("log").innerText(),
+            /conversa original continua guardada/,
+          );
+        const accessibility = await auditAccessibility(page);
         const violations = accessibility.violations.map((v) => ({
           id: v.id,
           impact: v.impact,

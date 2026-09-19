@@ -1,6 +1,7 @@
 import { createExperienceState, mountExperience } from "../experience.js";
 import "./composer.css";
 import { createThreadFixture, act } from "./thread-state.js";
+import { createAlternative } from "./conversation-tools.js";
 import {
   loadSessions,
   saveSession,
@@ -21,6 +22,7 @@ export function initChat({ onPhotoChange, onReset } = {}) {
     loading = true,
     storageFailed = false,
     interacted = false;
+  let saveStatus = "";
   let writes = Promise.resolve();
   const shell = document.createElement("main");
   shell.className = "composer-shell";
@@ -40,12 +42,14 @@ export function initChat({ onPhotoChange, onReset } = {}) {
   }
   function reportStorageError() {
     storageFailed = true;
+    saveStatus = "Não foi possível salvar neste navegador";
     state.error =
       "Não foi possível salvar no navegador. A conversa continua aberta, mas pode não estar disponível ao recarregar.";
     mounted?.show();
   }
   async function saveCurrent() {
     clearTimeout(saveTimer);
+    saveTimer = null;
     if (
       loading ||
       storageFailed ||
@@ -56,10 +60,12 @@ export function initChat({ onPhotoChange, onReset } = {}) {
       return;
     const session = {
       id: activeId,
-      title: (state.context.intent || state.draft || "Nova conversa").slice(
-        0,
-        100,
-      ),
+      title: (
+        state.sessionLabel ||
+        state.context.intent ||
+        state.draft ||
+        "Nova conversa"
+      ).slice(0, 100),
       updatedAt: Date.now(),
       state: structuredClone(state),
     };
@@ -70,14 +76,24 @@ export function initChat({ onPhotoChange, onReset } = {}) {
     writes = writes.catch(() => {}).then(() => saveSession(session));
     try {
       await writes;
+      saveStatus = "Salvo neste navegador";
+      mounted?.refreshSaveStatus();
     } catch {
       reportStorageError();
     }
   }
   function changed() {
+    if (
+      !state.context.intent &&
+      !state.draft &&
+      !state.messages.some((message) => message.role === "user")
+    ) {
+      saveStatus = "No seu tempo. Do seu jeito.";
+      return;
+    }
     if (!loading && !storageFailed) {
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveCurrent, 650);
+      saveStatus = "Salvando neste navegador…";
+      if (!saveTimer) saveTimer = setTimeout(saveCurrent, 650);
     }
   }
   function show(step = state.step, initialMessage = "") {
@@ -95,6 +111,20 @@ export function initChat({ onPhotoChange, onReset } = {}) {
       onChange: changed,
       getSessions: () => sessions,
       getSessionId: () => activeId,
+      getSaveStatus: () => saveStatus,
+      onAlternative: async (choice) => {
+        mounted?.destroy();
+        await saveCurrent();
+        const next = createAlternative(state, {
+          sourceId: activeId,
+          title: state.sessionLabel || state.context.intent,
+          choice,
+        });
+        activeId = crypto.randomUUID();
+        replaceState(next);
+        await saveCurrent();
+        show();
+      },
       onSessionSelect: async (id) => {
         if (id === activeId) return;
         mounted?.destroy();
@@ -103,6 +133,7 @@ export function initChat({ onPhotoChange, onReset } = {}) {
         if (!session) return;
         activeId = id;
         replaceState(structuredClone(session.state));
+        saveStatus = "Conversa retomada neste navegador";
         state.photoConsent = false;
         onPhotoChange?.(state.photoName || "");
         show();
@@ -117,6 +148,7 @@ export function initChat({ onPhotoChange, onReset } = {}) {
       },
       onDeleteSession: async (id) => {
         clearTimeout(saveTimer);
+        saveTimer = null;
         if (id === activeId) mounted?.destroy();
         await writes.catch(() => {});
         await deleteSession(id);
@@ -131,6 +163,7 @@ export function initChat({ onPhotoChange, onReset } = {}) {
       onClearSessions: async () => {
         mounted?.destroy();
         clearTimeout(saveTimer);
+        saveTimer = null;
         await writes.catch(() => {});
         await clearSessions();
         sessions = [];
@@ -202,6 +235,7 @@ export function initChat({ onPhotoChange, onReset } = {}) {
   );
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !shell.hidden) {
+      if (shell.querySelector("dialog[open]")) return;
       event.preventDefault();
       const sidebar = shell.querySelector(".sx-sidebar.is-open");
       if (sidebar) {

@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { CATALOG } from "../src/routine.js";
+import { consumeResponseStream } from "./chat-stream.mjs";
 
 export const MAX_BODY_BYTES = 3 * 1024 * 1024;
 export const MAX_PHOTO_BYTES = 2 * 1024 * 1024;
@@ -17,6 +18,7 @@ export const CONTEXT_KEYS = [
 const API = "https://api.openai.com/v1";
 export const DEFAULT_CHAT_MODEL = "gpt-5.4-mini";
 export const DEFAULT_IMAGE_MODEL = "gpt-image-2.5-sunburst";
+export const DEFAULT_TRANSCRIPTION_MODEL = "gpt-live-transcribe";
 export const IMAGE_LABEL = "Simulação visual criada por IA";
 export const IMAGE_DISCLAIMER =
   "Ilustração de uma possibilidade estética. Não é previsão clínica, diagnóstico, garantia de resultado nem efeito comprovado dos produtos SkinBoost.";
@@ -24,6 +26,7 @@ const productionHost = "skinboost-design-review.vercel.app";
 const limits = {
   chat: { count: 24, window: 10 * 60_000 },
   simulate: { count: 3, window: 60 * 60_000 },
+  "voice-session": { count: 6, window: 10 * 60_000 },
 };
 const SCENARIOS = ["acne", "oiliness", "dry", "general"];
 const isObject = (value) =>
@@ -471,9 +474,19 @@ function parseChatOutput(data, previousContext) {
     care: parsed.care,
   };
 }
-async function fetchOpenAI(fetchImpl, key, path, body, timeout) {
+async function fetchOpenAI(
+  fetchImpl,
+  key,
+  path,
+  body,
+  timeout,
+  { signal, onText } = {},
+) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
+  const cancel = () => controller.abort();
+  signal?.addEventListener("abort", cancel, { once: true });
+  if (signal?.aborted) controller.abort();
   try {
     const result = await fetchImpl(`${API}${path}`, {
       method: "POST",
@@ -511,7 +524,12 @@ async function fetchOpenAI(fetchImpl, key, path, body, timeout) {
         "Não foi possível obter a resposta da IA. Tente novamente.",
       );
     }
-    const data = await result.json();
+    const data = onText
+      ? await consumeResponseStream(result, {
+          onText,
+          signal: controller.signal,
+        })
+      : await result.json();
     if (!isObject(data))
       fail(
         502,
@@ -521,6 +539,8 @@ async function fetchOpenAI(fetchImpl, key, path, body, timeout) {
     return data;
   } catch (error) {
     if (error instanceof ApiError) throw error;
+    if (signal?.aborted)
+      fail(499, "cancelled", "A solicitação foi interrompida.");
     if (error?.name === "AbortError" || controller.signal.aborted)
       fail(504, "timeout", "A IA demorou além do esperado. Tente novamente.");
     fail(
@@ -530,6 +550,7 @@ async function fetchOpenAI(fetchImpl, key, path, body, timeout) {
     );
   } finally {
     clearTimeout(timer);
+    signal?.removeEventListener("abort", cancel);
   }
 }
 function imagePrompt(concern) {
@@ -542,7 +563,7 @@ export function createOpenAIService({
   rateLimit = createRateLimiter(),
   timeouts = { chat: 35_000, simulate: 180_000 },
 } = {}) {
-  return async (route, request) => {
+  return async (route, request, { onEvent, signal = request.signal } = {}) => {
     try {
       if (route === "status") {
         if (request.method !== "GET")
@@ -561,10 +582,11 @@ export function createOpenAIService({
           available,
           chatAvailable: available,
           simulationAvailable: available,
+          voiceAvailable: available,
           photoUploadMaxBytes: MAX_PHOTO_BYTES,
         });
       }
-      if (!["chat", "simulate"].includes(route))
+      if (!["chat", "simulate", "voice-session"].includes(route))
         return response(404, {
           error: { code: "not_found", message: "Não encontrado." },
         });
@@ -587,7 +609,16 @@ export function createOpenAIService({
         );
       const body = await readJson(request);
       let chat, photo, concern;
-      if (route === "chat") chat = validateChat(body);
+      if (route === "voice-session") {
+        if (body.consent !== true)
+          fail(
+            400,
+            "voice_consent_required",
+            "Autorize o envio da sua fala à OpenAI para transcrever.",
+          );
+        if (Object.keys(body).some((name) => name !== "consent"))
+          fail(400, "invalid_request", "Revise a solicitação de transcrição.");
+      } else if (route === "chat") chat = validateChat(body);
       else {
         if (body.consent !== true)
           fail(
@@ -609,7 +640,59 @@ export function createOpenAIService({
           "A conexão com a IA ainda não foi configurada.",
         );
       rateLimit(route, request);
+      if (route === "voice-session") {
+        const model =
+          env.OPENAI_TRANSCRIPTION_MODEL || DEFAULT_TRANSCRIPTION_MODEL;
+        const modern = ["gpt-live-transcribe", "gpt-transcribe"].includes(
+          model,
+        );
+        const data = await fetchOpenAI(
+          fetchImpl,
+          key,
+          "/realtime/client_secrets",
+          {
+            expires_after: { anchor: "created_at", seconds: 60 },
+            session: {
+              type: "transcription",
+              audio: {
+                input: {
+                  transcription: {
+                    model,
+                    ...(modern ? { languages: ["pt"] } : { language: "pt" }),
+                  },
+                  noise_reduction: { type: "near_field" },
+                  turn_detection: null,
+                },
+              },
+            },
+          },
+          timeouts.voice || 12_000,
+        );
+        if (
+          typeof data.value !== "string" ||
+          !/^ek_[A-Za-z0-9_-]{8,4096}$/.test(data.value) ||
+          !Number.isFinite(data.expires_at) ||
+          data.expires_at <= Date.now() / 1000 ||
+          data.session?.type !== "transcription"
+        )
+          fail(
+            502,
+            "invalid_voice_session",
+            "Não foi possível iniciar a transcrição. Tente novamente.",
+          );
+        // Only a short-lived browser credential is returned. Never forward the
+        // account key or unrelated provider fields, and never persist this value.
+        return response(200, {
+          clientSecret: data.value,
+          expiresAt: data.expires_at,
+          maxDurationMs: 120_000,
+        });
+      }
       if (route === "chat") {
+        const streaming =
+          /(?:^|[,;\s])text\/event-stream(?:$|[,;\s])/i.test(
+            header(request, "accept"),
+          ) && typeof onEvent === "function";
         const input = [
           {
             role: "developer",
@@ -633,6 +716,7 @@ export function createOpenAIService({
             instructions: CHAT_INSTRUCTIONS,
             input,
             store: false,
+            ...(streaming ? { stream: true } : {}),
             max_output_tokens: 2200,
             text: {
               format: {
@@ -644,6 +728,12 @@ export function createOpenAIService({
             },
           },
           timeouts.chat,
+          {
+            signal,
+            ...(streaming
+              ? { onText: (text) => onEvent({ type: "delta", text }) }
+              : {}),
+          },
         );
         return response(200, parseChatOutput(data, chat.context));
       }
@@ -713,10 +803,66 @@ export function createOpenAIService({
   };
 }
 const service = createOpenAIService();
-export async function handleNodeRequest(route, request, res) {
-  const result = await service(route, request);
-  for (const [name, value] of Object.entries(result.headers))
-    res.setHeader(name, value);
-  res.statusCode = result.status;
-  res.end(JSON.stringify(result.body));
+export async function handleNodeRequest(
+  route,
+  request,
+  res,
+  implementation = service,
+) {
+  const controller = new AbortController();
+  const streaming =
+    route === "chat" &&
+    /(?:^|[,;\s])text\/event-stream(?:$|[,;\s])/i.test(
+      header(request, "accept"),
+    );
+  let started = false;
+  const cancel = () => {
+    if (!res.writableEnded) controller.abort();
+  };
+  request.once?.("aborted", cancel);
+  res.once?.("close", cancel);
+  const relayAbort = () => controller.abort();
+  request.signal?.addEventListener("abort", relayAbort, { once: true });
+  if (request.aborted || request.signal?.aborted) controller.abort();
+  function emit(event) {
+    if (controller.signal.aborted || res.destroyed || res.writableEnded) return;
+    if (!started) {
+      for (const [name, value] of Object.entries(
+        response(200, null, {
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "Cache-Control": "no-store, private, no-transform",
+          "X-Accel-Buffering": "no",
+        }).headers,
+      ))
+        res.setHeader(name, value);
+      res.statusCode = 200;
+      res.flushHeaders?.();
+      started = true;
+    }
+    res.write(`data: ${JSON.stringify(event)}\n\n`);
+  }
+  try {
+    const result = await implementation(route, request, {
+      signal: controller.signal,
+      ...(streaming ? { onEvent: emit } : {}),
+    });
+    if (controller.signal.aborted || res.destroyed || res.writableEnded) return;
+    if (streaming && (started || result.status === 200)) {
+      emit(
+        result.status === 200
+          ? { type: "complete", result: result.body }
+          : { type: "error", error: result.body.error },
+      );
+      res.end();
+    } else {
+      for (const [name, value] of Object.entries(result.headers))
+        res.setHeader(name, value);
+      res.statusCode = result.status;
+      res.end(JSON.stringify(result.body));
+    }
+  } finally {
+    request.removeListener?.("aborted", cancel);
+    res.removeListener?.("close", cancel);
+    request.signal?.removeEventListener("abort", relayAbort);
+  }
 }

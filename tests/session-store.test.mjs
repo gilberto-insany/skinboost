@@ -83,6 +83,23 @@ test("restoring requires fresh photo consent, clears transient failures and pres
   assert.equal(source.state.error, "Falhou");
 });
 
+test("an interrupted live answer is resumable after reload and partial text is marked incomplete", () => {
+  const source = record();
+  Object.assign(source.state, {
+    requestInterrupted: true,
+    requestKind: "chat",
+    failedText: "Meu pedido",
+    streamText: "Texto ainda incompleto",
+  });
+  const loaded = restoreSession(source);
+  assert.equal(loaded.state.failedRequest, true);
+  assert.match(loaded.state.error, /não terminou/);
+  assert.equal(loaded.state.messages.at(-1).kind, "partial");
+  assert.equal(loaded.state.streamText, "");
+  assert.equal(loaded.state.draft, source.state.draft);
+  assert.deepEqual(loaded.state.context, source.state.context);
+});
+
 test("restoring an interrupted operation yields a usable state instead of an eternal loader", () => {
   for (const step of ["processing", "loading", "waiting", "generating"]) {
     const source = record();

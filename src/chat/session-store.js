@@ -62,8 +62,23 @@ export function restoreSession(session) {
   ]) {
     if (Object.hasOwn(state, key)) state[key] = false;
   }
-  state.error = "";
-  state.failedRequest = false;
+  state.failedRequest = Boolean(
+    state.requestInterrupted &&
+    (state.failedText || state.requestKind === "image"),
+  );
+  state.error = state.failedRequest
+    ? "O pedido anterior não terminou. Seu contexto foi preservado; você pode tentar novamente."
+    : "";
+  if (state.streamText) {
+    state.messages ||= [];
+    state.messages.push({
+      id: `interrupted-${state.messages.length + 1}`,
+      role: "assistant",
+      kind: "partial",
+      text: state.streamText,
+    });
+    state.streamText = "";
+  }
   state.photoConsent = false;
   if (["processing", "loading", "waiting", "generating"].includes(state.step)) {
     state.step = state.routine

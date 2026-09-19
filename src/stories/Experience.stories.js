@@ -1,8 +1,91 @@
 import { expect, fn, waitFor } from "storybook/test";
 import { mountExperience } from "../experience.js";
+import {
+  createThreadState,
+  createThreadFixture,
+  sendMessage,
+  act,
+} from "../chat/thread-state.js";
+import {
+  createAlternative,
+  recordContextChanges,
+  makeConversationNote,
+} from "../chat/conversation-tools.js";
 
 // Each canvas has its own instance; removal destroys event listeners and timers.
 const mounts = new Map();
+
+function stateWithOrigins(scenario = "general") {
+  const source = createThreadFixture("review", scenario);
+  let state = createThreadState();
+  for (const message of source.messages.filter(
+    (item) => item.role === "user",
+  )) {
+    const previous = { ...state.context };
+    state = sendMessage(state, message.text);
+    recordContextChanges(
+      state,
+      previous,
+      state.messages.findLast((item) => item.role === "user"),
+    );
+  }
+  return act(state, "confirm");
+}
+
+function fixtureState(args) {
+  if (!args.fixture) return undefined;
+  const state = stateWithOrigins(args.scenario);
+  if (args.fixture === "alternative")
+    return createAlternative(state, {
+      sourceId: "story-original",
+      title: "Minha rotina original · exemplo local",
+      choice: "budget",
+    });
+  if (args.fixture === "feedback")
+    state.messages.at(-1).feedback = { reason: "Fonte insuficiente" };
+  if (args.fixture === "note")
+    state.messages.push({
+      id: "story-note",
+      role: "assistant",
+      kind: "note",
+      text: "Aqui está o resumo revisável desta conversa de demonstração.",
+      note: makeConversationNote(state),
+    });
+  return state;
+}
+
+// Only this isolated fixture replaces the audio adapter. No microphone or API.
+function demonstrationVoice({ getDraft, onDraft, onState }) {
+  let previous = "";
+  let active = false;
+  return {
+    supported: true,
+    start() {
+      previous = getDraft();
+      active = true;
+      onState({ status: "listening" });
+    },
+    stop() {
+      if (active)
+        onDraft(
+          [previous, "Quero uma rotina com poucos passos."]
+            .filter(Boolean)
+            .join(" "),
+        );
+      active = false;
+      onState({ status: "idle" });
+    },
+    cancel() {
+      active = false;
+      onDraft(previous);
+      onState({ status: "idle" });
+    },
+    handleTypedInput() {},
+    destroy() {
+      active = false;
+    },
+  };
+}
 
 function renderExperience(args) {
   const host = document.createElement("div");
@@ -25,6 +108,14 @@ function renderExperience(args) {
       initialStep: args.initialStep,
       scenario: args.scenario,
       liveApi: false,
+      state: fixtureState(args),
+      ...(args.voiceDemo
+        ? {
+            voiceFactory: demonstrationVoice,
+            getSaveStatus: () =>
+              "Voz demonstrativa · sem microfone nem envio de áudio",
+          }
+        : {}),
       onClose: () => {
         args.onClose();
         instance?.destroy();
@@ -74,6 +165,8 @@ export default {
         "Contexto de exemplo declarado na conversa, sem diagnóstico ou análise de imagem.",
     },
     onClose: { table: { disable: true } },
+    fixture: { table: { disable: true } },
+    voiceDemo: { table: { disable: true } },
   },
   render: renderExperience,
   beforeEach: () => () => {
@@ -205,5 +298,60 @@ export const CarrinhoVazio = {
     await expect(
       canvas.getByRole("button", { name: /checkout/i }),
     ).toBeDisabled();
+  },
+};
+
+export const OrigemDoContexto = {
+  name: "Contexto · origem nas mensagens",
+  args: { initialStep: "routine", fixture: "origins" },
+};
+
+export const ResumoDaConversa = {
+  name: "Resumo · notas revisáveis",
+  args: { initialStep: "routine", fixture: "note" },
+};
+
+export const Alternativa = {
+  name: "Outra opção · contexto herdado",
+  args: { initialStep: "routine", fixture: "alternative" },
+};
+
+export const FeedbackRegistrado = {
+  name: "Feedback · registro nesta conversa",
+  args: { initialStep: "routine", fixture: "feedback" },
+};
+
+export const VozRevisavel = {
+  name: "Voz · demonstração sem áudio",
+  args: { initialStep: "welcome", voiceDemo: true },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Adaptador determinístico apenas para revisar os estados da interface. Não acessa microfone, não grava e não chama API. O texto aparece no rascunho e precisa de envio explícito.",
+      },
+    },
+  },
+  play: async ({ canvas, userEvent }) => {
+    const composer = await canvas.findByRole("textbox", { name: /mensagem/i });
+    await userEvent.type(composer, "Meu rascunho inicial.");
+    await userEvent.click(
+      canvas.getByRole("button", { name: "Ditar mensagem" }),
+    );
+    await userEvent.click(
+      canvas.getByRole("button", { name: "Ativar microfone" }),
+    );
+    await expect(canvas.getByRole("status")).toHaveTextContent(
+      "Revise antes de enviar",
+    );
+    await userEvent.click(
+      canvas.getByRole("button", { name: "Concluir ditado" }),
+    );
+    await expect(composer).toHaveValue(
+      "Meu rascunho inicial. Quero uma rotina com poucos passos.",
+    );
+    await expect(
+      canvas.getByRole("log").querySelectorAll('[data-role="user"]').length,
+    ).toBe(0);
   },
 };
