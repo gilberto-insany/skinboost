@@ -40,3 +40,6 @@ Follow https://www.figma.com/design/0wIp15KlSyc919z2jsqgHa?node-id=2091-2 for th
 
 ## Footer simplification — 19 September 2026
 Latest user override: remove the panoramic footer image/placeholder and its reserved area. Rebalance the remaining signature, social links, navigation and legal rows into a compact footer, preserving the oversized SkinBoost wordmark. This supersedes the image requirement above.
+
+## Revised Figma footer — 19 September 2026
+Follow node 2114:2089: top row combines official logo, vertical divider and compact signature at left with navigation at right. Oversized cropped SkinBoost comes next. Copyright, socials, privacy, demo and back-to-top share the final row. Wrap these rows on smaller screens; no editorial image.
