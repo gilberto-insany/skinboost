@@ -130,6 +130,10 @@ export function initLanding({ openChat }) {
       }),
   );
   const infos = {
+    social: [
+      "Acompanhe a SkinBoost",
+      "Os perfis oficiais ainda não foram definidos. Os ícones representam os canais previstos para a marca.",
+    ],
     privacy: [
       "Sua foto. Sua escolha.",
       "Neste protótipo, texto e foto ficam apenas na memória do navegador. Nada é enviado a uma IA ou armazenado em uma conta. Você pode remover a imagem pelo botão ao lado do nome do arquivo; ao recarregar a página, o estado da demonstração é descartado.",
@@ -140,7 +144,7 @@ export function initLanding({ openChat }) {
     ],
     about: [
       "Uma experiência para explorar.",
-      "Este é um wireframe de alta fidelidade da SkinBoost. As interações demonstram a jornada; as imagens de pessoas e pele são representadas por espaços reservados. As embalagens são imagens conceituais, o frasco é uma cena 3D e as histórias representam personas fictícias. Não há diagnóstico, venda ou envio de dados.",
+      "Este é um wireframe de alta fidelidade da SkinBoost. As interações demonstram a jornada; os espaços de pele e imagem editorial permanecem reservados; os retratos dos relatos são ilustrativos, gerados por IA. As embalagens são imagens conceituais, o frasco é uma cena 3D e as histórias representam personas fictícias. Não há diagnóstico, venda ou envio de dados.",
     ],
   };
   $$("[data-info]").forEach(

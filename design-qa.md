@@ -14,3 +14,6 @@ Limpeza da base e fluxo de conversa. Referência de navegação: https://www.nol
 
 ## Limites
 Teste mobile em viewport de navegador, sem aparelho físico. A revisão desta rodada não certifica o novo modelo 3D produzido em paralelo. A conversa usa regras locais, não IA; a foto não é enviada. Não houve publicação desta revisão.
+
+## Revisão Figma — 19/09/2026
+Fonte e diferenças implementadas em docs/figma-update.md. Comparação visual de logo/hero, painel de etapas, bento e footer. Desktop 1440 × 929 e mobile 390 × 844. Referência desktop adaptada ao celular, preservando a funcionalidade.

@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 export function initMotion() {
   const mm = gsap.matchMedia();
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    gsap.fromTo(
+    const filmTween = gsap.fromTo(
       ".film-copy h2 span",
       { opacity: 0.38 },
       {
@@ -28,6 +28,25 @@ export function initMotion() {
         $(".film-track span").style.transform = `scaleX(${self.progress})`;
       },
     });
+    const toggle = $(".film-toggle");
+    const pauseFilm = () => {
+      const paused = toggle.getAttribute("aria-pressed") !== "true";
+      toggle.setAttribute("aria-pressed", String(paused));
+      toggle.querySelector("span").textContent = paused
+        ? "Retomar movimento"
+        : "Pausar movimento";
+      toggle.querySelector("i").className = paused
+        ? "ph ph-play"
+        : "ph ph-pause";
+      if (paused) {
+        filmTween.scrollTrigger.disable(false);
+        filmTween.progress(1);
+      } else {
+        filmTween.scrollTrigger.enable();
+        ScrollTrigger.refresh();
+      }
+    };
+    toggle.addEventListener("click", pauseFilm);
     const tags = gsap.utils.toArray(".context-tags span").reverse();
     gsap.from(tags, {
       y: -125,
@@ -42,6 +61,14 @@ export function initMotion() {
         toggleActions: "play none none reset",
       },
     });
+    return () => toggle.removeEventListener("click", pauseFilm);
+  });
+  mm.add("(prefers-reduced-motion: reduce)", () => {
+    const toggle = $(".film-toggle");
+    toggle.hidden = true;
+    return () => {
+      toggle.hidden = false;
+    };
   });
   window.addEventListener("load", () => ScrollTrigger.refresh());
   document.fonts.ready.then(() => ScrollTrigger.refresh());
