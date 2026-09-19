@@ -1,0 +1,35 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:review",
+  "outputDirectory": "dist/client",
+  "framework": null,
+  "redirects": [
+    {
+      "source": "/storybook/wireframe",
+      "destination": "/storybook/wireframe/",
+      "permanent": false
+    },
+    {
+      "source": "/storybook/alta-fidelidade",
+      "destination": "/storybook/alta-fidelidade/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/chat",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ]
+}

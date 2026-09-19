@@ -1,0 +1,2191 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Guia didático do SkinBoost: decisões de interface, critérios de teste e limites da demonstração."
+    />
+    <title>SkinBoost — Guia das decisões de experiência</title>
+    <style>
+      :root {
+        --ink: #202a24;
+        --muted: #626b63;
+        --paper: #fbfbf7;
+        --sage: #e7ebdf;
+        --lime: #d9ef97;
+        --line: #dce0d7;
+        --white: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+        font-synthesis: none;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid #6b8347;
+        outline-offset: 5px;
+      }
+      p {
+        line-height: 1.75;
+        margin: 0 0 18px;
+      }
+      h1,
+      h2,
+      h3 {
+        font-weight: 400;
+        letter-spacing: -0.05em;
+        margin: 0;
+      }
+      h1 {
+        font-size: clamp(48px, 6.7vw, 92px);
+        line-height: 1.02;
+        max-width: 1000px;
+      }
+      h1 span {
+        color: #73836b;
+      }
+      h2 {
+        font-size: clamp(29px, 3vw, 43px);
+        line-height: 1.1;
+        max-width: 690px;
+      }
+      h3 {
+        font-size: 21px;
+        line-height: 1.25;
+        letter-spacing: -0.025em;
+      }
+      ul,
+      ol {
+        padding-left: 21px;
+        margin: 12px 0;
+      }
+      li {
+        line-height: 1.65;
+        margin: 8px 0;
+      }
+      strong {
+        font-weight: 600;
+      }
+      .wrap {
+        width: min(1280px, calc(100% - 96px));
+        margin: auto;
+      }
+      .skip {
+        position: fixed;
+        top: -80px;
+        left: 20px;
+        background: var(--ink);
+        color: white;
+        padding: 14px;
+        z-index: 100;
+      }
+      .skip:focus {
+        top: 10px;
+      }
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: #fbfbf7f5;
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+      }
+      .top .wrap {
+        height: 74px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      .brand {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -1.6px;
+        text-decoration: none;
+      }
+      .brand sup {
+        font-size: 9px;
+        vertical-align: top;
+        line-height: 2.4;
+        margin-left: 2px;
+      }
+      .top nav {
+        display: flex;
+        gap: 27px;
+        align-items: center;
+        font-size: 12px;
+      }
+      .top nav > a {
+        text-decoration: none;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        border: 1px solid #bcc7b1;
+        border-radius: 30px;
+        padding: 14px 21px;
+        text-decoration: none;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .pill.dark {
+        background: var(--ink);
+        color: white;
+        border-color: var(--ink);
+      }
+      .pill:hover {
+        background: var(--sage);
+        color: var(--ink);
+      }
+      .eyebrow {
+        font-size: 10px;
+        line-height: 1.5;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 25px;
+      }
+      .hero {
+        padding: 94px 0 66px;
+      }
+      .hero .lead {
+        font-size: 20px;
+        color: var(--muted);
+        max-width: 720px;
+        margin: 30px 0;
+      }
+      .hero-links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      .hero-foot {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        border-top: 1px solid var(--line);
+        padding-top: 24px;
+        margin-top: 64px;
+        font-size: 11px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .manifesto {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 53px 0;
+      }
+      .manifesto .wrap {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 58px;
+      }
+      .manifesto .eyebrow {
+        color: var(--lime);
+        margin: 4px 0;
+      }
+      .manifesto p {
+        font-size: clamp(25px, 3.2vw, 42px);
+        letter-spacing: -0.035em;
+        line-height: 1.25;
+        max-width: 880px;
+        margin: 0;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 205px minmax(0, 1fr);
+        gap: 76px;
+        padding-top: 68px;
+        padding-bottom: 80px;
+      }
+      .toc {
+        position: sticky;
+        top: 108px;
+        align-self: start;
+        max-height: calc(100svh - 135px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+      }
+      .toc > span {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 19px;
+      }
+      .toc a {
+        display: flex;
+        gap: 12px;
+        text-decoration: none;
+        font-size: 12px;
+        line-height: 1.45;
+        padding: 9px 0;
+        color: var(--muted);
+      }
+      .toc a:hover {
+        color: var(--ink);
+      }
+      .toc a b {
+        font-size: 10px;
+        font-weight: 400;
+        color: var(--muted);
+        min-width: 17px;
+        padding-top: 1px;
+      }
+      .toc .toc-separator {
+        border-top: 1px solid var(--line);
+        margin-top: 16px;
+        padding-top: 18px;
+      }
+      .body {
+        min-width: 0;
+      }
+      .intro-note {
+        border-left: 3px solid #879a70;
+        padding-left: 21px;
+        margin-bottom: 54px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .intro-note p:last-child {
+        margin: 0;
+      }
+      .lesson {
+        border-top: 1px solid var(--line);
+        padding: 46px 0 50px;
+        scroll-margin-top: 104px;
+      }
+      .lesson:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .number {
+        font-size: 11px;
+        letter-spacing: 0.13em;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 16px;
+      }
+      .lesson-sources {
+        font-size: 13px !important;
+        line-height: 1.7;
+        color: var(--muted);
+        margin-top: 20px;
+      }
+      .lesson-sources a {
+        text-underline-offset: 3px;
+      }
+      .lesson h2 {
+        margin-bottom: 24px;
+      }
+      .lesson > p {
+        font-size: 16px;
+        color: var(--muted);
+        max-width: 72ch;
+      }
+      .lesson > p strong {
+        color: var(--ink);
+      }
+      .test {
+        margin-top: 25px;
+        border-radius: 13px;
+        background: var(--sage);
+        padding: 21px 24px;
+        font-size: 14px;
+      }
+      .test summary {
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .test summary::-webkit-details-marker {
+        display: none;
+      }
+      .test summary::after {
+        content: "+";
+        font-size: 18px;
+        line-height: 12px;
+        font-weight: 400;
+      }
+      .test[open] summary::after {
+        content: "−";
+      }
+      .test ol {
+        margin-bottom: 0;
+      }
+      .test .expected {
+        font-size: 13px;
+        padding-top: 13px;
+        border-top: 1px solid #ccd5c0;
+        margin-top: 17px;
+        margin-bottom: 0;
+      }
+      .principle {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 21px;
+        line-height: 1.6;
+      }
+      .example {
+        padding: 23px 0 4px;
+      }
+      .bubble {
+        border: 1px solid var(--line);
+        border-radius: 18px 18px 4px 18px;
+        background: white;
+        padding: 19px 23px;
+        max-width: 520px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+      .bubble small {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin: 13px 0 0;
+      }
+      .chips span {
+        font-size: 11px;
+        border: 1px solid #c7d1bb;
+        padding: 9px 13px;
+        border-radius: 30px;
+      }
+      .example figcaption {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-top: 13px;
+      }
+      .mini-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 26px 0;
+      }
+      .mini-card {
+        padding: 23px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: white;
+      }
+      .mini-card small {
+        font-size: 9px;
+        color: var(--muted);
+        display: block;
+        letter-spacing: 0.08em;
+      }
+      .mini-card strong {
+        display: block;
+        font-size: 27px;
+        font-weight: 400;
+        letter-spacing: -0.045em;
+        margin: 12px 0 8px;
+      }
+      .mini-card p {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .dots {
+        display: flex;
+        gap: 5px;
+        margin-top: 19px;
+      }
+      .dots i {
+        display: block;
+        height: 4px;
+        flex: 1;
+        background: #7e936a;
+        border-radius: 3px;
+      }
+      .cost-chart {
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        padding: 26px;
+        margin: 25px 0;
+        background: #fff;
+      }
+      .cost-chart figcaption {
+        font-size: 11px;
+        margin-bottom: 23px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .bar-label {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        font-size: 12px;
+        margin-bottom: 9px;
+      }
+      .bar {
+        height: 14px;
+        border-radius: 20px;
+        background: #eef1e8;
+        overflow: hidden;
+        margin-bottom: 23px;
+      }
+      .bar span {
+        display: block;
+        height: 100%;
+        background: #a4b29a;
+        border-radius: 20px;
+      }
+      .bar.primary span {
+        background: #34573d;
+      }
+      .cost-chart p {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 0;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        margin: 26px 0;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 13px;
+        line-height: 1.6;
+        min-width: 520px;
+      }
+      caption {
+        text-align: left;
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 15px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 17px 13px;
+        border-bottom: 1px solid var(--line);
+      }
+      th:first-child,
+      td:first-child {
+        padding-left: 0;
+      }
+      thead th {
+        font-size: 10px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--muted);
+      }
+      tbody th {
+        font-weight: 500;
+        min-width: 130px;
+      }
+      .boundary {
+        padding: 26px;
+        border: 1px solid #becbab;
+        border-radius: 15px;
+        background: #f0f3e9;
+        margin-top: 25px;
+      }
+      .boundary h3 {
+        margin-bottom: 14px;
+      }
+      .boundary p,
+      .boundary li {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .boundary p:last-child {
+        margin-bottom: 0;
+      }
+      .checklist {
+        list-style: none;
+        padding: 0;
+        counter-reset: checks;
+      }
+      .checklist li {
+        counter-increment: checks;
+        border-bottom: 1px solid var(--line);
+        padding: 15px 0 15px 40px;
+        position: relative;
+        font-size: 15px;
+      }
+      .checklist li::before {
+        content: counter(checks, decimal-leading-zero);
+        position: absolute;
+        left: 0;
+        top: 18px;
+        font-size: 11px;
+        color: #7b8b6d;
+      }
+      .resources {
+        background: var(--sage);
+        padding: 64px 0;
+      }
+      .resources h2 {
+        max-width: 800px;
+      }
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+        margin-top: 33px;
+      }
+      .resource-grid a {
+        display: block;
+        text-decoration: none;
+        border-top: 1px solid #afbea1;
+        padding-top: 20px;
+        font-size: 18px;
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+      }
+      .resource-grid a > span {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 10px 0;
+      }
+      .resource-grid a > small {
+        font-size: 13px;
+      }
+      footer {
+        padding: 27px 0;
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        font-size: 10px;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      code {
+        font-family: ui-monospace, monospace;
+        font-size: 0.85em;
+        overflow-wrap: anywhere;
+      }
+      figure {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .mobile-index {
+        display: none;
+      }
+      @media (max-width: 980px) {
+        .wrap {
+          width: calc(100% - 56px);
+        }
+        .layout {
+          grid-template-columns: 175px minmax(0, 1fr);
+          gap: 40px;
+        }
+        .manifesto .wrap {
+          grid-template-columns: 150px 1fr;
+          gap: 35px;
+        }
+        .resource-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .top nav {
+          gap: 18px;
+        }
+        .hero {
+          padding-top: 72px;
+        }
+      }
+      @media (max-width: 700px) {
+        html {
+          scroll-padding-top: 90px;
+        }
+        .wrap {
+          width: calc(100% - 40px);
+        }
+        .top .wrap {
+          height: 66px;
+        }
+        .brand {
+          font-size: 25px;
+        }
+        .top nav > a:not(.pill) {
+          display: none;
+        }
+        .top .pill {
+          font-size: 11px;
+          padding: 10px 14px;
+        }
+        .hero {
+          padding: 55px 0 40px;
+        }
+        .hero .lead {
+          font-size: 17px;
+          margin: 25px 0;
+        }
+        .hero-foot {
+          display: block;
+          margin-top: 37px;
+          padding-top: 21px;
+        }
+        .hero-foot span {
+          display: block;
+          margin: 5px 0;
+        }
+        .hero-links {
+          gap: 9px;
+        }
+        .hero-links .pill {
+          font-size: 12px;
+          padding: 13px 16px;
+        }
+        .manifesto {
+          padding: 36px 0;
+        }
+        .manifesto .wrap {
+          display: block;
+        }
+        .manifesto .eyebrow {
+          margin-bottom: 17px;
+        }
+        .layout {
+          display: block;
+          padding-top: 35px;
+        }
+        .toc {
+          position: static;
+          max-height: none;
+          display: none;
+        }
+        .mobile-index {
+          display: block;
+          border-bottom: 1px solid var(--line);
+          padding-bottom: 23px;
+          margin-bottom: 34px;
+        }
+        .mobile-index summary {
+          cursor: pointer;
+          font-size: 13px;
+        }
+        .mobile-index nav {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px 20px;
+          margin-top: 21px;
+        }
+        .mobile-index a {
+          font-size: 12px;
+          line-height: 1.4;
+          text-decoration: none;
+        }
+        .intro-note {
+          font-size: 13px;
+          margin-bottom: 38px;
+        }
+        .lesson {
+          padding: 36px 0;
+        }
+        .lesson > p {
+          font-size: 15px;
+        }
+        .lesson h2 {
+          margin-bottom: 21px;
+        }
+        .test {
+          padding: 19px;
+          font-size: 13px;
+        }
+        .mini-cards {
+          gap: 10px;
+        }
+        .mini-card {
+          padding: 18px 14px;
+        }
+        .mini-card strong {
+          font-size: 22px;
+        }
+        .mini-card p {
+          font-size: 11px;
+        }
+        .cost-chart {
+          padding: 21px 18px;
+        }
+        .bar-label {
+          font-size: 11px;
+          gap: 10px;
+        }
+        .boundary {
+          padding: 21px;
+        }
+        .resource-grid {
+          gap: 25px 20px;
+        }
+        .resource-grid a {
+          font-size: 16px;
+        }
+        .resources {
+          padding: 42px 0;
+        }
+        .footer-inner {
+          display: block;
+        }
+        .footer-inner span {
+          display: block;
+          margin: 6px 0;
+        }
+        .checklist li {
+          font-size: 14px;
+        }
+        .number {
+          margin-bottom: 13px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      @media print {
+        .top,
+        .toc,
+        .mobile-index,
+        .hero-links,
+        .resources,
+        .skip {
+          display: none;
+        }
+        .wrap {
+          width: 100%;
+        }
+        .hero {
+          padding: 0 0 25px;
+        }
+        .hero h1 {
+          font-size: 40px;
+        }
+        .hero-foot {
+          margin-top: 25px;
+        }
+        .manifesto {
+          background: none;
+          color: #202a24;
+          padding: 20px 0;
+          border-block: 1px solid #aaa;
+        }
+        .manifesto .wrap {
+          display: block;
+        }
+        .manifesto p {
+          font-size: 24px;
+        }
+        .layout {
+          display: block;
+          padding: 30px 0;
+        }
+        .lesson {
+          break-inside: avoid;
+          padding: 26px 0;
+        }
+        .lesson h2 {
+          font-size: 27px;
+        }
+        .test {
+          background: #eee;
+        }
+        .test:not([open]) > *:not(summary) {
+          display: block;
+        }
+        .resource-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        a[href^="http"]::after {
+          content: " (" attr(href) ")";
+          font-size: 9px;
+          overflow-wrap: anywhere;
+        }
+        footer {
+          border-top: 1px solid #aaa;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#leitura">Pular para o guia</a>
+    <header class="top">
+      <div class="wrap">
+        <a class="brand" href="/">skinboost<sup>®</sup></a>
+        <nav aria-label="Navegação do guia">
+          <a href="/brandbook.html">Brandbook</a
+          ><a
+            href="https://leandro-boost.vercel.app/roteiro"
+            target="_blank"
+            rel="noopener"
+            >Roteiro da aula ↗</a
+          ><a class="pill dark" href="/chat"
+            >Abrir a experiência <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero wrap">
+        <span class="eyebrow"
+          >Guia de experiência · Professor e cliente · Setembro 2026</span
+        >
+        <h1>Cada escolha na tela<br />tem um <span>porquê.</span></h1>
+        <p class="lead">
+          Como as lições de design com IA viram um chat contínuo: mensagens,
+          contexto, fontes e decisões no mesmo histórico.
+        </p>
+        <div class="hero-links">
+          <a class="pill dark" href="#entrada"
+            >Ler as decisões <span aria-hidden="true">↓</span></a
+          ><a class="pill" href="#avaliacao"
+            >Percorrer os testes <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <div class="hero-foot">
+          <span
+            >Um material para observar, demonstrar e discutir o SkinBoost.</span
+          ><span
+            >Conversa contínua · Catálogo fictício · Sem previsão clínica</span
+          >
+        </div>
+      </section>
+      <section class="manifesto">
+        <div class="wrap">
+          <span class="eyebrow">A ideia central</span>
+          <p>
+            A pessoa conta o que precisa.<br />O diálogo, o resultado e a
+            próxima ação permanecem juntos.
+          </p>
+        </div>
+      </section>
+      <div class="layout wrap">
+        <aside class="toc" aria-label="Índice do guia">
+          <span>DECISÕES DE EXPERIÊNCIA</span
+          ><a href="#entrada"><b>01</b>Uma entrada orientada</a
+          ><a href="#contexto"><b>02</b>Contexto na conversa</a
+          ><a href="#opcoes"><b>03</b>Sugestões como mensagens</a
+          ><a href="#foto"><b>04</b>A foto é uma escolha</a
+          ><a href="#razoes"><b>05</b>Razões e fontes</a
+          ><a href="#indicadores"><b>06</b>Indicadores honestos</a
+          ><a href="#custos"><b>07</b>Comparar o custo</a
+          ><a href="#revisao"><b>08</b>Editar sem recomeçar</a
+          ><a href="#continuidade"><b>09</b>Continuar a jornada</a
+          ><a href="#erros"><b>10</b>Recuperar o caminho</a
+          ><a href="#dados"><b>11</b>Dados e limites</a
+          ><a href="#medir"><b>12</b>Aprender com o uso</a
+          ><a href="#espera"><b>13</b>Acompanhar e parar</a
+          ><a href="#voz"><b>14</b>Falar, revisar, enviar</a
+          ><a href="#alternativas"><b>15</b>Explorar outra opção</a
+          ><a href="#feedback"><b>16</b>Feedback com consequência</a
+          ><a href="#avaliacao" class="toc-separator">Roteiro de avaliação ↗</a
+          ><a href="#materiais">Outros materiais ↗</a>
+        </aside>
+        <div class="body" id="leitura">
+          <details class="mobile-index">
+            <summary>Índice do guia</summary>
+            <nav aria-label="Índice em telas menores">
+              <a href="#entrada">01 · Entrada</a
+              ><a href="#contexto">02 · Contexto</a
+              ><a href="#opcoes">03 · Opções</a
+              ><a href="#foto">04 · Foto opcional</a
+              ><a href="#razoes">05 · Razões e fontes</a
+              ><a href="#indicadores">06 · Indicadores</a
+              ><a href="#custos">07 · Custos</a
+              ><a href="#revisao">08 · Revisão</a
+              ><a href="#continuidade">09 · Continuidade</a
+              ><a href="#erros">10 · Recuperação</a
+              ><a href="#dados">11 · Dados e limites</a
+              ><a href="#medir">12 · Avaliação</a
+              ><a href="#espera">13 · Espera e controle</a
+              ><a href="#voz">14 · Voz revisável</a
+              ><a href="#alternativas">15 · Outra opção</a
+              ><a href="#feedback">16 · Feedback</a
+              ><a href="#avaliacao">Percurso de teste</a
+              ><a href="#materiais">Materiais</a>
+            </nav>
+          </details>
+          <div class="intro-note">
+            <p>
+              Este guia acompanha a <a href="/chat">experiência navegável</a> e
+              retoma os princípios do
+              <a
+                href="https://leandro-boost.vercel.app/roteiro"
+                target="_blank"
+                rel="noopener"
+                >roteiro de Leandro</a
+              >. Ele explica as decisões e propõe verificações; não apresenta
+              pesquisa de eficácia ou resultado comercial.
+            </p>
+            <p>
+              O chat oferece uma base demonstrativa local. A integração com
+              OpenAI depende de configuração no servidor e da indicação do modo
+              ativo; a existência da interface não comprova conexão. O objetivo
+              é avaliar a conversa sem transformar os produtos fictícios em uma
+              oferta real.
+            </p>
+          </div>
+
+          <section class="lesson" id="entrada">
+            <span class="number">01 / COMEÇAR</span>
+            <h2>O pedido já é parte da conversa.</h2>
+            <p>
+              A pessoa escreve o que está vivendo ou escolhe uma sugestão. Essa
+              entrada aparece como mensagem no histórico, acompanhada de uma
+              resposta do SkinBoost. O campo de mensagem continua disponível
+              para acrescentar uma preferência, fazer uma pergunta ou corrigir
+              uma interpretação.
+            </p>
+            <figure class="example">
+              <div class="bubble">
+                <small>UM PEDIDO POSSÍVEL</small>Minha pele fica oleosa ao longo
+                do dia. Quero começar com poucos passos e aproveitar o que já
+                tenho.
+              </div>
+              <div
+                class="chips"
+                aria-label="Exemplos de entradas, sem interação neste guia"
+              >
+                <span>Tenho acne</span><span>Quero entender a oleosidade</span
+                ><span>Quero começar a cuidar</span>
+              </div>
+              <figcaption>
+                As sugestões são atalhos de escrita. No aplicativo, cada escolha
+                entra na conversa como uma mensagem da pessoa.
+              </figcaption>
+            </figure>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Escreva uma frase própria e envie.</li>
+                <li>Confira sua mensagem e a resposta no mesmo histórico.</li>
+                <li>Acrescente outra informação sem sair da conversa.</li>
+              </ol>
+              <p class="expected">
+                Critério: o campo permanece disponível e nenhuma mensagem
+                anterior desaparece.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: intenção · estado vazio útil · conversa contínua.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-2"
+                target="_blank"
+                rel="noopener"
+                >02 — Pedir o resultado</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-8"
+                target="_blank"
+                rel="noopener"
+                >08 — Estado vazio</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-42"
+                target="_blank"
+                rel="noopener"
+                >42 — Formular o pedido</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="contexto">
+            <span class="number">02 / ENTENDER</span>
+            <h2>O contexto se constrói entre as mensagens.</h2>
+            <p>
+              O SkinBoost responde ao que a pessoa contou e pede esclarecimento
+              quando uma preferência ainda não está clara. Falar de acne,
+              oleosidade, ressecamento ou cuidado geral muda o contexto do
+              exemplo. O relato é informação declarada pela pessoa, não uma
+              conclusão sobre a pele.
+            </p>
+            <p>
+              <strong
+                >No modo demonstração, as respostas usam regras locais e
+                cenários conhecidos.</strong
+              >
+              No modo conectado, as mensagens dependem do serviço de IA
+              configurado no servidor. A interface deve distinguir esses modos e
+              permitir conferir o que foi entendido, sem presumir que toda
+              interpretação está correta. Em <strong>Seu contexto</strong>, “Ver
+              de onde veio” aproxima o resumo da mensagem que o originou. O
+              valor é uma interpretação revisável, não uma transcrição literal.
+              “Guardar um resumo” acrescenta uma nota à conversa; ela pode ser
+              copiada sem incluir a foto.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>
+                  Compare uma conversa sobre acne com uma sobre oleosidade.
+                </li>
+                <li>
+                  Informe em uma frase que já usa limpeza e prefere poucos
+                  passos.
+                </li>
+                <li>
+                  Confira o resumo proposto e corrija uma interpretação no
+                  próprio chat.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: a resposta se relaciona ao pedido e distingue o que
+                foi dito do que ainda precisa de esclarecimento.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: contexto explícito · esclarecimento progressivo ·
+              prevenção de suposições.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-34"
+                target="_blank"
+                rel="noopener"
+                >34 — Notas e origem</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-37"
+                target="_blank"
+                rel="noopener"
+                >37 — Preenchimento revisável</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-57"
+                target="_blank"
+                rel="noopener"
+                >57 — Papéis das entradas</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="opcoes">
+            <span class="number">03 / RESPONDER</span>
+            <h2>Uma sugestão escreve com a pessoa.</h2>
+            <p>
+              As sugestões abaixo da conversa ajudam a responder sem redigir
+              tudo. Ao clicar, a escolha é acrescentada como mensagem e o
+              SkinBoost responde no mesmo fluxo. O campo de texto oferece uma
+              alternativa para dizer algo diferente ou complementar a resposta
+              sugerida.
+            </p>
+            <p>
+              Cards, checkboxes e ações de revisão aparecem quando ajudam a
+              decidir. Eles pertencem à conversa: a interface combina linguagem
+              natural com controles precisos, mantendo visível a relação entre o
+              pedido e seu resultado.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Escolha uma sugestão por teclado.</li>
+                <li>Veja a resposta escolhida aparecer como mensagem.</li>
+                <li>
+                  Escreva um complemento e confirme que o diálogo anterior
+                  continua acima.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: cada sugestão tem um efeito visível no histórico, e
+                responder por texto continua possível.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: interface híbrida · ações contextuais · teclado.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-36"
+                target="_blank"
+                rel="noopener"
+                >36 — Sugestões</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-39"
+                target="_blank"
+                rel="noopener"
+                >39 — Interface híbrida</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-41"
+                target="_blank"
+                rel="noopener"
+                >41 — Ação reconhecível</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="foto">
+            <span class="number">04 / DAR CONTEXTO</span>
+            <h2>Opcional precisa continuar opcional.</h2>
+            <p>
+              O anexo aparece pelo nome do arquivo, junto ao contexto da
+              conversa. Pode ser substituído ou removido, e a pessoa consegue
+              explorar uma rotina sem enviar foto. O arquivo preparado é
+              guardado localmente com a conversa e pode ser removido. O aceite
+              de JPG, PNG ou WebP até 10 MB verifica características do arquivo,
+              não a qualidade da pele ou da imagem.
+            </p>
+            <p>
+              <strong>No modo demonstração, o anexo não é analisado.</strong>
+              Uma simulação visual de rosto, quando habilitada, é uma
+              ilustração: não prevê melhora, prazo, adequação ou eficácia de uma
+              rotina. O envio da foto à OpenAI exige marcar a autorização
+              explícita. Sem essa escolha, o arquivo permanece fora das
+              solicitações. As imagens de produto continuam conceituais.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Converse e explore um resultado sem foto.</li>
+                <li>
+                  Anexe uma imagem, retire-a e confira as mensagens anteriores.
+                </li>
+                <li>Teste um arquivo incompatível e continue escrevendo.</li>
+              </ol>
+              <p class="expected">
+                Critério: o erro permite corrigir ou continuar sem imagem,
+                preservando o diálogo.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: multimodalidade com finalidade · escolha real ·
+              limites perceptíveis.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-22"
+                target="_blank"
+                rel="noopener"
+                >22 — Multimodalidade</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-30"
+                target="_blank"
+                rel="noopener"
+                >30 — Permissão</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-57"
+                target="_blank"
+                rel="noopener"
+                >57 — Foto, contexto e catálogo</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="razoes">
+            <span class="number">05 / EXPLICAR</span>
+            <h2>O resultado e suas fontes pertencem ao histórico.</h2>
+            <p>
+              A proposta de rotina aparece como um artefato dentro da conversa.
+              Os cards reúnem categoria, volume conceitual, valor fictício e
+              motivo da seleção. A pessoa pode confirmar, ajustar, comparar ou
+              abrir fontes mantendo o pedido e as respostas à vista.
+            </p>
+            <p>
+              Fontes de naturezas diferentes devem ser reconhecíveis: o catálogo
+              descreve produtos fictícios; referências educacionais explicam
+              cuidados gerais. Uma publicação externa
+              <strong
+                >não comprova a fórmula, eficácia ou adequação de um produto
+                SkinBoost</strong
+              >.
+            </p>
+            <div class="boundary">
+              <h3>Referências educacionais da AAD</h3>
+              <p>
+                Materiais públicos da American Academy of Dermatology para
+                consulta, sem vínculo, avaliação, aprovação ou recomendação da
+                SkinBoost:
+              </p>
+              <ul>
+                <li>
+                  <a
+                    href="https://www.aad.org/public/diseases/acne/skin-care/tips"
+                    target="_blank"
+                    rel="noopener"
+                    >Acne: Tips for managing</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.aad.org/public/everyday-care/skin-care-basics/dry/oily-skin"
+                    target="_blank"
+                    rel="noopener"
+                    >How to control oily skin</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="https://www.aad.org/public/everyday-care/skin-care-basics/dry/dermatologists-tips-relieve-dry-skin"
+                    target="_blank"
+                    rel="noopener"
+                    >Dermatologists’ top tips for relieving dry skin</a
+                  >
+                </li>
+              </ul>
+              <p>
+                Esses links são leitura educacional. Não substituem avaliação
+                individual nem validam os exemplos do catálogo.
+              </p>
+            </div>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Abra uma fonte a partir de um card.</li>
+                <li>Identifique autoria, assunto e limite da referência.</li>
+                <li>
+                  Volte ao resultado e confira que a conversa não foi apagada.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: a pessoa distingue o relato, a regra do exemplo e a
+                evidência externa.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: resultado inspecionável · procedência · evidência com
+              escopo.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-26"
+                target="_blank"
+                rel="noopener"
+                >26 — Fontes inspecionáveis</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-38"
+                target="_blank"
+                rel="noopener"
+                >38 — Critério da recomendação</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-59"
+                target="_blank"
+                rel="noopener"
+                >59 — Confiança inspecionável</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="indicadores">
+            <span class="number">06 / INTERPRETAR</span>
+            <h2>O indicador descreve a conversa.</h2>
+            <p>
+              Resumo de preferências, presença de anexo, valores e composição da
+              proposta tornam a resposta mais fácil de conferir. Esses elementos
+              mostram informações disponíveis nesta sessão.
+              <strong
+                >Não medem saúde, compatibilidade, segurança ou confiança
+                clínica.</strong
+              >
+            </p>
+            <div class="mini-cards">
+              <div class="mini-card">
+                <small>CONTEXTO USADO</small
+                ><strong>Preferências declaradas</strong>
+                <p>Um resumo para conferir e corrigir na conversa.</p>
+              </div>
+              <div class="mini-card">
+                <small>FOTO OPCIONAL</small><strong>Sem foto, tudo bem</strong>
+                <p>
+                  A jornada continua. Nenhuma análise de imagem é realizada.
+                </p>
+              </div>
+            </div>
+            <details class="test">
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Leia os indicadores ao lado da proposta.</li>
+                <li>Explique o que cada rótulo representa.</li>
+                <li>
+                  Verifique se alguém os interpreta como uma nota da própria
+                  pele.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: todo indicador tem significado observável; o resultado
+                não inventa uma pontuação clínica.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: unidade e significado · incerteza · visibilidade de
+              estado.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-47"
+                target="_blank"
+                rel="noopener"
+                >47 — Indicadores</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-52"
+                target="_blank"
+                rel="noopener"
+                >52 — Limites da resposta</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="custos">
+            <span class="number">07 / COMPARAR</span>
+            <h2>A conta também pode entrar na conversa.</h2>
+            <p>
+              O orçamento e os produtos que a pessoa já possui orientam a
+              seleção demonstrativa. Ela pode escrever um novo limite e comparar
+              o resultado sem perder o que foi discutido. A quantidade de
+              produtos e o valor total devem corresponder à seleção atual.
+            </p>
+            <p>
+              O gráfico compara cenários de preços fictícios e apresenta os
+              valores em texto. Uma tabela detalha os mesmos produtos e valores
+              por embalagem para permitir conferir a conta. Ele ensina a
+              conferir uma diferença de custo,
+              <strong
+                >sem representar promoção, oferta ou economia real de
+                mercado</strong
+              >.
+            </p>
+            <figure class="cost-chart">
+              <figcaption>
+                Exemplo didático independente: três itens conceituais em duas
+                tabelas fictícias.
+              </figcaption>
+              <div class="bar-label">
+                <span>Referência fictícia</span><strong>R$247,00</strong>
+              </div>
+              <div class="bar" aria-hidden="true">
+                <span style="width: 100%"></span>
+              </div>
+              <div class="bar-label">
+                <span>Seleção demonstrativa</span><strong>R$197,00</strong>
+              </div>
+              <div class="bar primary" aria-hidden="true">
+                <span style="width: 79.757%"></span>
+              </div>
+              <p>
+                Diferença simulada: R$50,00. Os totais ilustram a leitura do
+                gráfico; a conversa mostra os valores da seleção atual.
+              </p>
+            </figure>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Abra a comparação a partir da proposta.</li>
+                <li>Escreva um limite menor na conversa.</li>
+                <li>
+                  Confira a nova composição e seu total, incluindo o que mudou.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: nenhum limite é ignorado silenciosamente e nenhuma
+                comparação é apresentada como evidência comercial.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: comparação honesta · restrição explícita ·
+              continuidade do contexto.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-46"
+                target="_blank"
+                rel="noopener"
+                >46 — Recorte e unidade</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-48"
+                target="_blank"
+                rel="noopener"
+                >48 — Comparar magnitudes</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="revisao">
+            <span class="number">08 / CORRIGIR</span>
+            <h2>A correção é outra mensagem.</h2>
+            <p>
+              “Já uso esse produto”, “quero gastar menos” e “prefiro poucos
+              passos” são maneiras de continuar o diálogo. As ações de edição
+              ajudam a expressar a mudança, mantendo visíveis o pedido original
+              e a resposta anterior.
+            </p>
+            <p>
+              A nova proposta deve explicar o que foi revisto. O histórico
+              registra a conversa salva neste navegador e permite retomá-la.
+              Isso não representa acompanhamento clínico ou histórico de uma
+              conta sincronizada entre dispositivos.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Peça uma mudança depois de receber os cards.</li>
+                <li>
+                  Confira que mensagens e artefatos anteriores continuam no
+                  histórico.
+                </li>
+                <li>Verifique qual proposta está ativa e o que mudou nela.</li>
+              </ol>
+              <p class="expected">
+                Critério: a pessoa consegue localizar a razão de cada alteração
+                sem recomeçar a conversa.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: correção por intenção · histórico contínuo · coerência
+              do resultado.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-28"
+                target="_blank"
+                rel="noopener"
+                >28 — Correção localizada</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-37"
+                target="_blank"
+                rel="noopener"
+                >37 — Revisar valores</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-39"
+                target="_blank"
+                rel="noopener"
+                >39 — Pedir e ajustar</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="continuidade">
+            <span class="number">09 / CONTINUAR</span>
+            <h2>A próxima ação aparece no mesmo lugar.</h2>
+            <p>
+              Rotina, fontes, comparação, seleção de produtos, revisão e
+              check-in são artefatos da conversa. Quando uma ação é acionada,
+              seu resultado se soma ao histórico. O composer continua disponível
+              para perguntar ou acrescentar contexto.
+            </p>
+            <p>
+              O checkout é demonstrativo: não cobra nem envia um pedido. O
+              check-in guarda um relato da sessão, sem medir eficácia ou
+              comprovar melhora da pele.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Revise os produtos dentro da conversa e retire um item.</li>
+                <li>Confira o total e abra a revisão demonstrativa.</li>
+                <li>
+                  Faça um check-in e encontre as mensagens que levaram à
+                  decisão.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: cada ação nomeia seu efeito, mantém a conversa e
+                mostra um resultado compreensível.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: artefatos no contexto · revisão antes da ação ·
+              continuidade.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-31"
+                target="_blank"
+                rel="noopener"
+                >31 — Histórico</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-53"
+                target="_blank"
+                rel="noopener"
+                >53 — Efeito da ação</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-60"
+                target="_blank"
+                rel="noopener"
+                >60 — Destinos e continuidade</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="erros">
+            <span class="number">10 / RECUPERAR</span>
+            <h2>O limite também é uma resposta.</h2>
+            <p>
+              Quando uma mensagem não oferece informação suficiente ou pede algo
+              fora do escopo, o SkinBoost deve explicar o limite na própria
+              conversa. Uma dúvida sobre diagnóstico ou tratamento não autoriza
+              o protótipo a inferir uma condição nem recomendar medicamentos.
+            </p>
+            <p>
+              Contar “tenho acne” é um contexto declarado; diagnosticar acne a
+              partir de uma foto seria outra operação. O exemplo permite
+              explorar informações e funções cosméticas mantendo essa distinção.
+              Respostas não reconhecidas pelas regras locais precisam de
+              esclarecimento, sem aparentar compreensão que o protótipo não tem.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Escreva algo diferente das sugestões.</li>
+                <li>Peça um diagnóstico e observe a explicação de escopo.</li>
+                <li>
+                  Continue com uma pergunta sobre a função de um produto e
+                  confira o histórico.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: a pessoa entende o limite e consegue continuar a
+                conversa com o contexto útil preservado.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: erro recuperável · esclarecimento · abstenção quando
+              falta fundamento.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-27"
+                target="_blank"
+                rel="noopener"
+                >27 — Falibilidade</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-29"
+                target="_blank"
+                rel="noopener"
+                >29 — Parar e retomar</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-58"
+                target="_blank"
+                rel="noopener"
+                >58 — Exceções</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="dados">
+            <span class="number">11 / CONFIAR</span>
+            <h2>A conversa fica neste navegador.</h2>
+            <p>
+              Conversas, preferências, artefatos e fotos são guardados
+              localmente neste navegador e continuam disponíveis após recarregar
+              a página. A lista lateral permite retomar uma conversa; no
+              celular, ela fica no menu. Não há sincronização entre
+              dispositivos. No modo conectado, as mensagens e o histórico
+              recente seguem ao servidor e à OpenAI para processamento. A foto
+              só acompanha as mensagens e a solicitação de ilustração quando a
+              autorização explícita está ativa. Sem autorização, não é enviada.
+              A chave de acesso fica no servidor, nunca no navegador.
+            </p>
+            <p>
+              Começar outra conversa preserva as anteriores. Excluir uma
+              conversa remove sua cópia local; remover uma foto retira o anexo
+              guardado. Limpar os dados do site também elimina o histórico neste
+              navegador. Essas ações não apagam conteúdo já processado pelo
+              provedor nem descrevem os registros técnicos de hospedagem. O modo
+              ativo e o destino dos dados precisam estar explícitos antes do
+              envio.
+            </p>
+            <div class="boundary">
+              <h3>O que o protótipo não comprova</h3>
+              <ul>
+                <li>
+                  Diagnóstico, eficácia, tolerância ou adequação clínica dos
+                  produtos.
+                </li>
+                <li>
+                  Diagnóstico ou previsão clínica a partir de uma foto ou
+                  ilustração.
+                </li>
+                <li>
+                  Compra, pagamento, entrega ou sincronização entre
+                  dispositivos.
+                </li>
+                <li>
+                  Avaliação, aprovação ou endosso da AAD aos produtos SkinBoost.
+                </li>
+                <li>
+                  Resultados reais de antes e depois ou aumento de conversão.
+                </li>
+              </ul>
+            </div>
+            <details class="test">
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Abra as informações sobre dados sem perder a conversa.</li>
+                <li>
+                  Confira o modo ativo, o aviso de uso da foto e o estado após
+                  removê-la.
+                </li>
+                <li>
+                  Comece outra conversa e retome a anterior pelo menu lateral.
+                </li>
+                <li>Recarregue a página e confira as conversas salvas.</li>
+                <li>
+                  Exclua uma conversa e confira que ela não reaparece após
+                  recarregar.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: permanência, remoção e escopo correspondem ao
+                comportamento observado.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: privacidade compreensível · memória explícita ·
+              evidência antes de promessa.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-30"
+                target="_blank"
+                rel="noopener"
+                >30 — Permissão</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-31"
+                target="_blank"
+                rel="noopener"
+                >31 — Histórico e memória</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="medir">
+            <span class="number">12 / APRENDER</span>
+            <h2>Uma boa conversa é uma hipótese testável.</h2>
+            <p>
+              A hipótese é que manter pedido, resposta e resultado no mesmo
+              histórico ajuda a pessoa a compreender e revisar uma escolha.
+              <strong
+                >O wireframe não apresenta resultados que confirmem essa
+                hipótese.</strong
+              >
+              Concluir uma revisão demonstrativa também não representa uma
+              venda.
+            </p>
+            <p>
+              Uma futura instrumentação deve ter finalidade e escopo definidos,
+              evitando texto livre, fotos, nomes de arquivos e relatos de saúde.
+              Os registros temporários da demonstração não são uma análise de
+              conversão publicada.
+            </p>
+            <div class="table-wrap">
+              <table>
+                <caption>
+                  Perguntas para observar o uso, sem números ou metas
+                  presumidos.
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Pergunta</th>
+                    <th>O que observar</th>
+                    <th>Como interpretar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>A pessoa consegue começar?</th>
+                    <td>Mensagem livre ou sugestão enviada</td>
+                    <td>Observar se ela reconhece o que pode pedir.</td>
+                  </tr>
+                  <tr>
+                    <th>O contexto foi entendido?</th>
+                    <td>Esclarecimento, complemento e correção</td>
+                    <td>
+                      Conferir se a pessoa identifica o que foi usado na
+                      resposta.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>O resultado faz sentido?</th>
+                    <td>Card lido, fonte aberta e proposta revisada</td>
+                    <td>
+                      Abrir uma fonte não prova compreensão; combinar com relato
+                      e observação.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>O histórico ajuda?</th>
+                    <td>Retorno às mensagens e comparação entre propostas</td>
+                    <td>
+                      Observar se a pessoa localiza a decisão atual e a razão de
+                      sua mudança.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Use a mesma tarefa para comparar versões. Observe se a pessoa
+              encontra uma informação errada e consegue corrigi-la. Apresente
+              conclusões somente depois de coletar e analisar evidências.
+            </p>
+            <div class="principle">
+              Princípios: discovery · hipótese separada de evidência · critérios
+              observáveis.
+            </div>
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-3"
+                target="_blank"
+                rel="noopener"
+                >03 — Avaliar melhor</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-56"
+                target="_blank"
+                rel="noopener"
+                >56 — Evidência e hipótese</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-61"
+                target="_blank"
+                rel="noopener"
+                >61 — Critérios de aceitação</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="espera">
+            <span class="number">13 / ACOMPANHAR</span>
+            <h2>Esperar inclui poder parar.</h2>
+            <p>
+              A interface distingue o preparo da foto, a resposta em andamento e
+              a criação de uma ilustração. O sinal de atividade descreve uma
+              operação conhecida; não mostra o pensamento interno da IA nem uma
+              porcentagem inventada.
+            </p>
+            <p>
+              Durante a resposta, o controle de envio permite parar. O pedido e
+              o rascunho permanecem disponíveis para uma nova tentativa. Parar
+              de aguardar uma imagem não garante que o processamento já enviado
+              ao provedor tenha sido cancelado. Ao ler uma mensagem anterior, a
+              pessoa mantém sua posição e pode escolher
+              <strong>Ver mensagem mais recente</strong>.
+            </p>
+            <p>
+              O chat pode mostrar trechos que chegam do serviço antes do fim.
+              Essa leitura é parcial: o contexto e os artefatos só são aceitos
+              depois da resposta completa validada. Se uma resposta chegar de
+              uma vez, a interface também consegue apresentá-la. Uma animação
+              local do texto pronto, sozinha, não comprova streaming do modelo.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Envie uma mensagem e pare durante a espera.</li>
+                <li>
+                  Confira o pedido, escreva um rascunho e tente novamente sem
+                  duplicar o pedido.
+                </li>
+                <li>
+                  Leia acima enquanto outra resposta chega; volte ao fim pelo
+                  controle explícito.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: o estado informa o que parou, preserva o que ainda
+                serve e respeita o lugar de leitura.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: visibilidade do estado · interrupção · leitura
+              estável.
+            </div>
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-11"
+                target="_blank"
+                rel="noopener"
+                >11 — Espera</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-12"
+                target="_blank"
+                rel="noopener"
+                >12 — Streaming e estabilidade</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-29"
+                target="_blank"
+                rel="noopener"
+                >29 — Parar e retomar</a
+              >.
+            </p>
+          </section>
+          <section class="lesson" id="voz">
+            <span class="number">14 / EXPRESSAR</span>
+            <h2>A fala vira um rascunho revisável.</h2>
+            <p>
+              Quando o serviço de transcrição e o navegador estão disponíveis,
+              <strong>Ditar mensagem</strong> explica o uso do áudio antes de
+              ativar o microfone. A fala segue à OpenAI para transcrição. O
+              SkinBoost guarda o texto da conversa neste navegador, sem guardar
+              uma gravação de áudio.
+            </p>
+            <p>
+              Ouvir, conectar, concluir a transcrição e enviar a mensagem são
+              ações diferentes. O texto aparece no composer para leitura e
+              edição. Concluir o ditado não envia a mensagem. A permissão do
+              navegador pode ser negada, e o caminho de digitação continua
+              disponível. Os Storybooks têm uma demonstração identificada que
+              não acessa o microfone nem envia áudio.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Escreva um começo de mensagem antes de ditar.</li>
+                <li>Ative o microfone, fale e conclua o ditado.</li>
+                <li>
+                  Confira o texto anterior e a transcrição, corrija uma palavra
+                  e envie explicitamente.
+                </li>
+                <li>
+                  Teste acesso negado ou perda de conexão; continue digitando.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: a pessoa sabe quando o microfone está ativo, conserva
+                o texto útil e decide quando enviar.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: multimodalidade · revisão · consentimento antes da
+              captura.
+            </div>
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-9"
+                target="_blank"
+                rel="noopener"
+                >09 — Composer</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-23"
+                target="_blank"
+                rel="noopener"
+                >23 — Voz revisável</a
+              >.
+            </p>
+          </section>
+          <section class="lesson" id="alternativas">
+            <span class="number">15 / EXPLORAR</span>
+            <h2>Outra opção conserva o ponto de partida.</h2>
+            <p>
+              <strong>Explorar outra opção</strong> oferece caminhos como gastar
+              menos, simplificar os cuidados ou mudar o foco. Uma nova conversa
+              herda as respostas disponíveis e mostra de qual conversa partiu. O
+              pedido sugerido fica no rascunho para revisão.
+            </p>
+            <p>
+              A original continua guardada. Ajustes na alternativa valem para
+              esse caminho, e <strong>Ver original</strong> permite voltar ao
+              ponto de partida. Herdar uma foto não herda a autorização de
+              enviá-la: a pessoa precisa autorizar novamente. Se a original
+              tiver sido excluída, o produto explica o limite sem apagar o
+              contexto já herdado.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>Crie uma alternativa a partir de uma rotina existente.</li>
+                <li>Altere o orçamento apenas na nova conversa.</li>
+                <li>
+                  Volte à original e confira que seus dados e artefatos foram
+                  preservados.
+                </li>
+                <li>
+                  Recarregue a página e retome cada caminho pelo histórico.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: a pessoa reconhece o caminho aberto, sua origem e o
+                alcance de cada ajuste.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: continuidade · contexto herdado explícito · revisão
+              localizada.
+            </div>
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-28"
+                target="_blank"
+                rel="noopener"
+                >28 — Preservar o trabalho</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-31"
+                target="_blank"
+                rel="noopener"
+                >31 — Histórico e bifurcação</a
+              >.
+            </p>
+          </section>
+          <section class="lesson" id="feedback">
+            <span class="number">16 / CORRIGIR A RESPOSTA</span>
+            <h2>“Não ajudou” pode levar a uma correção.</h2>
+            <p>
+              Cada resposta pode receber uma avaliação de utilidade ou um
+              problema específico: pedido mal entendido, informação suspeita,
+              explicação confusa ou fonte insuficiente. O recibo confirma que a
+              avaliação ficou naquela conversa, neste navegador.
+            </p>
+            <p>
+              Esse registro não é enviado à equipe nem usado para treinar o
+              modelo. Depois dele, a interface oferece ações: rever o contexto,
+              conferir fontes ou preparar um pedido de explicação mais clara. O
+              aviso <strong>A IA pode cometer erros</strong> também abre esses
+              caminhos de verificação, em vez de depender só da ressalva.
+            </p>
+            <details class="test" open>
+              <summary>O que conferir</summary>
+              <ol>
+                <li>
+                  Sinalize um problema numa resposta específica e escolha um
+                  motivo.
+                </li>
+                <li>Confira o recibo local e abra uma ação de revisão.</li>
+                <li>
+                  Recarregue a conversa e confirme a avaliação registrada.
+                </li>
+              </ol>
+              <p class="expected">
+                Critério: fica claro qual resposta recebeu feedback, onde ele
+                foi guardado e como continuar a correção.
+              </p>
+            </details>
+            <div class="principle">
+              Princípios: feedback específico · recibo honesto · falibilidade
+              acionável.
+            </div>
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-27"
+                target="_blank"
+                rel="noopener"
+                >27 — Conferir uma resposta</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-32"
+                target="_blank"
+                rel="noopener"
+                >32 — Feedback útil</a
+              >.
+            </p>
+          </section>
+
+          <section class="lesson" id="avaliacao">
+            <span class="number">NA PRÁTICA / UMA CONVERSA COMPLETA</span>
+            <h2>Abra o chat e experimente.</h2>
+            <p>
+              Este roteiro ajuda professor e cliente a avaliar continuidade,
+              compreensão e controle. São propostas de verificação, não
+              resultados de pesquisa.
+            </p>
+            <ol class="checklist">
+              <li>
+                Escreva uma necessidade própria sobre oleosidade, acne declarada
+                ou cuidado geral.
+              </li>
+              <li>Acrescente o que já usa e o orçamento em linguagem comum.</li>
+              <li>
+                Use uma sugestão e veja a escolha entrar no histórico como
+                mensagem.
+              </li>
+              <li>
+                Confira e corrija o resumo antes de confirmar uma proposta.
+              </li>
+              <li>
+                Abra uma fonte e separe conteúdo educacional de validação do
+                produto.
+              </li>
+              <li>
+                Peça um ajuste e confirme que as mensagens anteriores continuam
+                acessíveis.
+              </li>
+              <li>Compare valores e revise os produtos dentro da conversa.</li>
+              <li>
+                Explore a revisão demonstrativa e o check-in sem perder o
+                contexto.
+              </li>
+              <li>
+                Repita no celular e com teclado; confira o composer e os
+                anúncios de novas mensagens.
+              </li>
+            </ol>
+            <p style="margin-top: 25px">
+              Registre onde a pessoa hesita, o que interpreta de modo diferente
+              e qual informação procura. Essas evidências orientam a próxima
+              mudança na conversa, no acabamento e no sistema.
+            </p>
+            <a class="pill dark" href="/chat"
+              >Conversar agora <span aria-hidden="true">↗</span></a
+            >
+
+            <p class="lesson-sources">
+              <strong>Na aula:</strong>
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-54"
+                target="_blank"
+                rel="noopener"
+                >54 — Pedido, contexto e ação</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-61"
+                target="_blank"
+                rel="noopener"
+                >61 — Critérios de aceitação</a
+              >
+              ·
+              <a
+                href="https://leandro-boost.vercel.app/roteiro#slide-63"
+                target="_blank"
+                rel="noopener"
+                >63 — Entrega verificável</a
+              >.
+            </p>
+          </section>
+        </div>
+      </div>
+      <section class="resources" id="materiais">
+        <div class="wrap">
+          <span class="eyebrow">O mesmo projeto, diferentes perspectivas</span>
+          <h2>Comportamento, identidade e sistema.</h2>
+          <div class="resource-grid">
+            <a href="/chat"
+              >Experiência navegável<span
+                >Execute o percurso e observe os estados no contexto do
+                produto.</span
+              ><small>Abrir /chat ↗</small></a
+            ><a href="/brandbook.html"
+              >Brandbook<span
+                >Consulte a direção de marca e as escolhas de expressão
+                visual.</span
+              ><small>Ver direção visual ↗</small></a
+            ><a href="/storybook/wireframe/"
+              >Storybook · Wireframe<span
+                >Examine os componentes e estados do sistema atual.</span
+              ><small>Abrir catálogo ↗</small></a
+            ><a href="/storybook/alta-fidelidade/"
+              >Storybook · Alta fidelidade<span
+                >Compare a proposta de acabamento em um ambiente separado.</span
+              ><small>Abrir proposta ↗</small></a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap footer-inner">
+        <span
+          >SkinBoost · Projeto conceitual para o Design Boost · Setembro
+          2026</span
+        ><a
+          href="https://leandro-boost.vercel.app/roteiro"
+          target="_blank"
+          rel="noopener"
+          >Fundamentos e narrativa completa da aula ↗</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>

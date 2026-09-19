@@ -172,3 +172,11 @@ export function buildDemoPlan(state) {
     note: "A demonstração organiza respostas; não interpreta sintomas, analisa fotos ou determina o melhor tratamento. Fórmulas, preços e adequação dos produtos ainda precisam ser validados.",
   };
 }
+
+// The composer extends the conversation with artifacts, evidence and checkout states.
+// Both services are pure; the legacy exports remain compatible with existing consumers.
+export {
+  createExperienceState,
+  transitionExperience,
+  composerQuestions,
+} from "./composer-state.js";

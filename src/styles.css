@@ -1240,6 +1240,7 @@ blockquote {
   margin-top: 20px;
 }
 footer {
+  --muted: #5f6b62;
   background: var(--sage);
   overflow: hidden;
 }

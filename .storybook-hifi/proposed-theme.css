@@ -1,0 +1,16 @@
+/* Proposal from brandbook.html — isolated to this catalog, never the live app. */
+:root {
+  --ink: #183e31;
+  --muted: #505752;
+  --paper: #f8f5ed;
+  --sage: #b9c5b3;
+  --lime: #c8e76f;
+  --line: #c7cbc7;
+  --forest: #315e4b;
+  --mist: #eeefe9;
+  font-family: 'Avenir Next', Avenir, Helvetica, Arial, sans-serif;
+}
+.sb-experience {
+  font-family: inherit;
+  --sx-muted: var(--muted);
+}

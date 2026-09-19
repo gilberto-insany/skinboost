@@ -2,15 +2,29 @@ import "./styles.css";
 import "./product-story.css";
 import { $, $$ } from "./ui/dom.js";
 import { closeDialog } from "./ui/dialog.js";
-import { showCheckin } from "./ui/checkin.js";
-import { initChat } from "./chat/chat.js";
+import { validatePhoto } from "./routine.js";
+import { preparePhoto } from "./chat/photo.js";
+import { initChat } from "./chat/composer.js";
 import { initLanding } from "./landing/interactions.js";
 import { initMotion } from "./landing/motion.js";
 
 const prompt = $("#skin-prompt");
 const fileInput = $("#photo");
 let attachmentName = "";
-const chat = initChat({ onCheckin: showCheckin });
+const chat = initChat({
+  onPhotoChange: (name) => {
+    attachmentName = name;
+    $("#attachment").hidden = !name;
+    $("#attachment span").textContent = name;
+    if (!name) fileInput.value = "";
+  },
+  onReset: () => {
+    prompt.value = "";
+    attachmentName = "";
+    fileInput.value = "";
+    $("#attachment").hidden = true;
+  },
+});
 function openChat(goal, attachment = "") {
   closeDialog();
   chat.open(goal, attachment);
@@ -51,35 +65,47 @@ $$(".start").forEach((button) =>
   }),
 );
 $$("[data-demo]").forEach((button) =>
-  button.addEventListener("click", () =>
-    openChat(
-      "Quero começar com poucos passos e entender o que faz parte da minha rotina.",
-    ),
-  ),
+  button.addEventListener("click", () => {
+    closeDialog();
+    chat.demo();
+  }),
 );
 $$("[data-checkin]").forEach((button) =>
-  button.addEventListener("click", showCheckin),
+  button.addEventListener("click", () => {
+    closeDialog();
+    chat.checkin();
+  }),
 );
-fileInput.addEventListener("change", () => {
+fileInput.addEventListener("change", async () => {
   const file = fileInput.files?.[0];
   if (!file) return;
-  if (
-    !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
-    file.size > 10 * 1024 * 1024
-  ) {
-    $("#prompt-error").textContent =
-      "Escolha uma imagem JPG, PNG ou WebP de até 10 MB.";
+  const validationError = validatePhoto(file);
+  if (validationError) {
+    $("#prompt-error").textContent = validationError;
     $("#prompt-error").hidden = false;
     fileInput.value = "";
     return;
   }
+  try {
+    chat.state.photoDataUrl = await preparePhoto(file);
+    chat.state.photoConsent = false;
+  } catch {
+    $("#prompt-error").textContent =
+      "Não consegui abrir a imagem. Escolha outra foto.";
+    $("#prompt-error").hidden = false;
+    return;
+  }
   attachmentName = file.name;
+  chat.state.photoName = file.name;
   $("#attachment").hidden = false;
   $("#attachment span").textContent = attachmentName;
   $("#prompt-error").hidden = true;
 });
 $("#remove-photo").addEventListener("click", () => {
   attachmentName = "";
+  chat.state.photoName = "";
+  chat.state.photoDataUrl = "";
+  chat.state.photoConsent = false;
   fileInput.value = "";
   $("#attachment").hidden = true;
 });

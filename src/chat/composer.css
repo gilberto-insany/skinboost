@@ -1,0 +1,20 @@
+body.composer-open {
+  overflow: hidden;
+}
+body.composer-open > header,
+body.composer-open > main:not(.composer-shell),
+body.composer-open > footer,
+body.composer-open > .skip,
+body.composer-open > .experience-return {
+  display: none;
+}
+.composer-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  border-radius: 0;
+  overscroll-behavior: contain;
+}
+.composer-shell[hidden] {
+  display: none;
+}
