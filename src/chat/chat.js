@@ -20,7 +20,7 @@ export function initChat({ onCheckin }) {
   shell.setAttribute("aria-label", "Conversa SkinBoost");
   shell.innerHTML = `
     <aside class="chat-sidebar" aria-label="Sua conversa">
-      <a class="wordmark" href="/" data-chat-home>skinboost<span>®</span></a>
+      <a class="wordmark" href="/" data-chat-home aria-label="SkinBoost início"><img src="/media/figma/logo-green.svg" alt="SkinBoost" width="158" height="33" /></a>
       <button class="chat-new" data-new-chat>${icon("plus")} Nova conversa</button>
       <div><p class="chat-sidebar-label">NESTA SESSÃO</p><div class="chat-session" id="chat-session">Seu próximo passo</div></div>
       <div class="chat-sidebar-footer"><button data-chat-home>${icon("arrow-left")} Voltar ao site</button>Seu contexto fica neste navegador.<br>Ao recarregar, a conversa é apagada.</div>

@@ -14,13 +14,16 @@
     <a class="skip" href="#main">Pular para o conteúdo</a>
     <header class="nav">
       <a href="#inicio" class="wordmark" aria-label="SkinBoost início"
-        >skinboost<span>®</span></a
-      >
+        ><img
+          src="/media/figma/logo-light.svg"
+          alt="SkinBoost"
+          width="158"
+          height="33"
+      /></a>
       <nav aria-label="Principal">
         <a href="#como-funciona">Como funciona</a
         ><a href="#produtos">Nossos produtos</a
-        ><a href="#evolucao">Sua evolução</a
-        ><a href="/brandbook.html">Brandbook</a>
+        ><a href="#evolucao">Sua evolução</a>
       </nav>
       <div class="nav-actions">
         <button class="start nav-cta">
@@ -37,9 +40,6 @@
     </header>
     <main id="main">
       <section class="hero" id="inicio">
-        <div class="wire-media hero-placeholder">
-          <span>Imagem editorial</span><small>ESPAÇO RESERVADO</small>
-        </div>
         <div class="hero-content">
           <p class="eyebrow light">CIÊNCIA SENSÍVEL. CUIDADO PESSOAL.</p>
           <h1>Sua pele.<br />Seu próximo passo.</h1>
@@ -207,9 +207,7 @@
             role="tabpanel"
             aria-labelledby="step-0"
           >
-            <div class="wire-media step-placeholder">
-              <span>Imagem de pele</span><small>ESPAÇO RESERVADO</small>
-            </div>
+            <div class="step-placeholder" aria-hidden="true"></div>
             <div class="glass-card">
               <span class="tiny"
                 ><i class="ph ph-sparkle" aria-hidden="true"></i> SKINBOOST ·
@@ -236,10 +234,6 @@
         aria-label="Manifesto SkinBoost"
       >
         <div class="film-sticky">
-          <div class="wire-media film-placeholder">
-            <span>Vídeo de fundo · controlado pelo scroll</span
-            ><small>ESPAÇO RESERVADO</small>
-          </div>
           <div class="film-shade"></div>
           <div class="film-copy">
             <p class="eyebrow light">PELE DE VERDADE. VIDA DE VERDADE.</p>
@@ -252,7 +246,10 @@
           <div class="film-footer">
             <span>NO SEU TEMPO.</span>
             <div class="film-track"><span></span></div>
-            <span class="film-toggle">ROLE PARA EXPLORAR</span>
+            <button class="film-toggle" aria-pressed="false">
+              <i class="ph ph-pause" aria-hidden="true"></i
+              ><span>Pausar movimento</span>
+            </button>
           </div>
         </div>
       </section>
@@ -301,7 +298,7 @@
           </article>
           <article class="bento-photo">
             <img
-              src="/media/produtos-skinboost.png"
+              src="/media/figma/bento-products.png"
               alt="Família conceitual de produtos SkinBoost"
               loading="lazy"
             />
@@ -387,7 +384,7 @@
         </div>
         <div class="catalog-photo">
           <img
-            src="/media/produtos-skinboost.png"
+            src="/media/figma/catalog-products.png"
             alt="Cleanse 150 ml, Balance 30 ml e Comfort 50 ml — embalagens conceituais SkinBoost"
             loading="lazy"
           />
@@ -436,16 +433,8 @@
         </div>
         <div>
           <div class="comparison" style="--split: 50%">
-            <div class="compare-half after-image">
-              <div class="wire-media">
-                <span>Depois</span><small>ESPAÇO RESERVADO</small>
-              </div>
-            </div>
-            <div class="compare-half before-image">
-              <div class="wire-media">
-                <span>Antes</span><small>ESPAÇO RESERVADO</small>
-              </div>
-            </div>
+            <div class="compare-half after-image"></div>
+            <div class="compare-half before-image"></div>
             <span class="compare-label before-label">Antes</span
             ><span class="compare-label after-label">Depois</span>
             <div class="compare-divider">
@@ -643,40 +632,86 @@
     </main>
     <footer id="footer">
       <div class="footer-top">
-        <span class="footer-signature"
-          >Ciência sensível.<br />Cuidado pessoal.</span
-        >
-        <div>
-          <a href="#como-funciona">Como funciona</a
-          ><a href="#produtos">Produtos</a><a href="#confianca">Confiança</a
-          ><a href="#duvidas">Dúvidas</a>
+        <p class="footer-signature">Ciência sensível. Cuidado pessoal.</p>
+        <div class="footer-social">
+          <span>Acompanhe nas redes</span>
+          <div>
+            <button
+              class="social-icon social-instagram"
+              data-info="social"
+              aria-label="Instagram — demonstrativo"
+            >
+              <img
+                src="/media/figma/instagram.svg"
+                alt=""
+                width="16"
+                height="16"
+              />
+            </button>
+            <button
+              class="social-icon"
+              data-info="social"
+              aria-label="LinkedIn — demonstrativo"
+            >
+              <img
+                src="/media/figma/linkedin.svg"
+                alt=""
+                width="32"
+                height="32"
+              />
+            </button>
+            <button
+              class="social-icon"
+              data-info="social"
+              aria-label="YouTube — demonstrativo"
+            >
+              <img
+                src="/media/figma/youtube.svg"
+                alt=""
+                width="32"
+                height="32"
+              />
+            </button>
+          </div>
         </div>
       </div>
       <div
         class="footer-image"
         aria-label="Espaço reservado para imagem panorâmica da marca"
       >
-        <span class="tiny">VIDA REAL / UNIVERSO SKINBOOST</span>
-        <span>Imagem editorial<small>ESPAÇO RESERVADO</small></span>
+        <span>VIDA REAL / UNIVERSO SKINBOOST</span><span>Imagem editorial</span
+        ><small>ESPAÇO RESERVADO</small>
+      </div>
+      <div class="footer-content">
+        <div class="footer-navigation">
+          <a href="#inicio" class="wordmark" aria-label="SkinBoost início"
+            ><img
+              src="/media/figma/logo-green.svg"
+              alt="SkinBoost"
+              width="158"
+              height="33"
+          /></a>
+          <nav aria-label="Rodapé">
+            <a href="#como-funciona">Como funciona</a
+            ><a href="#produtos">Produtos</a><a href="#confianca">Confiança</a
+            ><a href="#duvidas">Dúvidas</a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 SkinBoost · Projeto conceitual</span
+          ><button data-info="privacy">Privacidade</button
+          ><button data-info="about">Sobre a demonstração</button
+          ><a href="#inicio"
+            >Voltar ao topo <i class="ph ph-arrow-up" aria-hidden="true"></i
+          ></a>
+        </div>
       </div>
       <a
         class="footer-wordmark"
         href="#inicio"
         aria-label="SkinBoost — voltar ao início"
-        ><svg viewBox="0 0 1000 220" aria-hidden="true" focusable="false">
-          <text x="0" y="185" textLength="1000" lengthAdjust="spacingAndGlyphs">
-            SkinBoost
-          </text>
-        </svg></a
+        >SkinBoost</a
       >
-      <div class="footer-bottom">
-        <span>© 2026 SkinBoost · Projeto conceitual</span
-        ><button data-info="privacy">Privacidade</button
-        ><button data-info="about">Sobre a demonstração</button
-        ><a href="#inicio"
-          >Voltar ao topo <i class="ph ph-arrow-up" aria-hidden="true"></i
-        ></a>
-      </div>
     </footer>
     <dialog id="experience" aria-labelledby="dialog-title">
       <button id="close-dialog" class="icon-btn" aria-label="Fechar">

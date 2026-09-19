@@ -1,32 +1,32 @@
-/* A light editorial stage for the Blender asset. */
+/* Deep green product stage, matched by the WebGL transmission background. */
 .product-story {
-  background: #f0efe7;
-  color: #263d30;
+  background: #0e2820;
+  color: #f4f2e8;
   height: 240vh;
   min-height: 1700px;
 }
 .product-sticky {
   min-height: min(750px, 100svh);
-  background: #f0efe7;
+  background: #0e2820;
 }
 .product-head .eyebrow {
-  color: #53674e;
+  color: #cbd6c5;
 }
 .product-note::before {
-  background: #b2bcac;
+  background: #668174;
 }
 .product-note p {
-  color: #626f60;
+  color: #c3d0c3;
 }
 .product-story-footer {
-  color: #60715b;
+  color: #c3d0c3;
   z-index: 2;
 }
 .product-story-footer a {
-  color: #263d30;
+  color: #f4f2e8;
 }
 #bottle-fallback {
-  mix-blend-mode: multiply;
+  mix-blend-mode: normal;
 }
 @media (max-width: 700px) {
   .product-story {

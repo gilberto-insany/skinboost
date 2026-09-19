@@ -130,6 +130,10 @@ export function initLanding({ openChat }) {
       }),
   );
   const infos = {
+    social: [
+      "Acompanhe a SkinBoost",
+      "Os perfis oficiais ainda não foram definidos. Os ícones representam os canais previstos para a marca.",
+    ],
     privacy: [
       "Sua foto. Sua escolha.",
       "Conversas e fotos ficam salvas neste navegador para você retomar depois. Você pode apagar esses dados na conversa; eles não são sincronizados com uma conta. No modo conectado, o histórico recente é enviado à OpenAI para gerar as respostas. A foto só é enviada com sua autorização explícita. Apagar os dados locais não exclui automaticamente o que já foi processado pelo provedor.",
@@ -140,7 +144,7 @@ export function initLanding({ openChat }) {
     ],
     about: [
       "Uma experiência para explorar.",
-      "Esta é uma experiência conceitual da SkinBoost com conversa por IA quando a conexão com a OpenAI está disponível. As embalagens são conceituais, o frasco é uma cena 3D e as histórias e retratos representam personas fictícias. Não há diagnóstico ou venda. Conversas e fotos são salvas neste navegador; o histórico recente segue à OpenAI no modo conectado, e a foto só é enviada com sua autorização explícita.",
+      "Esta é uma experiência conceitual da SkinBoost com conversa por IA quando a conexão com a OpenAI está disponível. Os espaços de pele e imagem editorial permanecem reservados; os retratos dos relatos são ilustrativos, gerados por IA. As embalagens são conceituais e o frasco é uma cena 3D. Não há diagnóstico ou venda. Conversas e fotos são salvas neste navegador; o histórico recente segue à OpenAI no modo conectado, e a foto só é enviada com sua autorização explícita. O microfone envia áudio para transcrição quando você o ativa; o texto é salvo como rascunho, sem guardar a gravação.",
     ],
   };
   $$("[data-info]").forEach(
