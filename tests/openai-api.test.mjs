@@ -15,6 +15,14 @@ import {
   readJson,
   validatePhotoDataUrl,
 } from "../server/openai-api.mjs";
+import {
+  PRODUCT_LIMITATION,
+  resolveSources,
+} from "../server/skinboost-grounding.mjs";
+import {
+  PHOTO_CHAT_PROVIDER_RESULT,
+  PHOTO_CHAT_RESPONSE,
+} from "./fixtures/photo-chat.mjs";
 
 // All provider calls in this file are mocked. No credential or paid request is used.
 const MOCK_SECRET = "unit-test-secret-not-a-real-key";
@@ -382,6 +390,7 @@ test("chat uses Responses, strict structured output, minimal catalogue and expli
   assert.deepEqual(body.text.format.schema, CHAT_SCHEMA);
   assert.equal(body.text.format.strict, true);
   assert.equal(body.input.at(-1).content[1].image_url, photo);
+  assert.equal(body.input.at(-1).content[1].detail, "high");
   assert.equal(body.input[0].content.includes("not forwarded"), false);
   assert.match(body.input[0].content, /demonstrationPrice/);
   assert.match(body.instructions, /no máximo UMA pergunta/);
@@ -678,6 +687,7 @@ test("simulation uses current image edits JSON contract and always returns illus
   assert.deepEqual(calls[0].body.images, [{ image_url: photo }]);
   assert.equal(calls[0].body.output_format, "jpeg");
   assert.equal(calls[0].body.n, 1);
+  assert.equal(calls[0].body.input_fidelity, "high");
   assert.match(calls[0].body.prompt, /Preserve rigorosamente identidade/);
   assert.match(calls[0].body.prompt, /NÃO É PREVISÃO/);
   assert.deepEqual(result.body, {
@@ -685,6 +695,10 @@ test("simulation uses current image edits JSON contract and always returns illus
     label: IMAGE_LABEL,
     disclaimer: IMAGE_DISCLAIMER,
     kind: "illustration",
+    originalLabel: "Foto enviada",
+    generatedLabel: "Simulação ilustrativa",
+    comparisonLabel: "Foto enviada × ilustração · não é previsão de resultado",
+    sources: resolveSources(["skinboost-p26"]),
   });
 });
 
@@ -925,4 +939,257 @@ test("voice provider timeouts abort without exposing provider errors or credenti
     "timeout",
   );
   assert.equal(aborted, true);
+});
+
+const photoRequest = (overrides = {}) =>
+  request({
+    messages: [
+      {
+        role: "user",
+        text: "Observe minha foto e explique os produtos documentados.",
+      },
+    ],
+    context: {},
+    photoDataUrl: photo,
+    photoConsent: true,
+    analyzePhoto: true,
+    ...overrides,
+  });
+test("explicit photo analysis cannot silently degrade to a text-only request or bypass consent", async () => {
+  const { service, calls } = harness();
+  errorIs(
+    await service("chat", photoRequest({ photoDataUrl: undefined })),
+    400,
+    "photo_required",
+  );
+  errorIs(
+    await service("chat", photoRequest({ photoConsent: false })),
+    400,
+    "photo_consent_required",
+  );
+  errorIs(
+    await service("chat", photoRequest({ analyzePhoto: "yes" })),
+    400,
+    "invalid_request",
+  );
+  assert.equal(calls.length, 0);
+});
+test("photo observations and cited product explanations arrive before a full routine context is ready", async () => {
+  const { service, calls } = harness({
+    result: providerOutput(PHOTO_CHAT_PROVIDER_RESULT),
+  });
+  const result = await service("chat", photoRequest());
+  assert.equal(result.status, 200);
+  assert.deepEqual(result.body, PHOTO_CHAT_RESPONSE);
+  assert.equal(result.body.ready, false);
+  assert.deepEqual(result.body.context, {});
+  assert.equal(result.body.productMatches.length, 2);
+  const provider = calls[0].body;
+  assert.equal(Object.keys(provider.text.format.schema.properties)[0], "text");
+  assert.match(provider.input[0].content, /CONTEXTO DOCUMENTAL SKINBOOST/);
+  assert.match(provider.input[0].content, /skinboost-p13/);
+  assert.match(provider.input[0].content, /ainda não foram desenvolvidas/);
+  assert.match(provider.instructions, /não adie a observação visual/);
+  assert.match(
+    provider.instructions,
+    /não preencha context.detail, scenario, sensitivity ou duration a partir da foto/,
+  );
+  assert.equal(JSON.stringify(result.body).includes(photo), false);
+});
+test("an explicit analysis must finish with observations or an honest limitation instead of silently ignoring the image", async () => {
+  const { service, calls } = harness();
+  errorIs(await service("chat", photoRequest()), 502, "photo_not_analyzed");
+  assert.equal(calls.length, 1);
+  const incomplete = {
+    ...PHOTO_CHAT_PROVIDER_RESULT,
+    photoAnalysis: {
+      ...PHOTO_CHAT_PROVIDER_RESULT.photoAnalysis,
+      status: "not_provided",
+    },
+  };
+  errorIs(
+    await harness({ result: providerOutput(incomplete) }).service(
+      "chat",
+      photoRequest(),
+    ),
+    502,
+    "photo_not_analyzed",
+  );
+});
+test("legacy chat outputs remain readable and visual metadata cannot invent an absent image", async () => {
+  const legacy = await harness().service("chat", request());
+  assert.equal(legacy.status, 200);
+  assert.equal(legacy.body.photoAnalysis.status, "not_provided");
+  assert.deepEqual(legacy.body.productMatches, []);
+  const hallucinated = await harness({
+    result: providerOutput(PHOTO_CHAT_PROVIDER_RESULT),
+  }).service("chat", request());
+  assert.equal(hallucinated.status, 200);
+  assert.deepEqual(hallucinated.body.photoAnalysis, {
+    status: "not_provided",
+    summary: "",
+    observations: [],
+    limitations: [],
+    confirmationQuestion: "",
+  });
+});
+test("product IDs, cited pages and URLs are controlled by the document registry", async () => {
+  const base = structuredClone(PHOTO_CHAT_PROVIDER_RESULT);
+  const invalids = [
+    { ...base, sourceIds: ["made-up-study"] },
+    {
+      ...base,
+      sources: [
+        { id: "skinboost-p13", url: "https://evil.example", page: 999 },
+      ],
+    },
+    {
+      ...base,
+      productMatches: [{ ...base.productMatches[0], productId: "invented" }],
+    },
+    {
+      ...base,
+      productMatches: [
+        { ...base.productMatches[0], sourceIds: ["skinboost-p26"] },
+      ],
+    },
+    {
+      ...base,
+      productMatches: [
+        {
+          ...base.productMatches[0],
+          sourceIds: ["skinboost-p6", "skinboost-p13"],
+        },
+      ],
+    },
+    { ...base, productMatches: [{ ...base.productMatches[0], sourceIds: [] }] },
+    {
+      ...base,
+      productMatches: [
+        { ...base.productMatches[0], url: "https://evil.example" },
+      ],
+    },
+    {
+      ...base,
+      productMatches: [base.productMatches[0], base.productMatches[0]],
+    },
+  ];
+  for (const value of invalids)
+    errorIs(
+      await harness({ result: providerOutput(value) }).service(
+        "chat",
+        photoRequest(),
+      ),
+      502,
+      "invalid_provider_response",
+    );
+  const changedLimit = {
+    ...base,
+    productMatches: [
+      {
+        ...base.productMatches[0],
+        limitation: "Provider-generated replacement",
+      },
+    ],
+  };
+  const valid = await harness({ result: providerOutput(changedLimit) }).service(
+    "chat",
+    photoRequest(),
+  );
+  assert.equal(valid.body.productMatches[0].limitation, PRODUCT_LIMITATION);
+  assert.equal(
+    valid.body.sources.every((source) =>
+      /^\/sources\/skinboost-page-(6|7|13|26)\.pdf$/.test(source.url),
+    ),
+    true,
+  );
+  assert.equal(
+    valid.body.sources.find((source) => source.id === "skinboost-p13").page,
+    13,
+  );
+});
+test("visual analysis validates statuses, useful observations, limits and bounded metadata", async () => {
+  const base = structuredClone(PHOTO_CHAT_PROVIDER_RESULT);
+  for (const photoAnalysis of [
+    { ...base.photoAnalysis, status: "diagnosed" },
+    { ...base.photoAnalysis, observations: [] },
+    { ...base.photoAnalysis, limitations: [] },
+    { ...base.photoAnalysis, summary: "a".repeat(701) },
+    { ...base.photoAnalysis, observations: ["a".repeat(301)] },
+    { ...base.photoAnalysis, condition: "medical inference" },
+  ])
+    errorIs(
+      await harness({
+        result: providerOutput({ ...base, photoAnalysis }),
+      }).service("chat", photoRequest()),
+      502,
+      "invalid_provider_response",
+    );
+  const limited = await harness({
+    result: providerOutput({
+      ...base,
+      productMatches: [],
+      photoAnalysis: {
+        ...base.photoAnalysis,
+        status: "limited",
+        observations: [],
+        summary: "A iluminação não permite observar com clareza.",
+      },
+    }),
+  }).service("chat", photoRequest());
+  assert.equal(limited.status, 200);
+  assert.equal(limited.body.photoAnalysis.status, "limited");
+});
+test("cancelling a generation also aborts the paid upstream image request", async () => {
+  const controller = new AbortController();
+  let ready,
+    upstreamAborted = false;
+  const pending = new Promise((resolve) => {
+    ready = resolve;
+  });
+  const { service, calls } = harness({
+    fetchImpl: async (_, { signal }) =>
+      new Promise((resolve, reject) => {
+        signal.addEventListener("abort", () => {
+          upstreamAborted = true;
+          reject(new DOMException("Aborted", "AbortError"));
+        });
+        ready();
+      }),
+  });
+  const result = service(
+    "simulate",
+    request({ consent: true, photoDataUrl: photo }),
+    { signal: controller.signal },
+  );
+  await pending;
+  controller.abort();
+  errorIs(await result, 499, "cancelled");
+  assert.equal(upstreamAborted, true);
+  assert.equal(calls.length, 1);
+});
+
+test("care responses deterministically discard product matches before adding their citations", async () => {
+  for (const productMatches of [
+    PHOTO_CHAT_PROVIDER_RESULT.productMatches,
+    [{ productId: "unknown", reason: "Contradictory provider recommendation" }],
+  ]) {
+    const result = await harness({
+      result: providerOutput({
+        ...PHOTO_CHAT_PROVIDER_RESULT,
+        care: true,
+        ready: true,
+        productMatches,
+        sourceIds: [],
+      }),
+    }).service("chat", photoRequest());
+    assert.equal(result.status, 200);
+    assert.equal(result.body.care, true);
+    assert.equal(result.body.ready, false);
+    assert.deepEqual(result.body.productMatches, []);
+    assert.deepEqual(
+      result.body.sources.map((source) => source.id),
+      ["skinboost-p6"],
+    );
+  }
 });

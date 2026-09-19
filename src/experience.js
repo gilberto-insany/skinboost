@@ -8,6 +8,12 @@ import {
   appendUserMessage,
   acceptAssistantResponse,
 } from "./chat/thread-state.js";
+import {
+  photoRequestIntent,
+  renderPhotoEvidence,
+  renderPhotoComparison,
+  safePhoto,
+} from "./chat/photo-experience.js";
 import { preparePhoto } from "./chat/photo.js";
 import { createVoiceInput } from "./chat/voice-input.js";
 import { readChatResponse } from "./chat/response-stream.js";
@@ -99,6 +105,7 @@ export function mountExperience(element, options = {}) {
         },
       ],
     });
+  if (options.initialMessage) state.draft = options.initialMessage;
   element.classList.add("sb-experience");
   element.innerHTML = `<aside class="sx-sidebar"><a class="sx-wordmark" href="/" data-action="home">skinboost<span>®</span></a>${button(icon("plus") + " Nova conversa", "reset", "new")}<div class="sx-sidebar-label">CONVERSAS SALVAS</div><nav class="sx-session-list" data-session-list aria-label="Conversas salvas"></nav><div class="sx-session" data-current-session>${icon("chat-circle-text")}<span data-session-title>Seu próximo cuidado</span></div><div class="sx-sidebar-bottom"><span class="sx-mini-orbit">${icon("sparkle")}</span><p>Boas escolhas<br>começam com uma<br><strong>boa conversa.</strong></p>${button(icon("shield-check") + " Sobre seus dados", "privacy", "text")}<a href="/guia.html" target="_blank" rel="noopener">Conheça a experiência ${icon("arrow-up-right")}</a></div></aside><button class="sx-history-scrim" data-action="close-history" aria-label="Fechar histórico"></button><div class="sx-chat"><header class="sx-top"><div>${button(icon("sidebar-simple") + '<span class="sr-only">Conversas salvas</span>', "history", "icon sx-mobile-only")}<a href="/" data-action="home" class="sx-mobile-brand">skinboost<span>®</span></a><span class="sx-top-title">Sua conversa</span><span class="sx-mode" data-mode>Preparando…</span></div><div class="sx-top-actions">${button(icon("path") + '<span class="sx-hide-small">Outra opção</span>', "alternative", "text", 'aria-label="Explorar outra opção" data-alternative-control')}${button(icon("notebook") + '<span class="sx-hide-small">Seu contexto</span>', "context", "text", 'aria-label="Seu contexto"')}${button(icon("plus") + '<span class="sr-only">Nova conversa</span>', "reset", "icon sx-mobile-only")}${options.onClose ? button(icon("x") + '<span class="sr-only">Fechar experiência</span>', "close", "icon") : ""}</div></header><div data-branch-banner></div><div class="sx-scroll"><section class="sx-thread" role="log" aria-label="Conversa com SkinBoost" aria-live="polite" aria-relevant="additions text"></section></div><button type="button" class="sx-new-messages" data-action="latest" hidden>Ver mensagem mais recente ↓</button><div class="sx-dock"><div class="sx-voice-status" role="status" data-voice-status hidden></div><div class="sx-error" role="alert" data-error hidden></div><form data-form="message" class="sx-composer"><div data-file></div><label class="sr-only" for="sx-message">Sua mensagem</label><textarea id="sx-message" rows="1" maxlength="2000" placeholder="Conte o que sua pele precisa…"></textarea><div class="sx-composer-tools"><label class="sx-attach" title="Adicionar foto">${icon("plus")}<span>Foto</span><input class="sr-only" type="file" data-photo accept="image/jpeg,image/png,image/webp"></label><span class="sx-composer-caption" data-save-status>No seu tempo. Do seu jeito.</span><button type="button" class="sx-mic" data-action="voice" aria-label="Ditar mensagem" title="Ditar mensagem">${icon("microphone")}</button><button type="submit" class="sx-send" aria-label="Enviar mensagem">${icon("arrow-up")}</button></div></form><p class="sx-disclaimer" data-disclaimer></p></div></div><dialog class="sx-dialog" aria-labelledby="sx-dialog-title"><div data-dialog-body></div></dialog>`;
   const thread = local(".sx-thread"),
@@ -204,7 +211,7 @@ export function mountExperience(element, options = {}) {
     const markup =
       state.messages.map((m) => message(m, m === last)).join("") +
       (pending
-        ? `<article class="sx-message sx-assistant sx-thinking" data-message-id="pending-response" aria-label="SkinBoost · resposta em andamento"><span class="sx-avatar">${icon("sparkle")}</span><div>${streaming || `<span class="sx-typing"><b></b><b></b><b></b></span><span class="sx-thinking-label">${state.generatingImage ? "Criando uma ilustração. Pode levar alguns minutos…" : mode === "live" ? "SkinBoost está preparando a resposta…" : "Preparando o próximo passo…"}</span>`}</div></article>`
+        ? `<article class="sx-message sx-assistant sx-thinking" data-message-id="pending-response" aria-label="SkinBoost · resposta em andamento"><span class="sx-avatar">${icon("sparkle")}</span><div>${streaming || `<span class="sx-typing"><b></b><b></b><b></b></span><span class="sx-thinking-label">${state.generatingImage ? "Criando uma ilustração. Pode levar alguns minutos…" : mode === "live" ? (state.failedAnalyzePhoto ? "Observando sua foto e conferindo as fontes…" : "SkinBoost está preparando a resposta…") : "Preparando o próximo passo…"}</span>`}</div></article>`
         : "");
     // Keep existing message nodes stable; animate only genuinely new messages.
     const template = document.createElement("template");
@@ -273,7 +280,10 @@ export function mountExperience(element, options = {}) {
   function photoMarkup() {
     if (photoPending) return '<p class="sx-file-note">Preparando foto…</p>';
     if (!state.photoName) return "";
-    return `<div class="sx-file">${state.photoDataUrl ? `<img src="${state.photoDataUrl}" alt="Sua foto anexada">` : icon("image")}<span>${esc(state.photoName)}<small>${state.photoDataUrl ? "Foto disponível nesta sessão" : "Selecione a foto novamente para enviar à IA"}</small></span>${button(icon("x") + '<span class="sr-only">Remover foto</span>', "remove-photo", "icon")}</div>${state.photoDataUrl ? `<label class="sx-consent"><input type="checkbox" data-photo-consent ${state.photoConsent ? "checked" : ""}> Autorizo enviar esta foto à OpenAI para conversar sobre ela e, quando eu pedir, criar uma simulação ilustrativa.</label>${button("Criar ilustração com esta foto", "simulate", "text")}` : ""}`;
+    const controls = `<div class="sx-file">${safePhoto(state.photoDataUrl) ? `<img src="${state.photoDataUrl}" alt="Sua foto anexada">` : icon("image")}<span>${esc(state.photoName)}<small>${state.photoDataUrl ? "Foto guardada nesta conversa" : "Selecione a foto novamente para enviar à IA"}</small></span>${button(icon("x") + '<span class="sr-only">Remover foto</span>', "remove-photo", "icon")}</div>${state.photoDataUrl ? `<label class="sx-consent"><input type="checkbox" data-photo-consent ${state.photoConsent ? "checked" : ""}> Autorizo enviar esta foto à OpenAI para conversar sobre ela e, quando eu pedir, criar uma simulação ilustrativa.</label><div class="sx-photo-actions">${button(icon("scan") + " Analisar minha foto", "analyze-photo", "primary", pending ? "disabled" : "")}${button("Criar ilustração", "simulate", "text", pending ? "disabled" : "")}</div>` : ""}`;
+    return state.photoSubmitted && state.photoConsent
+      ? `<details class="sx-attached-details"><summary>${icon("image")} Foto na conversa · envio autorizado</summary>${controls}</details>`
+      : controls;
   }
   function message(m, active) {
     const welcome =
@@ -310,8 +320,15 @@ export function mountExperience(element, options = {}) {
       content =
         `<div class="sx-context-diff"><span>${icon("pencil-simple")} O que mudou</span>${m.contextChanges.map((c) => `<p><strong>${fields[c.key]}</strong><s>${esc(c.before)}</s><b>${esc(c.after)}</b></p>`).join("")}<small>As outras respostas foram preservadas.</small></div>` +
         content;
-    if (m.kind === "simulation")
-      content = `<figure class="sx-simulation"><div class="sx-image-pair"><div><img src="${m.original}" alt="Foto original enviada por você"><span>Foto original</span></div><div><img src="${m.image}" alt="Simulação visual ilustrativa gerada por inteligência artificial"><span>ILUSTRAÇÃO COM IA · NÃO É PREVISÃO</span></div></div><figcaption>Exercício visual sobre aparência, sem prazo ou resultado garantido. Não demonstra o efeito de nenhum produto nem mede melhora clínica.</figcaption></figure>`;
+    if (m.kind === "simulation") content = renderPhotoComparison(m);
+    content += renderPhotoEvidence(m, {
+      canSimulate:
+        active &&
+        !pending &&
+        !!state.photoDataUrl &&
+        !!state.photoConsent &&
+        state.step !== "care",
+    });
     if (m.inherited)
       content = content.replaceAll(
         "<button ",
@@ -321,7 +338,7 @@ export function mountExperience(element, options = {}) {
       m.choices?.length && active && !pending && !m.inherited
         ? `<div class="sx-chip-row">${m.choices.map((c) => reply(c.label, c.value, true)).join("")}</div>`
         : "";
-    return `<article class="sx-message sx-${m.role}" data-message-id="${esc(m.id)}" data-role="${m.role}" aria-label="${m.role === "user" ? "Você" : "SkinBoost · assistente de IA"}">${m.role === "assistant" ? `<span class="sx-avatar">${icon("sparkle")}</span>` : ""}<div class="sx-message-body">${welcome ? `<div class="sx-welcome-kicker">SEU CUIDADO, EM CONVERSA</div><h1>Vamos entender<br>o que sua pele precisa?</h1>` : ""}${m.text ? `<div class="sx-message-text">${esc(m.text)}</div>` : ""}${content}${choices}${m.role === "assistant" && !welcome && m.kind !== "partial" && !m.inherited ? `<div class="sx-response-tools">${button(icon("thumbs-up") + '<span class="sr-only">Esta resposta ajudou</span>', "helpful", "icon", `data-message-id="${esc(m.id)}" aria-pressed="${m.feedback?.reason === "Ajudou"}"`)}${button(icon("chat-centered-dots") + "Sinalizar um problema", "feedback", "text", `data-message-id="${esc(m.id)}"`)}${active && state.context.intent ? button(icon("path") + "Explorar outra opção", "alternative", "text") : ""}${m.feedback ? "<small>Feedback salvo nesta conversa</small>" : ""}</div>` : ""}</div></article>`;
+    return `<article class="sx-message sx-${m.role}" data-message-id="${esc(m.id)}" data-role="${m.role}" aria-label="${m.role === "user" ? "Você" : "SkinBoost · assistente de IA"}">${m.role === "assistant" ? `<span class="sx-avatar">${icon("sparkle")}</span>` : ""}<div class="sx-message-body">${welcome ? `<div class="sx-welcome-kicker">SEU CUIDADO, EM CONVERSA</div><h1>Vamos entender<br>o que sua pele precisa?</h1>` : ""}${safePhoto(m.photo) ? `<figure class="sx-message-photo"><img src="${m.photo}" alt="Foto que você enviou para esta conversa"><figcaption>Sua foto · enviada com autorização</figcaption></figure>` : ""}${m.text ? `<div class="sx-message-text">${esc(m.text)}</div>` : ""}${content}${choices}${m.role === "assistant" && !welcome && m.kind !== "partial" && !m.inherited ? `<div class="sx-response-tools">${button(icon("thumbs-up") + '<span class="sr-only">Esta resposta ajudou</span>', "helpful", "icon", `data-message-id="${esc(m.id)}" aria-pressed="${m.feedback?.reason === "Ajudou"}"`)}${button(icon("chat-centered-dots") + "Sinalizar um problema", "feedback", "text", `data-message-id="${esc(m.id)}"`)}${active && state.context.intent ? button(icon("path") + "Explorar outra opção", "alternative", "text") : ""}${m.feedback ? "<small>Feedback salvo nesta conversa</small>" : ""}</div>` : ""}</div></article>`;
   }
   const reply = (label, value, active = true) =>
     `<button type="button" class="sx-reply" data-reply="${esc(value)}" ${!active || pending ? "disabled" : ""}>${esc(label)}${icon("arrow-up-left")}</button>`;
@@ -395,30 +412,51 @@ export function mountExperience(element, options = {}) {
       rows.shift();
     return rows;
   }
-  async function submit(text, { preserveDraft = false, retry = false } = {}) {
-    if (pending || mode === "checking" || voiceBusy()) return;
+  async function submit(
+    text,
+    { preserveDraft = false, retry = false, analyzePhoto = false } = {},
+  ) {
+    if (pending || photoPending || mode === "checking" || voiceBusy()) return;
     text = String(text || "").trim();
+    const intent = photoRequestIntent(text);
+    analyzePhoto =
+      analyzePhoto ||
+      (retry && !!state.failedAnalyzePhoto) ||
+      (!!state.photoDataUrl && (intent.analysis || !state.photoSubmitted));
+    if (!text && state.photoDataUrl) {
+      text = "Analise minha foto e me ajude a entender o próximo cuidado.";
+      analyzePhoto = true;
+    }
     if (!text) {
       state.error = "Escreva uma mensagem para começarmos.";
       render({ scrollToEnd: false });
       input.focus();
       return;
     }
+    if (analyzePhoto && !state.photoDataUrl) {
+      state.error = "Adicione a foto que você quer analisar.";
+      render({ scrollToEnd: false });
+      return;
+    }
+    if (state.photoDataUrl && !state.photoConsent) {
+      state.error =
+        "Autorize o envio da foto abaixo para a IA conseguir observá-la. Você também pode remover o anexo e conversar só por texto.";
+      render({ scrollToEnd: false });
+      local("[data-photo-consent]")?.focus();
+      return;
+    }
+    if (analyzePhoto && mode !== "live") {
+      state.error =
+        "A análise da foto precisa da conexão com a OpenAI. Sua foto e sua mensagem foram preservadas; tente novamente quando a conexão estiver disponível.";
+      render({ scrollToEnd: false });
+      return;
+    }
     followLatest = true;
     state.error = "";
-    if (
-      /simula[cç][aã]o|simular|ger(?:ar|e) (?:uma )?imagem|ver como.*ficar/i.test(
-        text,
-      ) &&
-      !retry
-    ) {
-      if (!preserveDraft) {
-        state.draft = "";
-        input.value = "";
-        resizeInput();
-      }
-      return simulate();
-    }
+    if (intent.simulation && !analyzePhoto && !retry)
+      return simulate({ clearDraft: !preserveDraft });
+    const illustrateAfter = intent.simulation && analyzePhoto;
+    let analysisAccepted = false;
     if (!preserveDraft) {
       state.draft = "";
       input.value = "";
@@ -437,7 +475,16 @@ export function mountExperience(element, options = {}) {
     }
     const draft = state.draft;
     if (!retry) update(appendUserMessage(state, text));
+    if (!retry && state.photoConsent && state.photoDataUrl) {
+      const previousPhoto = state.messages
+        .slice(0, -1)
+        .findLast((m) => m.photo)?.photo;
+      if (analyzePhoto || previousPhoto !== state.photoDataUrl)
+        state.messages.at(-1).photo = state.photoDataUrl;
+      state.photoSubmitted = true;
+    }
     state.failedText = text;
+    state.failedAnalyzePhoto = analyzePhoto;
     const requestEpoch = ++epoch;
     if (preserveDraft) state.draft = draft;
     pending = true;
@@ -459,6 +506,7 @@ export function mountExperience(element, options = {}) {
           context: state.context,
           photoDataUrl: state.photoConsent ? state.photoDataUrl : undefined,
           photoConsent: !!state.photoConsent,
+          analyzePhoto,
         }),
       });
       const result = await readChatResponse(response, {
@@ -471,6 +519,10 @@ export function mountExperience(element, options = {}) {
       if (disposed || requestEpoch !== epoch) return;
       state.streamText = "";
       update(acceptAssistantResponse(state, result));
+      analysisAccepted =
+        result.photoAnalysis?.status === "observed" &&
+        !result.care &&
+        state.step !== "care";
       recordContextChanges(
         state,
         contextBefore,
@@ -494,8 +546,15 @@ export function mountExperience(element, options = {}) {
         if (!disposed) render();
       }
     }
+    if (
+      illustrateAfter &&
+      analysisAccepted &&
+      !disposed &&
+      requestEpoch === epoch
+    )
+      await simulate();
   }
-  async function simulate() {
+  async function simulate({ clearDraft = false, retry = false } = {}) {
     if (pending) return;
     if (mode !== "live") {
       state.error =
@@ -516,12 +575,27 @@ export function mountExperience(element, options = {}) {
       local("[data-photo-consent]")?.focus();
       return;
     }
+    if (state.step === "care") {
+      state.error =
+        "Vamos priorizar a avaliação profissional indicada nesta conversa.";
+      render({ scrollToEnd: false });
+      return;
+    }
+    if (clearDraft) {
+      state.draft = "";
+      input.value = "";
+      resizeInput();
+    }
     const original = state.photoDataUrl;
     const requestEpoch = ++epoch;
-    append(
-      "user",
-      "Quero criar uma simulação visual ilustrativa com minha foto.",
-    );
+    if (!retry)
+      append(
+        "user",
+        "Quero criar uma simulação visual ilustrativa com minha foto.",
+        "text",
+        { photo: original },
+      );
+    state.photoSubmitted = true;
     pending = true;
     state.generatingImage = true;
     state.requestKind = "image";
@@ -557,8 +631,10 @@ export function mountExperience(element, options = {}) {
         );
       }
     } catch (error) {
-      if (requestEpoch === epoch && error.name !== "AbortError")
+      if (requestEpoch === epoch && error.name !== "AbortError") {
         state.error = error.message;
+        state.failedRequest = true;
+      }
     } finally {
       if (requestEpoch === epoch) {
         pending = false;
@@ -785,7 +861,7 @@ export function mountExperience(element, options = {}) {
       return;
     }
     if (action === "retry") {
-      if (state.requestKind === "image") return simulate();
+      if (state.requestKind === "image") return simulate({ retry: true });
       return submit(state.failedText, { preserveDraft: true, retry: true });
     }
     if (action === "history" || action === "close-history") {
@@ -864,6 +940,7 @@ export function mountExperience(element, options = {}) {
       }
       state.photoName = "";
       state.photoDataUrl = "";
+      state.photoSubmitted = false;
       state.photoConsent = false;
       options.onPhotoChange?.("");
       render({ scrollToEnd: false });
@@ -892,6 +969,12 @@ export function mountExperience(element, options = {}) {
       render();
       return;
     }
+    if (action === "analyze-photo")
+      return submit(
+        input.value ||
+          "Analise minha foto e me ajude a entender o próximo cuidado.",
+        { analyzePhoto: true },
+      );
     if (action === "simulate") return simulate();
     if (action === "edit" && mode === "live") {
       state.editingKey = target.dataset.key;
@@ -935,6 +1018,7 @@ export function mountExperience(element, options = {}) {
       try {
         const data = await preparePhoto(file);
         if (disposed || photoEpoch !== epoch) return;
+        state.photoSubmitted = false;
         state.photoName = file.name;
         state.photoDataUrl = data;
         state.photoConsent = false;
@@ -973,6 +1057,15 @@ export function mountExperience(element, options = {}) {
     input.style.height = `${Math.min(input.scrollHeight, 128)}px`;
   }
   function onInput(event) {
+    if (event.target.matches("[data-photo-compare]")) {
+      const value = Math.max(0, Math.min(100, Number(event.target.value) || 0));
+      event.target
+        .closest(".sx-simulation")
+        .querySelector(".sx-photo-compare")
+        .style.setProperty("--reveal", `${value}%`);
+      event.target.setAttribute("aria-valuetext", `${value}% da foto original`);
+      return;
+    }
     if (event.target === input) {
       voice?.handleTypedInput();
       state.draft = input.value;

@@ -1,3 +1,4 @@
+import { photoResponseFields } from "./photo-experience.js";
 import { CATALOG, buildRoutine } from "../routine.js";
 
 // Local, deterministic conversation for the prototype; not a model or diagnosis.
@@ -830,6 +831,7 @@ export function acceptAssistantResponse(input, result) {
     return state;
   }
   const text = clean(result.text);
+  const photoFields = photoResponseFields(result);
   if (result.context && typeof result.context === "object") {
     for (const key of Object.keys(CONTEXT)) {
       const value = result.context[key];
@@ -855,11 +857,16 @@ export function acceptAssistantResponse(input, result) {
         ? text
         : "O relato anterior pede avaliação profissional. A seleção de produtos permanece interrompida nesta conversa.",
     );
+    Object.assign(state.messages.at(-1), {
+      ...photoFields,
+      productMatches: [],
+    });
     event(state, "professional_care_suggested");
     return state;
   }
   if (result.ready === true) {
     review(state, text);
+    Object.assign(state.messages.at(-1), photoFields);
     event(state, "assistant_review_ready");
     return state;
   }
@@ -880,6 +887,7 @@ export function acceptAssistantResponse(input, result) {
     kind: "question",
     questionKey: state.questionKey,
     choices: options,
+    ...photoFields,
   });
   event(state, "assistant_response_received");
   return state;
