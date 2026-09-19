@@ -53,3 +53,6 @@ Follow https://www.figma.com/design/0wIp15KlSyc919z2jsqgHa?node-id=2091-2 for th
 
 ## Footer simplification — 19 September 2026
 Latest user override: remove the panoramic footer image/placeholder and its reserved area. Rebalance the remaining signature, social links, navigation and legal rows into a compact footer, preserving the oversized SkinBoost wordmark. This supersedes the image requirement above.
+
+## Integrated main release
+Leandro explicitly authorized merging the complete `composer-experience` implementation into `main`, together with Gilberto's latest work, and publishing the combined version to Vercel production. Preserve both histories and concurrent landing changes; never force-push main. The existing Vercel production project is `skinboost-design-review`, with the app at `/` and conversation at `/chat`.
