@@ -56,3 +56,5 @@ Latest user override: remove the panoramic footer image/placeholder and its rese
 
 ## Integrated main release
 Leandro explicitly authorized merging the complete `composer-experience` implementation into `main`, together with Gilberto's latest work, and publishing the combined version to Vercel production. Preserve both histories and concurrent landing changes; never force-push main. The existing Vercel production project is `skinboost-design-review`, with the app at `/` and conversation at `/chat`.
+## Revised Figma footer — 19 September 2026
+Follow node 2114:2089: top row combines official logo, vertical divider and compact signature at left with navigation at right. Oversized cropped SkinBoost comes next. Copyright, socials, privacy, demo and back-to-top share the final row. Wrap these rows on smaller screens; no editorial image.
