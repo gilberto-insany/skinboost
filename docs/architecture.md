@@ -79,3 +79,9 @@ Comandos: `npm test`, `npm run format:check`, `npm run build:review`, `node scri
 Testes unitários e QA com respostas controladas verificam contratos e comportamentos: consentimento, fontes, observação antes de completar toda a rotina, comparador por teclado, repetição sem duplicação e restauração sem autorização. Não comprovam qualidade clínica nem nova chamada ao provedor.
 
 Registros históricos de chat SSE e transcrição reais estão identificados no README e em `qa/stream-live/` e `qa/voice-live/`, fora do Git. Contagens daquela revisão não certificam automaticamente alterações posteriores. Cada nova validação em produção deve identificar o que efetivamente executou.
+
+## Unified Sites publication
+
+The GitHub `main` source now includes both Leandro's conversation work and Gilberto's landing. Sites publishes this same source, including both Storybooks. The Node/Sharp AI service continues at `https://skinboost-design-review.vercel.app`; `worker/index.js` is a narrow same-origin gateway for status, chat, simulation and voice-session only. It validates the public Sites origin and method, caps request bodies, recreates only allowed upstream headers, strips credentials/cookies and streams responses without caching. There is no API key in Sites or the browser. Both frontends depend on that Vercel backend's availability and provider quotas. Upstream per-instance rate limits remain shared; this does not introduce global abuse quotas.
+
+The testimonial gallery lives in `src/landing/stories.js` and `stories.css`. The same HTML is extracted by the wireframe Storybook. Its controller returns `destroy()` for observers, animation frames and listeners. The eight-second rotation pauses on mouse hover, keyboard focus, page visibility and when outside the viewport. Reduced motion starts paused; manual selection is always available.

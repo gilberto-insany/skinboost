@@ -1093,12 +1093,6 @@ h1 {
   display: grid;
   place-items: center;
 }
-.story {
-  padding: 60px 60px 28px;
-
-  background: #eceee3;
-  border-radius: 18px;
-}
 .quote-mark {
   font-size: 88px;
   line-height: 0.7;
@@ -1115,43 +1109,6 @@ blockquote {
   letter-spacing: 0;
   max-width: 880px;
   margin: 22px 0 37px;
-}
-.story-person {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-
-  font-size: 14px;
-}
-.story-person img {
-  width: 80px;
-  height: 80px;
-  flex: 0 0 80px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid #c8d0be;
-}
-.story-person-details {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.story-person span + span {
-  color: var(--muted);
-
-  font-size: 14px;
-}
-.story-bottom {
-  border-top: 1px solid #c8d0be;
-  padding-top: 23px;
-  margin-top: 45px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-
-  font-size: 12px;
-
-  letter-spacing: 0;
 }
 .trust {
   border-top: 1px solid var(--line);
@@ -1961,21 +1918,6 @@ dialog .actions .pill {
     width: 35px;
     height: 35px;
   }
-  .story {
-    padding: 35px 25px 25px;
-  }
-  .story blockquote {
-    font-size: 28px;
-    margin: 20px 0 30px;
-  }
-  .story-bottom {
-    font-size: 7px;
-    line-height: 1.5;
-    margin-top: 30px;
-  }
-  .story-bottom span:first-child {
-    max-width: 230px;
-  }
   .trust h2 {
     font-size: 37px;
   }
@@ -2288,9 +2230,6 @@ dialog .actions .pill {
   }
   .comparison-foot,
   .comparison-foot span:last-child {
-    font-size: 10px;
-  }
-  .story-bottom {
     font-size: 10px;
   }
 }
