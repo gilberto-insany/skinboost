@@ -1,3 +1,4 @@
+import { initStories } from "./stories.js";
 import { icon } from "../ui/dom.js";
 
 /** Same landing interactions in the app and isolated component catalogs. */
@@ -93,39 +94,7 @@ export function initLanding({
     (e) => $(".comparison").style.setProperty("--split", `${e.target.value}%`),
     { signal: events.signal },
   );
-  const stories = [
-    [
-      "Quero começar com poucos passos e entender onde meu dinheiro está indo.",
-      "Lucas, 26",
-      "Começar sem complicar.",
-      "/media/persona-lucas.jpg",
-    ],
-    [
-      "Quero entender se a indicação considera o que já uso e o que minha pele tolera.",
-      "Marina, 29",
-      "Confiança para fazer escolhas.",
-      "/media/persona-marina.jpg",
-    ],
-    [
-      "Quero cuidar da pele sem transformar minha rotina em uma obrigação difícil.",
-      "Denise, 48",
-      "Cuidado que cabe na vida.",
-      "/media/persona-denise.jpg",
-    ],
-  ];
-  let storyIndex = 0;
-  function showStory(delta) {
-    storyIndex = (storyIndex + delta + stories.length) % stories.length;
-    $("#story-quote").textContent = stories[storyIndex][0];
-    $("#story-name").textContent = stories[storyIndex][1];
-    $("#story-desc").textContent = stories[storyIndex][2];
-    $("#story-portrait").src = stories[storyIndex][3];
-    $("#story-portrait").alt =
-      `Retrato ilustrativo de ${stories[storyIndex][1].split(",")[0]}, persona fictícia`;
-    $("#story-count").textContent = `0${storyIndex + 1} / 03`;
-  }
-  if ($("#prev-story")) $("#prev-story").onclick = () => showStory(-1);
-  if ($("#next-story")) $("#next-story").onclick = () => showStory(1);
+  const stories = initStories({ root });
   const products = [
     ["Cleanse", "Limpeza · 150 ml", "O começo do ritual."],
     ["Balance", "Sérum · 30 ml", "Uma escolha com propósito."],
@@ -175,6 +144,7 @@ export function initLanding({
   return {
     destroy() {
       events.abort();
+      stories?.destroy();
       $$(
         ".menu-toggle, .nav nav a, [data-step], #prev-story, #next-story, [data-product], [data-info]",
       ).forEach((node) => {

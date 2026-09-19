@@ -460,20 +460,33 @@
           </div>
         </div>
       </section>
-      <section class="stories section" id="historias">
+      <section
+        class="stories section"
+        id="historias"
+        aria-labelledby="stories-title"
+      >
         <div class="section-head">
           <div>
             <p class="eyebrow">HISTÓRIAS QUE GUIAM A PROPOSTA</p>
-            <h2>O cuidado faz parte<br />da vida.</h2>
+            <h2 id="stories-title">O cuidado faz parte<br />da vida.</h2>
           </div>
           <div class="story-controls">
+            <button
+              id="pause-stories"
+              class="icon-btn"
+              aria-label="Pausar troca automática"
+              aria-pressed="false"
+            >
+              <i class="ph ph-pause" aria-hidden="true"></i>
+            </button>
             <button
               id="prev-story"
               class="icon-btn"
               aria-label="Relato anterior"
             >
-              <i class="ph ph-arrow-left" aria-hidden="true"></i></button
-            ><button
+              <i class="ph ph-arrow-left" aria-hidden="true"></i>
+            </button>
+            <button
               id="next-story"
               class="icon-btn"
               aria-label="Próximo relato"
@@ -482,33 +495,160 @@
             </button>
           </div>
         </div>
-        <div class="story" aria-live="polite">
-          <span class="quote-mark" aria-hidden="true">“</span>
-          <blockquote id="story-quote">
-            Quero começar com poucos passos e entender onde meu dinheiro está
-            indo.
-          </blockquote>
-          <div class="story-person">
-            <img
-              id="story-portrait"
-              src="/media/persona-lucas.jpg"
-              alt="Retrato ilustrativo de Lucas, persona fictícia"
-              width="80"
-              height="80"
-              loading="lazy"
-            />
-            <div class="story-person-details">
-              <span id="story-name">Lucas, 26</span
-              ><span id="story-desc">Começar sem complicar.</span>
+        <div class="story-gallery" aria-label="Relatos ilustrativos">
+          <article class="story-card is-active">
+            <button
+              class="story-photo"
+              id="story-photo-0"
+              aria-expanded="true"
+              aria-controls="story-panel-0"
+              aria-label="Ler relato de Lucas"
+            >
+              <img
+                src="/media/persona-lucas.jpg"
+                alt="Retrato gerado por IA de Lucas, pessoa fictícia"
+                width="400"
+                height="600"
+                loading="lazy"
+              />
+              <span class="story-photo-label"
+                ><span>Lucas</span
+                ><span class="story-photo-symbol" aria-hidden="true"
+                  >−</span
+                ></span
+              >
+            </button>
+            <div
+              class="story-panel"
+              id="story-panel-0"
+              role="region"
+              aria-labelledby="story-photo-0"
+            >
+              <div class="story-panel-content">
+                <span class="quote-mark" aria-hidden="true">“</span>
+                <blockquote>
+                  Quero começar com poucos passos e entender onde meu dinheiro
+                  está indo.
+                </blockquote>
+                <div class="story-author">
+                  <strong>Lucas, 26</strong><span>Começar sem complicar.</span>
+                </div>
+                <div class="story-progress" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div class="story-caption">
+                  <span
+                    >RETRATO GERADO POR IA · RELATO FICTÍCIO, NÃO DEPOIMENTO DE
+                    CLIENTE</span
+                  ><span>01 / 03</span>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="story-bottom">
-            <span
-              >RETRATO GERADO POR IA · RELATO FICTÍCIO, NÃO DEPOIMENTO DE
-              CLIENTE</span
-            ><span id="story-count">01 / 03</span>
-          </div>
+          </article>
+          <article class="story-card">
+            <button
+              class="story-photo"
+              id="story-photo-1"
+              aria-expanded="false"
+              aria-controls="story-panel-1"
+              aria-label="Ler relato de Marina"
+            >
+              <img
+                src="/media/persona-marina.jpg"
+                alt="Retrato gerado por IA de Marina, pessoa fictícia"
+                width="400"
+                height="600"
+                loading="lazy"
+              />
+              <span class="story-photo-label"
+                ><span>Marina</span
+                ><span class="story-photo-symbol" aria-hidden="true"
+                  >+</span
+                ></span
+              >
+            </button>
+            <div
+              class="story-panel"
+              id="story-panel-1"
+              role="region"
+              aria-labelledby="story-photo-1"
+              inert
+            >
+              <div class="story-panel-content">
+                <span class="quote-mark" aria-hidden="true">“</span>
+                <blockquote>
+                  Quero entender se a indicação considera o que já uso e o que
+                  minha pele tolera.
+                </blockquote>
+                <div class="story-author">
+                  <strong>Marina, 29</strong
+                  ><span>Confiança para fazer escolhas.</span>
+                </div>
+                <div class="story-progress" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div class="story-caption">
+                  <span
+                    >RETRATO GERADO POR IA · RELATO FICTÍCIO, NÃO DEPOIMENTO DE
+                    CLIENTE</span
+                  ><span>02 / 03</span>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="story-card">
+            <button
+              class="story-photo"
+              id="story-photo-2"
+              aria-expanded="false"
+              aria-controls="story-panel-2"
+              aria-label="Ler relato de Denise"
+            >
+              <img
+                src="/media/persona-denise.jpg"
+                alt="Retrato gerado por IA de Denise, pessoa fictícia"
+                width="400"
+                height="600"
+                loading="lazy"
+              />
+              <span class="story-photo-label"
+                ><span>Denise</span
+                ><span class="story-photo-symbol" aria-hidden="true"
+                  >+</span
+                ></span
+              >
+            </button>
+            <div
+              class="story-panel"
+              id="story-panel-2"
+              role="region"
+              aria-labelledby="story-photo-2"
+              inert
+            >
+              <div class="story-panel-content">
+                <span class="quote-mark" aria-hidden="true">“</span>
+                <blockquote>
+                  Quero cuidar da pele sem transformar minha rotina em uma
+                  obrigação difícil.
+                </blockquote>
+                <div class="story-author">
+                  <strong>Denise, 48</strong
+                  ><span>Cuidado que cabe na vida.</span>
+                </div>
+                <div class="story-progress" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div class="story-caption">
+                  <span
+                    >RETRATO GERADO POR IA · RELATO FICTÍCIO, NÃO DEPOIMENTO DE
+                    CLIENTE</span
+                  ><span>03 / 03</span>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
+        <p class="sr-only" id="story-announcement" aria-live="polite"></p>
       </section>
       <section class="trust section" id="confianca">
         <p class="eyebrow">CLAREZA TAMBÉM É CUIDADO</p>
