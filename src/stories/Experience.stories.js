@@ -1,4 +1,4 @@
-import { expect, fn } from "storybook/test";
+import { expect, fn, waitFor } from "storybook/test";
 import { mountExperience } from "../experience.js";
 
 // Each canvas has its own instance; removal destroys event listeners and timers.
@@ -23,9 +23,13 @@ function renderExperience(args) {
     attached = true;
     instance = mountExperience(host, {
       initialStep: args.initialStep,
+      scenario: args.scenario,
+      liveApi: false,
       onClose: () => {
         args.onClose();
         instance?.destroy();
+        host.replaceChildren();
+        host.classList.remove("sb-experience");
         const closed = document.createElement("div");
         closed.className = "sb-story-close";
         closed.innerHTML =
@@ -53,15 +57,21 @@ function renderExperience(args) {
 
 export default {
   id: "experiencia-jornada-guiada",
-  title: "Experiência/Jornada guiada",
+  title: "Experiência/Conversa contínua",
   tags: ["autodocs"],
-  args: { initialStep: "welcome", onClose: fn() },
+  args: { initialStep: "welcome", scenario: "general", onClose: fn() },
   argTypes: {
     initialStep: {
       control: "select",
       options: ["welcome", "context", "routine", "cart", "checkout", "checkin"],
       description:
-        "Estado inicial real. Estados posteriores usam uma fixture demonstrativa criada pelo próprio controlador.",
+        "Ponto inicial da conversa real, com mensagens e artefatos no mesmo histórico. Não representa uma etapa de formulário.",
+    },
+    scenario: {
+      control: "select",
+      options: ["acne", "oiliness", "general", "dry"],
+      description:
+        "Contexto de exemplo declarado na conversa, sem diagnóstico ou análise de imagem.",
     },
     onClose: { table: { disable: true } },
   },
@@ -74,44 +84,107 @@ export default {
       story: { inline: false },
       description: {
         component:
-          "mountExperience de src/experience.js, sem cópia de markup ou lógica. As respostas e o carrinho pertencem só a esta instância; não há pedido, pagamento ou análise real de pele.",
+          "Chat real de src/experience.js: texto livre e sugestões acrescentam mensagens; contexto, rotina, fontes e seleção permanecem no mesmo histórico. Cada canvas tem sua própria sessão demonstrativa. Não há diagnóstico, análise de foto, pedido ou pagamento real.",
       },
     },
   },
 };
 
 export const BoasVindas = {
-  name: "01 · Boas-vindas",
+  name: "Conversa inicial",
   args: { initialStep: "welcome" },
 };
 export const Contexto = {
-  name: "02 · Contexto",
+  name: "Contexto na conversa",
   args: { initialStep: "context" },
 };
-export const Rotina = { name: "03 · Rotina", args: { initialStep: "routine" } };
+export const Rotina = {
+  name: "Rotina no histórico",
+  args: { initialStep: "routine" },
+};
 export const Carrinho = {
-  name: "04 · Carrinho",
+  name: "Seleção no histórico",
   args: { initialStep: "cart" },
 };
 export const Checkout = {
-  name: "05 · Checkout demonstrativo",
+  name: "Revisão demonstrativa",
   args: { initialStep: "checkout" },
 };
 export const Checkin = {
-  name: "06 · Check-in",
+  name: "Check-in na conversa",
   args: { initialStep: "checkin" },
 };
 
-export const ContextoSemResposta = {
-  name: "Validação · resposta pendente",
-  args: { initialStep: "context" },
+export const Acne = {
+  name: "Cenário · acne declarada",
+  args: { initialStep: "context", scenario: "acne" },
+};
+export const Oleosidade = {
+  name: "Cenário · oleosidade",
+  args: { initialStep: "context", scenario: "oiliness" },
+};
+export const CuidadosGerais = {
+  name: "Cenário · cuidados gerais",
+  args: { initialStep: "context", scenario: "general" },
+};
+export const Ressecamento = {
+  name: "Cenário · ressecamento",
+  args: { initialStep: "context", scenario: "dry" },
+};
+
+export const MensagemLivre = {
+  name: "Texto livre · histórico preservado",
+  args: { initialStep: "welcome", scenario: "general" },
   play: async ({ canvas, userEvent }) => {
+    const log = await canvas.findByRole("log");
+    const previousIds = [...log.querySelectorAll("[data-message-id]")].map(
+      (el) => el.dataset.messageId,
+    );
+    const message =
+      "Minha pele fica oleosa ao longo do dia. Quero poucos passos.";
+    const composer = canvas.getByRole("textbox", { name: /mensagem/i });
+    await userEvent.type(composer, message);
     await userEvent.click(
-      await canvas.findByRole("button", { name: /^Continuar/ }),
+      canvas.getByRole("button", { name: "Enviar mensagem" }),
     );
-    await expect(await canvas.findByRole("alert")).toHaveTextContent(
-      "Escolha uma opção",
+    await waitFor(() =>
+      expect(canvas.getByRole("log")).toHaveTextContent(message),
     );
+    for (const id of previousIds)
+      await expect(
+        canvas.getByRole("log").querySelector(`[data-message-id="${id}"]`),
+      ).toBeInTheDocument();
+    await expect(
+      canvas.getByRole("textbox", { name: /mensagem/i }),
+    ).toBeVisible();
+  },
+};
+
+export const SugestaoComoMensagem = {
+  name: "Sugestão · resposta na conversa",
+  args: { initialStep: "context", scenario: "oiliness" },
+  play: async ({ canvas, userEvent }) => {
+    const log = await canvas.findByRole("log");
+    const previousIds = [...log.querySelectorAll("[data-message-id]")].map(
+      (el) => el.dataset.messageId,
+    );
+    const replies = canvas
+      .getAllByRole("button")
+      .filter((el) => el.hasAttribute("data-reply"));
+    const reply = replies.at(-1);
+    await expect(reply).toBeVisible();
+    const text = reply.getAttribute("data-reply");
+    await userEvent.click(reply);
+    await waitFor(() =>
+      expect(
+        canvas.getByRole("log").querySelectorAll("[data-message-id]").length,
+      ).toBeGreaterThan(previousIds.length),
+    );
+    await expect(canvas.getByRole("log")).toHaveTextContent(text);
+    for (const id of previousIds)
+      await expect(
+        canvas.getByRole("log").querySelector(`[data-message-id="${id}"]`),
+      ).toBeInTheDocument();
   },
 };
 
@@ -119,11 +192,18 @@ export const CarrinhoVazio = {
   name: "Carrinho · seleção vazia",
   args: { initialStep: "cart" },
   play: async ({ canvas, userEvent }) => {
-    for (const checkbox of await canvas.findAllByRole("checkbox")) {
-      if (checkbox.checked) await userEvent.click(checkbox);
+    await canvas.findAllByRole("checkbox");
+    let checked = canvas
+      .getAllByRole("checkbox")
+      .find((el) => el.checked && !el.disabled);
+    while (checked) {
+      await userEvent.click(checked);
+      checked = canvas
+        .getAllByRole("checkbox")
+        .find((el) => el.checked && !el.disabled);
     }
     await expect(
-      canvas.getByRole("button", { name: /Ir para checkout demonstrativo/ }),
+      canvas.getByRole("button", { name: /checkout/i }),
     ).toBeDisabled();
   },
 };

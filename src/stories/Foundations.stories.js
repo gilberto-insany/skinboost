@@ -151,12 +151,12 @@ export const Cobertura = {
     const table = document.createElement("table");
     table.className = "sb-state-table";
     table.innerHTML = `<thead><tr><th scope="col">Estado</th><th scope="col">Componentes reais</th><th scope="col">O que verificar</th></tr></thead><tbody>
-      <tr><th scope="row">Boas-vindas</th><td>Entrada por intenção e sugestões</td><td>Nome acessível, teclado, texto longo</td></tr>
-      <tr><th scope="row">Contexto</th><td>Conversa, respostas e progresso</td><td>Voltar, corrigir, alternativas e validação</td></tr>
-      <tr><th scope="row">Rotina</th><td>Resumo e cards de produtos</td><td>Explicações, editar, sequência e responsividade</td></tr>
-      <tr><th scope="row">Carrinho</th><td>Itens e ações de revisão</td><td>Quantidades, remoção e estado vazio</td></tr>
-      <tr><th scope="row">Checkout</th><td>Resumo da simulação</td><td>Sem cobrança ou pedido real</td></tr>
-      <tr><th scope="row">Check-in</th><td>Opções de acompanhamento</td><td>Seleção, retorno e anúncio de resultado</td></tr>
+      <tr><th scope="row">Conversa</th><td>Histórico e composer persistente</td><td>Texto livre, teclado e mensagens preservadas</td></tr>
+      <tr><th scope="row">Contexto</th><td>Mensagens, esclarecimentos e sugestões</td><td>Acne declarada, oleosidade, cuidado geral e ressecamento</td></tr>
+      <tr><th scope="row">Proposta</th><td>Resumo e cards no histórico</td><td>Confirmar, corrigir e comparar sem perder a conversa</td></tr>
+      <tr><th scope="row">Fontes</th><td>Referências e limites no fluxo</td><td>Fonte educacional não equivale a endosso de produto</td></tr>
+      <tr><th scope="row">Seleção</th><td>Checkboxes, total e revisão</td><td>Remoção, seleção vazia e ausência de cobrança real</td></tr>
+      <tr><th scope="row">Check-in</th><td>Relato e próxima resposta</td><td>Continuidade da sessão, sem previsão clínica</td></tr>
     </tbody>`;
     root.append(table);
     return root;

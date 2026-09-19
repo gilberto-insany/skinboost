@@ -3,6 +3,7 @@ import "./product-story.css";
 import { $, $$ } from "./ui/dom.js";
 import { closeDialog } from "./ui/dialog.js";
 import { validatePhoto } from "./routine.js";
+import { preparePhoto } from "./chat/photo.js";
 import { initChat } from "./chat/composer.js";
 import { initLanding } from "./landing/interactions.js";
 import { initMotion } from "./landing/motion.js";
@@ -75,7 +76,7 @@ $$("[data-checkin]").forEach((button) =>
     chat.checkin();
   }),
 );
-fileInput.addEventListener("change", () => {
+fileInput.addEventListener("change", async () => {
   const file = fileInput.files?.[0];
   if (!file) return;
   const validationError = validatePhoto(file);
@@ -83,6 +84,15 @@ fileInput.addEventListener("change", () => {
     $("#prompt-error").textContent = validationError;
     $("#prompt-error").hidden = false;
     fileInput.value = "";
+    return;
+  }
+  try {
+    chat.state.photoDataUrl = await preparePhoto(file);
+    chat.state.photoConsent = false;
+  } catch {
+    $("#prompt-error").textContent =
+      "Não consegui abrir a imagem. Escolha outra foto.";
+    $("#prompt-error").hidden = false;
     return;
   }
   attachmentName = file.name;
@@ -94,6 +104,8 @@ fileInput.addEventListener("change", () => {
 $("#remove-photo").addEventListener("click", () => {
   attachmentName = "";
   chat.state.photoName = "";
+  chat.state.photoDataUrl = "";
+  chat.state.photoConsent = false;
   fileInput.value = "";
   $("#attachment").hidden = true;
 });

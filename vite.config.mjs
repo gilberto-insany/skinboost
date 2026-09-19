@@ -1,7 +1,22 @@
 import { defineConfig } from "vite";
 import { resolve } from "node:path";
+import { handleNodeRequest } from "./server/openai-api.mjs";
 
 export default defineConfig({
+  plugins: [
+    {
+      name: "skinboost-local-api",
+      configureServer(server) {
+        server.middlewares.use((request, response, next) => {
+          const route = request.url
+            ?.split("?")[0]
+            .match(/^\/api\/(status|chat|simulate)$/)?.[1];
+          if (route) return handleNodeRequest(route, request, response);
+          next();
+        });
+      },
+    },
+  ],
   build: {
     outDir: "dist/client",
     rollupOptions: {

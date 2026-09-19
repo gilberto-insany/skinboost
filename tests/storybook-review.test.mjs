@@ -57,6 +57,7 @@ before(async () => {
     headless: true,
     executablePath:
       process.env.STORYBOOK_CHROME ||
+      process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ||
       (existsSync(localChrome) ? localChrome : undefined),
   });
 });
@@ -83,6 +84,12 @@ test("two independent builds expose the same CSF3 inventory", async () => {
     "carrinho",
     "checkout",
     "checkin",
+    "acne",
+    "oleosidade",
+    "cuidados-gerais",
+    "ressecamento",
+    "mensagem-livre",
+    "sugestao-como-mensagem",
   ]) {
     assert.ok(
       wireframe.includes(`experiencia-jornada-guiada--${name}`),
@@ -130,7 +137,7 @@ test(
 );
 
 test(
-  "real states work at deployed subpaths, with keyboard access, mobile layout and accessibility",
+  "continuous conversation states work at deployed subpaths, with keyboard access, mobile layout and accessibility",
   { timeout: 120000 },
   async () => {
     const report = [];
@@ -141,7 +148,12 @@ test(
       });
       const page = await context.newPage();
       const errors = [];
+      const apiRequests = [];
       page.on("pageerror", (error) => errors.push(error.message));
+      page.on("request", (request) => {
+        if (new URL(request.url()).pathname.startsWith("/api/"))
+          apiRequests.push(request.url());
+      });
       const story = (id) =>
         `${origin}/storybook/${mode}/iframe.html?id=experiencia-jornada-guiada--${id}&viewMode=story`;
       for (const id of [
@@ -151,14 +163,26 @@ test(
         "carrinho",
         "checkout",
         "checkin",
-        "contexto-sem-resposta",
+        "acne",
+        "oleosidade",
+        "cuidados-gerais",
+        "ressecamento",
+        "mensagem-livre",
+        "sugestao-como-mensagem",
         "carrinho-vazio",
       ]) {
         await page.goto(story(id), { waitUntil: "networkidle" });
-        await page.locator(".sb-experience .sx-main").waitFor();
-        await page.locator(".sb-experience #dialog-title").waitFor();
-        if (id === "contexto-sem-resposta")
-          await page.getByRole("alert").waitFor();
+        await page.getByRole("log").waitFor();
+        await page.locator(".sb-experience #sx-message").waitFor();
+        if (id === "mensagem-livre") {
+          await page.waitForFunction(() =>
+            document
+              .querySelector('[role="log"]')
+              ?.textContent.includes(
+                "Minha pele fica oleosa ao longo do dia. Quero poucos passos.",
+              ),
+          );
+        }
         if (id === "carrinho-vazio")
           await page.waitForFunction(
             () => document.querySelector('[data-action="checkout"]')?.disabled,
@@ -185,6 +209,7 @@ test(
           label,
           mode === "wireframe" ? /implementada/ : /proposta em revisão/,
         );
+        await page.locator("#sx-message").focus();
         await page.keyboard.press("Tab");
         const focusInside = await page.evaluate(() =>
           Boolean(document.activeElement.closest(".sb-experience")),
@@ -211,6 +236,11 @@ test(
       await page.goto(story("carrinho"), { waitUntil: "networkidle" });
       assert.ok((await page.locator("[data-cart-item]:checked").count()) > 0);
       assert.deepEqual(errors, [], `${mode}: runtime errors`);
+      assert.deepEqual(
+        apiRequests,
+        [],
+        `${mode}: stories must remain local demonstrations`,
+      );
       await context.close();
     }
     await writeFile(
@@ -225,5 +255,79 @@ test(
       [],
       "Inspect qa/storybook/review.json for accessibility/layout findings.",
     );
+  },
+);
+
+test(
+  "freeform messages and suggested replies retain the conversation in both catalogs",
+  { timeout: 60000 },
+  async () => {
+    for (const mode of ["wireframe", "alta-fidelidade"]) {
+      const page = await browser.newPage({
+        viewport: { width: 1280, height: 950 },
+        reducedMotion: "reduce",
+      });
+      await page.goto(
+        `${origin}/storybook/${mode}/iframe.html?id=experiencia-jornada-guiada--boas-vindas&viewMode=story`,
+        { waitUntil: "networkidle" },
+      );
+      await page.getByRole("log").waitFor();
+      const messageIds = () =>
+        page
+          .locator(".sx-thread [data-message-id]")
+          .evaluateAll((elements) =>
+            elements.map((el) => el.dataset.messageId),
+          );
+      const initial = await messageIds();
+      const messages = [
+        "Minha pele fica oleosa ao longo do dia. Quero poucos passos.",
+        "Já uso um limpador e prefiro gastar até R$ 150.",
+      ];
+      for (const message of messages) {
+        await page.locator("#sx-message").fill(message);
+        await page.getByRole("button", { name: "Enviar mensagem" }).click();
+        await page.waitForFunction(
+          (text) =>
+            document.querySelector('[role="log"]')?.textContent.includes(text),
+          message,
+        );
+        await page.waitForFunction(
+          () => !document.querySelector("#sx-message")?.disabled,
+        );
+        const ids = await messageIds();
+        for (const id of initial)
+          assert.ok(
+            ids.includes(id),
+            `${mode}: original message ${id} disappeared`,
+          );
+        assert.ok(
+          await page.locator("#sx-message").isVisible(),
+          `${mode}: composer disappeared`,
+        );
+      }
+      for (const text of messages)
+        assert.ok((await page.getByRole("log").innerText()).includes(text));
+      const beforeSuggestion = await messageIds();
+      const reply = page.locator("button[data-reply]").last();
+      await reply.waitFor();
+      const replyText = await reply.getAttribute("data-reply");
+      await reply.click();
+      await page.waitForFunction(
+        (count) =>
+          document.querySelectorAll(".sx-thread [data-message-id]").length >
+          count,
+        beforeSuggestion.length,
+      );
+      const afterSuggestion = await messageIds();
+      for (const id of beforeSuggestion)
+        assert.ok(
+          afterSuggestion.includes(id),
+          `${mode}: message ${id} disappeared after suggestion`,
+        );
+      assert.ok((await page.getByRole("log").innerText()).includes(replyText));
+      for (const text of messages)
+        assert.ok((await page.getByRole("log").innerText()).includes(text));
+      await page.close();
+    }
   },
 );
