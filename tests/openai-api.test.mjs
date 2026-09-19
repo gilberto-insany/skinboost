@@ -687,7 +687,7 @@ test("simulation uses current image edits JSON contract and always returns illus
   assert.deepEqual(calls[0].body.images, [{ image_url: photo }]);
   assert.equal(calls[0].body.output_format, "jpeg");
   assert.equal(calls[0].body.n, 1);
-  assert.equal(calls[0].body.input_fidelity, "high");
+  assert.equal(Object.hasOwn(calls[0].body, "input_fidelity"), false);
   assert.match(calls[0].body.prompt, /Preserve rigorosamente identidade/);
   assert.match(calls[0].body.prompt, /NÃO É PREVISÃO/);
   assert.deepEqual(result.body, {
@@ -718,6 +718,34 @@ test("simulation rejects malformed and oversized provider image responses", asyn
       502,
       "invalid_image_response",
     );
+  }
+});
+
+test("image editing remains compatible with providers that reject the legacy fidelity knob", async () => {
+  for (const model of [
+    DEFAULT_IMAGE_MODEL,
+    "gpt-image-2.5-sunburst-2026-09-08",
+  ]) {
+    const { service, calls } = harness({
+      environment: { ...env, OPENAI_IMAGE_MODEL: model },
+      fetchImpl: async (_, init) => {
+        const body = JSON.parse(init.body);
+        return Object.hasOwn(body, "input_fidelity")
+          ? jsonResponse({ error: { message: "Unsupported parameter" } }, 400)
+          : jsonResponse({ data: [{ b64_json: jpeg }] });
+      },
+    });
+    const result = await service(
+      "simulate",
+      request({ consent: true, photoDataUrl: photo }),
+    );
+    assert.equal(result.status, 200);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].body.model, model);
+    assert.deepEqual(calls[0].body.images, [{ image_url: photo }]);
+    assert.match(calls[0].body.prompt, /Preserve rigorosamente identidade/);
+    assert.match(calls[0].body.prompt, /mesma pessoa/);
+    assert.equal(result.body.kind, "illustration");
   }
 });
 
@@ -990,6 +1018,12 @@ test("photo observations and cited product explanations arrive before a full rou
   assert.match(provider.input[0].content, /skinboost-p13/);
   assert.match(provider.input[0].content, /ainda não foram desenvolvidas/);
   assert.match(provider.instructions, /não adie a observação visual/);
+  assert.match(provider.instructions, /introdução curta de 2 a 3 frases/);
+  assert.match(provider.instructions, /sem repetir a pergunta em text/);
+  assert.match(
+    provider.instructions,
+    /Não inclua URLs brutas nessa introdução/,
+  );
   assert.match(
     provider.instructions,
     /não preencha context.detail, scenario, sensitivity ou duration a partir da foto/,

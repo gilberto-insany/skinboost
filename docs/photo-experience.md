@@ -119,7 +119,9 @@ Na p26, antes/depois é uma imagem sintética para demonstrar a interface. O avi
 
 O contrato do backend é exercitado em [openai-api.test.mjs](../tests/openai-api.test.mjs), incluindo consentimento, entrada real de imagem, observação antes do contexto completo e fontes permitidas. O histórico e as alternativas têm testes próprios. Esta revisão documental leu os caminhos de código e os testes; não executou uma nova sessão paga, medição clínica ou teste de todos os dispositivos.
 
-## Auditoria da apresentação e do roteiro de implementação
+## Auditoria inicial da apresentação e do roteiro de implementação
+
+Registro anterior à atualização editorial descrita no fechamento desta seção. A tabela preserva as lacunas encontradas naquele momento.
 
 As rotas `/implementacao` e `/roteiro-implementacao` usam o mesmo conteúdo em `src/implementationContent.js` e o mesmo manifesto `src/implementationEvidence.js` do projeto pai. Portanto, uma atualização compartilhada corrigirá as duas. A sequência atual tem 24 slides; ela já explica consentimento, limites, fontes, revisão, privacidade e ilustração, mas ainda não mostra toda esta experiência nova de foto.
 
@@ -136,4 +138,6 @@ As rotas `/implementacao` e `/roteiro-implementacao` usam o mesmo conteúdo em `
 
 Os demais slides mantêm seus fundamentos. Não é necessário inventar scores de pele, acrescentar um quiz ou aumentar a contagem apenas para mostrar esses estados. A nova captura deve informar se veio de produção com provedor real ou de um teste controlado. As imagens antigas também antecedem a integração recente de tipografia/tokens, então a renovação visual precisa usar o estado atual do produto.
 
-Nenhum arquivo do projeto pai foi alterado nesta auditoria.
+Na revisão inicial, nenhum arquivo do projeto pai foi alterado. Na atualização autorizada seguinte, `implementationContent.js` e `implementationEvidence.js` foram atualizados: os slides 8, 9 e 21 agora explicam fontes documentais, consentimento e comparador; os slides 6, 7, 12, 22 e 24 complementam cards, limites, validação, dados e avaliação integrada. As duas rotas compartilham essa alteração, mantendo 24 slides e 72 parágrafos de estudo.
+
+As capturas novas dos slides 8 e 21 vieram de `qa/photo-experience/desktop-observations.png` e `desktop-comparison.png`, identificadas como QA com respostas ou imagens controladas. Elas não comprovam análise ou geração real do provedor. A captura de consentimento anterior continua identificada como anexo de teste; o texto explica as ações atuais. Build, auditoria geral e verificação de contagem e assets do projeto pai passaram. Esta atualização documental não declara publicação.

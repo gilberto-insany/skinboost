@@ -806,7 +806,9 @@ export function createOpenAIService({
           n: 1,
           size: "1024x1024",
           quality: "medium",
-          input_fidelity: "high",
+          // Keep the wire shape verified with Sunburst. The optional legacy
+          // fidelity control is not portable across image model versions;
+          // preserve the source identity through the explicit edit prompt.
           output_format: "jpeg",
           output_compression: 85,
           moderation: "auto",

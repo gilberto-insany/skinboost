@@ -1,6 +1,6 @@
 # SkinBoost — dois catálogos, uma implementação
 
-Os Storybooks usam os mesmos arquivos `*.stories.js` e o mesmo `mountExperience` da página. Cada canvas recebe uma instância independente e chama `destroy()` ao sair. As histórias não usam o histórico salvo da pessoa no aplicativo. Não há componente fictício paralelo.
+Os Storybooks compartilham os stories de fundamentos e conversa e o mesmo `mountExperience` da página. A landing atual tem stories exclusivos no wireframe, extraídos diretamente de `index.html` pelos controladores compartilhados. Cada canvas recebe uma instância independente e chama `destroy()` ao sair. As histórias não usam o histórico salvo da pessoa no aplicativo. Não há componente fictício paralelo.
 
 | Catálogo        | Status              | Fonte visual                                                                 | Comando independente                | Saída                                    |
 | --------------- | ------------------- | ---------------------------------------------------------------------------- | ----------------------------------- | ---------------------------------------- |
@@ -37,4 +37,6 @@ Configuração baseada na [documentação do Storybook](https://storybook.js.org
 
 ## Estados adicionados a partir do roteiro
 
-Origem do contexto, resumo revisável, alternativa e feedback usam o controlador real e `conversation-tools.js`. A proveniência é registrada reproduzindo mensagens da fixture; não atribui um campo a uma fala inventada. O estado de voz usa um adaptador determinístico apenas nesse story, com aviso visível de que não acessa microfone nem envia áudio. Seu play termina com o rascunho revisável, sem autoenvio. Todos os demais exemplos mantêm `liveApi: false`. O teste do catálogo cobre 18 cenários de conversa por tema.
+Origem do contexto, resumo revisável, alternativa e feedback usam o controlador real e `conversation-tools.js`. A proveniência é registrada reproduzindo mensagens da fixture; não atribui um campo a uma fala inventada. O estado de voz usa um adaptador determinístico apenas nesse story, com aviso visível de que não acessa microfone nem envia áudio. Seu play termina com o rascunho revisável, sem autoenvio. Todos os demais exemplos mantêm `liveApi: false`. O catálogo cobre 21 cenários de conversa por tema, incluindo foto observada, imagem limitada e comparação ilustrativa. Os exemplos de foto usam respostas controladas e retrato fictício; não são prova de geração ou de eficácia.
+
+O wireframe também tem 34 estados da landing: página inteira, cabeçalho, prompt e anexo, introdução, três abas, manifesto, cinco cards bento, frasco 3D real, catálogo e seus produtos, comparador, relatos, confiança, FAQ, chamada final, rodapé e diálogos. GSAP, Three e os listeners são descartados ao trocar a instância; `tests/landing-lifecycle.test.mjs` cobre a montagem repetida. A landing não foi apresentada como alta fidelidade final.

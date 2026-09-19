@@ -26,7 +26,9 @@ O segundo Storybook aplica os fundamentos do brandbook à mesma implementação.
 - Quando a transcrição estiver disponível, dite, revise o rascunho e envie explicitamente.
 - Faça um check-in e continue conversando. Abra outra conversa pelo menu, retome uma anterior e recarregue a página para conferir a persistência local.
 - Remova uma foto ou exclua uma conversa e confira o efeito. No celular, a lista de conversas fica no menu lateral.
+- No modo conectado, anexe uma foto de teste autorizada e peça **Analisar minha foto**. Confira observações, limites, pergunta de confirmação e conceitos de produto; abra a página original do PDF indicada no card.
 - Quando o serviço de imagem estiver disponível, anexe uma foto, autorize seu envio e solicite uma **ilustração estética**. A imagem não prevê o efeito de produtos, melhora clínica ou prazo de resultado.
+- Use o comparador de **Original** e **Ilustração com IA**, também pelo teclado. A análise não gera uma imagem automaticamente: a ilustração precisa ser solicitada.
 
 ## Demonstração e OpenAI
 
@@ -49,7 +51,7 @@ Configure segredos no ambiente do projeto Vercel. Localmente, o middleware Vite 
 | Endpoint             | Comportamento                                                                                                 |
 | -------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `GET /api/status`    | Informa disponibilidade configurada, sem expor chave. Não testa a validade da credencial no provedor.         |
-| `POST /api/chat`     | Valida a solicitação e chama a Responses API; retorna texto e contexto estruturado.                           |
+| `POST /api/chat`     | Valida texto e eventual foto consentida; retorna texto progressivo e, ao concluir, contexto, observações e fontes estruturadas. |
 | `POST /api/simulate` | Exige foto e consentimento explícito; solicita uma edição ilustrativa e retorna imagem com rótulo e ressalva. |
 
 `POST /api/voice-session` exige consentimento e cria uma credencial temporária de transcrição. O áudio segue via WebRTC à OpenAI; a chave permanente continua no servidor. A aplicação não grava nem persiste áudio. O texto transcrito fica no rascunho, pode ser editado e só vira mensagem com envio explícito. Disponibilidade configurada não comprova que microfone/rede/provedor funcionarão em todo navegador.
@@ -58,11 +60,15 @@ O backend valida origem, formato e tamanho do corpo e da foto, limita solicitaç
 
 ## Foto, dados e limites
 
-A foto é preparada no navegador e guardada localmente junto à conversa. Sem marcar a autorização, não é enviada à OpenAI. Com autorização ativa, ela pode acompanhar o histórico recente nas mensagens e ser usada na simulação quando a pessoa a solicitar. Uma nova foto exige nova autorização. Retomar uma conversa salva também desmarca a autorização antes de qualquer novo envio da foto.
+A foto é preparada no navegador e guardada localmente junto à conversa. Se há foto anexada sem autorização, o envio é bloqueado e foto e rascunho são preservados; remover o anexo permite seguir por texto. Marcar a autorização, sozinho, não envia nada. Com autorização ativa, a foto corrente acompanha as solicitações de chat e pode ser usada na ilustração quando a pessoa a solicitar. Uma nova foto, uma conversa retomada ou uma alternativa exigem nova autorização.
+
+A análise conectada envia a imagem ao provedor e organiza observações para confirmar, limitações e eventuais relações com conceitos do catálogo. Uma imagem insuficiente recebe um estado de limitação; a demonstração local não inventa uma leitura visual. Os cards aparecem após a validação final da resposta e não representam diagnóstico ou rotina já confirmada. O fluxo e seus testes estão documentados em [Foto como entrada real da conversa](docs/photo-experience.md).
+
+As fontes dos cards abrem excertos originais das páginas 6, 7, 13 e 26 do brief SkinBoost. A página 13 documenta os conceitos Cleanse, Balance e Comfort e informa que fórmulas, rotulagem e alegações ainda não foram desenvolvidas. Não há ingredientes, eficácia, indicação individual ou prazo de efeito comprovados pelo PDF. Veja a [proveniência dos excertos](public/sources/README.md).
 
 Conversas, mensagens, preferências, artefatos e fotos ficam no armazenamento local deste navegador e podem ser retomados após recarregar a página. A lista lateral permite abrir uma conversa salva ou começar outra; iniciar uma nova conversa não exclui as anteriores. A exclusão remove a cópia local da conversa selecionada. Limpar os dados do site também remove esse histórico. Não existe sincronização entre navegadores ou dispositivos, nem uma conta com histórico na nuvem.
 
-No modo conectado, o conteúdo necessário é processado pelo servidor e pela OpenAI. Apagar a conversa ou a foto no navegador não representa exclusão nos sistemas do provedor. A chamada de chat usa `store: false`; isso não substitui a política de retenção do provedor nem descreve logs técnicos da hospedagem. O armazenamento local e o envio autorizado para processamento são operações distintas.
+No modo conectado, o conteúdo necessário é processado pelo servidor e pela OpenAI. Remover o anexo retira a foto dos próximos pedidos, mas não apaga imagens já presentes em mensagens; excluir a conversa remove seu registro local. Essas ações não representam exclusão nos sistemas do provedor. A chamada de chat usa `store: false`; isso não substitui a política de retenção do provedor nem descreve logs técnicos da hospedagem. O armazenamento local e o envio autorizado para processamento são operações distintas.
 
 O catálogo, preços e comparações são fictícios. A proposta não é diagnóstico, prescrição ou comprovação de eficácia. A ilustração facial mantém rótulo visível de **ilustração, não previsão**; não deve representar cura, remoção garantida de acne ou cicatrizes, rejuvenescimento em anos ou antes/depois comprovado.
 
@@ -76,10 +82,13 @@ As referências da American Academy of Dermatology são educacionais, sem víncu
 - `src/chat/conversation-tools.js`: alternativas independentes, proveniência de contexto e notas revisáveis.
 - `src/chat/thread-state.js`: mensagens, cenários, contexto e ações da demonstração contínua.
 - `src/chat/session-store.js`: armazenamento IndexedDB das 20 conversas mais recentes, restauração sem consentimento de foto e exclusão local.
+- `src/chat/photo.js` e `photo-experience.js`: preparação local, observações, cards com fontes permitidas e comparador de imagem.
 - `src/experience.js` e `src/experience.css`: chat real compartilhado pelo app e pelos Storybooks; composer persistente e artefatos no histórico.
 - `src/routine.js`: catálogo, validações e seleção demonstrativa.
 - `server/openai-api.mjs`: configuração e validação da integração OpenAI.
-- `api/status.js`, `api/chat.js`, `api/simulate.js`: funções do deploy.
+- `server/photo-contract.mjs` e `skinboost-grounding.mjs`: contrato estruturado de foto e catálogo documental com IDs e fontes permitidos.
+- `server/chat-stream.mjs` e `src/chat/response-stream.js`: transmissão e leitura progressiva; metadados somente após conclusão validada.
+- `api/status.js`, `api/chat.js`, `api/simulate.js` e `api/voice-session.js`: funções do deploy.
 - `src/stories/`, `.storybook-wireframe/`, `.storybook-hifi/`: stories CSF3 comuns, fundamentos e temas independentes.
 - `public/guia.html`: decisões de experiência e roteiro de avaliação.
 
@@ -97,6 +106,7 @@ npm test
 npm run format:check
 node scripts/check-experience.mjs
 node scripts/check-chat-upgrades.mjs
+node scripts/check-photo-experience.mjs
 ```
 
 Sem chave, os comandos locais usam a demonstração. Os testes de API usam respostas controladas e não comprovam uma chamada real ao provedor. O QA da interface gera evidências em `qa/`, ignorado pelo Git. Playwright requer Chromium instalado ou `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`; o QA Storybook também aceita `STORYBOOK_CHROME`.
@@ -117,10 +127,12 @@ O QA das melhorias intercepta os endpoints pagos e usa voz determinística ident
 
 O chat solicita `text/event-stream`: trechos de texto podem ser exibidos antes da conclusão, enquanto contexto e artefatos dependem do evento final validado. O leitor também aceita a resposta JSON completa. Uma interrupção preserva o conteúdo recebido com indicação de incompleto; exibição progressiva não garante correção nem conclusão.
 
-### Integrações verificadas nesta revisão
+### Histórico de integrações verificadas
 
 Em 18 de setembro de 2026, o deploy de revisão recebeu uma resposta real de chat por SSE: HTTP 200, 39 deltas, 161 caracteres, primeiro trecho em 2.005 ms e resultado validado em 2.661 ms. Texto final e contexto estavam presentes. Esse resultado confirma uma chamada; não representa benchmark nem latência garantida. Evidência local: `qa/stream-live/report.json`.
 
 A transcrição real também passou 11 verificações em Chromium com um WAV sintético em português usado como microfone simulado: sessão 200, WebRTC 201, duas atualizações durante a escuta, rascunho anterior preservado, nenhum envio automático e captura encerrada. O rascunho transcrito reapareceu após recarregar. Evidência: `qa/voice-live/report.json`; [contrato e procedimento](docs/voice-streaming.md).
 
-Não foram testados microfone físico, Safari em aparelho, variedade de sotaques/ruídos ou qualidade ampla de transcrição. O teste automatizado demonstra o fluxo com áudio sintético, sem provar funcionamento em todo dispositivo. A suíte completa passou 122 testes; os dois Storybooks passaram seus quatro grupos de teste com 36 cenários no total.
+Não foram testados microfone físico, Safari em aparelho, variedade de sotaques/ruídos ou qualidade ampla de transcrição. O teste automatizado demonstra o fluxo com áudio sintético, sem provar funcionamento em todo dispositivo. Naquela revisão, a suíte passou 122 testes e os dois Storybooks passaram quatro grupos com 36 cenários no total. Essas contagens são históricas e não certificam automaticamente as mudanças posteriores de foto.
+
+A revisão de foto acrescenta QA com respostas e imagens controladas em desktop e mobile: consentimento, observações e fontes, comparação por teclado, recuperação e restauração. Esse teste exercita a interface implementada; suas capturas não comprovam nova análise ou geração real pelo provedor. Resultados atuais de produção devem ser registrados separadamente após execução. A [arquitetura atual](docs/architecture.md) detalha as responsabilidades e a separação entre demonstração, API e evidência.
