@@ -9,7 +9,7 @@
   min-height: 560px;
   background: var(--paper, #f8f7f2);
   color: var(--ink, #183c2d);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: inherit;
   font-size: 15px;
   line-height: 1.55;
   text-align: left;

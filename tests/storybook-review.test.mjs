@@ -249,6 +249,14 @@ test(
             .trim(),
         );
         assert.equal(ink, mode === "wireframe" ? "#121f21" : "#183e31");
+        const experienceFamily = await page
+          .locator(".sb-experience")
+          .evaluate((el) => getComputedStyle(el).fontFamily);
+        assert.match(
+          experienceFamily,
+          mode === "wireframe" ? /Manrope Variable/ : /Avenir Next/,
+          `${mode}: the actual conversation must use the catalog theme`,
+        );
         const label = await page
           .locator(".sb-catalog-status strong")
           .innerText();
