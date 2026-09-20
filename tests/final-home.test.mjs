@@ -35,7 +35,9 @@ test(
         viewport: { width: 1440, height: 1000 },
         reducedMotion: "reduce",
       });
-      await page.clock.install();
+      await page.clock.install({ time: new Date("2026-09-20T00:00:00Z") });
+      // Advance carousels only through runFor, not during slow browser actions.
+      await page.clock.pauseAt(new Date("2026-09-20T00:01:00Z"));
       const errors = [];
       page.on("pageerror", (error) => errors.push(error.message));
       await page.goto(`http://127.0.0.1:${server.httpServer.address().port}/`);
