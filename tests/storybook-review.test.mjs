@@ -283,6 +283,11 @@ test(
         const host = page.locator(".sb-chat-component");
         const component = await host.getAttribute("data-component");
         assert.equal(
+          await host.evaluate((el) => getComputedStyle(el).color),
+          mode === "wireframe" ? "rgb(20, 22, 21)" : "rgb(24, 62, 49)",
+          `${mode}: isolated components must use their catalog text token`,
+        );
+        assert.equal(
           await host
             .locator(".sx-chat,.sx-thread,.sx-scroll,.sx-history-scrim")
             .count(),
@@ -360,6 +365,22 @@ test(
           1,
           `${id}: exactly one named component`,
         );
+        if (component === "composer") {
+          assert.equal(
+            await host
+              .locator(".sx-composer")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            mode === "wireframe" ? "rgb(255, 255, 255)" : "rgb(255, 254, 250)",
+            `${mode}: composer surface must remain theme-aware`,
+          );
+          assert.equal(
+            await host
+              .locator(".sx-send")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            mode === "wireframe" ? "rgb(49, 94, 75)" : "rgb(24, 62, 49)",
+            `${mode}: send action must remain theme-aware`,
+          );
+        }
         if (id.endsWith("--carrinho-vazio"))
           await page.waitForFunction(
             () => document.querySelector('[data-action="checkout"]')?.disabled,
