@@ -1,22 +1,22 @@
 .sb-catalog {
   min-height: 100vh;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ui-canvas, var(--paper));
+  color: var(--ui-text, var(--ink));
   font-family: inherit;
 }
 .sb-catalog-status {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 24px;
-  padding: 16px 28px;
-  border-bottom: 1px solid var(--line);
-  font-size: 12px;
+  gap: var(--space-10) var(--space-24);
+  padding: var(--space-16) 28px;
+  border-bottom: var(--border-sm) solid var(--ui-border, var(--line));
+  font-size: var(--font-size-text-sm);
   line-height: 1.5;
-  background: var(--sage);
+  background: var(--ui-surface-highlight, var(--sage));
 }
 .sb-catalog-status strong {
-  font-size: 12px;
+  font-size: var(--font-size-text-sm);
   letter-spacing: 0.025em;
 }
 .sb-catalog-status span {
@@ -34,7 +34,7 @@
 .sb-foundation {
   max-width: 1000px;
   margin: auto;
-  padding: 24px 0 40px;
+  padding: var(--space-24) 0 var(--space-40);
 }
 .sb-foundation > h1 {
   font-size: 44px;
@@ -47,46 +47,46 @@
 }
 .sb-foundation > p {
   max-width: 720px;
-  font-size: 16px;
-  margin-bottom: 24px;
-  color: var(--muted);
+  font-size: var(--font-size-text-lg);
+  margin-bottom: var(--space-24);
+  color: var(--ui-text-secondary, var(--muted));
 }
 .sb-token-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--space-16);
 }
 .sb-token {
-  border: 1px solid var(--line);
-  border-radius: 16px;
+  border: var(--border-sm) solid var(--ui-border, var(--line));
+  border-radius: var(--radius-3xl);
   overflow: hidden;
-  background: var(--paper);
+  background: var(--ui-surface, var(--paper));
 }
 .sb-token-color {
   height: 105px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: var(--border-sm) solid var(--ui-border, var(--line));
 }
 .sb-token-meta {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-8);
   padding: 18px;
-  font-size: 14px;
+  font-size: var(--font-size-text-md);
 }
 .sb-token-meta code {
-  font-size: 12px;
-  color: var(--muted);
+  font-size: var(--font-size-text-sm);
+  color: var(--ui-text-secondary, var(--muted));
 }
 .sb-type-sample {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--line);
+  gap: var(--space-10);
+  padding: var(--space-24) 0;
+  border-bottom: var(--border-sm) solid var(--ui-border, var(--line));
 }
 .sb-type-sample small {
-  font-size: 12px;
-  color: var(--muted);
+  font-size: var(--font-size-text-sm);
+  color: var(--ui-text-secondary, var(--muted));
 }
 .sb-type-sample p {
   margin: 0;
@@ -98,16 +98,35 @@
   flex-wrap: wrap;
   margin: 28px 0;
 }
+.sb-catalog--wireframe .sb-foundation .pill.dark {
+  background: var(--ui-action);
+  color: var(--ui-on-action);
+}
+.sb-catalog--wireframe .sb-foundation .pill.dark:hover:not(:disabled) {
+  background: var(--ui-action-hover);
+  filter: none;
+}
+.sb-catalog--wireframe .sb-foundation :is(.pill.outline, .icon-btn) {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text);
+}
+.sb-catalog--wireframe
+  .sb-foundation
+  :is(button, a, input, textarea, summary):focus-visible {
+  outline: var(--border-lg) solid var(--ui-focus);
+  outline-offset: var(--space-4);
+}
 .sb-button-row button:disabled {
-  opacity: 0.45;
+  opacity: var(--opacity-op-50);
   cursor: not-allowed;
 }
 .sb-story-close {
   padding: 60px 30px;
   text-align: center;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: var(--paper);
+  border: var(--border-sm) solid var(--ui-border, var(--line));
+  border-radius: var(--radius-4xl);
+  background: var(--ui-surface, var(--paper));
 }
 .sb-story-close p {
   margin: 14px 0 20px;
@@ -115,13 +134,13 @@
 .sb-state-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: var(--font-size-text-md);
   line-height: 1.5;
 }
 .sb-state-table th,
 .sb-state-table td {
   padding: 16px 12px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: var(--border-sm) solid var(--ui-border, var(--line));
   text-align: left;
   vertical-align: top;
 }
@@ -133,7 +152,7 @@
     padding: 14px 18px;
   }
   .sb-catalog-canvas {
-    padding: 16px;
+    padding: var(--space-16);
   }
   .sb-token-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -144,7 +163,7 @@
   .sb-state-table th,
   .sb-state-table td {
     padding: 12px 6px;
-    font-size: 12px;
+    font-size: var(--font-size-text-sm);
   }
 }
 

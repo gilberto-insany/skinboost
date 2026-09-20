@@ -192,6 +192,19 @@ test(
         );
         const frame = page.frameLocator("#storybook-preview-iframe");
         await frame.locator(".sb-foundation").waitFor();
+        const catalogColors = await frame
+          .locator(".sb-catalog")
+          .evaluate((el) => {
+            const style = getComputedStyle(el);
+            return { background: style.backgroundColor, text: style.color };
+          });
+        assert.deepEqual(
+          catalogColors,
+          mode === "wireframe"
+            ? { background: "rgb(245, 246, 244)", text: "rgb(20, 22, 21)" }
+            : { background: "rgb(248, 245, 237)", text: "rgb(24, 62, 49)" },
+          `${mode} must keep its own catalog theme`,
+        );
         if (id === "tipografia") {
           const family = await frame
             .locator(".sb-catalog")
@@ -201,13 +214,21 @@ test(
             mode === "wireframe" ? /Manrope Variable/ : /Avenir Next/,
           );
         }
-        if (id === "botoes")
+        if (id === "botoes") {
           assert.equal(
             await frame
               .getByRole("button", { name: "Aguardando resposta" })
               .isDisabled(),
             true,
           );
+          assert.equal(
+            await frame
+              .getByRole("button", { name: "Continuar" })
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            mode === "wireframe" ? "rgb(49, 94, 75)" : "rgb(24, 62, 49)",
+            `${mode} primary action must use its own functional color`,
+          );
+        }
       }
       await page.screenshot({
         path: resolve(artifacts, `${mode}-manager.png`),
