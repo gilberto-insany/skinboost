@@ -1,0 +1,241 @@
+import { motion } from "motion/react";
+const imgMagnificApplySmootherAndCleane6AezBvhiJo2 = "https://www.figma.com/api/mcp/asset/26aa8317-a0c2-4c28-a19f-68a8c94f270c.png";
+const imgMagnificApplySmootherAndCleane6AezBvhiJo3 = "https://www.figma.com/api/mcp/asset/b1c0ca3d-b80f-4859-85fc-d3cfa8735d8a.png";
+const imgVector = "https://www.figma.com/api/mcp/asset/8c86d038-bcb9-4c2b-96c8-1f040820c063.svg";
+const imgVector1 = "https://www.figma.com/api/mcp/asset/2a720f46-342c-4b99-9b2b-9683fb998b35.svg";
+const imgFrame = "https://www.figma.com/api/mcp/asset/16327823-8d1d-4034-90df-6dc03dbee374.svg";
+const imgFrame1 = "https://www.figma.com/api/mcp/asset/a403c1e0-a5b0-4f20-af49-463c8daa321a.svg";
+const imgFrame2 = "https://www.figma.com/api/mcp/asset/3484b59a-9bb9-4287-8f23-c25f15395469.svg";
+const imgFrame3 = "https://www.figma.com/api/mcp/asset/07e70244-a6cf-4f6b-a9c9-1e2aec74cd19.svg";
+const imgVector2 = "https://www.figma.com/api/mcp/asset/0e143527-cc94-4b78-b7b1-3ccc311e5fc7.svg";
+const imgVector3 = "https://www.figma.com/api/mcp/asset/e08b6d9c-f21b-4a7d-a177-26371bbc76eb.svg";
+const imgFrame4 = "https://www.figma.com/api/mcp/asset/7572762a-833b-446f-9c1b-fd788e1a9ace.svg";
+const imgFrame5 = "https://www.figma.com/api/mcp/asset/04b00187-b566-4190-a26a-3c94481f01af.svg";
+const imgVector4 = "https://www.figma.com/api/mcp/asset/90b00500-8361-415a-9172-f141975787e4.svg";
+const imgFrame6 = "https://www.figma.com/api/mcp/asset/85757271-6ffd-48d7-8bb6-ad85e630a196.svg";
+const imgVector5 = "https://www.figma.com/api/mcp/asset/da474ce1-7b56-4549-855f-7ef204e838c2.svg";
+const imgVector6 = "https://www.figma.com/api/mcp/asset/852b3ee9-64d1-43a0-be16-ac77c426e2cb.svg";
+const imgVector7 = "https://www.figma.com/api/mcp/asset/25b7df04-39ce-4829-86eb-97eaba9780e0.svg";
+const imgVector8 = "https://www.figma.com/api/mcp/asset/26b3fbc5-0774-4c5f-b6fe-2d189289c663.svg";
+const imgFrame7 = "https://www.figma.com/api/mcp/asset/62db0083-afdf-4d87-9083-9afd2ea452b9.svg";
+const imgMagnificApplySmootherAndCleane6AezBvhiJo1 = "https://www.figma.com/api/mcp/asset/59887ba2-e338-4f3b-bdf5-a9176be4d9d4.svg";
+const imgGroup427320474 = "https://www.figma.com/api/mcp/asset/e885d735-8691-467d-aad7-94d3e4065742.svg";
+const imgVector9 = "https://www.figma.com/api/mcp/asset/fd2d2f8a-f0e7-497e-9fb6-3c9a93574f4b.svg";
+
+type StepsProps = {
+  className?: string;
+  property1?: "Default";
+};
+
+function Steps({ className, property1 = "Default" }: StepsProps) {
+  return (
+    <div className={className || "border-[length:var(--border\\/sm,1px)] border-[var(--neutral\\/light,#d9ddda)] border-solid content-stretch flex flex-col items-start overflow-clip px-px relative rounded-[5px] w-[1312px]"} data-node-id="2204:8814">
+      <div className="content-stretch flex gap-[32px] items-start p-[32px] relative shrink-0 w-full" data-node-id="2128:1645">
+        <div className="content-stretch flex flex-col items-end justify-between relative self-stretch shrink-0 w-[625px]" data-node-id="2240:595">
+          <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2204:8890">
+            <div className="bg-[var(--brand-primary\/soft,#e3ece4)] border-[var(--neutral\/light,#d9ddda)] border-b-[length:var(--border\/sm,1px)] border-solid content-stretch flex items-start justify-between p-[32px] relative rounded-[var(--radius\/md,4px)] shrink-0 w-full" data-node-id="2128:1647" data-name="Tab">
+              <div className="[word-break:break-word] content-stretch flex gap-[29px] items-start relative shrink-0" data-node-id="2219:9334">
+                <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1648">
+                  01
+                </p>
+                <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-[484px]" data-node-id="2128:1649">
+                  <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.2] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-full" data-node-id="2128:1650">
+                    Comece com uma conversa.
+                  </p>
+                  <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1651">
+                    Conte seus objetivos e sua rotina. Uma foto pode complementar. Você decide.
+                  </p>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Phosphor:Regular'] leading-[18px] not-italic relative shrink-0 text-[color:var(--brand-primary\/intense,#315e4b)] text-[length:var(--font\/size\/text\/xl,18px)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1653">{`\uE092`}</p>
+              <div className="absolute bottom-[-2px] h-px left-0 overflow-clip w-[625px]" data-node-id="2223:9757" data-name="Progress">
+                <div className="absolute bg-[var(--white\/20,rgba(255,255,255,0.2))] h-[2px] left-0 top-0 w-[1312px]" data-node-id="I2223:9757;2223:9620" />
+                <div className="absolute bg-[var(--brand-secondary\/base,#a8c94d)] h-[2px] left-0 top-0 w-[8px]" data-node-id="I2223:9757;2223:9622" />
+              </div>
+            </div>
+            <button className="border-[var(--neutral\/light,#d9ddda)] border-b-[length:var(--border\/sm,1px)] border-solid content-stretch cursor-pointer flex items-start justify-between p-[32px] relative rounded-[var(--radius\/md,4px)] shrink-0 w-full" data-node-id="2240:303" data-name="Tab">
+              <div className="content-stretch flex gap-[29px] items-start relative shrink-0" data-node-id="2240:304">
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] text-left tracking-[-0.5px] whitespace-nowrap" data-node-id="2240:305">
+                  02
+                </p>
+                <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-[484px]" data-node-id="2240:306">
+                  <p className="[word-break:break-word] font-['Manrope:SemiBold'] font-semibold leading-[1.2] relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/heading\/h4,28px)] text-left tracking-[-1px] w-full" data-node-id="2240:307">
+                    Entenda cada escolha.
+                  </p>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Phosphor:Regular'] leading-[18px] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/xl,18px)] text-left tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2240:309">{`\uE092`}</p>
+            </button>
+            <div className="border-[var(--neutral\/light,#d9ddda)] border-b-[length:var(--border\/sm,1px)] border-solid content-stretch flex items-start justify-between p-[32px] relative rounded-[var(--radius\/md,4px)] shrink-0 w-full" data-node-id="2240:323" data-name="Tab">
+              <div className="content-stretch flex gap-[29px] items-start relative shrink-0" data-node-id="2240:324">
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2240:325">
+                  03
+                </p>
+                <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-[484px]" data-node-id="2240:326">
+                  <p className="[word-break:break-word] font-['Manrope:SemiBold'] font-semibold leading-[1.2] relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-full" data-node-id="2240:327">
+                    Encontre seu ritmo.
+                  </p>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Phosphor:Regular'] leading-[18px] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/xl,18px)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2240:329">{`\uE092`}</p>
+            </div>
+          </div>
+          <div className="overflow-clip relative shrink-0 size-[56.32px]" data-node-id="2240:702" data-name="skinboost-ai-orb-glass 1">
+            <div className="absolute inset-[5.86%]" data-node-id="2240:703" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector} />
+            </div>
+            <div className="absolute inset-[15.63%_15.62%_15.62%_15.63%]" data-node-id="2240:704" data-name="Vector">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector1} />
+            </div>
+            <div className="absolute contents inset-[15.63%_15.62%_15.62%_15.63%]" data-node-id="2240:705" data-name="Clip path group">
+              <div className="absolute inset-[0_15.62%_15.62%_0] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[8.8px_8.8px] mask-size-[38.72px_38.72px]" data-node-id="2240:708" style={{ maskImage: `url("${imgFrame}")` }} data-name="Frame">
+                <motion.div className="absolute inset-[22.91%_3.24%_2.69%_15.61%]" data-node-id="2240:709" data-name="Frame">
+                  <div className="absolute inset-[-5.64%_-5.34%_-7.98%_-3.07%]">
+                    <img alt="" className="block max-w-none size-full" src={imgFrame1} />
+                  </div>
+                </motion.div>
+                <motion.div className="absolute inset-[22.72%_13.5%_10.42%_23.63%]" data-node-id="2240:714" data-name="Frame">
+                  <div className="absolute inset-[-4.85%_-5.16%_-4.85%_-5.15%]">
+                    <img alt="" className="block max-w-none size-full" src={imgFrame2} />
+                  </div>
+                </motion.div>
+                <motion.div className="absolute inset-[44.91%_26.39%_21.3%_45.37%]" data-node-id="2240:717" data-name="Frame">
+                  <div className="absolute inset-[-30.14%_-36.07%]">
+                    <img alt="" className="block max-w-none size-full" src={imgFrame3} />
+                  </div>
+                </motion.div>
+                <div className="absolute inset-[19.91%_14.12%_66.67%_34.95%]" data-node-id="2240:719" data-name="Vector">
+                  <div className="absolute inset-[-75.86%_-20%]">
+                    <img alt="" className="block max-w-none size-full" src={imgVector2} />
+                  </div>
+                </div>
+                <div className="absolute inset-[86.11%_17.36%_1.39%_32.64%]" data-node-id="2240:720" data-name="Vector">
+                  <div className="absolute inset-[-81.48%_-20.37%]">
+                    <img alt="" className="block max-w-none size-full" src={imgVector3} />
+                  </div>
+                </div>
+                <div className="absolute contents inset-[18.52%_0_0_18.52%]" data-node-id="2240:721" data-name="Mask group">
+                  <div className="absolute inset-[16.43%_-6.02%_0_23.2%] mask-intersect mask-luminance mask-no-clip mask-no-repeat mask-position-[-2.226px_0.99px] mask-size-[38.72px_38.72px]" data-node-id="2240:724" style={{ maskImage: `url("${imgFrame4}")` }} data-name="Frame">
+                    <div className="absolute inset-[-2.11%_-2.12%_-2.39%_-2.12%]">
+                      <img alt="" className="block max-w-none size-full" src={imgFrame5} />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute inset-[18.52%_0_0_18.52%]" data-node-id="2240:739" data-name="Vector">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector4} />
+                </div>
+                <motion.div className="absolute inset-[28.7%_1.78%_1.85%_30.56%]" data-node-id="2240:740" data-name="Frame">
+                  <div className="absolute inset-[-6.67%_-6.84%_-5.5%_-5.65%]">
+                    <img alt="" className="block max-w-none size-full" src={imgFrame6} />
+                  </div>
+                </motion.div>
+                <div className="absolute inset-[25.23%_53.94%_48.61%_29.49%]" data-node-id="2240:743" data-name="Vector">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
+                </div>
+                <div className="absolute flex inset-[31.45%_63.98%_59.23%_29.25%] items-center justify-center" data-node-id="2240:744" style={{ containerType: "size" }}>
+                  <div className="flex-none h-[hypot(-56.9679cqw,84.768cqh)] rotate-26 w-[hypot(43.0321cqw,15.232cqh)]">
+                    <div className="relative size-full" data-name="Vector">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector6} />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute inset-[20.67%_30.32%_76.16%_43.98%]" data-node-id="2240:745" data-name="Vector">
+                  <div className="absolute inset-[-7.29%_-0.9%]">
+                    <img alt="" className="block max-w-none size-full" src={imgVector7} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="absolute inset-[15.72%]" data-node-id="2240:746" data-name="Vector">
+              <div className="absolute inset-[-0.2%]">
+                <img alt="" className="block max-w-none size-full" src={imgVector8} />
+              </div>
+            </div>
+            <div className="absolute inset-[37.83%_37.84%_37.83%_37.83%]" data-node-id="2240:747" data-name="Frame">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame7} />
+            </div>
+          </div>
+        </div>
+        <div className="flex-[1_0_0] h-[608px] min-h-[540px] min-w-px overflow-clip relative" data-node-id="2128:1664" data-name="Tab Panel">
+          <div className="absolute bg-[#7c8676] h-[608px] left-0 overflow-clip top-0 w-[587px]" data-node-id="2128:1665" data-name="Image (Detalhe de pele com textura natural)">
+            <div className="absolute contents left-[-31px] top-0" data-node-id="2240:3389" data-name="Mask group">
+              <div className="absolute h-[813px] left-[-20px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-11px_103px] mask-size-[639px_621px] top-[-103px] w-[607px]" data-node-id="2240:3381" style={{ maskImage: `url("${imgMagnificApplySmootherAndCleane6AezBvhiJo1}")` }} data-name="magnific_apply-smoother-and-cleane_6AezBvhiJO 1">
+                <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificApplySmootherAndCleane6AezBvhiJo2} />
+              </div>
+            </div>
+            <div className="absolute blur-[7px] h-[813px] left-[-21px] top-[-103px] w-[607px]" data-node-id="2240:3387" data-name="magnific_apply-smoother-and-cleane_6AezBvhiJO 2">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificApplySmootherAndCleane6AezBvhiJo3} />
+            </div>
+            <div className="absolute h-[367px] left-[-21px] top-[246px] w-[638px]" data-node-id="2240:3452" style={{ backgroundImage: "linear-gradient(176.74248426942748deg, rgba(137, 144, 125, 0) 20.769%, rgb(50, 57, 39) 100.35%)" }} />
+            <div className="absolute content-stretch flex items-start justify-between left-0 p-[40px] top-0 w-[586px]" data-node-id="2240:3694">
+              <div className="content-stretch flex flex-col gap-[21px] items-start relative shrink-0 w-[117px]" data-node-id="2240:3687">
+                <div className="h-[10.977px] relative shrink-0 w-[68.436px]" data-node-id="2240:3536">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup427320474} />
+                </div>
+                <p className="[word-break:break-word] font-['Manrope:SemiBold'] font-semibold leading-[1.3] min-w-full relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/heading\/h6,20px)] tracking-[-1px] w-[min-content]" data-node-id="2128:1671">
+                  Vamos entender você.
+                </p>
+              </div>
+              <div className="h-[16px] relative shrink-0 w-[15px]" data-node-id="2223:9779" data-name="Vector">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector9} />
+              </div>
+            </div>
+          </div>
+          <div className="-translate-x-1/2 -translate-y-1/2 absolute backdrop-blur-[16px] border-[length:var(--border\/sm,1px)] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex flex-col items-start left-[calc(50%+9px)] overflow-clip p-[4px] rounded-[22px] top-[calc(50%+181px)] w-[481px]" data-node-id="2240:3220">
+            <div className="backdrop-blur-[22px] bg-[var(--white\/5,rgba(255,255,255,0.05))] border-[length:var(--border\/sm,1px)] border-[var(--white\/5,rgba(255,255,255,0.05))] border-solid content-stretch flex flex-col gap-[16px] items-start overflow-clip p-[16px] relative rounded-[19px] shrink-0 w-full" data-node-id="2128:1666" data-name="Container">
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2240:2122">
+                <p className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[1.5] not-italic relative shrink-0 text-[color:var(--white\/70,rgba(255,255,255,0.7))] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1672">
+                  “Quero uma rotina simples que caiba nas minhas manhãs.”
+                </p>
+              </div>
+              <div className="backdrop-blur-[16px] bg-[var(--white\/10,rgba(255,255,255,0.1))] content-stretch flex items-center justify-between overflow-clip pl-[16px] pr-[8px] py-[8px] relative rounded-[122px] shrink-0 w-full" data-node-id="2128:1674" data-name="Container">
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--white\/70,rgba(255,255,255,0.7))] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1675">
+                  O que você já usa hoje?
+                </p>
+                <div className="border border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid relative rounded-[10.5px] shrink-0 size-[21px]" data-node-id="2240:3584" data-name="Button - Conhecer minha rotina a partir do prompt">
+                  <div className="absolute left-[4.25px] size-[10.5px] top-[4.25px]" data-node-id="2240:3585" data-name="Italic Text">
+                    <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[10.5px] left-[5.5px] not-italic text-[10.5px] text-[color:var(--white\/70,rgba(255,255,255,0.7))] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2240:3586">{`\uE08E`}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Steps1() {
+  return (
+    <div className="content-stretch flex flex-col gap-[40px] items-start pb-[110px] px-[64px] relative size-full" data-node-id="2128:1638" data-name="Steps">
+      <div className="[word-break:break-word] content-stretch flex items-end justify-between relative shrink-0 w-[1312px]" data-node-id="2128:1639">
+        <div className="content-stretch flex flex-col gap-[26px] items-start relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] w-[496px]" data-node-id="2128:1640">
+          <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1641">
+            DO SEU CONTEXTO AO SEU CUIDADO
+          </p>
+          <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[length:var(--font\/size\/display\/d2,64px)] tracking-[-1px] w-full" data-node-id="2128:1642">
+            <p className="leading-[1.1] mb-0">Simples por fora.</p>
+            <p className="leading-[1.1]">Atento a você.</p>
+          </div>
+        </div>
+        <div className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[0] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/lg,16px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1643">
+          <p className="leading-[1.5] mb-0">Você conta. A gente organiza.</p>
+          <p className="leading-[1.5]">Cada escolha vem com um porquê.</p>
+        </div>
+      </div>
+      <Steps className="border-[length:var(--border\/sm,1px)] border-[var(--neutral\/light,#d9ddda)] border-solid content-stretch flex flex-col items-start overflow-clip px-px relative rounded-[5px] shrink-0 w-full" />
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D2: Font(family: "Manrope", style: SemiBold, size: font/size/display/D2, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Text/LG/Regular: Font(family: "Inter", style: Regular, size: font/size/text/lg, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Heading/H4: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H4, weight: 600, lineHeight: 1.2000000476837158, letterSpacing: -1), Heading/H6: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H6, weight: 600, lineHeight: 1.2999999523162842, letterSpacing: -1), Text/MD/Semi Bold: Font(family: "Inter", style: Semi Bold, size: font/size/text/md, weight: 600, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.
+IMPORTANT: This design contains animated nodes. You MUST get the animation data (keyframe tracks, easing curves, code snippets, and timeline coordination hints) to faithfully recreate this design. IMMEDIATELY call the `get_motion_context` tool with the same node ID and file key.

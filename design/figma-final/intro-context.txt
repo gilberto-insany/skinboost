@@ -1,0 +1,70 @@
+const imgSkinBoostSpaces22 = "https://www.figma.com/api/mcp/asset/38dda5fd-1825-4552-9a05-fc6e049f2f84.png";
+
+export default function Intro() {
+  return (
+    <div className="content-stretch flex flex-col items-start px-[64px] relative size-full" data-node-id="2128:1059" data-name="Intro">
+      <div className="content-stretch flex flex-col gap-[72px] items-start py-[110px] relative shrink-0 w-full" data-node-id="2128:1060" data-name="Container">
+        <div className="[word-break:break-word] content-stretch flex flex-col gap-[32px] items-start relative shrink-0 whitespace-nowrap" data-node-id="2128:1632">
+          <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1062">
+            MENOS TENTATIVA. MAIS CLAREZA.
+          </p>
+          <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[0px] text-[color:var(--neutral\/very-strong,#3b403c)] tracking-[-1px]" data-node-id="2128:1064">
+            <p className="leading-none mb-0 text-[80px]">Você não precisa de</p>
+            <p className="leading-none mb-0 text-[80px]">mais uma rotina.</p>
+            <p className="leading-none text-[#88a43d] text-[80px]">Precisa da sua.</p>
+          </div>
+        </div>
+        <div className="border-[var(--neutral\/light,#d9ddda)] border-b-[length:var(--border\/sm,1px)] border-solid content-stretch flex items-end justify-between pb-[64px] relative shrink-0 w-[1312px]" data-node-id="2128:1066" data-name="Container">
+          <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="2223:9745">
+            <div className="bg-white overflow-clip relative shrink-0 size-[96px]" data-node-id="2223:9746" data-name="Progress Hero">
+              <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[128px] left-1/2 top-[calc(50%+9px)] w-[98px]" data-node-id="2223:9747" data-name="SkinBoost Spaces (2) 2">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <img alt="" className="absolute h-[100.27%] left-0 max-w-none top-0 w-[307.2%]" src={imgSkinBoostSpaces22} />
+                </div>
+              </div>
+            </div>
+            <div className="bg-white overflow-clip relative shrink-0 size-[96px]" data-node-id="2223:9748" data-name="Progress Hero">
+              <div className="-translate-x-1/2 -translate-y-1/2 absolute flex h-[128px] items-center justify-center left-1/2 top-[calc(50%+9px)] w-[96px]" data-node-id="2223:9749">
+                <div className="-scale-y-100 flex-none rotate-180">
+                  <div className="h-[128px] relative w-[96px]" data-name="SkinBoost Spaces (2) 2">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                      <img alt="" className="absolute h-[100.27%] left-[206.25%] max-w-none top-0 w-[-313.6%]" src={imgSkinBoostSpaces22} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white overflow-clip relative shrink-0 size-[96px]" data-node-id="2223:9750" data-name="Progress Hero">
+              <div className="-translate-y-1/2 absolute h-[128px] left-0 top-[calc(50%+9px)] w-[104px]" data-node-id="2223:9751" data-name="SkinBoost Spaces (2) 2">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <img alt="" className="absolute h-[100.27%] left-[-195.19%] max-w-none top-0 w-[289.48%]" src={imgSkinBoostSpaces22} />
+                </div>
+              </div>
+              <div className="absolute content-stretch flex items-center left-[69px] top-[67px]" data-node-id="2223:9752">
+                <div className="h-[20.276px] relative shrink-0 w-[19.113px]" data-node-id="2223:9753" />
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[8px] items-center justify-center relative shrink-0" data-node-id="2219:9357">
+            <div className="content-stretch flex items-center relative shrink-0" data-node-id="2219:9362">
+              <div className="h-[20.276px] relative shrink-0 w-[19.113px]" data-node-id="2219:9363" />
+            </div>
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/strong,#4d7058)] text-[length:var(--font\/size\/text\/xl,18px)] tracking-[-0.5px] w-[642px]" data-node-id="2128:1070">
+              Seus hábitos, suas preferências e o que você quer cuidar. Tudo isso vem antes de um produto. A SkinBoost conecta esse contexto a uma rotina explicada, que cabe na sua vida.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D1: Font(family: "Manrope", style: SemiBold, size: 80, weight: 600, lineHeight: 1, letterSpacing: -1), Text/XL/Regular: Font(family: "Inter", style: Regular, size: font/size/text/xl, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

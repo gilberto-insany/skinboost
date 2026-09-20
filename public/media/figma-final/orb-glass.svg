@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none" role="img" aria-labelledby="sb-title sb-desc">
+  <title id="sb-title">SkinBoost · inteligência em movimento</title>
+  <desc id="sb-desc">Esfera de vidro verde com luzes em rotação, sombra difusa de folhagem em movimento suave e o o original da marca ampliado e fixo no centro.</desc>
+  <style>
+    .sb-flow,.sb-reflection { transform-origin:256px 256px; }
+    .sb-flow { animation:sb-turn 22s linear infinite; }
+    .sb-flow-reverse { animation-direction:reverse; animation-duration:31s; }
+    .sb-reflection { animation:sb-turn 38s linear infinite; }
+    .sb-breathe { animation:sb-breathe 7s ease-in-out infinite alternate; }
+    .sb-foliage { transform-origin:130px 411px; animation:sb-sway 15s ease-in-out infinite alternate; }
+    @keyframes sb-sway { from { transform:rotate(-3deg); } to { transform:rotate(4deg); } }
+    @keyframes sb-turn { to { transform:rotate(360deg); } }
+    @keyframes sb-breathe { from { opacity:.58; } to { opacity:.88; } }
+    @media (prefers-reduced-motion:reduce) {
+      .sb-flow,.sb-reflection,.sb-breathe,.sb-foliage { animation:none; }
+    }
+  </style>
+  <defs>
+    <clipPath id="sb-clip"><circle cx="256" cy="256" r="176"/></clipPath>
+    <radialGradient id="sb-body" cx=".37" cy=".31" r=".76">
+      <stop stop-color="#66866C"/>
+      <stop offset=".35" stop-color="#315E4B"/>
+      <stop offset=".72" stop-color="#112C25"/>
+      <stop offset="1" stop-color="#071A15"/>
+    </radialGradient>
+    <radialGradient id="sb-halo">
+      <stop offset=".55" stop-color="#66866C" stop-opacity="0"/>
+      <stop offset=".74" stop-color="#A8C94D" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#66866C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="sb-rim">
+      <stop offset=".72" stop-color="#C7D8C9" stop-opacity="0"/>
+      <stop offset=".88" stop-color="#C7D8C9" stop-opacity=".04"/>
+      <stop offset=".96" stop-color="#C7D8C9" stop-opacity=".38"/>
+      <stop offset=".988" stop-color="#E8F2CD" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#315E4B" stop-opacity=".25"/>
+    </radialGradient>
+    <linearGradient id="sb-edge" x1="118" y1="108" x2="386" y2="411" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6E7" stop-opacity=".86"/>
+      <stop offset=".35" stop-color="#C7D8C9" stop-opacity=".06"/>
+      <stop offset=".68" stop-color="#A8C94D" stop-opacity=".68"/>
+      <stop offset="1" stop-color="#C7D8C9" stop-opacity=".18"/>
+    </linearGradient>
+    <linearGradient id="sb-mark" x1="281" y1="36" x2="320" y2="81" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1F6E8"/>
+      <stop offset=".55" stop-color="#C7D8C9"/>
+      <stop offset="1" stop-color="#A8C94D"/>
+    </linearGradient>
+    <linearGradient id="sb-specular" x1="140" y1="116" x2="200" y2="250" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".74"/>
+      <stop offset="1" stop-color="#C7D8C9" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="sb-foliage-fade">
+      <stop offset=".55" stop-color="white"/>
+      <stop offset="1" stop-color="white" stop-opacity=".15"/>
+    </radialGradient>
+    <mask id="sb-foliage-mask" maskUnits="userSpaceOnUse" x="80" y="80" width="352" height="352">
+      <circle cx="256" cy="256" r="176" fill="url(#sb-foliage-fade)"/>
+    </mask>
+    <filter id="sb-leaf-soft" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="3.8"/></filter>
+    <filter id="sb-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="22"/></filter>
+    <filter id="sb-light-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="sb-mark-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="1.2" stdDeviation="1.8" flood-color="#061A12" flood-opacity=".7"/></filter>
+  </defs>
+
+  <circle cx="256" cy="256" r="226" fill="url(#sb-halo)"/>
+  <circle cx="256" cy="256" r="176" fill="url(#sb-body)"/>
+  <g clip-path="url(#sb-clip)">
+    <!-- Diffuse moving light volumes beneath the glass. -->
+    <g class="sb-flow" filter="url(#sb-soft)">
+      <ellipse cx="187" cy="244" rx="56" ry="136" transform="rotate(32 187 244)" fill="#66866C"/>
+      <ellipse cx="326" cy="302" rx="41" ry="113" transform="rotate(30 326 302)" fill="#A8C94D" opacity=".9"/>
+      <ellipse cx="267" cy="174" rx="74" ry="47" fill="#071E18" opacity=".9"/>
+      <ellipse cx="194" cy="339" rx="80" ry="38" fill="#C7D8C9" opacity=".42"/>
+    </g>
+    <g class="sb-flow sb-flow-reverse" opacity=".75">
+      <path d="M123 349C183 419 356 367 372 235C389 111 273 77 217 110C333 90 332 215 274 277C213 342 160 340 123 349Z" fill="#A8C94D" opacity=".36" filter="url(#sb-light-soft)"/>
+      <path d="M105 201C132 87 269 76 352 145C266 108 198 133 163 215C136 278 165 358 192 387C129 350 91 264 105 201Z" fill="#C7D8C9" opacity=".33" filter="url(#sb-light-soft)"/>
+    </g>
+    <g class="sb-breathe" filter="url(#sb-soft)">
+      <ellipse cx="257" cy="267" rx="61" ry="73" fill="#A8C94D" opacity=".5"/>
+    </g>
+    <!-- Stationary light source anchors the spherical volume. -->
+    <ellipse cx="261" cy="115" rx="110" ry="29" fill="#061A15" opacity=".62" filter="url(#sb-soft)"/>
+    <ellipse cx="249" cy="399" rx="108" ry="27" fill="#061A15" opacity=".48" filter="url(#sb-soft)"/>
+    <!-- Broad, out-of-focus palm shadow projected across the glass. -->
+    <g mask="url(#sb-foliage-mask)">
+      <g class="sb-foliage" fill="#071D16" opacity=".48" filter="url(#sb-leaf-soft)">
+        <path d="M124 432C171 352 263 241 400 104" stroke="#071D16" stroke-width="4"/>
+        <path d="M155 382C102 329 91 265 107 203C111 274 157 315 155 382Z"/>
+        <path d="M181 345C140 273 143 188 169 133C156 206 191 285 181 345Z"/>
+        <path d="M212 304C187 231 205 138 241 91C215 166 228 243 212 304Z"/>
+        <path d="M247 263C236 188 270 112 308 75C275 145 265 217 247 263Z"/>
+        <path d="M283 221C284 165 329 100 372 71C333 124 311 185 283 221Z"/>
+        <path d="M322 180C339 125 390 97 428 86C385 117 354 155 322 180Z"/>
+        <path d="M155 381C237 350 325 371 375 402C292 382 227 399 155 381Z"/>
+        <path d="M183 342C251 298 358 313 418 343C332 326 245 360 183 342Z"/>
+        <path d="M215 301C289 249 392 261 450 278C360 278 282 313 215 301Z"/>
+        <path d="M251 260C321 204 418 199 458 215C381 221 314 272 251 260Z"/>
+        <path d="M286 219C341 165 409 149 458 148C398 176 344 222 286 219Z"/>
+        <path d="M325 178C374 122 416 112 457 104C403 137 371 174 325 178Z"/>
+      </g>
+    </g>
+    <circle cx="256" cy="256" r="176" fill="url(#sb-rim)"/>
+    <g class="sb-reflection">
+      <path d="M351 124C406 158 436 229 420 290" stroke="#DBEEB6" stroke-width="12" stroke-linecap="round" opacity=".66" filter="url(#sb-light-soft)"/>
+      <path d="M132 369C158 398 196 416 232 424" stroke="#C7D8C9" stroke-width="5" stroke-linecap="round" opacity=".54" filter="url(#sb-light-soft)"/>
+    </g>
+    <path d="M137 145C153 124 176 112 199 109C171 133 156 174 152 222C126 219 120 180 137 145Z" fill="url(#sb-specular)"/>
+    <ellipse cx="141" cy="156" rx="7" ry="19" transform="rotate(26 141 156)" fill="#F4F7E9" opacity=".74"/>
+    <path d="M190 103C229 85 271 87 301 96" stroke="#F3F9E8" stroke-width="2" stroke-linecap="round" opacity=".56"/>
+  </g>
+  <circle cx="256" cy="256" r="175.5" stroke="url(#sb-edge)" stroke-width="1.4"/>
+
+  <!-- Exact second o path from logo_colored.svg; stationary at the sphere centre. -->
+  <g transform="translate(256 256) scale(2.45) translate(-301.394 -58.811)" fill="url(#sb-mark)" filter="url(#sb-mark-shadow)">
+    <path d="M299.591 33.4473C313.587 32.4555 325.742 42.9901 326.749 56.9865C327.757 70.9828 317.234 83.1489 303.24 84.1712C289.222 85.1949 277.035 74.6537 276.026 60.6361C275.017 46.6184 285.571 34.4409 299.591 33.4473ZM296.087 76.296C305.895 73.8705 315.763 61.6663 312.981 51.338C311.371 45.3712 307.052 42.1076 300.887 42.6784C290.533 45.0307 281.652 57.8005 284.151 68.3096C285.567 74.266 289.956 77.6426 296.087 76.296Z"/>
+  </g>
+</svg>

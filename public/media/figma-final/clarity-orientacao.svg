@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">O que orienta a escolha</title>
+  <desc id="desc">Brilhos verdes com expansão e luminosidade suaves.</desc>
+  <style>.star{transform-origin:150px 170px;animation:shine 4.8s ease-in-out infinite}.small{transform-origin:222px 108px;animation:shine 4.8s ease-in-out -2.4s infinite}@keyframes shine{0%,100%{transform:scale(.96);opacity:.86}50%{transform:scale(1.04);opacity:1}}
+    @media(prefers-reduced-motion:reduce){.motion{animation:none!important}}
+  </style>
+  <defs>
+    <radialGradient id="disk" cx=".35" cy=".25" r=".85"><stop stop-color="#FFFFFF"/><stop offset=".56" stop-color="#F7F8F4"/><stop offset=".82" stop-color="#EDF1E8"/><stop offset="1" stop-color="#D3DFCD"/></radialGradient>
+    <radialGradient id="rim"><stop offset=".88" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".965" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset=".99" stop-color="#B6C7AA" stop-opacity=".75"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".7"/></radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#BBCDB4"/><stop offset=".26" stop-color="#FFFFFF"/><stop offset=".67" stop-color="#A9BD9A"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="green" x1=".15" y1="0" x2=".85" y2="1"><stop stop-color="#244E39"/><stop offset=".18" stop-color="#81A777"/><stop offset=".36" stop-color="#D4E5B8"/><stop offset=".5" stop-color="#668C4B"/><stop offset=".76" stop-color="#A8C94D"/><stop offset="1" stop-color="#315E4B"/></linearGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#315E4B"/><stop offset=".4" stop-color="#486B37"/><stop offset=".67" stop-color="#C7D8C9"/><stop offset="1" stop-color="#244B35"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E3ECDC" stop-opacity=".8"/><stop offset=".45" stop-color="#C7D8C9" stop-opacity=".25"/><stop offset="1" stop-color="#66866C" stop-opacity=".75"/></linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#C6DE7A"/><stop offset=".5" stop-color="#A8C94D"/><stop offset="1" stop-color="#4E783B"/></linearGradient>
+    <filter id="shadow" x="-35%" y="-35%" width="170%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#315E4B" flood-opacity=".17"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <clipPath id="circle"><circle cx="160" cy="160" r="131"/></clipPath>
+    
+  </defs>
+  <circle cx="160" cy="160" r="132" fill="url(#disk)" stroke="url(#edge)" stroke-width="2"/>
+  <g clip-path="url(#circle)">
+    <g fill="#66866C" opacity=".055" filter="url(#soft)">
+      <path d="M35 235C69 191 92 153 110 106C105 165 84 213 35 235ZM49 218C36 185 34 157 43 127C47 171 63 191 49 218ZM66 192C53 159 53 127 68 94C62 140 78 167 66 192ZM81 165C112 146 138 143 157 149C121 155 111 177 81 165ZM63 198C95 173 124 176 145 182C106 187 93 209 63 198ZM46 229C78 207 104 210 125 218C92 220 72 243 46 229Z"/>
+    </g>
+    <path d="M57 91C74 64 96 50 118 46C93 67 76 92 69 115Z" fill="white" opacity=".65"/>
+    <path d="M80 55C119 30 178 29 215 43" stroke="white" stroke-width="3" opacity=".82" stroke-linecap="round"/>
+    <path d="M227 262C254 245 274 213 279 182" stroke="#A8C94D" stroke-width="6" opacity=".12" filter="url(#soft)"/>
+  </g>
+  <circle cx="160" cy="160" r="130" fill="url(#rim)"/>
+  <circle cx="160" cy="160" r="126" stroke="#FFFFFF" stroke-opacity=".75"/>
+
+  <g filter="url(#shadow)" stroke="url(#bevel)" stroke-width="3" stroke-linejoin="round">
+    <g class="motion star">
+      <path d="M150 91C158 91 157 126 174 144C192 161 224 161 224 170C224 179 193 180 175 196C157 214 158 249 150 249C142 249 142 215 124 197C107 180 76 179 76 170C76 161 108 161 125 144C142 126 141 91 150 91Z" fill="url(#green)"/>
+      <path d="M150 106C148 139 133 158 95 170" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".72"/>
+      <path d="M169 193C157 211 155 226 151 238" stroke="#ECF3C7" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+    </g>
+    <g class="motion small">
+      <path d="M222 73C227 73 226 89 234 97C243 106 259 104 259 109C259 115 242 114 234 122C226 130 227 146 222 146C217 146 217 130 209 122C201 114 185 114 185 109C185 104 201 105 209 97C217 89 217 73 222 73Z" fill="url(#green)"/>
+      <path d="M221 83C219 99 213 103 198 109" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+    </g>
+  </g>
+</svg>
+

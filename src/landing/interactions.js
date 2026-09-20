@@ -1,4 +1,7 @@
 import { initStories } from "./stories.js";
+import { initHeader } from "./header.js";
+import { initHeroSlider } from "./hero-slider.js";
+import { initFinalPanels } from "./final-panels.js";
 import { icon } from "../ui/dom.js";
 
 /** Same landing interactions in the app and isolated component catalogs. */
@@ -11,6 +14,9 @@ export function initLanding({
   const $ = (selector) => root.querySelector(selector);
   const $$ = (selector) => [...root.querySelectorAll(selector)];
   const events = new AbortController();
+  const header = initHeader(root);
+  const heroSlider = initHeroSlider({ root });
+  const finalPanels = initFinalPanels({ root });
   const navToggle = $(".menu-toggle");
   if (navToggle)
     navToggle.onclick = () => {
@@ -59,6 +65,9 @@ export function initLanding({
     $("#step-title").textContent = steps[index][0];
     $("#step-text").textContent = steps[index][1];
     $("#step-reply").textContent = steps[index][2];
+    const stepImage = $("[data-step-image]");
+    if (stepImage)
+      stepImage.src = `/media/figma-final/${["steps-0", "steps2-2", "steps3-2"][index]}.webp`;
     $(".card-foot span").textContent = steps[index][3];
   }
   $$("[data-step]").forEach((el) => {
@@ -144,6 +153,9 @@ export function initLanding({
   return {
     destroy() {
       events.abort();
+      header?.destroy();
+      heroSlider?.destroy();
+      finalPanels.destroy();
       stories?.destroy();
       $$(
         ".menu-toggle, .nav nav a, [data-step], #prev-story, #next-story, [data-product], [data-info]",

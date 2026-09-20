@@ -1,0 +1,76 @@
+export default function Video() {
+  return (
+    <div className="bg-[#584136] relative size-full" data-node-id="2128:1753" data-name="Video">
+      <div className="absolute contents left-[-12px] top-[-32px]" data-node-id="2240:2426" data-name="video + bg">
+        <div className="absolute h-[871px] left-[-12px] top-0 w-[1568px]" data-node-id="2240:2423" data-name="final 1" />
+        <div className="absolute bg-gradient-to-b from-[rgba(84,56,41,0)] h-[903px] left-0 opacity-40 to-[#2e1a10] top-[-32px] w-[1440px]" data-node-id="2240:2427" />
+        <div className="absolute bg-[#2e1a10] h-[903px] left-0 opacity-10 top-[-32px] w-[1440px]" data-node-id="2240:2428" />
+      </div>
+      <div className="-translate-x-1/2 [word-break:break-word] absolute content-stretch flex flex-col gap-[24px] items-start left-[calc(50%-339px)] top-[232px] w-[642px]" data-node-id="2128:1754">
+        <p className="font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-dourado\/light,#e3d5bf)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1755">
+          PELE DE VERDADE. VIDA DE VERDADE.
+        </p>
+        <div className="content-stretch flex flex-col font-['Manrope:SemiBold'] font-semibold items-start leading-none relative shrink-0 text-[80px] tracking-[-1px] w-full" data-node-id="2128:1756">
+          <p className="relative shrink-0 text-[color:var(--static\/white,white)] w-full" data-node-id="2128:1757">
+            O cuidado muda.
+          </p>
+          <p className="relative shrink-0 text-[color:var(--static\/white,white)] w-full" data-node-id="2128:1758">
+            A sua essência,
+          </p>
+          <p className="relative shrink-0 text-[color:var(--brand-secondary\/soft,#f0f9dd)] w-full" data-node-id="2128:1759">
+            permanece.
+          </p>
+        </div>
+        <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/xl,18px)] tracking-[-0.5px] w-full" data-node-id="2128:1760">
+          Para cada fase, um próximo passo.
+        </p>
+      </div>
+      <div className="-translate-x-1/2 absolute bottom-0 content-stretch flex gap-[32px] items-center left-1/2 p-[60px] w-[1440px]" data-node-id="2128:1762">
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1763">
+          NO SEU TEMPO.
+        </p>
+        <div className="bg-[var(--white\/20,rgba(255,255,255,0.2))] flex-[1_0_0] h-[1.5px] min-w-px overflow-clip relative" data-node-id="2128:1764" data-name="Container">
+          <div className="absolute bg-[var(--brand-secondary\/base,#a8c94d)] h-[1.5px] left-[-27px] top-0 w-[100px]" data-node-id="2219:9283" />
+        </div>
+      </div>
+      <div className="absolute border border-[var(--white\/5,rgba(255,255,255,0.05))] border-solid content-stretch flex items-start left-[973px] p-[32px] rounded-[1222px] top-[201px]" data-node-id="2240:2429">
+        <div className="border border-[var(--white\/20,rgba(255,255,255,0.2))] border-solid content-stretch flex flex-col items-start px-[40px] py-[83px] relative rounded-[1222px] shrink-0 size-[332px]" data-node-id="2240:1846">
+          <div className="content-stretch flex flex-col gap-[14.4px] items-center justify-center overflow-clip relative shrink-0 w-full" data-node-id="2240:1836" data-name="Progresso · 100 dias">
+            <div className="[word-break:break-word] content-stretch flex flex-col gap-[7.2px] items-center justify-center not-italic relative shrink-0 text-center whitespace-nowrap" data-node-id="2240:2076">
+              <p className="font-['Inter:Medium'] font-medium leading-[1.5] relative shrink-0 text-[10.8px] text-[color:var(--white\/100,white)] tracking-[-0.45px]" data-node-id="2240:1837">
+                SUA PELE MAIS JOVEM
+              </p>
+              <p className="font-['Inter:Light'] font-light leading-[normal] relative shrink-0 text-[36px] text-[color:var(--white\/90,rgba(255,255,255,0.9))]" data-node-id="2240:1838">
+                em 100 dias.
+              </p>
+            </div>
+            <div className="backdrop-blur-[12px] bg-[var(--white\/20,rgba(255,255,255,0.2))] border-[0.9px] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid h-[12px] overflow-clip relative rounded-[122px] shrink-0 w-[250px]" data-node-id="2240:1839" data-name="Barra · progresso ilustrativo">
+              <div className="absolute backdrop-blur-[12px] bg-[var(--white\/70,rgba(255,255,255,0.7))] h-[12px] left-[-0.9px] rounded-[15.3px] top-[-0.95px] w-[157px]" data-node-id="2240:1840" data-name="Progresso" />
+            </div>
+            <div className="[word-break:break-word] content-stretch flex font-['Inter:Medium'] font-medium h-[13px] items-start justify-between leading-[1.5] not-italic overflow-clip relative shrink-0 text-[10.8px] text-[color:var(--white\/80,rgba(255,255,255,0.8))] tracking-[-0.45px] w-full whitespace-nowrap" data-node-id="2240:1842" data-name="Escala · início e conclusão">
+              <p className="relative shrink-0" data-node-id="2240:1843">
+                DIA 01
+              </p>
+              <p className="relative shrink-0" data-node-id="2240:1844">
+                DIA 100
+              </p>
+            </div>
+            <div className="border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid border-t-[0.9px] content-stretch flex items-center justify-center pt-[10.8px] relative shrink-0 w-full" data-node-id="2240:2077">
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[10.8px] text-[color:var(--white\/60,rgba(255,255,255,0.6))] tracking-[-0.45px] whitespace-pre" data-node-id="2240:1845">{`Hidratação    ·    Textura    ·    Firmeza`}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Medium: Font(family: "Inter", style: Medium, size: font/size/text/md, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Display/D1: Font(family: "Manrope", style: SemiBold, size: 80, weight: 600, lineHeight: 1, letterSpacing: -1), Text/XL/Regular: Font(family: "Inter", style: Regular, size: font/size/text/xl, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

@@ -1,0 +1,93 @@
+const imgGroup1 = "https://www.figma.com/api/mcp/asset/be68c483-cd2b-4b8e-bcc2-2bbea0989d6d.svg";
+const imgVector2219 = "https://www.figma.com/api/mcp/asset/7fa7c45a-1857-419a-8b52-ac029422d989.svg";
+const imgGroup427320422 = "https://www.figma.com/api/mcp/asset/1cb6be2d-42ea-47c7-9e92-a71b2045c405.svg";
+const imgSocial = "https://www.figma.com/api/mcp/asset/5d7d0da4-637e-43c4-bd54-8d5ecd8a482f.svg";
+const imgSocial1 = "https://www.figma.com/api/mcp/asset/f1b051a5-c045-40d0-a13c-5054fed93665.svg";
+
+export default function Footer() {
+  return (
+    <div className="bg-[var(--brand-primary\/soft,#e3ece4)] content-stretch flex flex-col items-start relative size-full" data-node-id="2134:2249" data-name="Footer">
+      <div className="content-stretch flex items-center justify-between px-[64px] py-[70px] relative shrink-0 w-[1440px]" data-node-id="2134:2250" data-name="Container">
+        <div className="h-[33.263px] relative shrink-0 w-[470.443px]" data-node-id="2134:2251">
+          <div className="absolute inset-[0_66.32%_0_0]" data-node-id="2134:2252">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup1} />
+          </div>
+          <div className="absolute h-[17.5px] left-[190.44px] top-[7.88px] w-0" data-node-id="2134:2262">
+            <div className="absolute inset-[0_-0.5px]">
+              <img alt="" className="block max-w-none size-full" src={imgVector2219} />
+            </div>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] left-[222.44px] not-italic text-[color:var(--brand-primary\/base,#66866c)] text-[length:var(--font\/size\/text\/lg,16px)] top-[4.63px] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2263">
+            Ciência sensível. Cuidado pessoal.
+          </p>
+        </div>
+        <div className="[word-break:break-word] content-stretch flex font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] gap-[32px] items-center leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2264">
+          <p className="relative shrink-0" data-node-id="2134:2265">
+            Como funciona
+          </p>
+          <p className="relative shrink-0" data-node-id="2134:2266">
+            Produtos
+          </p>
+          <p className="relative shrink-0" data-node-id="2134:2267">
+            Confiança
+          </p>
+          <p className="relative shrink-0" data-node-id="2134:2268">
+            Dúvidas
+          </p>
+        </div>
+      </div>
+      <div className="h-[217px] overflow-clip relative shrink-0 w-full" data-node-id="2134:2269">
+        <p className="[text-box-edge:cap_alphabetic] [text-box-trim:trim-both] [word-break:break-word] absolute font-['Manrope:Medium'] font-[571] leading-[normal] left-0 text-[277px] text-[color:var(--brand-primary\/subtle,#b9c5b3)] top-[24.03px] tracking-[13.85px] whitespace-nowrap" data-node-id="2134:2270">{`SkinBoost `}</p>
+      </div>
+      <div className="border-[var(--brand-primary\/subtle,#b9c5b3)] border-solid border-t-[length:var(--border\/sm,1px)] content-stretch flex gap-[196px] items-center px-[64px] py-[24px] relative shrink-0" data-node-id="2134:2271" data-name="Container">
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2272">
+          © 2026 SkinBoost · Projeto conceitual
+        </p>
+        <div className="h-[32px] relative shrink-0 w-[283px]" data-node-id="2134:2273">
+          <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-[69.5px] not-italic text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] text-center top-[5.5px] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2274">
+            Acompanhe nas redes
+          </p>
+          <div className="absolute h-[32px] left-[155px] top-0 w-[128px]" data-node-id="2134:2275">
+            <div className="absolute bg-[var(--brand-primary\/light,#c7d8c9)] left-0 rounded-[122px] size-[32px] top-0" data-node-id="2134:2276" data-name="social">
+              <div className="absolute bottom-1/4 left-[28.13%] right-1/4 top-[28.13%]" data-node-id="I2134:2276;203:16">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup427320422} />
+              </div>
+            </div>
+            <div className="absolute left-[48px] size-[32px] top-0" data-node-id="2134:2277" data-name="social">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSocial} />
+            </div>
+            <div className="absolute left-[96px] size-[32px] top-0" data-node-id="2134:2278" data-name="social">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSocial1} />
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[41px] items-center relative shrink-0" data-node-id="2134:2279">
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2280">
+            Privacidade
+          </p>
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2281">
+            Sobre a demonstração
+          </p>
+          <div className="h-[21px] relative shrink-0 w-[107px]" data-node-id="2134:2282" data-name="Link">
+            <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-0 not-italic text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2283">
+              Voltar ao topo
+            </p>
+            <div className="absolute left-[94px] size-[13px] top-[4px]" data-node-id="2134:2284" data-name="Italic Text">
+              <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[13px] left-0 not-italic text-[13px] text-[color:var(--neutral\/strong,#707872)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2134:2285">{`\uE08E`}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/LG/Medium: Font(family: "Inter", style: Medium, size: font/size/text/lg, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

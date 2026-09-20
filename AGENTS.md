@@ -67,3 +67,25 @@ The header CTA is “Começar”, kept on one line. In photo recommendation card
 ## Unified publication and expanding stories — 19 September 2026
 Gilberto requested merging Leandro's latest work into his published Sites version. Publish the same GitHub main source to Sites; do not maintain a separate footer-only version. The Sites Worker forwards only the four known AI endpoints to the existing skinboost-design-review Vercel backend; Node/Sharp and secrets stay there. Require the exact public Sites origin for POST before recreating upstream headers. Never forward cookies or authorization. Preserve consent and local retention controls.
 Stories use three photo cards, with one expanding into the illustrated quote. Click or keyboard selects a story, automatic progression takes eight seconds with a progress bar, pauses on hover/focus/offscreen/hidden page, and offers explicit pause. Reduced motion starts paused. Keep lifecycle cleanup for isolated Storybooks and the fictional/AI labels.
+
+## Manifesto video — 19 September 2026
+Gilberto requested the supplied `Imagem de referência.webm` in the manifesto background, controlled in both directions by scrolling. This is an explicit exception to the people-placeholder rule for this section. Use `public/media/manifesto-scroll.webm`, keep pause/resume and a static first frame for reduced motion. Preserve the existing copy and section structure.
+
+Gilberto found the initial manifesto scroll playback too fast. Use a longer scroll distance (430vh desktop, 340vh mobile) for a slower, more deliberate progression.
+
+Gilberto requested a white progress graphic on the right of the manifesto, inspired by a rounded bar with a diagonal-hatched remainder. Fill it with section scroll progress, reverse on upward scroll and respect pause/reduced motion. The reference is visual; use section progress rather than unsupported skin-age or 100-day efficacy claims.
+
+## Updated manifesto source — 20 September 2026
+Replace the previous manifesto clip with the supplied `Fotos e videos/Vídeos/final.mp4`, converted to VP9 WebM with no audio and a keyframe every 12 frames to support scroll seeking. Keep the existing slow scroll distance, white progress bar, pause and reduced-motion behavior. Refresh the poster from this source.
+
+## Product performance — 20 September 2026
+Gilberto confirmed optimizing the current interactive Comfort bottle, not replacing it with the scene open in Blender. Preserve high-DPI sharpness, acrylic transmission, materials, logo and reversible scroll/cap motion. Batch the fixed pump pieces sharing one material without simplifying geometry; keep the cap separate. Coalesce redraw requests, skip unchanged poses and canvas sizes, and suspend rendering offscreen or while the document is hidden. Keep the existing lazy loading and dispose pending frames when unmounting.
+
+## Final Home rebuild — 20 September 2026
+Gilberto requested rebuilding the Home visual layer from finalized Figma frame 2128:1633 in file 0wIp15KlSyc919z2jsqgHa (page 7:630), in bounded stages. This supersedes older visual snapshots for the Home. Retain useful existing behavior, especially optimized 3D, bento actions, video scroll, chat and related controllers, while following the refined Figma composition. Stage 1 analysis is in design/figma-final/README.md with token/style/motion snapshots. Next stage is foundations, header and hero. Use effective node/style values when tokens disagree: D1 is 80px in the final design despite the 72px variable; headings are Manrope, body styles are Inter. Preserve uncommitted concurrent changes. Do one reviewable stage at a time.
+
+Gilberto clarified the rebuild order: focus on the desktop Figma first (1440 px reference); refine responsive layouts afterward. Complete foundations/header/hero as one reviewable stage before moving through subsequent sections.
+
+## Complete final Home — 20 September 2026
+Gilberto then explicitly requested implementing the entire finalized Home, superseding the one-stage-per-delivery limit above. Keep desktop as the priority. Hero is a two-image slider using Figma variants 2223:9634 and 2223:9632, with a 10-second interval and 300ms crossfade; preserve the prompt across slide changes and pause while editing, offscreen, hidden or reduced motion. All final sections now use the scoped foundations and exported local assets. Catalog variants, step imagery and three illustrative comparisons must remain interactive. Preserve optimized Comfort 3D and slow WebM scroll. Mark Figma efficacy numbers and satisfaction seal as conceptual, not clinical evidence or a real guarantee.
+User-approved animated assets override static Figma icons: use the four original SVGs from Fotos e videos/Highlights in Clareza, and Fotos e videos/Logos/skinboost-ai-orb-glass.svg in both Steps and Bento. Serve exact copies through img to isolate their IDs and preserve internal animations/reduced motion. The glass orb has 512px canvas and 352px visible sphere; compensate its layout size for that halo margin without clipping or rotating the central logo.

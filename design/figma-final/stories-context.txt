@@ -1,0 +1,175 @@
+const imgMagnificRetrato9X16HomemBrasilN2DNtAl6D91 = "https://www.figma.com/api/mcp/asset/62b88e13-e16b-481c-8b1b-8be7fbaab6af.png";
+const imgMagnificRetrato9X16HomemBrasilN2DNtAl6D92 = "https://www.figma.com/api/mcp/asset/2b7e9c2d-9fc8-46b0-88a9-b5517e638d38.png";
+const imgMagnific916VerticalMulherBrasiDtqdLubXsl1 = "https://www.figma.com/api/mcp/asset/04cadd47-fa32-4698-a7e0-ff991bbfbdec.png";
+const imgMagnific916VerticalMulherBrasiDtqdLubXsl2 = "https://www.figma.com/api/mcp/asset/50e30c2c-fb92-4e7e-b494-ce86f494d616.png";
+const imgMagnific916VerticalHomemOuMul6Ap6MeAiJo1 = "https://www.figma.com/api/mcp/asset/32b51173-013b-4daa-9500-309b7611921c.png";
+const imgMagnific916VerticalHomemOuMul6Ap6MeAiJo2 = "https://www.figma.com/api/mcp/asset/529c05ac-3e4c-479b-98e4-cda76c412cdc.png";
+const img = "https://www.figma.com/api/mcp/asset/3a3a4dd4-2e29-4bdc-aff9-7afd6014d7a1.svg";
+
+export default function Testmonial() {
+  return (
+    <div className="content-stretch flex flex-col items-start px-[64px] py-[110px] relative size-full" data-node-id="2128:2099" data-name="Testmonial">
+      <div className="content-stretch flex items-end justify-between relative shrink-0 w-full" data-node-id="2128:2100" data-name="Container">
+        <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2101" data-name="Container">
+          <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2128:2102" data-name="Paragraph">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/very-strong,#3b403c)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2103">
+              HISTÓRIAS QUE GUIAM A PROPOSTA
+            </p>
+          </div>
+          <div className="content-stretch flex flex-col items-start pt-[26px] relative shrink-0 w-full" data-node-id="2128:2104" data-name="Heading 2">
+            <p className="[word-break:break-word] font-['Manrope:SemiBold'] font-semibold leading-[1.1] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/display\/d3,56px)] tracking-[-1px] whitespace-nowrap" data-node-id="2128:2105">
+              O cuidado faz parte da vida.
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[var(--space\/10,10px)] items-start relative shrink-0" data-node-id="2128:2106" data-name="Container">
+          <div className="border-[#bfc7b7] border-[length:var(--border\/sm,1px)] border-solid grid grid-cols-[_28px] grid-rows-[_38px] px-[6px] py-px relative rounded-[21px] shrink-0 size-[42px]" data-node-id="2128:2107" data-name="Button - Pausar troca automática">
+            <div className="col-1 content-stretch flex flex-col items-center justify-self-center relative row-1 self-center shrink-0 size-[21px]" data-node-id="2128:2108" data-name="Italic Text">
+              <p className="[word-break:break-word] font-['Phosphor:Regular'] leading-[21px] not-italic relative shrink-0 text-[21px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-center tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2109">{`\uE39E`}</p>
+            </div>
+          </div>
+          <div className="border-[#bfc7b7] border-[length:var(--border\/sm,1px)] border-solid grid grid-cols-[_28px] grid-rows-[_38px] px-[6px] py-px relative rounded-[21px] shrink-0 size-[42px]" data-node-id="2128:2110" data-name="Button - Relato anterior">
+            <div className="col-1 content-stretch flex flex-col items-center justify-self-center relative row-1 self-center shrink-0 size-[21px]" data-node-id="2128:2111" data-name="Italic Text">
+              <p className="[word-break:break-word] font-['Phosphor:Regular'] leading-[21px] not-italic relative shrink-0 text-[21px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-center tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2112">{`\uE058`}</p>
+            </div>
+          </div>
+          <div className="border-[#bfc7b7] border-[length:var(--border\/sm,1px)] border-solid grid grid-cols-[_28px] grid-rows-[_38px] px-[6px] py-px relative rounded-[21px] shrink-0 size-[42px]" data-node-id="2128:2113" data-name="Button - Próximo relato">
+            <div className="col-1 content-stretch flex flex-col items-center justify-self-center relative row-1 self-center shrink-0 size-[21px]" data-node-id="2128:2114" data-name="Italic Text">
+              <p className="[word-break:break-word] font-['Phosphor:Regular'] leading-[21px] not-italic relative shrink-0 text-[21px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-center tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2115">{`\uE06C`}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex gap-[var(--space\/16,16px)] h-[588.773px] items-start pt-[52px] relative shrink-0 w-full" data-node-id="2128:2116" data-name="Relatos ilustrativos">
+        <div className="bg-[#e6e9e3] content-stretch flex flex-[182.852_0_0] h-full items-start min-w-px overflow-clip relative" data-node-id="2128:2117" data-name="Article">
+          <div className="bg-[var(--neutral\/very-strong,#3b403c)] content-stretch flex flex-col h-full items-start justify-center overflow-clip relative shrink-0 w-[190px]" data-node-id="2128:2118" data-name="Button - Ler relato de Lucas">
+            <div className="h-[536.773px] overflow-clip relative shrink-0 w-full" data-node-id="2128:2119" data-name="Image (Retrato gerado por IA de Lucas, pessoa fictícia)">
+              <div className="absolute h-[666px] left-[-91px] top-[-65px] w-[371px]" data-node-id="2240:2667" data-name="magnific_retrato-9x16-homem-brasil_N2DNtAL6D9 1">
+                <div aria-hidden className="absolute inset-0 pointer-events-none">
+                  <img alt="" className="absolute max-w-none object-cover size-full" src={imgMagnificRetrato9X16HomemBrasilN2DNtAl6D91} />
+                  <img alt="" className="absolute max-w-none object-cover size-full" src={imgMagnificRetrato9X16HomemBrasilN2DNtAl6D92} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-gradient-to-b from-[rgba(18,31,33,0)] h-[241.555px] left-0 to-[rgba(18,31,33,0.7)] top-[295.22px] w-[190px]" data-node-id="2128:2120" data-name="Text" />
+            <div className="absolute content-stretch flex items-center justify-between left-[20px] top-[481.27px] w-[150px]" data-node-id="2128:2121" data-name="Text">
+              <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2122" data-name="Text">
+                <p className="[word-break:break-word] font-['Manrope_Variable:Regular'] leading-[normal] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2123">
+                  Lucas
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2124" data-name="Text">
+                <p className="[word-break:break-word] font-['Manrope_Variable:Regular'] leading-[normal] not-italic relative shrink-0 text-[23px] text-[color:var(--static\/white,white)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2125">
+                  +
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[#e6e9e3] content-stretch flex flex-[182.859_0_0] h-full items-start min-w-px overflow-clip relative" data-node-id="2128:2126" data-name="Article">
+          <div className="bg-[var(--neutral\/very-strong,#3b403c)] content-stretch flex flex-col h-full items-start justify-center overflow-clip relative shrink-0 w-[190px]" data-node-id="2128:2127" data-name="Button - Ler relato de Marina">
+            <div className="h-[536.773px] overflow-clip relative shrink-0 w-full" data-node-id="2128:2128" data-name="Image (Retrato gerado por IA de Marina, pessoa fictícia)">
+              <div className="absolute h-[606px] left-[-74.85px] top-[-26px] w-[339px]" data-node-id="2240:2725" data-name="magnific_916-vertical-mulher-brasi_dtqdLubXSL 1">
+                <div aria-hidden className="absolute inset-0 pointer-events-none">
+                  <img alt="" className="absolute max-w-none object-cover size-full" src={imgMagnific916VerticalMulherBrasiDtqdLubXsl1} />
+                  <img alt="" className="absolute max-w-none object-cover size-full" src={imgMagnific916VerticalMulherBrasiDtqdLubXsl2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-gradient-to-b from-[rgba(18,31,33,0)] h-[241.555px] left-0 to-[rgba(18,31,33,0.7)] top-[295.22px] w-[190px]" data-node-id="2128:2129" data-name="Text" />
+            <div className="absolute content-stretch flex items-center justify-between left-[20px] top-[481.27px] w-[150px]" data-node-id="2128:2130" data-name="Text">
+              <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2131" data-name="Text">
+                <p className="[word-break:break-word] font-['Manrope_Variable:Regular'] leading-[normal] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2132">
+                  Marina
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2133" data-name="Text">
+                <p className="[word-break:break-word] font-['Manrope_Variable:Regular'] leading-[normal] not-italic relative shrink-0 text-[23px] text-[color:var(--static\/white,white)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2134">
+                  +
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[var(--brand-primary\/very-soft,#f1f5f2)] content-stretch flex flex-[914.289_0_0] h-full items-start min-w-px overflow-clip relative" data-node-id="2128:2135" data-name="Article">
+          <div className="bg-[var(--neutral\/very-strong,#3b403c)] content-stretch flex flex-col h-full items-start justify-center overflow-clip relative shrink-0 w-[190px]" data-node-id="2128:2136" data-name="Button - Ler relato de Denise">
+            <div className="h-[536.773px] overflow-clip relative shrink-0 w-full" data-node-id="2128:2137" data-name="Image (Retrato gerado por IA de Denise, pessoa fictícia)">
+              <div className="absolute h-[796px] left-[-117.71px] top-[-130px] w-[445px]" data-node-id="2240:2754" data-name="magnific_916-vertical-homem-ou-mul_6Ap6meAiJO 1">
+                <div aria-hidden className="absolute inset-0 pointer-events-none">
+                  <img alt="" className="absolute max-w-none object-cover size-full" src={imgMagnific916VerticalHomemOuMul6Ap6MeAiJo1} />
+                  <img alt="" className="absolute max-w-none object-cover size-full" src={imgMagnific916VerticalHomemOuMul6Ap6MeAiJo2} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute bg-gradient-to-b from-[rgba(18,31,33,0)] h-[241.555px] left-0 to-[rgba(18,31,33,0.7)] top-[295.22px] w-[190px]" data-node-id="2128:2138" data-name="Text" />
+            <div className="absolute content-stretch flex items-center justify-between left-[20px] top-[481.27px] w-[150px]" data-node-id="2128:2139" data-name="Text">
+              <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2140" data-name="Text">
+                <p className="[word-break:break-word] font-['Manrope_Variable:Regular'] leading-[normal] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2141">
+                  Denise
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2142" data-name="Text">
+                <p className="[word-break:break-word] font-['Manrope_Variable:Regular'] leading-[normal] not-italic relative shrink-0 text-[23px] text-[color:var(--static\/white,white)] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2143">
+                  −
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex flex-[634.769_0_0] flex-col h-full items-start min-w-px pb-[28px] pt-[36px] px-[44.76px] relative" data-node-id="2128:2144" data-name="Container">
+            <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2128:2145" data-name="Text">
+              <div className="h-[24px] relative shrink-0 w-[30px]" data-node-id="2240:2826" data-name="“">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={img} />
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start pb-[var(--space\/24,24px)] pt-[var(--space\/32,32px)] relative shrink-0 w-full" data-node-id="2128:2147" data-name="Quote:margin">
+              <p className="[word-break:break-word] font-['Manrope:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h3,32px)] tracking-[-1px] w-[635px]" data-node-id="2128:2148">{`Quero cuidar da pele sem transformar minha rotina em uma obrigação difícil. `}</p>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--space\/6,6px)] items-start relative shrink-0 w-full" data-node-id="2128:2149" data-name="Container">
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2128:2150" data-name="Bold Text">
+                <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/lg,16px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2151">
+                  Denise, 48
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2128:2152" data-name="Text">
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[#5f6b62] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2153">
+                  Cuidado que cabe na vida.
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-[1_0_0] flex-col items-start justify-end min-h-px relative w-full" data-node-id="2128:2154" data-name="Container:align">
+              <div className="content-stretch flex h-[15px] items-end justify-between relative shrink-0 w-full" data-node-id="2128:2155" data-name="Container">
+                <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2156" data-name="Text">
+                  <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/xs,10px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2157">
+                    RETRATO GERADO POR IA · RELATO FICTÍCIO, NÃO DEPOIMENTO DE CLIENTE
+                  </p>
+                </div>
+                <div className="content-stretch flex flex-col items-start relative shrink-0" data-node-id="2128:2158" data-name="Text">
+                  <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/xs,10px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2159">
+                    03 / 03
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start pb-[var(--space\/20,20px)] pt-[var(--space\/32,32px)] relative shrink-0 w-full" data-node-id="2128:2160" data-name="Container:margin">
+              <div className="bg-[#c8d0be] content-stretch flex flex-col items-start relative shrink-0 w-full" data-node-id="2128:2161" data-name="Container">
+                <div className="content-stretch flex flex-col h-[2px] items-start relative shrink-0 w-[635px]" data-node-id="2128:2162" data-name="Text:transform">
+                  <div className="absolute bg-[var(--brand-primary\/strong,#4d7058)] h-[2px] left-0 top-0 w-[524.812px]" data-node-id="2128:2163" data-name="Text" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D3: Font(family: "Manrope", style: SemiBold, size: font/size/display/D3, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Heading/H3: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H3, weight: 600, lineHeight: 1.2999999523162842, letterSpacing: -1), Text/LG/Medium: Font(family: "Inter", style: Medium, size: font/size/text/lg, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/XS/Regular: Font(family: "Inter", style: Regular, size: font/size/text/xs, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

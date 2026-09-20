@@ -1,0 +1,299 @@
+const imgMagnificUseThisProdutctImg1UsBh5TDmuoQr3 = "https://www.figma.com/api/mcp/asset/82f3af9e-966f-4634-aa7f-ba47a1d52d10.png";
+const imgMagnificUseThisProdutctImg1UsBh5TDmuoQr4 = "https://www.figma.com/api/mcp/asset/73cf6c2d-1cc3-440c-9824-13786f0e8087.png";
+const imgMagnificPromptParaGeracaoDeImU5W5EZrQld1 = "https://www.figma.com/api/mcp/asset/88b09773-be47-4b3a-920d-011d529c3be4.png";
+const imgMagnificPromptParaGeracaoDeImU5W5EZrQld2 = "https://www.figma.com/api/mcp/asset/d2c982ad-553c-4745-b836-180a64386240.png";
+const imgMagnificUseThisProdutctImg1UsBh5TDmuoQr2 = "https://www.figma.com/api/mcp/asset/12b8a8be-2507-49f2-98e0-dba599b53b32.svg";
+const imgVector = "https://www.figma.com/api/mcp/asset/a5aefa7b-27cb-40f6-b681-8d43a2f9f7a3.svg";
+const imgGroup427320472 = "https://www.figma.com/api/mcp/asset/fa5ca5e1-92a6-43a5-b62d-618befba5bf9.svg";
+const imgVector1 = "https://www.figma.com/api/mcp/asset/5edb5557-b625-4040-a970-bb96db20344f.svg";
+const imgVector2 = "https://www.figma.com/api/mcp/asset/2afbc1c4-2953-4c01-b0fa-022e875762c9.svg";
+const imgVector3 = "https://www.figma.com/api/mcp/asset/b553faae-5023-4fd3-bde3-7f8dacb40602.svg";
+const imgVector2220 = "https://www.figma.com/api/mcp/asset/72e5e7e0-8cbe-4734-9036-9c80b03cc3c2.svg";
+
+type ProgressProps = {
+  className?: string;
+  property1?: "Default";
+};
+
+function Progress({ className, property1 = "Default" }: ProgressProps) {
+  return (
+    <div className={className || "h-[1.5px] overflow-clip relative w-[1312px]"} data-node-id="2223:9603">
+      <div className="absolute bg-[var(--white\/20,rgba(255,255,255,0.2))] h-[2px] left-0 top-0 w-[1312px]" data-node-id="2223:9620" />
+      <div className="absolute bg-[var(--brand-secondary\/base,#a8c94d)] h-[2px] left-0 top-0 w-[8px]" data-node-id="2223:9622" />
+    </div>
+  );
+}
+
+type HeroProps = {
+  className?: string;
+  property1?: "1" | "2";
+};
+
+function Hero({ className, property1 = "1" }: HeroProps) {
+  const is1 = property1 === "1";
+  const is2 = property1 === "2";
+  return (
+    <div className={className || `h-[930px] overflow-clip relative w-[1440px] ${is2 ? "bg-[#18221c]" : "bg-[#3b4335]"}`} id={is2 ? "node-2223_9632" : "node-2223_9634"}>
+      <div className="absolute h-[930px] left-0 top-0 w-[1440px]" id={is2 ? "node-2223_9466" : "node-2223_9372"} data-name="Image">
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute contents left-[calc(50%+0.5px)] top-1/2" id={is2 ? "node-2223_9467" : "node-2223_9373"} data-name="Mask group">
+          {is1 && (
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[1028px] left-[calc(50%-68px)] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[259px_98px] mask-size-[1461px_930px] top-[calc(50%-49px)] w-[1842px]" data-node-id="2223:9375" style={{ maskImage: `url("${imgMagnificUseThisProdutctImg1UsBh5TDmuoQr2}")` }} data-name="magnific_use-this-produtct-img1-us_Bh5TDmuoQR 2">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificUseThisProdutctImg1UsBh5TDmuoQr3} />
+            </div>
+          )}
+          {is2 && (
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute blur-[4px] h-[930px] left-[calc(50%+120.5px)] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-10px_0px] mask-size-[1461px_930px] top-1/2 w-[1681px]" data-node-id="2223:9561" style={{ maskImage: `url("${imgMagnificUseThisProdutctImg1UsBh5TDmuoQr2}")` }} data-name="magnific_prompt-para-geracao-de-im_u5w5eZrQLD 1">
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <img alt="" className="absolute h-[99.98%] left-0 max-w-none top-[0.02%] w-full" src={imgMagnificPromptParaGeracaoDeImU5W5EZrQld1} />
+              </div>
+            </div>
+          )}
+        </div>
+        {is1 && (
+          <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[1028px] left-[calc(50%-68px)] opacity-90 top-[calc(50%-49px)] w-[1842px]" data-node-id="2223:9376" data-name="magnific_use-this-produtct-img1-us_Bh5TDmuoQR 3">
+            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificUseThisProdutctImg1UsBh5TDmuoQr4} />
+          </div>
+        )}
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[141px] left-[calc(50%+580px)] opacity-90 top-[calc(50%-85.5px)] w-[144px]" id={is2 ? "node-2223_9471" : "node-2223_9377"} data-name="magnific_use-this-produtct-img1-us_Bh5TDmuoQR 4" />
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute bg-[var(--brand-primary\/strong,#4d7058)] h-[930px] left-1/2 mix-blend-soft-light opacity-11 top-1/2 w-[1440px]" id={is2 ? "node-2223_9472" : "node-2223_9378"} />
+        <div className="-translate-x-1/2 -translate-y-1/2 absolute bg-gradient-to-b from-[#1b1c16] h-[160px] left-1/2 opacity-45 to-[rgba(27,28,22,0)] top-[calc(50%-385px)] w-[1440px]" id={is2 ? "node-2223_9473" : "node-2223_9379"} />
+        <div className="-translate-x-1/2 absolute bottom-0 flex h-[266px] items-center justify-center left-1/2 w-[1440px]" id={is2 ? "node-2223_9474" : "node-2223_9380"}>
+          <div className="flex-none rotate-180">
+            <div className="bg-gradient-to-b from-[#1b1c16] h-[266px] opacity-50 relative to-[rgba(88,93,74,0)] w-[1440px]" />
+          </div>
+        </div>
+        <div className={`-translate-x-1/2 absolute bottom-0 flex h-[930px] items-center justify-center ${is2 ? "left-[calc(50%+374.5px)] w-[691px]" : "left-[calc(50%+527px)] w-[386px]"}`} id={is2 ? "node-2223_9475" : "node-2223_9381"}>
+          <div className="flex-none rotate-180">
+            <div className={`bg-gradient-to-l from-[18.135%] from-[rgba(88,93,74,0)] h-[930px] opacity-65 relative to-[#1b1c16] ${is2 ? "to-[98.316%] w-[691px]" : "to-[171.11%] w-[386px]"}`} />
+          </div>
+        </div>
+        {is2 && (
+          <>
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[930px] left-[calc(50%+120.5px)] top-1/2 w-[1681px]" data-node-id="2223:9592" data-name="magnific_prompt-para-geracao-de-im_u5w5eZrQLD 2">
+              <img alt="" className="absolute inset-0 max-w-none object-bottom pointer-events-none size-full" src={imgMagnificPromptParaGeracaoDeImU5W5EZrQld2} />
+            </div>
+            <div className="absolute content-stretch flex flex-col gap-[32px] items-center left-[1223.75px] top-[284px] w-[116px]" data-node-id="2223:9598">
+              <div className="content-stretch flex flex-col gap-[16px] items-center relative shrink-0 w-full" data-node-id="2223:9595">
+                <div className="backdrop-blur-[12px] bg-[rgba(24,34,28,0.1)] border-[1.5px] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex flex-col h-[95px] items-center justify-center px-[22px] py-[43px] relative rounded-[72px] shrink-0 w-[96px]" data-node-id="2223:9586">
+                  <p className="[word-break:break-word] font-['Inter:Light'] font-light leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[0px] tracking-[-1.764px] whitespace-nowrap" data-node-id="2223:9575">
+                    <span className="leading-[normal] text-[29.4px]">−38</span>
+                    <span className="leading-[normal] text-[13.2px]">%</span>
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] min-w-full not-italic relative shrink-0 text-[color:var(--neutral\/soft,#eceeec)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] w-[min-content]" data-node-id="2223:9576">
+                  MENOS OLEOSIDADE
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col gap-[16px] items-center relative shrink-0 w-[103px]" data-node-id="2223:9594">
+                <div className="aspect-[145.5/144] backdrop-blur-[12px] bg-[rgba(24,34,28,0.1)] border-[1.5px] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex flex-col items-center justify-center px-[22px] py-[43px] relative rounded-[72px] shrink-0 w-full" data-node-id="2223:9587">
+                  <p className="[word-break:break-word] font-['Inter:Light'] font-light leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[0px] tracking-[-1.764px] whitespace-nowrap" data-node-id="2223:9578">
+                    <span className="leading-[normal] text-[29.4px]">+52</span>
+                    <span className="leading-[normal] text-[13.2px]">%</span>
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/soft,#eceeec)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] w-full" data-node-id="2223:9579">
+                  MAIS HIDRATAÇÃO
+                </p>
+              </div>
+              <div className="content-stretch flex flex-col gap-[16px] items-center relative shrink-0 w-[96px]" data-node-id="2223:9597">
+                <div className="aspect-[145.5/144] backdrop-blur-[12px] bg-[rgba(24,34,28,0.1)] border-[1.5px] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex flex-col items-center justify-center px-[23px] py-[43px] relative rounded-[72px] shrink-0 w-full" data-node-id="2223:9588">
+                  <p className="[word-break:break-word] font-['Inter:Light'] font-light leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[0px] tracking-[-1.764px] whitespace-nowrap" data-node-id="2223:9581">
+                    <span className="leading-[normal] text-[29.4px]">+29</span>
+                    <span className="leading-[normal] text-[13.2px]">%</span>
+                  </p>
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/soft,#eceeec)] text-[length:var(--font\/size\/text\/sm,12px)] text-center tracking-[-0.5px] w-full" data-node-id="2223:9582">
+                  MAIS FIRMEZA
+                </p>
+              </div>
+            </div>
+            <div className="absolute h-0 left-[1025px] top-[664px] w-[170px]" data-node-id="2223:9599">
+              <div className="absolute inset-[-0.75px_0]">
+                <img alt="" className="block max-w-none size-full" src={imgVector2220} />
+              </div>
+            </div>
+            <div className="absolute h-0 left-[1025px] top-[507px] w-[170px]" data-node-id="2223:9600">
+              <div className="absolute inset-[-0.75px_0]">
+                <img alt="" className="block max-w-none size-full" src={imgVector2220} />
+              </div>
+            </div>
+            <div className="absolute h-0 left-[1025px] top-[350px] w-[170px]" data-node-id="2223:9601">
+              <div className="absolute inset-[-0.75px_0]">
+                <img alt="" className="block max-w-none size-full" src={imgVector2220} />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="absolute content-stretch flex flex-col gap-[32px] items-start left-[64px] pb-[96px] pt-[80px] top-[78px] w-[570px]" id={is2 ? "node-2223_9477" : "node-2223_9383"}>
+        <div className="[word-break:break-word] content-stretch flex flex-col gap-[26px] items-start relative shrink-0 w-full" id={is2 ? "node-2223_9478" : "node-2223_9384"}>
+          <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" id={is2 ? "node-2223_9479" : "node-2223_9385"}>
+            CIÊNCIA SENSÍVEL. CUIDADO PESSOAL.
+          </p>
+          <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[80px] text-[color:var(--static\/white,white)] tracking-[-1px] w-full" id={is2 ? "node-2223_9480" : "node-2223_9386"}>
+            <p className="leading-none mb-0">Sua pele.</p>
+            <p className="leading-none">Seu próximo passo.</p>
+          </div>
+          <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[color:var(--neutral\/soft,#eceeec)] text-[length:var(--font\/size\/heading\/h6,20px)] tracking-[-1px] w-full" id={is2 ? "node-2223_9481" : "node-2223_9387"}>
+            Uma rotina que começa por entender você.
+          </p>
+        </div>
+        <div className="content-stretch flex flex-col gap-[13px] items-start relative shrink-0 w-[524px]" id={is2 ? "node-2223_9482" : "node-2223_9388"}>
+          <div className="bg-[var(--static\/white,white)] border-4 border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch drop-shadow-[0px_12px_22.5px_rgba(0,0,0,0.07)] flex flex-col gap-[46px] items-center pb-[12px] pt-[24px] px-[24px] relative rounded-[20px] shrink-0 w-full" id={is2 ? "node-2223_9483" : "node-2223_9389"} data-name="Form">
+            <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/lg,16px)] tracking-[-0.5px] w-[482px]" id={is2 ? "node-2223_9484" : "node-2223_9390"}>
+              O que você quer cuidar na sua pele?
+            </p>
+            <div className="h-[42px] relative shrink-0 w-[486px]" id={is2 ? "node-2223_9485" : "node-2223_9391"} data-name="Container">
+              <div className="absolute content-stretch flex gap-[var(--space\/8,8px)] items-center left-0 px-px py-[9px] top-[1.5px]" id={is2 ? "node-2223_9486" : "node-2223_9392"} data-name="Label">
+                <div className="relative shrink-0 size-[21px]" id={is2 ? "node-2223_9487" : "node-2223_9393"} data-name="Italic Text">
+                  <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[21px] left-0 not-italic text-[21px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9488" : "node-2223_9394"}>{`\uE10E`}</p>
+                </div>
+                <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9489" : "node-2223_9395"}>
+                  Adicionar foto
+                </p>
+                <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9490" : "node-2223_9396"}>
+                  opcional
+                </p>
+              </div>
+              <div className="absolute bg-[var(--neutral\/very-strong,#3b403c)] left-[444px] rounded-[21px] size-[42px] top-0" id={is2 ? "node-2223_9491" : "node-2223_9397"} data-name="Button - Conhecer minha rotina a partir do prompt">
+                <div className="absolute left-[10.5px] size-[21px] top-[10.5px]" id={is2 ? "node-2223_9492" : "node-2223_9398"} data-name="Italic Text">
+                  <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[21px] left-[10.5px] not-italic text-[21px] text-[color:var(--static\/white,white)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9493" : "node-2223_9399"}>{`\uE08E`}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[8px] items-center relative shrink-0" id={is2 ? "node-2223_9494" : "node-2223_9400"}>
+            <div className="backdrop-blur-[16px] bg-[var(--white\/10,rgba(255,255,255,0.1))] border-[length:var(--border\/sm,1px)] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex gap-[10px] items-center px-[11px] py-[5px] relative rounded-[22px] shrink-0" id={is2 ? "node-2223_9495" : "node-2223_9401"} data-name="Button">
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9496" : "node-2223_9402"}>
+                Quero começar
+              </p>
+              <div className="relative shrink-0 size-[12px]" id={is2 ? "node-2223_9497" : "node-2223_9403"} data-name="Italic Text">
+                <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[12px] left-[6px] not-italic text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/sm,12px)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9498" : "node-2223_9404"}>{`\uE3D4`}</p>
+              </div>
+            </div>
+            <div className="backdrop-blur-[16px] bg-[var(--white\/10,rgba(255,255,255,0.1))] border-[length:var(--border\/sm,1px)] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex gap-[10px] items-center px-[11px] py-[5px] relative rounded-[22px] shrink-0" id={is2 ? "node-2223_9499" : "node-2223_9405"} data-name="Button">
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9500" : "node-2223_9406"}>
+                Simplificar a rotina
+              </p>
+              <div className="relative shrink-0 size-[12px]" id={is2 ? "node-2223_9501" : "node-2223_9407"} data-name="Italic Text">
+                <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[12px] left-[6px] not-italic text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/sm,12px)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9502" : "node-2223_9408"}>{`\uE3D4`}</p>
+              </div>
+            </div>
+            <div className="backdrop-blur-[16px] bg-[var(--white\/10,rgba(255,255,255,0.1))] border-[length:var(--border\/sm,1px)] border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex gap-[10px] items-center px-[11px] py-[5px] relative rounded-[22px] shrink-0" id={is2 ? "node-2223_9503" : "node-2223_9409"} data-name="Button">
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9504" : "node-2223_9410"}>
+                Entender minha pele
+              </p>
+              <div className="relative shrink-0 size-[12px]" id={is2 ? "node-2223_9505" : "node-2223_9411"} data-name="Italic Text">
+                <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[12px] left-[6px] not-italic text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/sm,12px)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9506" : "node-2223_9412"}>{`\uE3D4`}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[8px] items-center relative shrink-0" id={is2 ? "node-2223_9507" : "node-2223_9413"}>
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9508" : "node-2223_9414"}>
+            Prefere explorar primeiro?
+          </p>
+          <div className="h-[13px] relative shrink-0 w-[122px]" id={is2 ? "node-2223_9509" : "node-2223_9415"} data-name="Text">
+            <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-[52.5px] not-italic text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] text-center top-[-4px] tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9510" : "node-2223_9416"}>
+              Veja um exemplo
+            </p>
+            <div className="absolute left-[109px] size-[13px] top-0" id={is2 ? "node-2223_9511" : "node-2223_9417"} data-name="Italic Text">
+              <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[13px] left-[6.5px] not-italic text-[13px] text-[color:var(--static\/white,white)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9512" : "node-2223_9418"}>{`\uE092`}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={`absolute content-stretch flex items-center justify-between left-[64px] py-[20px] top-[868px] w-[1312px] ${is2 ? String.raw`border-[var(--white\/20,rgba(255,255,255,0.2))] border-solid border-t-[length:var(--border\/sm,1px)]` : ""}`} id={is2 ? "node-2223_9513" : "node-2223_9419"} data-name="Container">
+        <div className="h-[21px] relative shrink-0 w-[204px]" id={is2 ? "node-2223_9514" : "node-2223_9420"} data-name="Text">
+          <div className="absolute left-0 size-[14px] top-[3.5px]" id={is2 ? "node-2223_9515" : "node-2223_9421"} data-name="Italic Text">
+            <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[14px] left-0 not-italic text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9516" : "node-2223_9422"}>{`\uE308`}</p>
+          </div>
+          <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-[23px] not-italic text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9517" : "node-2223_9423"}>
+            Seu contexto. Suas escolhas.
+          </p>
+        </div>
+        <div className="h-[21px] relative shrink-0 w-[169px]" id={is2 ? "node-2223_9518" : "node-2223_9424"} data-name="Link">
+          <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-0 not-italic text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9519" : "node-2223_9425"}>
+            O cuidado começa aqui
+          </p>
+          <div className="absolute left-[155px] size-[14px] top-[3.5px]" id={is2 ? "node-2223_9520" : "node-2223_9426"} data-name="Italic Text">
+            <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[14px] left-0 not-italic text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" id={is2 ? "node-2223_9521" : "node-2223_9427"}>{`\uE03E`}</p>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[8px] items-center relative shrink-0" id={is2 ? "node-2223_9522" : "node-2223_9428"}>
+          <div className="h-[20.276px] relative shrink-0 w-[19.113px]" id={is2 ? "node-2223_9523" : "node-2223_9429"} data-name="Vector">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector} />
+          </div>
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" id={is2 ? "node-2223_9524" : "node-2223_9430"}>
+            {is2 ? "SkinBoost Shot / 02" : "SkinBoost Shot / 01"}
+          </p>
+        </div>
+      </div>
+      {is1 && (
+        <>
+          <div className="absolute content-stretch flex flex-col gap-[43px] items-end justify-center left-[1008px] top-[308px] w-[363px]" data-node-id="2223:9431">
+            <div className="relative shrink-0 size-[141px]" data-node-id="2223:9432">
+              <div className="absolute inset-[-0.46%]">
+                <img alt="" className="block max-w-none size-full" src={imgGroup427320472} />
+              </div>
+            </div>
+            <div className="[word-break:break-word] font-['Inter:Light'] font-light leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[24px] text-right w-[243px]" data-node-id="2223:9435">
+              <p className="leading-[normal] mb-0">Natureza na fórmula.</p>
+              <p className="leading-[normal]">Ciência no cuidado.</p>
+            </div>
+            <div className="content-stretch flex items-start relative shrink-0 w-full" data-node-id="2223:9436">
+              <div className="content-stretch flex flex-col gap-[15px] items-center overflow-clip relative shrink-0" data-node-id="2223:9437" data-name="Extratos botânicos">
+                <div className="h-[31px] relative shrink-0 w-[28.069px]" data-node-id="2223:9438" data-name="Vector">
+                  <div className="absolute inset-[-2.1%_-2.32%_-1.45%_-1.68%]">
+                    <img alt="" className="block max-w-none size-full" src={imgVector1} />
+                  </div>
+                </div>
+                <div className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[13px] text-center w-[121px]" data-node-id="2223:9439">
+                  <p className="leading-[19px] mb-0">Extratos</p>
+                  <p className="leading-[19px]">botânicos</p>
+                </div>
+              </div>
+              <div className="content-stretch flex flex-col gap-[15px] items-center overflow-clip relative shrink-0" data-node-id="2223:9440" data-name="Óleos vegetais">
+                <div className="h-[35.75px] relative shrink-0 w-[26px]" data-node-id="2223:9441" data-name="Vector">
+                  <div className="absolute inset-[-4.62%_-2.5%_-1.82%_-2.5%]">
+                    <img alt="" className="block max-w-none size-full" src={imgVector2} />
+                  </div>
+                </div>
+                <div className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[13px] text-center w-[121px]" data-node-id="2223:9442">
+                  <p className="leading-[19px] mb-0">Óleos</p>
+                  <p className="leading-[19px]">vegetais</p>
+                </div>
+              </div>
+              <div className="content-stretch flex flex-col gap-[15px] items-center overflow-clip relative shrink-0" data-node-id="2223:9443" data-name="Sem fragrância adicionada">
+                <div className="h-[34px] relative shrink-0 w-[30px]" data-node-id="2223:9444" data-name="Vector">
+                  <div className="absolute inset-[-1.26%_-1.62%]">
+                    <img alt="" className="block max-w-none size-full" src={imgVector3} />
+                  </div>
+                </div>
+                <div className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[0] not-italic relative shrink-0 text-[#f4f1e9] text-[13px] text-center w-[121px]" data-node-id="2223:9445">
+                  <p className="leading-[19px] mb-0">Sem fragrância</p>
+                  <p className="leading-[19px]">adicionada</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="absolute h-[1.5px] left-[64px] overflow-clip top-[868px] w-[1312px]" data-node-id="2223:9604" data-name="Progress">
+            <div className="absolute bg-[var(--white\/20,rgba(255,255,255,0.2))] h-[2px] left-0 top-0 w-[1312px]" data-node-id="I2223:9604;2223:9620" />
+            <div className="absolute bg-[var(--brand-secondary\/base,#a8c94d)] h-[2px] left-0 top-0 w-[8px]" data-node-id="I2223:9604;2223:9622" />
+          </div>
+        </>
+      )}
+      {is2 && <Progress className="absolute h-[1.5px] left-[64px] overflow-clip top-[868px] w-[1312px]" />}
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/SM/Medium: Font(family: "Inter", style: Medium, size: font/size/text/sm, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D1: Font(family: "Manrope", style: SemiBold, size: 80, weight: 600, lineHeight: 1, letterSpacing: -1), Heading/H6: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H6, weight: 600, lineHeight: 1.2999999523162842, letterSpacing: -1), Text/LG/Regular: Font(family: "Inter", style: Regular, size: font/size/text/lg, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

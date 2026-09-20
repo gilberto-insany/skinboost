@@ -18,6 +18,24 @@ export function initMotion({ root = document } = {}) {
     const toggle = $(".film-toggle");
     let filmTween;
     let pauseFilm;
+    const video = film?.querySelector(".film-video");
+    let progress = 0;
+    let paused = false;
+    // Coalesce scroll updates while the decoder finishes the previous seek.
+    const seek = () => {
+      if (
+        paused ||
+        !video ||
+        video.readyState < 1 ||
+        video.seeking ||
+        !Number.isFinite(video.duration)
+      )
+        return;
+      const time = progress * Math.max(0, video.duration - 0.05);
+      if (Math.abs(video.currentTime - time) > 0.025) video.currentTime = time;
+    };
+    video?.addEventListener("loadedmetadata", seek);
+    video?.addEventListener("seeked", seek);
     if (film) {
       filmTween = gsap.fromTo(
         film.querySelectorAll(".film-copy h2 span"),
@@ -34,17 +52,26 @@ export function initMotion({ root = document } = {}) {
           },
         },
       );
+      const syncFilm = (self) => {
+        progress = self.progress;
+        if (paused) return;
+        const track = $(".film-track span");
+        if (track) track.style.transform = `scaleX(${progress})`;
+        const percent = Math.round(progress * 100);
+        $(".film-track")?.setAttribute("aria-valuenow", String(percent));
+        const value = $(".film-progress-value");
+        if (value) value.textContent = `${percent}%`;
+        seek();
+      };
       ScrollTrigger.create({
         trigger: film,
         start: "top top",
         end: "bottom bottom",
-        onUpdate: (self) => {
-          const track = $(".film-track span");
-          if (track) track.style.transform = `scaleX(${self.progress})`;
-        },
+        onUpdate: syncFilm,
+        onRefresh: syncFilm,
       });
       pauseFilm = () => {
-        const paused = toggle.getAttribute("aria-pressed") !== "true";
+        paused = toggle.getAttribute("aria-pressed") !== "true";
         toggle.setAttribute("aria-pressed", String(paused));
         toggle.querySelector("span").textContent = paused
           ? "Retomar movimento"
@@ -54,10 +81,11 @@ export function initMotion({ root = document } = {}) {
           : "ph ph-pause";
         if (paused) {
           filmTween.scrollTrigger.disable(false);
-          filmTween.progress(1);
+          video?.pause();
         } else {
           filmTween.scrollTrigger.enable();
           refresh();
+          seek();
         }
       };
       toggle?.addEventListener("click", pauseFilm);
@@ -79,6 +107,9 @@ export function initMotion({ root = document } = {}) {
       });
     return () => {
       if (pauseFilm) toggle?.removeEventListener("click", pauseFilm);
+      video?.removeEventListener("loadedmetadata", seek);
+      video?.removeEventListener("seeked", seek);
+      video?.pause();
     };
   });
   media.add("(prefers-reduced-motion: reduce)", () => {

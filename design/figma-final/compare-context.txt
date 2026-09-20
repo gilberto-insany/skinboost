@@ -1,0 +1,139 @@
+const imgMagnificCriarUmaCenaComBackgrFHgEnh9Cdy2 = "https://www.figma.com/api/mcp/asset/09ccac27-9197-47d2-bea4-2385532f72dc.png";
+const imgMagnificEducationalFictionalSkiSyG1BnaUb81 = "https://www.figma.com/api/mcp/asset/69c0f83a-d256-4a2a-802f-b25215683ef3.png";
+const imgMagnificEducationalFictionalSkiSyG1BnaUb82 = "https://www.figma.com/api/mcp/asset/4b199142-4eb0-4799-8e72-a8bcf78bd628.png";
+const imgMagnificEducationalFictionalSkiSyG1BnaUb83 = "https://www.figma.com/api/mcp/asset/64a8754a-1c27-4136-9b83-da0a47c46416.png";
+const imgMagnificCriarUmaCenaComBackgrFHgEnh9Cdy1 = "https://www.figma.com/api/mcp/asset/63fc4d35-e0cb-4d24-bf7d-cd69eba7bcd3.svg";
+
+export default function Compair() {
+  return (
+    <div className="bg-[var(--auxiliar-dourado\/soft,#f1eadf)] relative size-full" data-node-id="2128:1972" data-name="Compair">
+      <div className="absolute contents left-[-8px] top-0" data-node-id="2240:2855" data-name="Mask group">
+        <div className="absolute flex h-[821px] items-center justify-center left-[-8px] top-0 w-[1471px]" data-node-id="2240:2853">
+          <div className="-scale-y-100 flex-none rotate-180">
+            <div className="h-[821px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[289px_0px] mask-size-[1159px_822px] relative w-[1471px]" style={{ maskImage: `url("${imgMagnificCriarUmaCenaComBackgrFHgEnh9Cdy1}")` }} data-name="magnific_criar-uma-cena-com-backgr_fHgEnh9CDY 1">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificCriarUmaCenaComBackgrFHgEnh9Cdy2} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="absolute content-stretch flex flex-col h-[570px] items-start justify-between left-[64px] top-[110px] w-[525px]" data-node-id="2128:1973">
+        <div className="content-stretch flex flex-col gap-[24px] items-start relative shrink-0 w-full" data-node-id="2240:2448">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-node-id="2128:1974">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/very-strong,#3b403c)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1975">
+              SEU CUIDADO, AO LONGO DO TEMPO
+            </p>
+            <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/display\/d3,56px)] tracking-[-1px] w-full" data-node-id="2128:1976">
+              <p className="leading-[1.1] mb-0">Cada pele</p>
+              <p className="leading-[1.1]">tem seu tempo.</p>
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] min-w-full not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/xl,18px)] tracking-[-0.5px] w-[min-content]" data-node-id="2128:1977">
+            Observar, entender, ajustar. Acompanhe a sua experiência além do espelho. Da constância ao conforto no dia a dia.
+          </p>
+          <div className="bg-[var(--brand-secondary\/base,#a8c94d)] h-[51px] relative rounded-[40px] shrink-0 w-[217px]" data-node-id="2128:1978" data-name="Button">
+            <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] left-[86.5px] not-italic text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/text\/md,14px)] text-center top-[15px] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1979">
+              Conhecer o check-in
+            </p>
+            <div className="absolute left-[178px] size-[17px] top-[17px]" data-node-id="2128:1980" data-name="Italic Text">
+              <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[17px] left-[8.5px] not-italic text-[17px] text-[color:var(--neutral\/maximum,#141615)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1981">{`\uE092`}</p>
+            </div>
+          </div>
+          <div className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-[min-content]" data-node-id="2128:1982">
+            <p className="leading-[1.5] mb-0">Comparação ilustrativa gerada por IA.</p>
+            <p className="leading-[1.5]">Não representa resultado clínico ou promessa de eficácia.</p>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2240:2449">
+          <div className="bg-[#cbd1c5] overflow-clip relative shrink-0 size-[59px]" data-node-id="2240:2446">
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[77px] left-[calc(50%-36px)] top-[calc(50%+9px)] w-[139px]" data-node-id="2240:2463" data-name="magnific_educational-fictional-ski_SyG1bnaUb8 1">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificEducationalFictionalSkiSyG1BnaUb81} />
+            </div>
+          </div>
+          <div className="bg-[var(--auxiliar-dourado\/light,#e3d5bf)] opacity-50 overflow-clip relative shrink-0 size-[59px]" data-node-id="2240:2450">
+            <div className="absolute h-[79px] left-0 top-0 w-[65px]" data-node-id="2240:2465" data-name="magnific_educational-fictional-ski_SyG1bnaUb8 2">
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <img alt="" className="absolute h-full left-[-118.42%] max-w-none top-0 w-[218.39%]" src={imgMagnificEducationalFictionalSkiSyG1BnaUb82} />
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--auxiliar-dourado\/light,#e3d5bf)] opacity-50 overflow-clip relative shrink-0 size-[59px]" data-node-id="2240:2451">
+            <div className="absolute h-[69px] left-[-1px] top-0 w-[62px]" data-node-id="2240:2469" data-name="magnific_educational-fictional-ski_SyG1bnaUb8 3">
+              <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <img alt="" className="absolute h-[127.71%] left-[-142.33%] max-w-none top-[-1.68%] w-[251.29%]" src={imgMagnificEducationalFictionalSkiSyG1BnaUb83} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="absolute h-[602px] left-[738px] top-[110px] w-[638px]" data-node-id="2128:1983" data-name="Container">
+        <div className="absolute bg-[#d6d8cc] h-[570px] left-0 overflow-clip rounded-[18px] top-0 w-[638px]" data-node-id="2128:1984" data-name="Container">
+          <div className="absolute bg-[#e0e3dc] h-[570px] left-0 top-0 w-[622.266px]" data-node-id="2128:1985" data-name="Container">
+            <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Arial:Regular'] leading-[24px] left-[522.59px] not-italic text-[#646a63] text-[length:var(--font\/size\/text\/lg,16px)] text-center top-[259.5px] tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1986">
+              Depois
+            </p>
+            <div className="absolute h-[15px] left-[420.59px] opacity-80 top-[295.5px] w-[127px]" data-node-id="2128:1987" data-name="Small">
+              <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Arial:Regular'] leading-[15px] left-[63.5px] not-italic text-[#646a63] text-[length:var(--font\/size\/text\/xs,10px)] text-center top-0 tracking-[1.4px] whitespace-nowrap" data-node-id="2128:1988">
+                ESPAÇO RESERVADO
+              </p>
+            </div>
+          </div>
+          <div className="absolute bg-[#cbd1c5] h-[570px] left-0 top-0 w-[638px]" data-node-id="2128:1989" data-name="Container">
+            <div className="absolute h-[15px] left-[74.67px] opacity-80 top-[295.5px] w-[127px]" data-node-id="2128:1991" data-name="Small" />
+            <div className="absolute h-[570px] left-0 overflow-clip top-0 w-[319px]" data-node-id="2240:2444">
+              <div className="absolute h-[588px] left-[-100px] top-0 w-[1053px]" data-node-id="2240:2454" data-name="magnific_educational-fictional-ski_SyG1bnaUb8 1">
+                <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificEducationalFictionalSkiSyG1BnaUb81} />
+              </div>
+            </div>
+            <div className="absolute h-[570px] overflow-clip right-0 top-0 w-[319px]" data-node-id="2240:2458">
+              <div className="absolute h-[588px] right-[-91px] top-0 w-[1053px]" data-node-id="2240:2459" data-name="magnific_educational-fictional-ski_SyG1bnaUb8 1">
+                <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificEducationalFictionalSkiSyG1BnaUb81} />
+              </div>
+            </div>
+          </div>
+          <div className="absolute backdrop-blur-[6px] bg-[var(--gray\/10,rgba(20,22,21,0.1))] content-stretch flex items-center justify-center left-[138px] px-[16px] py-[6px] rounded-[30px] top-[483px]" data-node-id="2128:1993" data-name="Text">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1994">
+              Antes
+            </p>
+          </div>
+          <div className="absolute backdrop-blur-[6px] bg-[var(--gray\/10,rgba(20,22,21,0.1))] content-stretch flex items-center justify-center left-[451px] px-[16px] py-[6px] rounded-[30px] top-[483px]" data-node-id="2128:1995" data-name="Text">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1996">
+              Depois
+            </p>
+          </div>
+          <div className="absolute bg-[var(--static\/white,white)] h-[570px] left-[317.34px] top-0 w-[2px]" data-node-id="2128:1997" data-name="Container">
+            <div className="absolute bg-[var(--static\/white,white)] left-[-20px] rounded-[21px] size-[42px] top-[285px]" data-node-id="2128:1998" data-name="Text">
+              <div className="absolute left-[10.5px] size-[21px] top-[10.5px]" data-node-id="2128:1999" data-name="Italic Text">
+                <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[21px] left-0 not-italic text-[21px] text-[color:var(--neutral\/very-strong,#3b403c)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2000">{`\uE0A0`}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="absolute h-[32px] left-0 top-[570px] w-[622.266px]" data-node-id="2128:2001" data-name="Container">
+          <div className="absolute h-[14px] left-0 top-[18px] w-[114px]" data-node-id="2128:2002" data-name="Text">
+            <p className="[word-break:break-word] absolute font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] left-0 not-italic text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/xs,10px)] top-0 tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2003">
+              Comprador / Estrutura
+            </p>
+          </div>
+          <div className="absolute content-stretch flex gap-[10px] items-center left-[500.27px] top-[18px]" data-node-id="2128:2004" data-name="Text">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/xs,10px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2005">
+              Arraste para comparar
+            </p>
+            <div className="relative shrink-0 size-[14px]" data-node-id="2128:2006" data-name="Italic Text">
+              <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[14px] left-0 not-italic text-[#737d6b] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2007">{`\uE0A0`}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D3: Font(family: "Manrope", style: SemiBold, size: font/size/display/D3, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Text/XL/Regular: Font(family: "Inter", style: Regular, size: font/size/text/xl, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Text/MD/Medium: Font(family: "Inter", style: Medium, size: font/size/text/md, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/SM/Medium: Font(family: "Inter", style: Medium, size: font/size/text/sm, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/XS/Medium: Font(family: "Inter", style: Medium, size: font/size/text/xs, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

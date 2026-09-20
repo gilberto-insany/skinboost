@@ -12,10 +12,10 @@
   </head>
   <body>
     <a class="skip" href="#main">Pular para o conteúdo</a>
-    <header class="nav">
+    <header class="nav home-final">
       <a href="#inicio" class="wordmark" aria-label="SkinBoost início"
         ><img
-          src="/media/figma/logo-light.svg"
+          src="/media/figma-final/header-logo-light.svg"
           alt="SkinBoost"
           width="158"
           height="33"
@@ -26,8 +26,8 @@
         ><a href="#evolucao">Sua evolução</a>
       </nav>
       <div class="nav-actions">
-        <button class="start nav-cta" aria-label="Começar minha rotina">
-          Começar
+        <button class="start nav-cta" aria-label="Conhecer minha rotina">
+          Conhecer minha rotina
           <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
         ><button
           class="menu-toggle icon-btn"
@@ -39,12 +39,68 @@
       </div>
     </header>
     <main id="main">
-      <section class="hero" id="inicio">
+      <section
+        class="hero home-final hero-final"
+        id="inicio"
+        aria-label="Sua pele. Seu próximo passo."
+      >
+        <div
+          class="hero-art hero-slide is-active"
+          data-hero-slide="0"
+          aria-hidden="true"
+        >
+          <img
+            class="hero-art-base"
+            src="/media/figma-final/hero-image-base.webp"
+            alt=""
+            width="1842"
+            height="1028"
+            fetchpriority="high"
+          />
+          <img
+            class="hero-art-overlay"
+            src="/media/figma-final/hero-image-overlay.webp"
+            alt=""
+            width="1842"
+            height="1028"
+          />
+          <div class="hero-art-tint"></div>
+          <div class="hero-art-top"></div>
+          <div class="hero-art-bottom"></div>
+          <div class="hero-art-right"></div>
+        </div>
+        <div
+          class="hero-art hero-slide hero-slide-product"
+          data-hero-slide="1"
+          aria-hidden="true"
+        >
+          <img
+            class="hero-product-backdrop"
+            src="/media/figma-final/hero2-2.webp"
+            alt=""
+            width="1681"
+            height="930"
+          />
+          <div class="hero-art-top"></div>
+          <div class="hero-art-bottom"></div>
+          <div class="hero-art-right"></div>
+          <img
+            class="hero-product-overlay"
+            src="/media/figma-final/hero2-3.webp"
+            alt=""
+            width="1681"
+            height="930"
+          />
+        </div>
         <div class="hero-content">
           <p class="eyebrow light">CIÊNCIA SENSÍVEL. CUIDADO PESSOAL.</p>
           <h1>Sua pele.<br />Seu próximo passo.</h1>
           <p class="hero-sub">Uma rotina que começa por entender você.</p>
-          <form id="prompt-form" class="prompt">
+          <form
+            id="prompt-form"
+            class="prompt"
+            aria-describedby="hero-disclosure"
+          >
             <label class="sr-only" for="skin-prompt"
               >Conte sobre sua pele e sua rotina</label
             ><textarea
@@ -82,7 +138,7 @@
             </div>
             <p id="prompt-error" role="alert" hidden></p>
           </form>
-          <p class="hero-disclosure">
+          <p class="hero-disclosure sr-only" id="hero-disclosure">
             Conversa com IA quando conectada. Produtos conceituais. Foto
             opcional, enviada só com sua autorização.
           </p>
@@ -109,6 +165,79 @@
             ></span>
           </button>
         </div>
+        <aside class="hero-science" aria-label="Conceito SkinBoost">
+          <img
+            class="hero-focus"
+            src="/media/figma-final/hero-focus.svg"
+            width="141"
+            height="141"
+            alt=""
+          />
+          <p class="hero-science-title">
+            Natureza na fórmula.<br />Ciência no cuidado.
+          </p>
+          <div class="hero-science-items">
+            <div>
+              <img
+                src="/media/figma-final/hero-botanical.svg"
+                width="30"
+                height="34"
+                alt=""
+              />
+              <p>Extratos<br />botânicos</p>
+            </div>
+            <div>
+              <img
+                src="/media/figma-final/hero-oils.svg"
+                width="28"
+                height="38"
+                alt=""
+              />
+              <p>Óleos<br />vegetais</p>
+            </div>
+            <div>
+              <img
+                src="/media/figma-final/hero-fragrance.svg"
+                width="32"
+                height="36"
+                alt=""
+              />
+              <p>Sem fragrância<br />adicionada</p>
+            </div>
+          </div>
+        </aside>
+        <aside
+          class="hero-metrics"
+          hidden
+          aria-label="Indicadores ilustrativos do conceito"
+        >
+          <div class="hero-metric">
+            <span>−38<small>%</small></span>
+            <p>MENOS OLEOSIDADE</p>
+          </div>
+          <div class="hero-metric">
+            <span>+52<small>%</small></span>
+            <p>MAIS HIDRATAÇÃO</p>
+          </div>
+          <div class="hero-metric">
+            <span>+29<small>%</small></span>
+            <p>MAIS FIRMEZA</p>
+          </div>
+          <small>Dados ilustrativos do conceito.</small>
+        </aside>
+        <div class="hero-slider-controls" aria-label="Controles do destaque">
+          <button data-hero-prev aria-label="Imagem anterior">
+            <i class="ph ph-arrow-left" aria-hidden="true"></i></button
+          ><button
+            data-hero-pause
+            aria-label="Pausar slider"
+            aria-pressed="false"
+          >
+            <i class="ph ph-pause" aria-hidden="true"></i></button
+          ><button data-hero-next aria-label="Próxima imagem">
+            <i class="ph ph-arrow-right" aria-hidden="true"></i></button
+          ><span class="sr-only" data-hero-status aria-live="polite"></span>
+        </div>
         <div class="hero-footer">
           <span
             ><i class="ph ph-lock-simple" aria-hidden="true"></i> Seu contexto.
@@ -116,10 +245,17 @@
           ><a href="#intro"
             >O cuidado começa aqui
             <i class="ph ph-arrow-down" aria-hidden="true"></i></a
-          ><span>SKINBOOST / 01</span>
+          ><span class="hero-shot"
+            ><img
+              src="/media/figma-final/hero-shot.svg"
+              width="20"
+              height="21"
+              alt=""
+            /><span data-hero-shot>SkinBoost Shot / 01</span></span
+          >
         </div>
       </section>
-      <section class="intro section" id="intro">
+      <section class="intro section home-final" id="intro">
         <p class="eyebrow">MENOS TENTATIVA. MAIS CLAREZA.</p>
         <h2>
           Você não precisa de<br />mais uma rotina.<br /><span
@@ -127,7 +263,12 @@
           >
         </h2>
         <div class="intro-bottom">
-          <span class="index">01 — UM NOVO JEITO DE CUIDAR</span>
+          <img
+            class="intro-portraits"
+            src="/media/figma-final/intro-0.webp"
+            alt="Três momentos de uma rotina de cuidado ilustrativa"
+            loading="lazy"
+          />
           <p>
             Seus hábitos, suas preferências e o que você quer cuidar. Tudo isso
             vem antes de um produto. A SkinBoost conecta esse contexto a uma
@@ -135,7 +276,7 @@
           </p>
         </div>
       </section>
-      <section class="how section" id="como-funciona">
+      <section class="how section home-final" id="como-funciona">
         <div class="section-head">
           <div>
             <p class="eyebrow">DO SEU CONTEXTO AO SEU CUIDADO</p>
@@ -146,6 +287,12 @@
           </p>
         </div>
         <div class="how-grid">
+          <img
+            class="steps-orb"
+            src="/media/figma-final/orb-glass.svg"
+            alt=""
+            loading="lazy"
+          />
           <div class="step-list" role="tablist" aria-label="Como funciona">
             <button
               class="step active"
@@ -207,33 +354,59 @@
             role="tabpanel"
             aria-labelledby="step-0"
           >
-            <div class="step-placeholder" aria-hidden="true"></div>
-            <div class="glass-card">
-              <span class="tiny"
-                ><i class="ph ph-sparkle" aria-hidden="true"></i> SKINBOOST ·
-                EXEMPLO</span
-              >
+            <img
+              class="step-image"
+              src="/media/figma-final/steps-0.webp"
+              alt="Cena ilustrativa de cuidado com a pele"
+              loading="lazy"
+              data-step-image
+            />
+            <div class="step-photo-shade"></div>
+            <div class="step-caption">
+              <span>skinboost . AI</span>
               <h3 id="step-title">Vamos entender você.</h3>
+            </div>
+            <img
+              class="step-shot"
+              src="/media/figma-final/hero-shot.svg"
+              alt=""
+              loading="lazy"
+            />
+            <div class="glass-card">
               <p id="step-text">
                 “Quero uma rotina simples que caiba nas minhas manhãs.”
               </p>
-              <div class="chat-reply" id="step-reply">
-                O que você já usa hoje?
+              <div class="chat-reply">
+                <span id="step-reply">O que você já usa hoje?</span
+                ><i class="ph ph-arrow-up" aria-hidden="true"></i>
               </div>
-              <div class="card-foot">
-                <span>Contexto antes da escolha</span
-                ><i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-              </div>
+            </div>
+            <div class="card-foot sr-only">
+              <span>Contexto antes da escolha</span>
             </div>
           </div>
         </div>
       </section>
       <section
-        class="film-section"
+        class="film-section home-final"
         id="manifesto"
         aria-label="Manifesto SkinBoost"
       >
         <div class="film-sticky">
+          <video
+            class="film-video"
+            muted
+            playsinline
+            preload="auto"
+            poster="/media/manifesto-poster.jpg?v=final"
+            aria-hidden="true"
+            tabindex="-1"
+          >
+            <source
+              src="/media/manifesto-scroll.webm?v=final"
+              type="video/webm"
+            />
+          </video>
           <div class="film-shade"></div>
           <div class="film-copy">
             <p class="eyebrow light">PELE DE VERDADE. VIDA DE VERDADE.</p>
@@ -243,9 +416,30 @@
             </h2>
             <p>Para cada fase, um próximo passo.</p>
           </div>
+          <div class="film-progress">
+            <p class="film-progress-kicker">EVOLUÇÃO ILUSTRATIVA</p>
+            <p class="film-progress-title">em 100 dias.</p>
+            <div
+              class="film-track"
+              role="progressbar"
+              aria-label="Progresso da rolagem nesta seção"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <span></span>
+            </div>
+            <div class="film-progress-labels">
+              <span>INÍCIO</span><span class="film-progress-value">0%</span
+              ><span>FIM</span>
+            </div>
+            <p class="film-progress-hint">
+              Hidratação · Textura · Firmeza<br />Visual conceitual, sem
+              promessa de eficácia.
+            </p>
+          </div>
           <div class="film-footer">
             <span>NO SEU TEMPO.</span>
-            <div class="film-track"><span></span></div>
             <button class="film-toggle" aria-pressed="false">
               <i class="ph ph-pause" aria-hidden="true"></i
               ><span>Pausar movimento</span>
@@ -253,7 +447,7 @@
           </div>
         </div>
       </section>
-      <section class="benefits section" id="diferenciais">
+      <section class="benefits section home-final" id="diferenciais">
         <div class="section-head">
           <div>
             <p class="eyebrow">FEITO PARA A SUA VIDA</p>
@@ -272,14 +466,14 @@
               Tempo, preferências e orçamento.<br />A sua vida faz parte da
               conversa.
             </p>
-            <div class="context-tags" aria-label="Cada rotina tem seu contexto">
-              <span>Minha rotina é corrida</span>
-              <span>Prefiro poucos passos</span>
-              <span>Quero entender o que uso</span>
-              <span>Meu cuidado, no meu tempo</span>
-              <span>Precisa caber no meu bolso</span>
-              <span>Quero criar constância</span>
-            </div>
+            <button class="context-prompt start">
+              O que você quer cuidar na sua pele?<img
+                class="context-orb"
+                src="/media/figma-final/orb-glass.svg"
+                alt=""
+                loading="lazy"
+              />
+            </button>
           </article>
           <article class="bento-reason">
             <i class="ph ph-sparkle" aria-hidden="true"></i>
@@ -298,7 +492,7 @@
           </article>
           <article class="bento-photo">
             <img
-              src="/media/figma/bento-products.png"
+              src="/media/figma-final/bento-1.webp"
               alt="Família conceitual de produtos SkinBoost"
               loading="lazy"
             />
@@ -308,13 +502,29 @@
             </div>
           </article>
           <article class="bento-privacy">
-            <i class="ph ph-lock-simple" aria-hidden="true"></i>
+            <img
+              class="privacy-icon"
+              src="/media/figma-final/bento-25.svg"
+              alt=""
+              loading="lazy"
+            />
             <h3>Sua foto.<br />Sua escolha.</h3>
             <p>Continue sem imagem.<br />Reveja o que compartilha.</p>
             <button data-info="privacy" class="text-link">
               Entenda seus dados
               <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
             </button>
+            <img
+              class="privacy-portrait portrait-one"
+              src="/media/figma-final/bento-2.webp"
+              alt=""
+              loading="lazy"
+            /><img
+              class="privacy-portrait portrait-two"
+              src="/media/figma-final/bento-3.webp"
+              alt=""
+              loading="lazy"
+            />
           </article>
           <article class="bento-checkin">
             <div>
@@ -334,7 +544,7 @@
           </article>
         </div>
       </section>
-      <section class="product-story" id="produtos">
+      <section class="product-story home-final" id="produtos">
         <div class="product-sticky">
           <div class="product-head">
             <p class="eyebrow light">CONHEÇA A LINHA SKINBOOST</p>
@@ -366,7 +576,18 @@
             </p>
           </div>
           <div class="product-story-footer">
-            <span>COMFORT / 50 ML · EMBALAGEM CONCEITUAL</span
+            <span class="product-miniatures"
+              ><img
+                class=""
+                src="/media/figma-final/product3d-1.webp"
+                alt=""
+                loading="lazy"
+              /><img
+                class=""
+                src="/media/figma-final/product3d-2.webp"
+                alt=""
+                loading="lazy"
+              />COMFORT / 50 ML · EMBALAGEM CONCEITUAL</span
             ><a href="#catalogo"
               >Explore a linha
               <i class="ph ph-arrow-down" aria-hidden="true"></i
@@ -374,7 +595,7 @@
           </div>
         </div>
       </section>
-      <section class="catalog section" id="catalogo">
+      <section class="catalog section home-final" id="catalogo">
         <div class="section-head">
           <div>
             <p class="eyebrow">POUCOS PRODUTOS. ESCOLHAS COM SENTIDO.</p>
@@ -382,40 +603,835 @@
           </div>
           <span class="subtle">Linha conceitual · produtos demonstrativos</span>
         </div>
-        <div class="catalog-photo">
+        <div
+          class="catalog-feature"
+          id="catalog-panel-comfort"
+          role="tabpanel"
+          aria-labelledby="catalog-tab-comfort"
+          data-catalog-panel="0"
+        >
           <img
-            src="/media/figma/catalog-products.png"
-            alt="Cleanse 150 ml, Balance 30 ml e Comfort 50 ml — embalagens conceituais SkinBoost"
+            class="catalog-feature-image"
+            src="/media/figma-final/details-2.webp"
+            alt="Apresentação conceitual SkinBoost Comfort"
             loading="lazy"
           />
           <div class="catalog-caption">
-            <p>O essencial.<br />Bem escolhido.</p>
-            <span>CIÊNCIA SENSÍVEL / SKINBOOST</span>
+            <h3>Hidratação.<br />Com conforto.</h3>
+            <span>CIÊNCIA SENSÍVEL /<br />SKINBOOST</span>
           </div>
+          <button
+            data-product="2"
+            class="circle-link"
+            aria-label="Conhecer Comfort"
+          >
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+          </button>
+          <div class="catalog-feature-copy">
+            <div class="catalog-metric">
+              +52<small>%</small><span>MAIS HIDRATAÇÃO</span>
+            </div>
+            <p>Conforto que abraça.</p>
+            <div class="catalog-benefits">
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 28px;
+                      left: 5.89px;
+                      top: 2px;
+                      width: 20.211px;
+                    "
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        inset: -1.11% -3.09% -2.23% -3.09%;
+                      "
+                    >
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/details-4.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      left: 10.95px;
+                      width: 5.053px;
+                      height: 5.053px;
+                      top: 21.37px;
+                    "
+                  >
+                    <div style="position: absolute; inset: 0 0 -12.37% -12.37%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/details-5.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Hidratação</span>
+              </div>
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 4.858px;
+                      left: 3.38px;
+                      top: 2px;
+                      width: 25.245px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -12.86% -1.75%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/details-6.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 4.858px;
+                      left: 3.38px;
+                      top: 13.57px;
+                      width: 25.245px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -12.86% -1.75%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/details-6.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 4.858px;
+                      left: 3.38px;
+                      top: 25.14px;
+                      width: 25.245px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -12.86% -1.75%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/details-6.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Maciez</span>
+              </div>
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 26.758px;
+                      left: 2px;
+                      top: 2.62px;
+                      width: 28px;
+                    "
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        inset: -2.33% -2.23% -1.79% -2.23%;
+                      "
+                    >
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/details-7.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Conforto</span>
+              </div>
+            </div>
+          </div>
+          <div class="concept-seal">
+            <span>SATISFAÇÃO</span><strong>120</strong><span>DIAS</span
+            ><span>CONCEITO</span>
+          </div>
+          <small class="catalog-claim-note"
+            >Visual e indicadores conceituais. Não representam resultados
+            comprovados.</small
+          >
         </div>
-        <div class="catalog-items">
-          <button data-product="0">
-            <span class="tiny">01 / LIMPEZA · 150 ML</span>
-            <h3>
-              Cleanse <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-            </h3>
-            <p>O começo do ritual.</p></button
-          ><button data-product="1">
-            <span class="tiny">02 / SÉRUM · 30 ML</span>
-            <h3>
-              Balance <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-            </h3>
-            <p>Uma escolha com propósito.</p></button
-          ><button data-product="2">
+        <div
+          class="catalog-feature"
+          id="catalog-panel-cleanse"
+          role="tabpanel"
+          aria-labelledby="catalog-tab-cleanse"
+          data-catalog-panel="1"
+          hidden
+        >
+          <img
+            class="catalog-feature-image"
+            src="/media/figma-final/cleanse-3.webp"
+            alt="Apresentação conceitual SkinBoost Cleanse"
+            loading="lazy"
+          />
+          <div class="catalog-caption">
+            <h3>Pele limpa.<br />Novo começo.</h3>
+            <span>CIÊNCIA SENSÍVEL /<br />SKINBOOST</span>
+          </div>
+          <button
+            data-product="0"
+            class="circle-link"
+            aria-label="Conhecer Cleanse"
+          >
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+          </button>
+          <div class="catalog-feature-copy">
+            <div class="catalog-metric">
+              <i class="ph ph-drop" aria-hidden="true"></i
+              ><span>LIMPEZA SUAVE</span>
+            </div>
+            <p>Limpeza suave.<br />Pele fresca.</p>
+            <div class="catalog-benefits">
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      left: 2px;
+                      width: 28px;
+                      height: 28px;
+                      top: 2px;
+                    "
+                  >
+                    <img
+                      alt=""
+                      style="
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                        max-width: none;
+                      "
+                      src="/media/figma-final/cleanse-13.svg"
+                    />
+                  </div>
+                </div>
+                <span>Remove impurezas</span>
+              </div>
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 3.674px;
+                      left: 2px;
+                      top: 5.25px;
+                      width: 28px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -16.32% -1.25%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/cleanse-14.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 3.674px;
+                      left: 2px;
+                      top: 14.16px;
+                      width: 28px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -16.32% -1.25%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/cleanse-14.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 3.674px;
+                      left: 2px;
+                      top: 23.07px;
+                      width: 28px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -16.32% -1.25%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/cleanse-14.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Toque suave</span>
+              </div>
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 24.292px;
+                      left: 4.25px;
+                      top: 2px;
+                      width: 25.291px;
+                    "
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        inset: -2.47% -2.37% -2.48% -2.37%;
+                      "
+                    >
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/cleanse-15.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      left: 2.46px;
+                      width: 19.478px;
+                      height: 19.478px;
+                      top: 10.52px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -2.18%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/cleanse-16.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Frescor diário</span>
+              </div>
+            </div>
+          </div>
+          <div class="concept-seal">
+            <span>SATISFAÇÃO</span><strong>120</strong><span>DIAS</span
+            ><span>CONCEITO</span>
+          </div>
+          <small class="catalog-claim-note"
+            >Visual e indicadores conceituais. Não representam resultados
+            comprovados.</small
+          >
+        </div>
+        <div
+          class="catalog-feature"
+          id="catalog-panel-balance"
+          role="tabpanel"
+          aria-labelledby="catalog-tab-balance"
+          data-catalog-panel="2"
+          hidden
+        >
+          <img
+            class="catalog-feature-image"
+            src="/media/figma-final/balance-3.webp"
+            alt="Apresentação conceitual SkinBoost Balance"
+            loading="lazy"
+          />
+          <div class="catalog-caption">
+            <h3>Equilíbrio.<br />Todos os dias.</h3>
+            <span>CIÊNCIA SENSÍVEL /<br />SKINBOOST</span>
+          </div>
+          <button
+            data-product="1"
+            class="circle-link"
+            aria-label="Conhecer Balance"
+          >
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+          </button>
+          <div class="catalog-feature-copy">
+            <div class="catalog-metric">
+              −38<small>%</small><span>MENOS OLEOSIDADE</span>
+            </div>
+            <p>Sua pele em equilíbrio.</p>
+            <div class="catalog-benefits">
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 28px;
+                      left: 16px;
+                      top: 2px;
+                    "
+                  >
+                    <div style="position: absolute; inset: 0 -0.6px">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-12.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      left: 3.87px;
+                      top: 8.53px;
+                      width: 24.267px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -0.6px 0">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-13.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 12.133px;
+                      left: 2.93px;
+                      top: 10.4px;
+                      width: 9.333px;
+                    "
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        inset: -13.78% -9.36% -4.95% -6%;
+                      "
+                    >
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-14.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 12.133px;
+                      left: 19.73px;
+                      top: 10.4px;
+                      width: 9.333px;
+                    "
+                  >
+                    <div
+                      style="
+                        position: absolute;
+                        inset: -13.78% -9.36% -4.95% -6%;
+                      "
+                    >
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-14.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      left: 10.4px;
+                      top: 30px;
+                      width: 11.2px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -0.6px 0">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-15.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Equilíbrio</span>
+              </div>
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 22.723px;
+                      left: 5.22px;
+                      top: 2px;
+                      width: 23.847px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -2.64% -2.52%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-16.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 20.728px;
+                      left: 2.93px;
+                      top: 9.27px;
+                      width: 19.827px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -2% -2.19%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-17.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 8.111px;
+                      left: 13.75px;
+                      top: 10.17px;
+                    "
+                  >
+                    <div style="position: absolute; inset: 0 -0.6px">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-18.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Leveza</span>
+              </div>
+              <div>
+                <div
+                  aria-hidden="true"
+                  style="
+                    position: relative;
+                    width: 32px;
+                    height: 32px;
+                    flex-shrink: 0;
+                    width: 32px;
+                    height: 32px;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      height: 4.311px;
+                      left: 2px;
+                      top: 3.58px;
+                      width: 28px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -13.92% -1.34%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-19.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 4.311px;
+                      left: 2px;
+                      top: 13.84px;
+                      width: 28px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -13.92% -1.34%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-19.svg"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      height: 4.311px;
+                      left: 2px;
+                      top: 24.11px;
+                      width: 28px;
+                    "
+                  >
+                    <div style="position: absolute; inset: -13.92% -1.34%">
+                      <img
+                        alt=""
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          display: block;
+                          max-width: none;
+                        "
+                        src="/media/figma-final/balance-19.svg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <span>Textura</span>
+              </div>
+            </div>
+          </div>
+          <div class="concept-seal">
+            <span>SATISFAÇÃO</span><strong>120</strong><span>DIAS</span
+            ><span>CONCEITO</span>
+          </div>
+          <small class="catalog-claim-note"
+            >Visual e indicadores conceituais. Não representam resultados
+            comprovados.</small
+          >
+        </div>
+        <div
+          class="catalog-items"
+          role="tablist"
+          aria-label="Produtos SkinBoost"
+        >
+          <button
+            id="catalog-tab-comfort"
+            role="tab"
+            aria-controls="catalog-panel-comfort"
+            aria-selected="true"
+            tabindex="0"
+            data-catalog-tab="0"
+          >
             <span class="tiny">03 / HIDRATAÇÃO · 50 ML</span>
-            <h3>
-              Comfort <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
-            </h3>
-            <p>Seu momento de cuidado.</p>
+            <h3>Comfort</h3>
+            <p>Seu momento de cuidado.</p></button
+          ><button
+            id="catalog-tab-cleanse"
+            role="tab"
+            aria-controls="catalog-panel-cleanse"
+            aria-selected="false"
+            tabindex="-1"
+            data-catalog-tab="1"
+          >
+            <span class="tiny">01 / LIMPEZA · 150 ML</span>
+            <h3>Cleanse</h3>
+            <p>O começo do ritual.</p></button
+          ><button
+            id="catalog-tab-balance"
+            role="tab"
+            aria-controls="catalog-panel-balance"
+            aria-selected="false"
+            tabindex="-1"
+            data-catalog-tab="2"
+          >
+            <span class="tiny">02 / SÉRUM · 30 ML</span>
+            <h3>Balance</h3>
+            <p>Uma escolha com propósito.</p>
           </button>
         </div>
       </section>
-      <section class="evolution section" id="evolucao">
+      <section class="evolution section home-final" id="evolucao">
         <div class="evolution-copy">
           <p class="eyebrow">SEU CUIDADO, AO LONGO DO TEMPO</p>
           <h2>Cada pele<br />tem seu tempo.</h2>
@@ -427,14 +1443,64 @@
             Conhecer o check-in
             <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
           ><small
-            >Espaço reservado para comparação antes e depois.<br />Sem imagens
-            ou resultados clínicos nesta etapa.</small
+            >Comparação ilustrativa gerada por IA.<br />Não representa resultado
+            clínico ou promessa de eficácia.</small
           >
+          <div class="compare-people" aria-label="Escolher comparação">
+            <button
+              data-compare-person="0"
+              aria-label="Ver comparação ilustrativa 1"
+              aria-pressed="true"
+            >
+              <img
+                class=""
+                src="/media/figma-final/compare-1-before.webp"
+                alt="Pessoa fictícia"
+                loading="lazy"
+              /></button
+            ><button
+              data-compare-person="1"
+              aria-label="Ver comparação ilustrativa 2"
+              aria-pressed="false"
+            >
+              <img
+                class=""
+                src="/media/figma-final/compare-2-before.webp"
+                alt="Pessoa fictícia"
+                loading="lazy"
+              /></button
+            ><button
+              data-compare-person="2"
+              aria-label="Ver comparação ilustrativa 3"
+              aria-pressed="false"
+            >
+              <img
+                class=""
+                src="/media/figma-final/compare-3-before.webp"
+                alt="Pessoa fictícia"
+                loading="lazy"
+              />
+            </button>
+          </div>
         </div>
         <div>
           <div class="comparison" style="--split: 50%">
-            <div class="compare-half after-image"></div>
-            <div class="compare-half before-image"></div>
+            <div class="compare-half after-image">
+              <img
+                class=""
+                src="/media/figma-final/compare-1-after.webp"
+                alt="Depois ilustrativo, gerado por IA"
+                loading="lazy"
+              />
+            </div>
+            <div class="compare-half before-image">
+              <img
+                class=""
+                src="/media/figma-final/compare-1-before.webp"
+                alt="Antes ilustrativo, pessoa fictícia"
+                loading="lazy"
+              />
+            </div>
             <span class="compare-label before-label">Antes</span
             ><span class="compare-label after-label">Depois</span>
             <div class="compare-divider">
@@ -461,14 +1527,14 @@
         </div>
       </section>
       <section
-        class="stories section"
+        class="stories section home-final"
         id="historias"
         aria-labelledby="stories-title"
       >
         <div class="section-head">
           <div>
             <p class="eyebrow">HISTÓRIAS QUE GUIAM A PROPOSTA</p>
-            <h2 id="stories-title">O cuidado faz parte<br />da vida.</h2>
+            <h2 id="stories-title">O cuidado faz parte da vida.</h2>
           </div>
           <div class="story-controls">
             <button
@@ -505,7 +1571,7 @@
               aria-label="Ler relato de Lucas"
             >
               <img
-                src="/media/persona-lucas.jpg"
+                src="/media/figma-final/stories-0.webp"
                 alt="Retrato gerado por IA de Lucas, pessoa fictícia"
                 width="400"
                 height="600"
@@ -554,7 +1620,7 @@
               aria-label="Ler relato de Marina"
             >
               <img
-                src="/media/persona-marina.jpg"
+                src="/media/figma-final/stories-2.webp"
                 alt="Retrato gerado por IA de Marina, pessoa fictícia"
                 width="400"
                 height="600"
@@ -605,7 +1671,7 @@
               aria-label="Ler relato de Denise"
             >
               <img
-                src="/media/persona-denise.jpg"
+                src="/media/figma-final/stories-4.webp"
                 alt="Retrato gerado por IA de Denise, pessoa fictícia"
                 width="400"
                 height="600"
@@ -650,7 +1716,7 @@
         </div>
         <p class="sr-only" id="story-announcement" aria-live="polite"></p>
       </section>
-      <section class="trust section" id="confianca">
+      <section class="trust section home-final" id="confianca">
         <p class="eyebrow">CLAREZA TAMBÉM É CUIDADO</p>
         <div class="section-head">
           <h2>Confiança não é um selo.<br />É poder entender.</h2>
@@ -661,7 +1727,12 @@
         </div>
         <div class="trust-columns">
           <div>
-            <i class="ph ph-flask" aria-hidden="true"></i>
+            <img
+              class="trust-icon"
+              src="/media/figma-final/clarity-composicao.svg"
+              alt=""
+              loading="lazy"
+            />
             <h3>O que está no produto.</h3>
             <p>
               Origem, composição e evidências acessíveis para uma escolha
@@ -669,7 +1740,12 @@
             </p>
           </div>
           <div>
-            <i class="ph ph-sparkle" aria-hidden="true"></i>
+            <img
+              class="trust-icon"
+              src="/media/figma-final/clarity-orientacao.svg"
+              alt=""
+              loading="lazy"
+            />
             <h3>O que orienta a escolha.</h3>
             <p>
               A IA organiza e explica. O catálogo e regras revisadas delimitam a
@@ -677,16 +1753,34 @@
             </p>
           </div>
           <div>
-            <i class="ph ph-hand-heart" aria-hidden="true"></i>
+            <img
+              class="trust-icon"
+              src="/media/figma-final/clarity-limites.svg"
+              alt=""
+              loading="lazy"
+            />
             <h3>Onde estão os limites.</h3>
             <p>
               Skincare com contexto. Sem diagnósticos, fórmulas inventadas ou
               promessas de pele perfeita.
             </p>
           </div>
+          <div>
+            <img
+              class="trust-icon"
+              src="/media/figma-final/clarity-acompanhamento.svg"
+              alt=""
+              loading="lazy"
+            />
+            <h3>Cuidado que acompanha você</h3>
+            <p>
+              Sua rotina pode ser revista conforme seus hábitos, preferências e
+              experiência de uso.
+            </p>
+          </div>
         </div>
       </section>
-      <section class="faq section" id="duvidas">
+      <section class="faq section home-final" id="duvidas">
         <div>
           <p class="eyebrow">VAMOS DEIXAR MAIS CLARO</p>
           <h2>Boas perguntas.<br />Um bom começo.</h2>
@@ -761,16 +1855,76 @@
           </details>
         </div>
       </section>
-      <section class="final-cta">
-        <p class="eyebrow">O CUIDADO COMEÇA POR VOCÊ</p>
-        <h2>Sua pele.<br /><span>Sua próxima conversa.</span></h2>
-        <button class="pill dark start">
-          Vamos começar
-          <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
-        ><span class="final-note">Sem complicar. No seu tempo.</span>
+      <section class="final-cta home-final">
+        <div class="cta-art" aria-hidden="true">
+          <div class="cta-art-left">
+            <div class="cta-art-mask">
+              <img
+                class=""
+                src="/media/figma-final/cta-0.webp"
+                alt=""
+                loading="lazy"
+              />
+            </div>
+            <img
+              class=""
+              src="/media/figma-final/cta-1.webp"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+          <div class="cta-art-right">
+            <div class="cta-art-mask">
+              <img
+                class=""
+                src="/media/figma-final/cta-0.webp"
+                alt=""
+                loading="lazy"
+              />
+            </div>
+            <img
+              class=""
+              src="/media/figma-final/cta-2.webp"
+              alt=""
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="cta-content">
+          <p class="eyebrow">O CUIDADO COMEÇA POR VOCÊ</p>
+          <h2>Sua pele.<br /><span>Sua próxima conversa.</span></h2>
+          <button class="pill dark start">
+            Vamos começar
+            <i class="ph ph-arrow-up-right" aria-hidden="true"></i></button
+          ><span class="final-note">Sem complicar. No seu tempo.</span>
+          <div class="cta-assurances">
+            <span
+              ><img
+                class=""
+                src="/media/figma-final/cta-5.svg"
+                alt=""
+                loading="lazy"
+              />Dados protegidos</span
+            ><span
+              ><img
+                class=""
+                src="/media/figma-final/cta-6.svg"
+                alt=""
+                loading="lazy"
+              />Ingredientes selecionados</span
+            ><span
+              ><img
+                class=""
+                src="/media/figma-final/cta-7.svg"
+                alt=""
+                loading="lazy"
+              />Origem rastreável</span
+            >
+          </div>
+        </div>
       </section>
     </main>
-    <footer id="footer">
+    <footer id="footer" class="home-final">
       <div class="footer-top">
         <div class="footer-brand">
           <a href="#inicio" class="wordmark" aria-label="SkinBoost início"

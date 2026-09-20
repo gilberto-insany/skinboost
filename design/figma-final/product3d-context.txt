@@ -1,0 +1,91 @@
+const imgImage2 = "https://www.figma.com/api/mcp/asset/ab5920ba-eb58-4feb-a768-635d7a9e66e6.png";
+const imgMagnificMacroDoRotuloMostrando79YtvsvJal2 = "https://www.figma.com/api/mcp/asset/22801e8f-40fe-45ca-bfa6-6e4bb91d9751.png";
+const imgMagnificPlanoDetalheDaTampaTrO6ChfLGynm1 = "https://www.figma.com/api/mcp/asset/9bcb7f0a-5c5f-4b7c-bf5f-acf86180421b.png";
+
+export default function Component3D() {
+  return (
+    <div className="bg-[var(--brand-primary\/maximum,#0e2820)] relative size-full" data-node-id="2128:1907" data-name="3D">
+      <div className="absolute h-[743.188px] left-[537.14px] overflow-clip top-[92.89px] w-[805.672px]" data-node-id="2128:1908" data-name="Image (Frascos SkinBoost)">
+        <div className="absolute h-[887px] left-[-487.14px] top-[-23.89px] w-[1269px]" data-node-id="2128:1909" data-name="image 2">
+          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage2} />
+        </div>
+      </div>
+      <div className="[word-break:break-word] absolute content-stretch flex flex-col gap-[26px] items-start left-[68.5px] top-[110px] w-[634px]" data-node-id="2128:1915">
+        <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/subtle,#c4c8c5)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1916">
+          CONHEÇA A LINHA SKINBOOST
+        </p>
+        <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/display\/d3,56px)] tracking-[-1px] w-full" data-node-id="2128:1917">
+          <p className="leading-[1.1] mb-0">Seu ritual.</p>
+          <p className="leading-[1.1]">Em cada detalhe.</p>
+        </div>
+      </div>
+      <div className="absolute content-stretch flex flex-col gap-[24px] items-start left-[69px] top-[455px] w-[303px]" data-node-id="2128:1918">
+        <div className="bg-[var(--white\/20,rgba(255,255,255,0.2))] h-px relative shrink-0 w-full" data-node-id="2128:1919" data-name="Text" />
+        <div className="[word-break:break-word] content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-full" data-node-id="2128:1920">
+          <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/subtle,#c4c8c5)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1921">
+            01 / DESIGN ESSENCIAL
+          </p>
+          <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[color:var(--neutral\/light,#d9ddda)] text-[length:var(--font\/size\/heading\/h3,32px)] tracking-[-1px] w-full" data-node-id="2128:1922">
+            <p className="leading-[1.3] mb-0">Simples de usar.</p>
+            <p className="leading-[1.3]">Fácil de continuar.</p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--white\/60,rgba(255,255,255,0.6))] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1923">
+          Uma família pensada para ocupar menos espaço na sua rotina.
+        </p>
+      </div>
+      <div className="absolute content-stretch flex flex-col gap-[24px] items-start left-[1081px] top-[455px] w-[295px]" data-node-id="2128:1924">
+        <div className="bg-[var(--white\/20,rgba(255,255,255,0.2))] h-px relative shrink-0 w-full" data-node-id="2128:1925" data-name="Text" />
+        <div className="[word-break:break-word] content-stretch flex flex-col gap-[7px] items-start relative shrink-0 w-full" data-node-id="2128:1926">
+          <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] min-w-full not-italic relative shrink-0 text-[color:var(--neutral\/subtle,#c4c8c5)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-[min-content]" data-node-id="2128:1927">
+            02 / CADA ESCOLHA, UM MOTIVO
+          </p>
+          <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[color:var(--neutral\/light,#d9ddda)] text-[length:var(--font\/size\/heading\/h3,32px)] tracking-[-1px] whitespace-nowrap" data-node-id="2128:1928">
+            <p className="leading-[1.3] mb-0">O que faz parte.</p>
+            <p className="leading-[1.3]">E por que faz.</p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--white\/60,rgba(255,255,255,0.6))] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1929">
+          Conheça a função de cada item antes de montar seu cuidado.
+        </p>
+      </div>
+      <div className="absolute content-stretch flex gap-[16px] items-center left-[1081px] top-[861px]" data-node-id="2240:3464">
+        <div className="border border-[var(--white\/10,rgba(255,255,255,0.1))] border-solid content-stretch flex items-start p-[17px] relative rounded-[27.5px] shrink-0 size-[55px]" data-node-id="2240:3463">
+          <div className="relative shrink-0 size-[21px]" data-node-id="2128:1913" data-name="Italic Text">
+            <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[21px] left-0 not-italic text-[21px] text-[color:var(--neutral\/light,#d9ddda)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1914">{`\uE03E`}</p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/subtle,#c4c8c5)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1912">
+          Explore a linha
+        </p>
+      </div>
+      <div className="absolute content-stretch flex gap-[16px] items-center left-[69px] top-[867px]" data-node-id="2240:3522">
+        <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2240:3523">
+          <div className="bg-[#fbfbf7] h-[49px] overflow-clip relative shrink-0 w-[67px]" data-node-id="2240:3466">
+            <div className="absolute h-[68px] left-[-17px] top-[-9px] w-[102px]" data-node-id="2240:3526" data-name="magnific_macro-do-rotulo-mostrando_79YtvsvJAL 2">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificMacroDoRotuloMostrando79YtvsvJal2} />
+            </div>
+          </div>
+          <div className="bg-[#fbfbf7] h-[49px] overflow-clip relative shrink-0 w-[67px]" data-node-id="2240:3521">
+            <div className="absolute h-[72px] left-[-20px] top-[-11px] w-[108px]" data-node-id="2240:3524" data-name="magnific_plano-detalhe-da-tampa-tr_O6chfLGynm 1">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificPlanoDetalheDaTampaTrO6ChfLGynm1} />
+            </div>
+          </div>
+        </div>
+        <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/subtle,#c4c8c5)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1910">
+          BALANCE / 30 ML · EMBALAGEM CONCEITUAL
+        </p>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D3: Font(family: "Manrope", style: SemiBold, size: font/size/display/D3, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Heading/H3: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H3, weight: 600, lineHeight: 1.2999999523162842, letterSpacing: -1).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

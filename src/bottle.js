@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { batchPump, createRenderQueue } from "./bottle-performance.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -116,6 +117,7 @@ export async function initBottle({ root = document, signal } = {}) {
   renderer.toneMappingExposure = 0.9;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.VSMShadowMap;
+  renderer.shadowMap.autoUpdate = false;
   renderer.setClearColor(0x000000, 0);
   renderer.domElement.setAttribute("aria-hidden", "true");
   container.appendChild(renderer.domElement);
@@ -163,20 +165,34 @@ export async function initBottle({ root = document, signal } = {}) {
   const pose = new THREE.Group();
   scene.add(pose);
 
-  let visible = true;
+  let visible = false;
   let disposed = false;
   let model;
   let cap;
   let closedCapY = 0;
   const motion = { progress: 0 };
   const media = gsap.matchMedia();
-  const render = () => {
-    if (visible && !disposed && model) renderer.render(scene, camera);
-  };
+  const renderQueue = createRenderQueue({
+    request: (callback) => window.requestAnimationFrame(callback),
+    cancel: (id) => window.cancelAnimationFrame(id),
+    draw: () => {
+      if (!disposed && model) renderer.render(scene, camera);
+    },
+  });
+  renderQueue.setActive(false);
+  const render = () => renderQueue.invalidate();
+  function syncVisibility() {
+    renderQueue.setActive(visible && !document.hidden && !!model);
+  }
+  document.addEventListener("visibilitychange", syncVisibility);
+  let lastPose = "";
   function update() {
     if (!model || !cap) return;
     const p = motion.progress;
     const mobile = window.innerWidth < 701;
+    const poseKey = `${p}:${mobile}:${camera.aspect}`;
+    if (poseKey === lastPose) return;
+    lastPose = poseKey;
     const lift = THREE.MathUtils.smoothstep(p, 0.32, 0.78);
     // glTF is Y-up. Cap translates in meters inside the exported root (scale 20).
     cap.position.y = closedCapY + 0.065 * lift;
@@ -188,8 +204,12 @@ export async function initBottle({ root = document, signal } = {}) {
     container.dataset.phase =
       lift < 0.01 ? "closed" : lift > 0.99 ? "open" : "opening";
     container.dataset.progress = p.toFixed(3);
+    renderer.shadowMap.needsUpdate = true;
     render();
   }
+  let lastWidth = 0;
+  let lastHeight = 0;
+  let lastRatio = 0;
   function resize() {
     const width = container.clientWidth;
     const height = container.clientHeight;
@@ -205,6 +225,15 @@ export async function initBottle({ root = document, signal } = {}) {
       Math.sqrt(8_000_000 / (width * height)),
       renderer.capabilities.maxTextureSize / Math.max(width, height),
     );
+    if (
+      width === lastWidth &&
+      height === lastHeight &&
+      pixelRatio === lastRatio
+    )
+      return;
+    lastWidth = width;
+    lastHeight = height;
+    lastRatio = pixelRatio;
     if (renderer.getPixelRatio() !== pixelRatio)
       renderer.setPixelRatio(pixelRatio);
     renderer.setSize(width, height);
@@ -212,6 +241,7 @@ export async function initBottle({ root = document, signal } = {}) {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     update();
+    render();
   }
   const sizeObserver = new ResizeObserver(resize);
   sizeObserver.observe(container);
@@ -231,7 +261,7 @@ export async function initBottle({ root = document, signal } = {}) {
   window.addEventListener("resize", resize);
   const visibilityObserver = new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting;
-    if (visible) render();
+    syncVisibility();
   });
   visibilityObserver.observe(container);
 
@@ -260,6 +290,8 @@ export async function initBottle({ root = document, signal } = {}) {
   function cleanup() {
     if (disposed) return;
     disposed = true;
+    renderQueue.dispose();
+    document.removeEventListener("visibilitychange", syncVisibility);
     media.revert();
     sizeObserver.disconnect();
     densityQuery?.removeEventListener("change", onDensityChange);
@@ -365,7 +397,9 @@ export async function initBottle({ root = document, signal } = {}) {
     cap.geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     cap.material.vertexColors = true;
     oldCapMaterial.dispose();
+    batchPump(model);
     pose.add(model);
+    syncVisibility();
     media.add(
       {
         reduce: "(prefers-reduced-motion: reduce)",

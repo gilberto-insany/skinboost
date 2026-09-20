@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">O que está no produto</title>
+  <desc id="desc">Frasco de vidro com líquido verde ondulando e pequenas bolhas.</desc>
+  <style>.wave{animation:wave 4s ease-in-out infinite alternate}.bubble{animation:bubble 4.5s ease-in-out infinite}.b2{animation-delay:-1.5s}.b3{animation-delay:-3s}@keyframes wave{from{transform:translate(-5px,1px)}to{transform:translate(5px,-2px)}}@keyframes bubble{0%{transform:translateY(8px);opacity:0}25%,70%{opacity:.7}100%{transform:translateY(-25px);opacity:0}}
+    @media(prefers-reduced-motion:reduce){.motion{animation:none!important}}
+  </style>
+  <defs>
+    <radialGradient id="disk" cx=".35" cy=".25" r=".85"><stop stop-color="#FFFFFF"/><stop offset=".56" stop-color="#F7F8F4"/><stop offset=".82" stop-color="#EDF1E8"/><stop offset="1" stop-color="#D3DFCD"/></radialGradient>
+    <radialGradient id="rim"><stop offset=".88" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".965" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset=".99" stop-color="#B6C7AA" stop-opacity=".75"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".7"/></radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#BBCDB4"/><stop offset=".26" stop-color="#FFFFFF"/><stop offset=".67" stop-color="#A9BD9A"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="green" x1=".15" y1="0" x2=".85" y2="1"><stop stop-color="#244E39"/><stop offset=".18" stop-color="#81A777"/><stop offset=".36" stop-color="#D4E5B8"/><stop offset=".5" stop-color="#668C4B"/><stop offset=".76" stop-color="#A8C94D"/><stop offset="1" stop-color="#315E4B"/></linearGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#315E4B"/><stop offset=".4" stop-color="#486B37"/><stop offset=".67" stop-color="#C7D8C9"/><stop offset="1" stop-color="#244B35"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E3ECDC" stop-opacity=".8"/><stop offset=".45" stop-color="#C7D8C9" stop-opacity=".25"/><stop offset="1" stop-color="#66866C" stop-opacity=".75"/></linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#C6DE7A"/><stop offset=".5" stop-color="#A8C94D"/><stop offset="1" stop-color="#4E783B"/></linearGradient>
+    <filter id="shadow" x="-35%" y="-35%" width="170%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#315E4B" flood-opacity=".17"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <clipPath id="circle"><circle cx="160" cy="160" r="131"/></clipPath>
+    <clipPath id="flask"><path d="M137 83H183V132C183 145 220 204 225 220C230 239 211 246 160 246C109 246 90 239 95 220C100 204 137 145 137 132Z"/></clipPath>
+  </defs>
+  <circle cx="160" cy="160" r="132" fill="url(#disk)" stroke="url(#edge)" stroke-width="2"/>
+  <g clip-path="url(#circle)">
+    <g fill="#66866C" opacity=".055" filter="url(#soft)">
+      <path d="M35 235C69 191 92 153 110 106C105 165 84 213 35 235ZM49 218C36 185 34 157 43 127C47 171 63 191 49 218ZM66 192C53 159 53 127 68 94C62 140 78 167 66 192ZM81 165C112 146 138 143 157 149C121 155 111 177 81 165ZM63 198C95 173 124 176 145 182C106 187 93 209 63 198ZM46 229C78 207 104 210 125 218C92 220 72 243 46 229Z"/>
+    </g>
+    <path d="M57 91C74 64 96 50 118 46C93 67 76 92 69 115Z" fill="white" opacity=".65"/>
+    <path d="M80 55C119 30 178 29 215 43" stroke="white" stroke-width="3" opacity=".82" stroke-linecap="round"/>
+    <path d="M227 262C254 245 274 213 279 182" stroke="#A8C94D" stroke-width="6" opacity=".12" filter="url(#soft)"/>
+  </g>
+  <circle cx="160" cy="160" r="130" fill="url(#rim)"/>
+  <circle cx="160" cy="160" r="126" stroke="#FFFFFF" stroke-opacity=".75"/>
+
+  <g filter="url(#shadow)">
+    <path d="M137 83H183V132C183 145 220 204 225 220C230 239 211 246 160 246C109 246 90 239 95 220C100 204 137 145 137 132Z" fill="url(#glass)" stroke="url(#bevel)" stroke-width="5" stroke-linejoin="round"/>
+    <g clip-path="url(#flask)">
+      <g class="motion wave">
+        <path d="M76 186C117 172 145 197 180 185C208 175 231 180 242 185V252H76Z" fill="url(#liquid)"/>
+        <path d="M76 186C117 172 145 197 180 185C208 175 231 180 242 185" stroke="#F0F6C8" stroke-width="2" opacity=".85"/>
+      </g>
+      <g fill="#F1F7CD" stroke="#739644" stroke-width="1">
+        <circle class="motion bubble" cx="143" cy="220" r="3.5"/><circle class="motion bubble b2" cx="178" cy="219" r="4"/><circle class="motion bubble b3" cx="157" cy="215" r="2"/>
+      </g>
+    </g>
+    <path d="M137 83H183V132C183 145 220 204 225 220C230 239 211 246 160 246C109 246 90 239 95 220C100 204 137 145 137 132Z" stroke="url(#bevel)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M143 98V133C143 150 107 207 103 221" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+    <path d="M109 234C137 241 187 241 211 233" stroke="#D9E8B5" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+    <ellipse cx="160" cy="83" rx="27" ry="7" fill="url(#green)" stroke="#315E4B" stroke-width="2"/>
+    <ellipse cx="160" cy="82" rx="22" ry="3.8" fill="#EDF3E7" fill-opacity=".7" stroke="#C7D8C9"/>
+  </g>
+</svg>
+

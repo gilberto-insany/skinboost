@@ -41,7 +41,7 @@ export function mountLandingCatalog(
 ) {
   const source = new DOMParser().parseFromString(pageSource, "text/html");
   const root = document.createElement("div");
-  root.className = "sb-landing-surface";
+  root.className = "sb-landing-surface home-final";
   root.dataset.component = component;
   const clone = (selector) => {
     const node = source.querySelector(selector);

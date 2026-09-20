@@ -1,0 +1,946 @@
+{
+  "textNodes": 223,
+  "styleUsage": {
+    "Text/MD/Regular": 77,
+    "Display/D1": 5,
+    "Text/XL/Regular": 6,
+    "Display/D2": 3,
+    "Text/LG/Regular": 8,
+    "Heading/H4": 8,
+    "Unstyled or mixed": 80,
+    "Heading/H6": 2,
+    "Text/MD/Semi Bold": 1,
+    "Text/MD/Medium": 8,
+    "Heading/H5": 1,
+    "Display/D3": 5,
+    "Heading/H3": 6,
+    "Text/SM/Medium": 6,
+    "Text/XS/Medium": 2,
+    "Text/LG/Medium": 2,
+    "Text/XS/Regular": 2,
+    "Heading/H2": 1
+  },
+  "fontSegments": {
+    "Inter": 147,
+    "Manrope": 34,
+    "Phosphor": 34,
+    "Arial": 2,
+    "Manrope Variable": 6
+  },
+  "sections": [
+    {
+      "id": "2128:1059",
+      "name": "Intro",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1062",
+          "text": "MENOS TENTATIVA. MAIS CLAREZA.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1064",
+          "text": "Você não precisa de\nmais uma rotina.\nPrecisa da sua.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 80,
+          "style": "Display/D1"
+        },
+        {
+          "id": "2128:1070",
+          "text": "Seus hábitos, suas preferências e o que você quer cuidar. Tudo isso vem antes de um produto. A SkinBoost conecta esse contexto a uma rotina explicada, que cabe na sua vida.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 18,
+          "style": "Text/XL/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2128:1638",
+      "name": "Steps",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1641",
+          "text": "DO SEU CONTEXTO AO SEU CUIDADO",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1642",
+          "text": "Simples por fora.\nAtento a você.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 64,
+          "style": "Display/D2"
+        },
+        {
+          "id": "2128:1643",
+          "text": "Você conta. A gente organiza.\nCada escolha vem com um porquê.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 16,
+          "style": "Text/LG/Regular"
+        },
+        {
+          "id": "I2204:8815;2128:1650",
+          "text": "Comece com uma conversa.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 28,
+          "style": "Heading/H4"
+        }
+      ]
+    },
+    {
+      "id": "2128:1753",
+      "name": "Video",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1755",
+          "text": "PELE DE VERDADE. VIDA DE VERDADE.",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Medium"
+        },
+        {
+          "id": "2128:1757",
+          "text": "O cuidado muda.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 80,
+          "style": "Display/D1"
+        },
+        {
+          "id": "2128:1758",
+          "text": "A sua essência,",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 80,
+          "style": "Display/D1"
+        },
+        {
+          "id": "2128:1759",
+          "text": "permanece.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 80,
+          "style": "Display/D1"
+        }
+      ]
+    },
+    {
+      "id": "2128:1837",
+      "name": "Bento",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1839",
+          "text": "FEITO PARA A SUA VIDA",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1840",
+          "text": "Um pouco de ciência.\nMuito de você.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 64,
+          "style": "Display/D2"
+        },
+        {
+          "id": "2128:1841",
+          "text": "Tecnologia para deixar a escolha mais simples. E o cuidado mais seu.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 16,
+          "style": "Text/LG/Regular"
+        },
+        {
+          "id": "2128:1845",
+          "text": "CONTEXTO, NÃO RÓTULOS",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2128:1907",
+      "name": "3D",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1916",
+          "text": "CONHEÇA A LINHA SKINBOOST",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1917",
+          "text": "Seu ritual.\nEm cada detalhe.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 56,
+          "style": "Display/D3"
+        },
+        {
+          "id": "2128:1921",
+          "text": "01 / DESIGN ESSENCIAL",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1922",
+          "text": "Simples de usar.\nFácil de continuar.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 32,
+          "style": "Heading/H3"
+        }
+      ]
+    },
+    {
+      "id": "2128:1937",
+      "name": "Details",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1939",
+          "text": "POUCOS PRODUTOS. ESCOLHAS COM SENTIDO.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1940",
+          "text": "Conheça seu próximo passo.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 56,
+          "style": "Display/D3"
+        },
+        {
+          "id": "2128:1941",
+          "text": "Linha conceitual · produtos demonstrativos",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2240:2503;2128:1945",
+          "text": "Hidratação.\nCom conforto.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 28,
+          "style": "Heading/H4"
+        }
+      ]
+    },
+    {
+      "id": "2128:1972",
+      "name": "Compair",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:1975",
+          "text": "SEU CUIDADO, AO LONGO DO TEMPO",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:1976",
+          "text": "Cada pele\ntem seu tempo.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 56,
+          "style": "Display/D3"
+        },
+        {
+          "id": "2128:1977",
+          "text": "Observar, entender, ajustar. Acompanhe a sua experiência além do espelho. Da constância ao conforto no dia a dia.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 18,
+          "style": "Text/XL/Regular"
+        },
+        {
+          "id": "2128:1979",
+          "text": "Conhecer o check-in",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Medium"
+        }
+      ]
+    },
+    {
+      "id": "2128:2099",
+      "name": "Testmonial",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:2103",
+          "text": "HISTÓRIAS QUE GUIAM A PROPOSTA",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:2105",
+          "text": "O cuidado faz parte da vida.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 56,
+          "style": "Display/D3"
+        },
+        {
+          "id": "2128:2123",
+          "text": "Lucas",
+          "font": {
+            "family": "Manrope Variable",
+            "style": "Regular"
+          },
+          "size": 14,
+          "style": null
+        },
+        {
+          "id": "2128:2132",
+          "text": "Marina",
+          "font": {
+            "family": "Manrope Variable",
+            "style": "Regular"
+          },
+          "size": 14,
+          "style": null
+        }
+      ]
+    },
+    {
+      "id": "2128:2165",
+      "name": "Bullets",
+      "visible": true,
+      "text": [
+        {
+          "id": "2128:2167",
+          "text": "CLAREZA TAMBÉM É CUIDADO",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2128:2169",
+          "text": "Confiança não é um selo.\nÉ poder entender.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 56,
+          "style": "Display/D3"
+        },
+        {
+          "id": "2128:2171",
+          "text": "Nossa proposta",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Medium"
+        },
+        {
+          "id": "2128:2179",
+          "text": "O que está no produto",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 18,
+          "style": "Text/XL/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2134:2199",
+      "name": "FAQ",
+      "visible": true,
+      "text": [
+        {
+          "id": "2134:2202",
+          "text": "VAMOS DEIXAR MAIS CLARO",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2134:2203",
+          "text": "Boas perguntas.\nUm bom começo.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 40,
+          "style": "Heading/H2"
+        },
+        {
+          "id": "2134:2207",
+          "text": "Preciso enviar uma foto?",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 16,
+          "style": "Text/LG/Regular"
+        },
+        {
+          "id": "2134:2210",
+          "text": "Não. A foto é opcional e você pode começar apenas contando sobre seus objetivos e sua rotina. Neste protótipo, a imagem fica somente na memória do seu navegador.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2134:2236",
+      "name": "Section",
+      "visible": true,
+      "text": [
+        {
+          "id": "2134:2237",
+          "text": "O CUIDADO COMEÇA POR VOCÊ",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2134:2238",
+          "text": "Sua pele.\nSua próxima conversa.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 64,
+          "style": "Display/D2"
+        },
+        {
+          "id": "2134:2240",
+          "text": "Vamos começar",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Medium"
+        },
+        {
+          "id": "2134:2243",
+          "text": "Sem complicar. No seu tempo.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2134:2249",
+      "name": "Footer",
+      "visible": true,
+      "text": [
+        {
+          "id": "2134:2263",
+          "text": "Ciência sensível. Cuidado pessoal.",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 16,
+          "style": "Text/LG/Medium"
+        },
+        {
+          "id": "2134:2265",
+          "text": "Como funciona",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2134:2266",
+          "text": "Produtos",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "2134:2267",
+          "text": "Confiança",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2204:8762",
+      "name": "Header",
+      "visible": true,
+      "variants": {
+        "Property 1": "Variant2"
+      },
+      "text": [
+        {
+          "id": "I2204:8762;2204:8624",
+          "text": "Como funciona",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2204:8762;2204:8625",
+          "text": "Nossos produtos",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2204:8762;2204:8626",
+          "text": "Sua evolução",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2204:8762;2204:8628",
+          "text": "Conhecer minha rotina",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Medium"
+        }
+      ]
+    },
+    {
+      "id": "2223:9639",
+      "name": "Hero",
+      "visible": true,
+      "variants": {
+        "Property 1": "1"
+      },
+      "text": [
+        {
+          "id": "I2223:9639;2223:9385",
+          "text": "CIÊNCIA SENSÍVEL. CUIDADO PESSOAL.",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2223:9639;2223:9386",
+          "text": "Sua pele.\nSeu próximo passo.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 80,
+          "style": "Display/D1"
+        },
+        {
+          "id": "I2223:9639;2223:9387",
+          "text": "Uma rotina que começa por entender você.",
+          "font": {
+            "family": "Manrope",
+            "style": "SemiBold",
+            "variationSettings": {
+              "wght": 600
+            }
+          },
+          "size": 20,
+          "style": "Heading/H6"
+        },
+        {
+          "id": "I2223:9639;2223:9390",
+          "text": "O que você quer cuidar na sua pele?",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 16,
+          "style": "Text/LG/Regular"
+        }
+      ]
+    },
+    {
+      "id": "2204:8713",
+      "name": "Header",
+      "visible": true,
+      "variants": {
+        "Property 1": "Default"
+      },
+      "text": [
+        {
+          "id": "I2204:8713;2204:8508",
+          "text": "Como funciona",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2204:8713;2204:8509",
+          "text": "Nossos produtos",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2204:8713;2204:8510",
+          "text": "Sua evolução",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Regular"
+        },
+        {
+          "id": "I2204:8713;2204:8512",
+          "text": "Conhecer minha rotina",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "style": "Text/MD/Medium"
+        }
+      ]
+    }
+  ]
+}

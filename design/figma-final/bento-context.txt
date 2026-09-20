@@ -1,0 +1,295 @@
+import { motion } from "motion/react";
+const imgMagnificCriarBackgroundMaisMinBxPj4Dx5Y22 = "https://www.figma.com/api/mcp/asset/c3526e6a-a86e-4060-82f3-313179192e8f.png";
+const imgImageFamiliaConceitualDeProdutosSkinBoost = "https://www.figma.com/api/mcp/asset/4db8a712-acc5-498d-94c3-49026a5317be.png";
+const imgRectangle15 = "https://www.figma.com/api/mcp/asset/20211c32-c791-4ee3-9eae-117cd0585303.png";
+const imgRectangle13 = "https://www.figma.com/api/mcp/asset/3d7e9f72-09c4-4151-97e2-744906957937.png";
+const imgMagnificCloseupDoBicoDoPumpCJU3PX1PLd2 = "https://www.figma.com/api/mcp/asset/a854cc4c-5fe9-4f77-9b46-d008b8d4844f.png";
+const imgMagnificCriarBackgroundMaisMinBxPj4Dx5Y21 = "https://www.figma.com/api/mcp/asset/3e7f29c1-0b65-4edc-bd32-0cef59227f1d.svg";
+const imgVector = "https://www.figma.com/api/mcp/asset/fb29c4c2-9941-48f2-90c3-381a545a05ad.svg";
+const imgVector1 = "https://www.figma.com/api/mcp/asset/bcd30bee-8355-4c28-904c-d24f97d27681.svg";
+const imgFrame = "https://www.figma.com/api/mcp/asset/f85808a6-d41b-4f40-82a1-b78726391a32.svg";
+const imgFrame1 = "https://www.figma.com/api/mcp/asset/8645a6fd-0230-4644-90f0-6dc08ec1fa3e.svg";
+const imgFrame2 = "https://www.figma.com/api/mcp/asset/b11b5ef6-be52-421f-b322-638d790edded.svg";
+const imgFrame3 = "https://www.figma.com/api/mcp/asset/e4f4286e-7adf-482a-b39e-bf255d06ff91.svg";
+const imgVector2 = "https://www.figma.com/api/mcp/asset/876527a1-3080-42d1-8a9d-adf23960ef64.svg";
+const imgVector3 = "https://www.figma.com/api/mcp/asset/b8ed03c8-ce02-40ee-8db2-26128df9c099.svg";
+const imgFrame4 = "https://www.figma.com/api/mcp/asset/541bde0c-ef3e-4c37-86c2-cea60dd96705.svg";
+const imgFrame5 = "https://www.figma.com/api/mcp/asset/0ed22bc4-942a-4b2a-9949-b4aa9d704596.svg";
+const imgVector4 = "https://www.figma.com/api/mcp/asset/dd225364-d1ab-43b9-8b27-2b91027e04be.svg";
+const imgFrame6 = "https://www.figma.com/api/mcp/asset/9f148da7-c729-4e24-b6d8-d3c4d43d3695.svg";
+const imgVector5 = "https://www.figma.com/api/mcp/asset/dd2c2681-ccdc-4703-9420-dd83aacb51d6.svg";
+const imgVector6 = "https://www.figma.com/api/mcp/asset/7e56c1a3-a4cf-455a-884d-0537d1a67b9c.svg";
+const imgVector7 = "https://www.figma.com/api/mcp/asset/b73ebba9-1aca-458c-bc94-533fa60f70f7.svg";
+const imgVector8 = "https://www.figma.com/api/mcp/asset/6a430879-2418-4757-a672-8a27d85346c4.svg";
+const imgFrame7 = "https://www.figma.com/api/mcp/asset/bf87b3cc-c6af-48aa-b64a-5dc7d07cceb3.svg";
+const imgSparkle = "https://www.figma.com/api/mcp/asset/38a2eb5a-054c-4767-b428-0e4558ec3b37.svg";
+const imgVector9 = "https://www.figma.com/api/mcp/asset/8b2ccfcb-eba6-492e-9501-99c6eec031b4.svg";
+const imgGooglePhotosLogo = "https://www.figma.com/api/mcp/asset/dedeea11-05d8-4e36-a47c-ceece7bf7898.svg";
+const imgRectangle14 = "https://www.figma.com/api/mcp/asset/d6206b56-7463-4bd3-bb61-b735fc05b32f.svg";
+const imgMagnificCloseupDoBicoDoPumpCJU3PX1PLd01 = "https://www.figma.com/api/mcp/asset/7ad2d179-cc59-4650-a6bf-599e7a47b780.svg";
+
+export default function Bento() {
+  return (
+    <div className="content-stretch flex flex-col gap-[48px] items-start px-[64px] py-[110px] relative size-full" data-node-id="2128:1837" data-name="Bento">
+      <div className="[word-break:break-word] content-stretch flex flex-col items-start relative shrink-0 whitespace-nowrap" data-node-id="2128:1838">
+        <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1839">
+          FEITO PARA A SUA VIDA
+        </p>
+        <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/display\/d2,64px)] tracking-[-1px]" data-node-id="2128:1840">
+          <p className="leading-[1.1] mb-0">Um pouco de ciência.</p>
+          <p className="leading-[1.1]">Muito de você.</p>
+        </div>
+        <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/lg,16px)] tracking-[-0.5px]" data-node-id="2128:1841">
+          Tecnologia para deixar a escolha mais simples. E o cuidado mais seu.
+        </p>
+      </div>
+      <div className="gap-x-[32px] gap-y-[34px] grid grid-cols-[repeat(3,minmax(0,1fr))] grid-rows-[repeat(2,minmax(0,1fr))] h-[606px] relative shrink-0 w-[1311px]" data-node-id="2128:1842">
+        <div className="bg-[var(--brand-primary\/soft,#e3ece4)] col-1 h-[606px] justify-self-start overflow-clip relative rounded-[18px] row-[1/span_2] shrink-0 w-[415.667px]" data-node-id="2128:1843" data-name="Article">
+          <div className="absolute contents left-0 top-[-4px]" data-node-id="2240:1855" data-name="Mask group">
+            <div className="absolute h-[526px] left-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[0px_-95px] mask-size-[416px_633px] top-[91px] w-[423px]" data-node-id="2240:1856" style={{ maskImage: `url("${imgMagnificCriarBackgroundMaisMinBxPj4Dx5Y21}")` }} data-name="magnific_criar-background-mais-min_bxPj4DX5Y2 1">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificCriarBackgroundMaisMinBxPj4Dx5Y22} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] absolute content-stretch flex flex-col gap-[12px] items-start left-[32px] top-[32px] w-[272px]" data-node-id="2128:1844">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] min-w-full not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-[min-content]" data-node-id="2128:1845">
+              CONTEXTO, NÃO RÓTULOS
+            </p>
+            <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] min-w-full relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-[min-content]" data-node-id="2128:1846">
+              <p className="leading-[1.2] mb-0">Você é mais do que</p>
+              <p className="leading-[1.2]">um tipo de pele.</p>
+            </div>
+            <div className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[0] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1847">
+              <p className="leading-[1.5] mb-0">Tempo, preferências e orçamento.</p>
+              <p className="leading-[1.5]">A sua vida faz parte da conversa.</p>
+            </div>
+          </div>
+          <div className="-translate-x-1/2 absolute backdrop-blur-[6px] bg-[var(--white\/80,rgba(255,255,255,0.8))] border-6 border-[var(--white\/20,rgba(255,255,255,0.2))] border-solid content-stretch flex h-[63px] items-center justify-between left-[calc(50%+0.17px)] pb-[4px] pl-[18px] pr-[7px] pt-[3px] rounded-[122px] top-[330px] w-[348px]" data-node-id="2240:1880">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2240:1063">
+              O que você quer cuidar na sua pele?
+            </p>
+            <div className="overflow-clip relative shrink-0 size-[56.32px]" data-node-id="2240:1000" data-name="skinboost-ai-orb-glass 1">
+              <div className="absolute inset-[5.86%]" data-node-id="2240:1001" data-name="Vector">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector} />
+              </div>
+              <div className="absolute inset-[15.63%_15.62%_15.62%_15.63%]" data-node-id="2240:1002" data-name="Vector">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector1} />
+              </div>
+              <div className="absolute contents inset-[15.63%_15.62%_15.62%_15.63%]" data-node-id="2240:1003" data-name="Clip path group">
+                <div className="absolute inset-[0_15.62%_15.62%_0] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[8.8px_8.8px] mask-size-[38.72px_38.72px]" data-node-id="2240:1006" style={{ maskImage: `url("${imgFrame}")` }} data-name="Frame">
+                  <motion.div className="absolute inset-[22.91%_3.24%_2.69%_15.61%]" data-node-id="2240:1010" data-name="Frame">
+                    <div className="absolute inset-[-5.64%_-5.34%_-7.98%_-3.07%]">
+                      <img alt="" className="block max-w-none size-full" src={imgFrame1} />
+                    </div>
+                  </motion.div>
+                  <motion.div className="absolute inset-[22.72%_13.5%_10.42%_23.63%]" data-node-id="2240:1018" data-name="Frame">
+                    <div className="absolute inset-[-4.85%_-5.16%_-4.85%_-5.15%]">
+                      <img alt="" className="block max-w-none size-full" src={imgFrame2} />
+                    </div>
+                  </motion.div>
+                  <motion.div className="absolute inset-[44.91%_26.39%_21.3%_45.37%]" data-node-id="2240:1024" data-name="Frame">
+                    <div className="absolute inset-[-30.14%_-36.07%]">
+                      <img alt="" className="block max-w-none size-full" src={imgFrame3} />
+                    </div>
+                  </motion.div>
+                  <div className="absolute inset-[19.91%_14.12%_66.67%_34.95%]" data-node-id="2240:1026" data-name="Vector">
+                    <div className="absolute inset-[-75.86%_-20%]">
+                      <img alt="" className="block max-w-none size-full" src={imgVector2} />
+                    </div>
+                  </div>
+                  <div className="absolute inset-[86.11%_17.36%_1.39%_32.64%]" data-node-id="2240:1027" data-name="Vector">
+                    <div className="absolute inset-[-81.48%_-20.37%]">
+                      <img alt="" className="block max-w-none size-full" src={imgVector3} />
+                    </div>
+                  </div>
+                  <div className="absolute contents inset-[18.52%_0_0_18.52%]" data-node-id="2240:1028" data-name="Mask group">
+                    <div className="absolute inset-[16.43%_-6.02%_0_23.2%] mask-intersect mask-luminance mask-no-clip mask-no-repeat mask-position-[-2.226px_0.99px] mask-size-[38.72px_38.72px]" data-node-id="2240:1031" style={{ maskImage: `url("${imgFrame4}")` }} data-name="Frame">
+                      <div className="absolute inset-[-2.11%_-2.12%_-2.39%_-2.12%]">
+                        <img alt="" className="block max-w-none size-full" src={imgFrame5} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="absolute inset-[18.52%_0_0_18.52%]" data-node-id="2240:1049" data-name="Vector">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector4} />
+                  </div>
+                  <motion.div className="absolute inset-[28.7%_1.78%_1.85%_30.56%]" data-node-id="2240:1053" data-name="Frame">
+                    <div className="absolute inset-[-6.67%_-6.84%_-5.5%_-5.65%]">
+                      <img alt="" className="block max-w-none size-full" src={imgFrame6} />
+                    </div>
+                  </motion.div>
+                  <div className="absolute inset-[25.23%_53.94%_48.61%_29.49%]" data-node-id="2240:1056" data-name="Vector">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector5} />
+                  </div>
+                  <div className="absolute flex inset-[31.45%_63.98%_59.23%_29.25%] items-center justify-center" data-node-id="2240:1057" style={{ containerType: "size" }}>
+                    <div className="flex-none h-[hypot(-56.9679cqw,84.768cqh)] rotate-26 w-[hypot(43.0321cqw,15.232cqh)]">
+                      <div className="relative size-full" data-name="Vector">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector6} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="absolute inset-[20.67%_30.32%_76.16%_43.98%]" data-node-id="2240:1058" data-name="Vector">
+                    <div className="absolute inset-[-7.29%_-0.9%]">
+                      <img alt="" className="block max-w-none size-full" src={imgVector7} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute inset-[15.72%]" data-node-id="2240:1059" data-name="Vector">
+                <div className="absolute inset-[-0.2%]">
+                  <img alt="" className="block max-w-none size-full" src={imgVector8} />
+                </div>
+              </div>
+              <div className="absolute inset-[37.83%_37.84%_37.83%_37.83%]" data-node-id="2240:1060" data-name="Frame">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgFrame7} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[var(--neutral\/soft,#eceeec)] col-2 content-stretch flex flex-col items-start justify-between justify-self-stretch overflow-clip p-[32px] relative rounded-[18px] row-1 self-stretch shrink-0" data-node-id="2128:1861" data-name="Article">
+          <div className="content-stretch flex items-end justify-between relative shrink-0 w-[351px]" data-node-id="2128:1862">
+            <div className="relative shrink-0 size-[28px]" data-node-id="2240:2006" data-name="Sparkle">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSparkle} />
+            </div>
+            <div className="bg-[var(--static\/white,white)] relative rounded-[18px] shrink-0 size-[36px]" data-node-id="2128:1864" data-name="Button - Ver recomendação explicada">
+              <div className="absolute left-[7.5px] size-[21px] top-[7.5px]" data-node-id="2128:1865" data-name="Italic Text">
+                <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[21px] left-[10.5px] not-italic text-[21px] text-[color:var(--neutral\/very-strong,#3b403c)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1866">{`\uE092`}</p>
+              </div>
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[5px] items-start relative shrink-0 w-[318px]" data-node-id="2128:1867">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1868">
+              ESCOLHAS EXPLICADAS
+            </p>
+            <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.2] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-full" data-node-id="2128:1869">
+              O porquê vem junto.
+            </p>
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1870">
+              Entenda a função de cada produto antes de decidir.
+            </p>
+          </div>
+        </div>
+        <div className="bg-[var(--auxiliar-dourado\/soft,#f1eadf)] col-3 h-[286px] overflow-clip relative rounded-[18px] row-1 shrink-0 w-[415.667px]" data-node-id="2128:1871" data-name="Article">
+          <div className="absolute h-[242px] left-[259.67px] top-[-57px] w-[228px]" data-node-id="2240:1067" data-name="Vector">
+            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgVector9} />
+          </div>
+          <div className="absolute blur-[9px] h-[11px] left-[39.67px] rounded-[24px] top-[265px] w-[344px]" data-node-id="2240:1064" style={{ backgroundImage: "url(\"data:image/svg+xml;utf8,<svg viewBox='0 0 344 11' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(17.2 0 0 2.327 172 5.5)'><stop stop-color='rgba(159,134,108,1)' offset='0'/><stop stop-color='rgba(195,174,152,1)' offset='0.5'/><stop stop-color='rgba(230,213,196,1)' offset='1'/></radialGradient></defs></svg>\")" }} />
+          <div className="[word-break:break-word] absolute content-stretch flex flex-col gap-[2px] items-start left-0 p-[32px] right-0 top-0" data-node-id="2128:1872">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1873">
+              MENOS, COM INTENÇÃO
+            </p>
+            <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.2] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-full" data-node-id="2128:1874">
+              Espaço para o essencial.
+            </p>
+          </div>
+          <div className="-translate-x-1/2 absolute h-[143px] left-[calc(50%+0.33px)] overflow-clip rounded-[14px] top-[127px] w-[381px]" data-node-id="2128:1875" data-name="Image (Família conceitual de produtos SkinBoost)">
+            <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-[14px]">
+              <img alt="" className="absolute h-[179.94%] left-[-4.64%] max-w-none top-[-39.97%] w-[109.1%]" src={imgImageFamiliaConceitualDeProdutosSkinBoost} />
+            </div>
+            <div className="absolute h-[232px] left-[-18px] top-[-19px] w-[416px]" data-node-id="2219:9192" data-name="SkinBoost Magnific AI 2" />
+          </div>
+        </div>
+        <div className="bg-[var(--auxiliar-dourado\/soft,#f1eadf)] col-2 h-[286px] overflow-clip relative rounded-[18px] row-2 shrink-0 w-[415.667px]" data-node-id="2128:1876" data-name="Article">
+          <div className="absolute content-stretch flex flex-col gap-[43px] items-start left-[32.33px] top-[32px] w-[193px]" data-node-id="2240:1879">
+            <div className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-full" data-node-id="2240:1877">
+              <div className="relative shrink-0 size-[24px]" data-node-id="2240:1988" data-name="GooglePhotosLogo">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGooglePhotosLogo} />
+              </div>
+              <div className="[word-break:break-word] font-['Manrope:SemiBold'] font-semibold leading-[0] min-w-full relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-[min-content]" data-node-id="2128:1879">
+                <p className="leading-[1.2] mb-0">Sua foto.</p>
+                <p className="leading-[1.2]">Sua escolha.</p>
+              </div>
+              <div className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-[min-content]" data-node-id="2128:1880">
+                <p className="leading-[1.5] mb-0">Continue sem imagem.</p>
+                <p className="leading-[1.5]">Reveja o que compartilha.</p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="2240:1878">
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1882">
+                Entenda seus dados
+              </p>
+              <div className="relative shrink-0 size-[15px]" data-node-id="2128:1883" data-name="Italic Text">
+                <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[15px] left-[7.5px] not-italic text-[15px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1884">{`\uE092`}</p>
+              </div>
+            </div>
+          </div>
+          <div className="absolute contents left-[214.33px] top-[-23px]" data-node-id="2240:2075" data-name="Mask group">
+            <div className="absolute flex h-[152.907px] items-center justify-center left-[279.32px] top-[34.39px] w-[130.826px]" data-node-id="2240:998">
+              <div className="-rotate-165 -scale-y-100 flex-none">
+                <div className="h-[131.447px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-64.989px_-57.394px] mask-size-[210px_319px] relative rounded-[16px] w-[100.22px]" style={{ maskImage: `url("${imgRectangle14}")` }}>
+                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[16px] size-full" src={imgRectangle15} />
+                </div>
+              </div>
+            </div>
+            <div className="absolute flex h-[160.745px] items-center justify-center left-[225.33px] top-[149.31px] w-[134.098px]" data-node-id="2240:997">
+              <div className="flex-none rotate-[-11.53deg]">
+                <div className="h-[142.049px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[-11px_-172.305px] mask-size-[210px_319px] relative rounded-[16px] w-[107.883px]" style={{ maskImage: `url("${imgRectangle14}")` }}>
+                  <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[16px] size-full" src={imgRectangle13} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-[var(--auxiliar-azul\/maximum,#121f21)] col-3 h-[286px] overflow-clip relative rounded-[18px] row-2 shrink-0 w-[415.667px]" data-node-id="2128:1885" data-name="Article">
+          <div className="absolute contents left-[-7.33px] top-0" data-node-id="2240:1820" data-name="Mask group">
+            <div className="absolute blur-[6px] h-[345px] left-[-97.33px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[90px_36px] mask-size-[425px_316px] top-[-36px] w-[515px]" data-node-id="2240:1817" style={{ maskImage: `url("${imgMagnificCloseupDoBicoDoPumpCJU3PX1PLd01}")` }} data-name="magnific_closeup-do-bico-do-pump-c_jU3pX1pLD0 1">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgMagnificCloseupDoBicoDoPumpCJU3PX1PLd2} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] absolute content-stretch flex flex-col gap-[2px] items-start left-[32px] text-[color:var(--static\/white,white)] top-[24.98px] w-[237px]" data-node-id="2128:1886">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1887">
+              CONTINUIDADE
+            </p>
+            <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[length:var(--font\/size\/heading\/h5,24px)] tracking-[-1px] w-full" data-node-id="2128:1888">
+              <p className="leading-[1.3] mb-0">O cuidado não termina</p>
+              <p className="leading-[1.3]">na primeira escolha.</p>
+            </div>
+          </div>
+          <div className="absolute backdrop-blur-[12px] bg-[rgba(1,4,2,0.1)] border-[length:var(--border\/sm,1px)] border-[rgba(154,154,154,0.1)] border-solid content-stretch flex flex-col gap-[12px] items-start left-[20.67px] p-[24px] rounded-[var(--radius\/2xl,12px)] top-[121px] w-[310px]" data-node-id="2128:1890" data-name="Container">
+            <div className="content-stretch flex flex-col gap-[4px] items-start relative shrink-0 w-full" data-node-id="2128:1891">
+              <div className="h-[21px] relative shrink-0 w-full" data-node-id="2128:1892" data-name="Text">
+                <div className="absolute left-0 size-[15px] top-[3px]" data-node-id="2128:1893" data-name="Italic Text">
+                  <p className="[word-break:break-word] absolute font-['Phosphor:Regular'] leading-[15px] left-0 not-italic text-[15px] text-[color:var(--brand-primary\/light,#c7d8c9)] top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1894">{`\uE472`}</p>
+                </div>
+                <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-[22px] not-italic text-[color:var(--brand-primary\/light,#c7d8c9)] text-[length:var(--font\/size\/text\/md,14px)] top-0 tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1895">
+                  Seu check-in
+                </p>
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--static\/white,white)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1896">
+                Como foi cuidar de você hoje?
+              </p>
+            </div>
+            <div className="bg-[var(--brand-secondary\/subtle,#d6ed9a)] content-stretch flex gap-[16px] items-center px-[12px] py-[6px] relative rounded-[20px] shrink-0" data-node-id="2128:1897" data-name="Button">
+              <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:1898">
+                Contar como foi
+              </p>
+              <div className="relative shrink-0 size-[15px]" data-node-id="2128:1899" data-name="Italic Text">
+                <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[15px] left-[7.5px] not-italic text-[15px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:1900">{`\uE092`}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D2: Font(family: "Manrope", style: SemiBold, size: font/size/display/D2, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Text/LG/Regular: Font(family: "Inter", style: Regular, size: font/size/text/lg, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Heading/H4: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H4, weight: 600, lineHeight: 1.2000000476837158, letterSpacing: -1), Text/MD/Medium: Font(family: "Inter", style: Medium, size: font/size/text/md, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Heading/H5: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H5, weight: 600, lineHeight: 1.2999999523162842, letterSpacing: -1).
+Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.
+
+## Sparkle
+**Node ID:** 2240:2013
+
+star, rate, ratings, favorites, favorited, weather & nature
+
+## GooglePhotosLogo
+**Node ID:** 2240:1939
+
+album, pictures, photography, brands
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.
+IMPORTANT: This design contains animated nodes. You MUST get the animation data (keyframe tracks, easing curves, code snippets, and timeline coordination hints) to faithfully recreate this design. IMMEDIATELY call the `get_motion_context` tool with the same node ID and file key.

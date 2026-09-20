@@ -230,7 +230,13 @@ export const Catalogo = {
 async function openProduct(context, name) {
   await ready(context);
   await context.userEvent.click(
-    context.canvas.getByRole("button", { name: new RegExp(name) }),
+    context.canvas.getByRole("tab", { name: new RegExp(name) }),
+  );
+  await context.userEvent.click(
+    context.canvas.getByRole("button", {
+      name: `Conhecer ${name}`,
+      exact: true,
+    }),
   );
   await expect(context.canvas.getByRole("dialog")).toHaveTextContent(
     "Produto indisponível para compra.",

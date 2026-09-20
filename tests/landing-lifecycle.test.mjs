@@ -38,6 +38,10 @@ test(
       });
       const errors = [];
       page.on("pageerror", (error) => errors.push(error.message));
+      page.on("console", (message) => {
+        if (message.type() === "error" && message.text().includes("THREE."))
+          errors.push(message.text());
+      });
       await page.route("**/__landing-lifecycle", (route) =>
         route.fulfill({
           contentType: "text/html",

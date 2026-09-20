@@ -7,3 +7,6 @@ references/
 .env.*
 
 .vercel/
+
+# Local full-resolution Figma exports; production assets live in public/media.
+design/figma-final/assets/

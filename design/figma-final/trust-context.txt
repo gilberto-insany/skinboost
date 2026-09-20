@@ -1,0 +1,102 @@
+const imgImage13 = "https://www.figma.com/api/mcp/asset/e2953fdc-4f29-4aea-9de8-bd8634ac1dd9.png";
+const imgImage14 = "https://www.figma.com/api/mcp/asset/5003d8b0-30de-4ea9-b7c8-e492675d8c86.png";
+const imgImage15 = "https://www.figma.com/api/mcp/asset/63f21b7d-369b-449c-8025-908a3d5679ce.png";
+const imgImage16 = "https://www.figma.com/api/mcp/asset/e4bc567d-9f58-485d-9e65-a2d9b21c6b81.png";
+
+export default function Bullets() {
+  return (
+    <div className="content-stretch flex flex-col gap-[56px] items-start pb-[86px] px-[64px] relative size-full" data-node-id="2128:2165" data-name="Bullets">
+      <div className="content-stretch flex items-end justify-between relative shrink-0 w-full" data-node-id="2134:2194">
+        <div className="[word-break:break-word] content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-[644px]" data-node-id="2134:2193">
+          <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/very-strong,#3b403c)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:2167">
+            CLAREZA TAMBÉM É CUIDADO
+          </p>
+          <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/display\/d3,56px)] tracking-[-1px] w-full" data-node-id="2128:2169">
+            <p className="leading-[1.1] mb-0">Confiança não é um selo.</p>
+            <p className="leading-[1.1]">É poder entender.</p>
+          </div>
+        </div>
+        <div className="border-[length:var(--border\/sm,1px)] border-[var(--brand-primary\/light,#c7d8c9)] border-solid content-stretch flex gap-[27px] items-center px-[23px] py-[16px] relative rounded-[40px] shrink-0" data-node-id="2128:2170" data-name="Button">
+          <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] text-center tracking-[-0.5px] whitespace-nowrap" data-node-id="2128:2171">
+            Nossa proposta
+          </p>
+          <div className="relative shrink-0 size-[17px]" data-node-id="2128:2172" data-name="Italic Text">
+            <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[17px] left-[8.5px] not-italic text-[17px] text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2128:2173">{`\uE092`}</p>
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex gap-[32px] items-start relative shrink-0 w-full" data-node-id="2128:2174" data-name="Container:margin">
+        <div className="content-stretch flex flex-[1_0_0] flex-col gap-[20px] items-start min-w-px relative" data-node-id="2128:2176" data-name="Container">
+          <div className="overflow-clip relative shrink-0 size-[64px]" data-node-id="2240:2856">
+            <div className="absolute left-0 size-[64px] top-[0.23px]" data-node-id="2240:2858" data-name="image 13">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage13} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] gap-[8px] items-start leading-[1.5] not-italic relative shrink-0 tracking-[-0.5px] w-full" data-node-id="2134:2197">
+            <p className="relative shrink-0 text-[color:var(--neutral\/very-strong,#3b403c)] text-[length:var(--font\/size\/text\/xl,18px)] w-full" data-node-id="2128:2179">
+              O que está no produto
+            </p>
+            <p className="relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] w-full" data-node-id="2128:2180">
+              Origem, composição e evidências acessíveis para uma escolha informada.
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-[1_0_0] flex-col gap-[20px] items-start min-w-px relative" data-node-id="2128:2181" data-name="Container">
+          <div className="overflow-clip relative shrink-0 size-[64px]" data-node-id="2240:2860">
+            <div className="absolute left-0 size-[64px] top-[0.23px]" data-node-id="2240:2861" data-name="image 13">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage14} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] gap-[8px] items-start leading-[1.5] not-italic relative shrink-0 tracking-[-0.5px] w-full" data-node-id="2134:2196">
+            <p className="relative shrink-0 text-[color:var(--neutral\/very-strong,#3b403c)] text-[length:var(--font\/size\/text\/xl,18px)] w-full" data-node-id="2128:2184">
+              O que orienta a escolha
+            </p>
+            <p className="relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] w-full" data-node-id="2128:2185">
+              A IA organiza e explica. O catálogo e regras revisadas delimitam a recomendação proposta.
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-[1_0_0] flex-col gap-[20px] items-start min-w-px relative" data-node-id="2128:2186" data-name="Container">
+          <div className="overflow-clip relative shrink-0 size-[64px]" data-node-id="2240:2863">
+            <div className="absolute left-0 size-[64px] top-[0.23px]" data-node-id="2240:2864" data-name="image 13">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage15} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] gap-[8px] items-start leading-[1.5] not-italic relative shrink-0 tracking-[-0.5px] w-full" data-node-id="2134:2195">
+            <p className="relative shrink-0 text-[color:var(--neutral\/very-strong,#3b403c)] text-[length:var(--font\/size\/text\/xl,18px)] w-full" data-node-id="2128:2189">
+              Onde estão os limites
+            </p>
+            <p className="relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] w-full" data-node-id="2128:2190">
+              Skincare com contexto. Sem diagnósticos, fórmulas inventadas ou promessas de pele perfeita.
+            </p>
+          </div>
+        </div>
+        <div className="content-stretch flex flex-[1_0_0] flex-col gap-[20px] items-start min-w-px overflow-clip relative" data-node-id="2264:349" data-name="Diferencial · acompanhamento da rotina">
+          <div className="overflow-clip relative shrink-0 size-[64px]" data-node-id="2240:2866">
+            <div className="absolute left-0 size-[64px] top-[0.23px]" data-node-id="2240:2867" data-name="image 13">
+              <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage16} />
+            </div>
+          </div>
+          <div className="[word-break:break-word] content-stretch flex flex-col font-['Inter:Regular'] gap-[8px] items-start leading-[1.5] not-italic overflow-clip relative shrink-0 w-full" data-node-id="2264:351" data-name="Texto">
+            <p className="font-normal relative shrink-0 text-[18px] text-[color:var(--neutral\/very-strong,#3b403c)] w-full" data-node-id="2264:352">
+              Cuidado que acompanha você
+            </p>
+            <p className="font-[var(--font\/weight\/regular,400)] relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2264:353">
+              Sua rotina pode ser revista conforme seus hábitos, preferências e experiência de uso.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D3: Font(family: "Manrope", style: SemiBold, size: font/size/display/D3, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Text/MD/Medium: Font(family: "Inter", style: Medium, size: font/size/text/md, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/XL/Regular: Font(family: "Inter", style: Regular, size: font/size/text/xl, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

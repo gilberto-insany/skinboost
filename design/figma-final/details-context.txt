@@ -1,0 +1,304 @@
+const imgSelo = "https://www.figma.com/api/mcp/asset/053b117f-2138-4dcd-b1c7-9c0b9776aa1c.svg";
+const imgArcosLaterais = "https://www.figma.com/api/mcp/asset/1f4d9fa8-7c6c-4f2f-b4e9-255cf4f2228b.svg";
+const imgSkinBoostBackground1 = "https://www.figma.com/api/mcp/asset/1a76034f-2bae-4407-b4fa-8f3ed25a96c7.png";
+const imgVector2223 = "https://www.figma.com/api/mcp/asset/d85d9a94-8d60-46aa-bbc7-b1d6ed5f53dc.svg";
+const imgTracadoHidratacaoContorno = "https://www.figma.com/api/mcp/asset/d82a60b8-7ab8-4520-a22c-dd9708927d04.svg";
+const imgIconeHidratacaoTraco2 = "https://www.figma.com/api/mcp/asset/5ffeb3da-22fe-42ba-90c3-2a0c3633f53b.svg";
+const imgIconeMaciezTraco1 = "https://www.figma.com/api/mcp/asset/d7dd8038-1fe4-4266-bc3d-b0a8e097414f.svg";
+const imgIconeConfortoTraco1 = "https://www.figma.com/api/mcp/asset/9c1fc17d-929f-481e-a74b-3f9c1e4b345a.svg";
+
+function Selo({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[128px]"} data-node-id="2240:3088" data-name="Selo">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgSelo} />
+      <p className="[word-break:break-word] absolute font-['Manrope:Medium'] font-medium inset-[30.63%_22.5%_46.72%_22.5%] leading-[1.1] text-[26.4px] text-center text-white" data-node-id="2240:3063">
+        120
+      </p>
+      <p className="[word-break:break-word] absolute font-['Manrope:Regular'] font-normal inset-[52.5%_22.5%_34.22%_22.5%] leading-[1.1] text-[15.6px] text-[color:var(--white\/80,rgba(255,255,255,0.8))] text-center" data-node-id="2240:3064">
+        DIAS
+      </p>
+      <div className="absolute inset-[39.38%_12.15%_39.06%_12.15%]" data-node-id="2240:3065" data-name="Arcos laterais">
+        <div className="absolute inset-[-0.55%_-0.52%_-0.6%_-0.52%]">
+          <img alt="" className="block max-w-none size-full" src={imgArcosLaterais} />
+        </div>
+      </div>
+      <div className="absolute contents inset-[6.21%_13.27%_68.79%_13.84%]" data-node-id="2240:3066" data-name="SATISFAÇÃO · texto circular">
+        <div className="absolute flex inset-[21.55%_76.48%_69.54%_13.84%] items-center justify-center" data-node-id="2240:3067" style={{ containerType: "size" }}>
+          <div className="-rotate-53 flex-none h-[hypot(70.8702cqw,58.0099cqh)] w-[hypot(29.1298cqw,-41.9901cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">S</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[15.03%_70.82%_74.9%_19.41%] items-center justify-center" data-node-id="2240:3068" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(57.9259cqw,64.2042cqh)] rotate-[-41.22deg] w-[hypot(42.0741cqw,-35.7958cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">A</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[10.67%_65.11%_79.54%_26.59%] items-center justify-center" data-node-id="2240:3069" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(50.8577cqw,76.4581cqh)] rotate-[-29.44deg] w-[hypot(49.1423cqw,-23.5419cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">T</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[7.89%_59.33%_83.21%_35.83%] items-center justify-center" data-node-id="2240:3070" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(53.871cqw,92.0079cqh)] rotate-[-17.67deg] w-[hypot(46.129cqw,-7.99213cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">I</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[6.21%_50.96%_84.76%_43.49%] items-center justify-center" data-node-id="2240:3071" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(15.9026cqw,94.6736cqh)] rotate-[-5.89deg] w-[hypot(84.0974cqw,-5.32637cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">S</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[6.29%_42.71%_84.68%_51.74%] items-center justify-center" data-node-id="2240:3072" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-15.9026cqw,94.6736cqh)] rotate-[5.89deg] w-[hypot(84.0974cqw,5.32637cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">F</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[7.6%_33.75%_82.55%_58.44%] items-center justify-center" data-node-id="2240:3073" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-33.3555cqw,83.1475cqh)] rotate-[17.67deg] w-[hypot(66.6445cqw,16.8525cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">A</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[10.75%_25.77%_79.08%_65.24%] items-center justify-center" data-node-id="2240:3074" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-47.0075cqw,73.5714cqh)] rotate-[29.44deg] w-[hypot(52.9925cqw,26.4286cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">Ç</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[15.55%_18.82%_74.38%_71.4%] items-center justify-center" data-node-id="2240:3075" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-57.9259cqw,64.2042cqh)] rotate-[41.22deg] w-[hypot(42.0741cqw,35.7958cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">Ã</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[21.67%_13.27%_68.79%_76.57%] items-center justify-center" data-node-id="2240:3076" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-67.5888cqw,54.2157cqh)] rotate-53 w-[hypot(32.4112cqw,45.7843cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">O</p>
+          </div>
+        </div>
+      </div>
+      <div className="absolute contents inset-[70.91%_13.64%_5.16%_14.14%]" data-node-id="2240:3077" data-name="GARANTIDA · texto circular">
+        <div className="absolute flex inset-[71.51%_75.76%_18.78%_14.14%] items-center justify-center" data-node-id="2240:3078" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-65.1902cqw,56.8702cqh)] rotate-50 w-[hypot(34.8098cqw,43.1298cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">G</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[77.33%_69.59%_12.52%_20.84%] items-center justify-center" data-node-id="2240:3079" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-54.665cqw,67.1908cqh)] rotate-[37.5deg] w-[hypot(45.335cqw,32.8092cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">A</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[82%_62.91%_8.24%_29.21%] items-center justify-center" data-node-id="2240:3080" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-46.0887cqw,79.7226cqh)] rotate-25 w-[hypot(53.9113cqw,20.2774cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">R</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[84.88%_54.79%_5.54%_38.01%] items-center justify-center" data-node-id="2240:3081" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(-25.8368cqw,87.6364cqh)] rotate-[12.5deg] w-[hypot(74.1632cqw,12.3636cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">A</p>
+          </div>
+        </div>
+        <p className="[word-break:break-word] absolute font-['Inter:Medium'] font-medium inset-[86.25%_46.87%_5.16%_47.66%] leading-[normal] not-italic text-[9px] text-white whitespace-nowrap" data-node-id="2240:3082">
+          N
+        </p>
+        <div className="absolute flex inset-[84.85%_37.85%_5.75%_55.71%] items-center justify-center" data-node-id="2240:3083" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(28.8985cqw,89.2121cqh)] rotate-[-12.5deg] w-[hypot(71.1015cqw,-10.7879cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">T</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[82.26%_29.77%_8.96%_64.47%] items-center justify-center" data-node-id="2240:3084" style={{ containerType: "size" }}>
+          <div className="-rotate-25 flex-none h-[hypot(63.0968cqw,88.7174cqh)] w-[hypot(36.9032cqw,-11.2826cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">I</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[76.86%_20.22%_13%_70.21%] items-center justify-center" data-node-id="2240:3085" style={{ containerType: "size" }}>
+          <div className="flex-none h-[hypot(54.665cqw,67.1908cqh)] rotate-[-37.5deg] w-[hypot(45.335cqw,-32.8092cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">D</p>
+          </div>
+        </div>
+        <div className="absolute flex inset-[70.91%_13.64%_19.38%_76.26%] items-center justify-center" data-node-id="2240:3086" style={{ containerType: "size" }}>
+          <div className="-rotate-50 flex-none h-[hypot(65.1902cqw,56.8702cqh)] w-[hypot(34.8098cqw,-43.1298cqh)]">
+            <p className="[word-break:break-word] font-['Inter:Medium'] font-medium leading-[normal] not-italic relative text-[9px] text-white whitespace-nowrap">A</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type ProductsProps = {
+  className?: string;
+  property1?: "Default";
+};
+
+function Products({ className, property1 = "Default" }: ProductsProps) {
+  return (
+    <div className={className || "content-stretch flex flex-col gap-[8px] items-start relative w-[1312px]"} data-node-id="2240:2502">
+      <div className="bg-[var(--neutral\/soft,#eceeec)] h-[694px] overflow-clip relative rounded-[var(--radius\/3xl,16px)] shrink-0 w-full" data-node-id="2128:1942" data-name="Container">
+        <div className="absolute bg-[var(--neutral\/subtle,#c4c8c5)] h-[694px] left-0 overflow-clip top-0 w-[1312px]" data-node-id="2128:1943" data-name="Image (Cleanse 150 ml, Balance 30 ml e Comfort 50 ml — embalagens conceituais SkinBoost)">
+          <div className="-translate-x-1/2 -translate-y-1/2 absolute h-[895px] left-[calc(50%+13px)] top-[calc(50%-0.5px)] w-[1344px]" data-node-id="2128:1944" data-name="image 1" />
+          <div className="absolute h-[794px] left-[-95px] top-[-9px] w-[1423px]" data-node-id="2240:2487" data-name="SkinBoost Background 1">
+            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgSkinBoostBackground1} />
+          </div>
+        </div>
+        <div className="absolute content-stretch flex items-start justify-between left-[3px] p-[48px] top-0 w-[1309px]" data-node-id="2240:2486">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[16px] items-start relative shrink-0 text-white w-[189px]" data-node-id="2240:2481">
+            <div className="font-['Manrope:SemiBold'] font-semibold leading-[0] relative shrink-0 text-[length:var(--font\/size\/heading\/h4,28px)] tracking-[-1px] w-full" data-node-id="2128:1945">
+              <p className="leading-[1.2] mb-0">Hidratação.</p>
+              <p className="leading-[1.2]">Com conforto.</p>
+            </div>
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px] w-full" data-node-id="2128:1946">
+              CIÊNCIA SENSÍVEL / SKINBOOST
+            </p>
+          </div>
+          <div className="bg-[var(--static\/white,white)] relative rounded-[18px] shrink-0 size-[36px]" data-node-id="2240:2482" data-name="Button - Ver recomendação explicada">
+            <div className="absolute left-[7.5px] size-[21px] top-[7.5px]" data-node-id="2240:2483" data-name="Italic Text">
+              <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[21px] left-[10.5px] not-italic text-[21px] text-[color:var(--neutral\/very-strong,#3b403c)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2240:2484">{`\uE092`}</p>
+            </div>
+          </div>
+        </div>
+        <div className="absolute content-stretch flex flex-col gap-[28px] items-start left-[51px] top-[361px] w-[310px]" data-node-id="2257:333" data-name="Comfort · composição vetorial">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[4px] items-start not-italic overflow-clip relative shrink-0 text-white" data-node-id="2240:3048" data-name="Indicador de hidratação">
+            <p className="font-['Inter:Light'] font-light leading-[0] relative shrink-0 text-[0px] w-[172px]" data-node-id="2240:3049">
+              <span className="leading-[normal] text-[60px]">+52</span>
+              <span className="leading-[normal] text-[30px]">%</span>
+            </p>
+            <p className="font-['Inter:Regular'] font-normal leading-[normal] relative shrink-0 text-[12px] w-[172px]" data-node-id="2240:3050">
+              MAIS HIDRATAÇÃO
+            </p>
+          </div>
+          <div className="h-0 relative shrink-0 w-[262px]" data-node-id="2240:3042">
+            <div className="absolute inset-[-0.5px_0]">
+              <img alt="" className="block max-w-none size-full" src={imgVector2223} />
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Inter:Light'] font-light leading-[normal] min-w-full not-italic relative shrink-0 text-[24px] text-white w-[min-content]" data-node-id="2257:2220">
+            Conforto que abraça.
+          </p>
+          <div className="content-stretch flex gap-[20px] items-start overflow-clip relative shrink-0 w-full" data-node-id="2257:2221" data-name="Benefícios Comfort">
+            <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip relative shrink-0" data-node-id="2257:2228" data-name="Hidratação">
+              <div className="content-stretch flex items-center justify-center relative shrink-0 size-[32px]" data-node-id="2271:339" data-name="Ícone · Hidratação · 32 × 32">
+                <div className="absolute h-[28px] left-[5.89px] top-[2px] w-[20.211px]" data-node-id="2288:409" data-name="Traçado · Hidratação · contorno">
+                  <div className="absolute inset-[-1.11%_-3.09%_-2.23%_-3.09%]">
+                    <img alt="" className="block max-w-none size-full" src={imgTracadoHidratacaoContorno} />
+                  </div>
+                </div>
+                <div className="absolute left-[10.95px] size-[5.053px] top-[21.37px]" data-node-id="2289:413" data-name="Ícone · Hidratação · traço 2">
+                  <div className="absolute inset-[0_0_-12.37%_-12.37%]">
+                    <img alt="" className="block max-w-none size-full" src={imgIconeHidratacaoTraco2} />
+                  </div>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[12px] text-white w-[90px]" data-node-id="2257:2230">
+                Hidratação
+              </p>
+            </div>
+            <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip relative shrink-0" data-node-id="2257:2231" data-name="Maciez">
+              <div className="content-stretch flex items-center justify-center relative shrink-0 size-[32px]" data-node-id="2271:340" data-name="Ícone · Maciez · 32 × 32">
+                <div className="absolute h-[4.858px] left-[3.38px] top-[2px] w-[25.245px]" data-node-id="2289:2524" data-name="Ícone · Maciez · traço 1">
+                  <div className="absolute inset-[-12.86%_-1.75%]">
+                    <img alt="" className="block max-w-none size-full" src={imgIconeMaciezTraco1} />
+                  </div>
+                </div>
+                <div className="absolute h-[4.858px] left-[3.38px] top-[13.57px] w-[25.245px]" data-node-id="2289:2528" data-name="Ícone · Maciez · traço 2">
+                  <div className="absolute inset-[-12.86%_-1.75%]">
+                    <img alt="" className="block max-w-none size-full" src={imgIconeMaciezTraco1} />
+                  </div>
+                </div>
+                <div className="absolute h-[4.858px] left-[3.38px] top-[25.14px] w-[25.245px]" data-node-id="2289:2532" data-name="Ícone · Maciez · traço 3">
+                  <div className="absolute inset-[-12.86%_-1.75%]">
+                    <img alt="" className="block max-w-none size-full" src={imgIconeMaciezTraco1} />
+                  </div>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[12px] text-white w-[90px]" data-node-id="2257:2233">
+                Maciez
+              </p>
+            </div>
+            <div className="content-stretch flex flex-col gap-[12px] items-start overflow-clip relative shrink-0" data-node-id="2257:2234" data-name="Conforto">
+              <div className="content-stretch flex items-center justify-center relative shrink-0 size-[32px]" data-node-id="2271:341" data-name="Ícone · Conforto · 32 × 32">
+                <div className="absolute h-[26.758px] left-[2px] top-[2.62px] w-[28px]" data-node-id="2289:2539" data-name="Ícone · Conforto · traço 1">
+                  <div className="absolute inset-[-2.33%_-2.23%_-1.79%_-2.23%]">
+                    <img alt="" className="block max-w-none size-full" src={imgIconeConfortoTraco1} />
+                  </div>
+                </div>
+              </div>
+              <p className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[normal] not-italic relative shrink-0 text-[12px] text-white w-[90px]" data-node-id="2257:2236">
+                Conforto
+              </p>
+            </div>
+          </div>
+        </div>
+        <Selo className="absolute left-[1144px] size-[128px] top-[504px]" />
+      </div>
+      <div className="content-stretch flex gap-[32px] items-start relative shrink-0 w-full" data-node-id="2128:1947" data-name="Container:margin">
+        <div className="border-[var(--neutral\/very-strong,#3b403c)] border-b-[1.5px] border-solid content-stretch flex flex-[1_0_0] items-start justify-between min-w-px py-[32px] relative" data-node-id="2128:1962" data-name="Button">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start relative shrink-0 whitespace-nowrap" data-node-id="2128:1963">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1964">
+              03 / HIDRATAÇÃO · 50 ML
+            </p>
+            <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/heading\/h3,32px)] tracking-[-1px]" data-node-id="2128:1965">
+              Comfort
+            </p>
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1966">
+              Seu momento de cuidado.
+            </p>
+          </div>
+        </div>
+        <button className="border-[var(--neutral\/subtle,#c4c8c5)] border-b-[1.5px] border-solid content-stretch cursor-pointer flex flex-[1_0_0] items-start justify-between min-w-px py-[32px] relative" data-node-id="2128:1948" data-name="Button">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start relative shrink-0 text-left whitespace-nowrap" data-node-id="2128:1949">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1950">
+              01 / LIMPEZA · 150 ML
+            </p>
+            <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/heading\/h3,32px)] tracking-[-1px]" data-node-id="2128:1951">
+              Cleanse
+            </p>
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/base,#8d9590)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1952">
+              O começo do ritual.
+            </p>
+          </div>
+        </button>
+        <button className="border-[var(--neutral\/subtle,#c4c8c5)] border-b-[1.5px] border-solid content-stretch cursor-pointer flex flex-[1_0_0] items-start justify-between min-w-px py-[32px] relative" data-node-id="2128:1955" data-name="Button">
+          <div className="[word-break:break-word] content-stretch flex flex-col gap-[12px] items-start relative shrink-0 text-left whitespace-nowrap" data-node-id="2128:1956">
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1957">
+              02 / SÉRUM · 30 ML
+            </p>
+            <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.3] relative shrink-0 text-[color:var(--neutral\/intense,#525853)] text-[length:var(--font\/size\/heading\/h3,32px)] tracking-[-1px]" data-node-id="2128:1958">
+              Balance
+            </p>
+            <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/base,#8d9590)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1959">
+              Uma escolha com propósito.
+            </p>
+          </div>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function Details() {
+  return (
+    <div className="content-stretch flex flex-col gap-[8px] items-start px-[64px] py-[110px] relative size-full" data-node-id="2128:1937" data-name="Details">
+      <div className="[word-break:break-word] content-stretch flex flex-col gap-[8px] items-start pb-[40px] relative shrink-0 whitespace-nowrap" data-node-id="2128:1938">
+        <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--auxiliar-azul\/maximum,#121f21)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1939">
+          POUCOS PRODUTOS. ESCOLHAS COM SENTIDO.
+        </p>
+        <p className="font-['Manrope:SemiBold'] font-semibold leading-[1.1] relative shrink-0 text-[color:var(--neutral\/maximum,#141615)] text-[length:var(--font\/size\/display\/d3,56px)] tracking-[-1px]" data-node-id="2128:1940">
+          Conheça seu próximo passo.
+        </p>
+        <p className="font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--neutral\/strong,#707872)] text-[length:var(--font\/size\/text\/md,14px)] tracking-[-0.5px]" data-node-id="2128:1941">
+          Linha conceitual · produtos demonstrativos
+        </p>
+      </div>
+      <Products className="content-stretch flex flex-col gap-[8px] items-start relative shrink-0 w-full" />
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D3: Font(family: "Manrope", style: SemiBold, size: font/size/display/D3, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Heading/H4: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H4, weight: 600, lineHeight: 1.2000000476837158, letterSpacing: -1), Heading/H3: Font(family: "Manrope", style: SemiBold, size: font/size/heading/H3, weight: 600, lineHeight: 1.2999999523162842, letterSpacing: -1).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.
+IMPORTANT: This design contains animated nodes. You MUST get the animation data (keyframe tracks, easing curves, code snippets, and timeline coordination hints) to faithfully recreate this design. IMMEDIATELY call the `get_motion_context` tool with the same node ID and file key.

@@ -1,0 +1,99 @@
+const imgSkinBoostImagem3 = "https://www.figma.com/api/mcp/asset/1ee710dc-390b-404a-bbf8-e1435a59d626.png";
+const imgSkinBoostImagem4 = "https://www.figma.com/api/mcp/asset/74693644-7c13-43a3-8f24-3ced875b836b.png";
+const imgSkinBoostImagem5 = "https://www.figma.com/api/mcp/asset/c8563004-eab4-4ce4-a165-4dac733814d0.png";
+const imgSkinBoostImagem2 = "https://www.figma.com/api/mcp/asset/5688628a-aea5-4221-99af-afcc8c0d43c3.svg";
+const imgSkinBoostImagem1 = "https://www.figma.com/api/mcp/asset/53139958-2747-4dea-ae3b-ee2b72931402.svg";
+const imgIconeDadosProtegidos = "https://www.figma.com/api/mcp/asset/fb1ee070-6dfd-490f-9520-05d1d7c5953c.svg";
+const imgIconeIngredientesSelecionados = "https://www.figma.com/api/mcp/asset/17253360-fd90-4512-ab2e-64571cc629cd.svg";
+const imgIconeOrigemRastreavel = "https://www.figma.com/api/mcp/asset/098b805f-833d-436f-8b3f-aeef80124c0b.svg";
+
+export default function Section() {
+  return (
+    <div className="bg-[#8e9b8a] relative size-full" data-node-id="2134:2236" data-name="Section">
+      <div className="absolute contents left-0 top-[0.23px]" data-node-id="2240:2762" data-name="Mask group">
+        <div className="absolute h-[587px] left-0 mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-size-[427px_559px] top-[0.23px] w-[427px]" data-node-id="2240:2758" style={{ maskImage: `url("${imgSkinBoostImagem2}")` }} data-name="SkinBoost imagem 2">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <img alt="" className="absolute h-[100.03%] left-[0.23%] max-w-none top-[-0.01%] w-[246.37%]" src={imgSkinBoostImagem3} />
+          </div>
+        </div>
+      </div>
+      <div className="absolute h-[587px] left-0 top-[0.23px] w-[427px]" data-node-id="2240:2765" data-name="SkinBoost imagem 3">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <img alt="" className="absolute h-[100.03%] left-[0.23%] max-w-none top-[-0.01%] w-[246.37%]" src={imgSkinBoostImagem4} />
+        </div>
+      </div>
+      <div className="absolute contents left-[882px] top-[0.23px]" data-node-id="2240:2763" data-name="Mask group">
+        <div className="absolute h-[657px] left-[749px] mask-alpha mask-intersect mask-no-clip mask-no-repeat mask-position-[133px_70px] mask-size-[558px_559px] top-[-69.77px] w-[691px]" data-node-id="2240:2756" style={{ maskImage: `url("${imgSkinBoostImagem1}")` }} data-name="SkinBoost imagem 1">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <img alt="" className="absolute h-[100.03%] left-[-70.5%] max-w-none top-[-0.01%] w-[170.5%]" src={imgSkinBoostImagem3} />
+          </div>
+        </div>
+      </div>
+      <div className="absolute h-[657px] left-[749px] top-[-69.77px] w-[691px]" data-node-id="2240:2764" data-name="SkinBoost imagem 2">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <img alt="" className="absolute h-[100.03%] left-[-70.5%] max-w-none top-[-0.01%] w-[170.5%]" src={imgSkinBoostImagem5} />
+        </div>
+      </div>
+      <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-[617px] not-italic right-[616px] text-[color:var(--brand-primary\/light,#c7d8c9)] text-[length:var(--font\/size\/text\/md,14px)] text-center top-[105px] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2237">
+        O CUIDADO COMEÇA POR VOCÊ
+      </p>
+      <div className="[word-break:break-word] absolute font-['Manrope:SemiBold'] font-semibold leading-[0] left-[301px] right-[301px] text-[0px] text-[color:var(--brand-primary\/soft,#e3ece4)] text-center top-[158px] tracking-[-1px]" data-node-id="2134:2238">
+        <p className="leading-[1.1] mb-0 text-[64px]">Sua pele.</p>
+        <p className="leading-[1.1] text-[64px] text-white">Sua próxima conversa.</p>
+      </div>
+      <div className="absolute bg-[var(--static\/white,white)] h-[51px] left-[626px] rounded-[40px] top-[330.23px] w-[188px]" data-node-id="2134:2239" data-name="Button">
+        <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] left-[72px] not-italic text-[color:var(--brand-primary\/base,#66866c)] text-[length:var(--font\/size\/text\/md,14px)] text-center top-[15px] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2240">
+          Vamos começar
+        </p>
+        <div className="absolute left-[149px] size-[17px] top-[17px]" data-node-id="2134:2241" data-name="Italic Text">
+          <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Phosphor:Regular'] leading-[17px] left-[8.5px] not-italic text-[17px] text-[color:var(--brand-primary\/base,#66866c)] text-center top-0 tracking-[var(--font\/tracking\/normal,0px)] whitespace-nowrap" data-node-id="2134:2242">{`\uE092`}</p>
+        </div>
+      </div>
+      <p className="[word-break:break-word] absolute font-['Inter:Regular'] font-[var(--font\/weight\/regular,400)] leading-[1.5] left-[626px] not-italic right-[626px] text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/md,14px)] text-center top-[406.23px] tracking-[-0.5px] whitespace-nowrap" data-node-id="2134:2243">
+        Sem complicar. No seu tempo.
+      </p>
+      <div className="-translate-x-1/2 absolute content-stretch flex gap-[32px] items-center left-[calc(50%+0.5px)] top-[463px]" data-node-id="2261:349" data-name="Confiança · segurança e qualidade">
+        <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="2261:2229" data-name="Dados protegidos">
+          <div className="h-[20px] relative shrink-0 w-[16px]" data-node-id="2261:2230" data-name="Ícone · Dados protegidos">
+            <div className="absolute inset-[-3.25%_-4.06%]">
+              <img alt="" className="block max-w-none size-full" src={imgIconeDadosProtegidos} />
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2261:2231">
+            Dados protegidos
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="2261:2232" data-name="Ingredientes selecionados">
+          <div className="h-[20px] relative shrink-0 w-[17px]" data-node-id="2261:2233" data-name="Ícone · Ingredientes selecionados">
+            <div className="absolute inset-[-3.25%_-3.82%_-2.16%_-2.86%]">
+              <img alt="" className="block max-w-none size-full" src={imgIconeIngredientesSelecionados} />
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2261:2234">
+            Ingredientes selecionados
+          </p>
+        </div>
+        <div className="content-stretch flex gap-[9px] items-center relative shrink-0" data-node-id="2261:2235" data-name="Origem rastreável">
+          <div className="h-[20px] relative shrink-0 w-[15px]" data-node-id="2261:2236" data-name="Ícone · Origem rastreável">
+            <div className="absolute inset-[-3.56%_-4.33%_-3.72%_-4.33%]">
+              <img alt="" className="block max-w-none size-full" src={imgIconeOrigemRastreavel} />
+            </div>
+          </div>
+          <p className="[word-break:break-word] font-['Inter:Medium'] font-[var(--font\/weight\/medium,500)] leading-[1.5] not-italic relative shrink-0 text-[color:var(--brand-primary\/soft,#e3ece4)] text-[length:var(--font\/size\/text\/sm,12px)] tracking-[-0.5px] whitespace-nowrap" data-node-id="2261:2237">
+            Origem rastreável
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Text/MD/Regular: Font(family: "Inter", style: Regular, size: font/size/text/md, weight: font/weight/regular, lineHeight: 1.5, letterSpacing: -0.5), Display/D2: Font(family: "Manrope", style: SemiBold, size: font/size/display/D2, weight: 600, lineHeight: 1.100000023841858, letterSpacing: -1), Text/MD/Medium: Font(family: "Inter", style: Medium, size: font/size/text/md, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5), Text/SM/Medium: Font(family: "Inter", style: Medium, size: font/size/text/sm, weight: font/weight/medium, lineHeight: 1.5, letterSpacing: -0.5).
+Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.

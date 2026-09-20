@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Onde estão os limites</title>
+  <desc id="desc">Mão acolhendo um coração com pulsação delicada.</desc>
+  <style>.heart{transform-origin:177px 128px;animation:heartbeat 3.8s ease-in-out infinite}@keyframes heartbeat{0%,38%,100%{transform:scale(1)}14%{transform:scale(1.055)}25%{transform:scale(1.012)}}
+    @media(prefers-reduced-motion:reduce){.motion{animation:none!important}}
+  </style>
+  <defs>
+    <radialGradient id="disk" cx=".35" cy=".25" r=".85"><stop stop-color="#FFFFFF"/><stop offset=".56" stop-color="#F7F8F4"/><stop offset=".82" stop-color="#EDF1E8"/><stop offset="1" stop-color="#D3DFCD"/></radialGradient>
+    <radialGradient id="rim"><stop offset=".88" stop-color="#FFFFFF" stop-opacity="0"/><stop offset=".965" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset=".99" stop-color="#B6C7AA" stop-opacity=".75"/><stop offset="1" stop-color="#FFFFFF" stop-opacity=".7"/></radialGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#BBCDB4"/><stop offset=".26" stop-color="#FFFFFF"/><stop offset=".67" stop-color="#A9BD9A"/><stop offset="1" stop-color="#FFFFFF"/></linearGradient>
+    <linearGradient id="green" x1=".15" y1="0" x2=".85" y2="1"><stop stop-color="#244E39"/><stop offset=".18" stop-color="#81A777"/><stop offset=".36" stop-color="#D4E5B8"/><stop offset=".5" stop-color="#668C4B"/><stop offset=".76" stop-color="#A8C94D"/><stop offset="1" stop-color="#315E4B"/></linearGradient>
+    <linearGradient id="bevel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#315E4B"/><stop offset=".4" stop-color="#486B37"/><stop offset=".67" stop-color="#C7D8C9"/><stop offset="1" stop-color="#244B35"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E3ECDC" stop-opacity=".8"/><stop offset=".45" stop-color="#C7D8C9" stop-opacity=".25"/><stop offset="1" stop-color="#66866C" stop-opacity=".75"/></linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2=".5" y2="1"><stop stop-color="#C6DE7A"/><stop offset=".5" stop-color="#A8C94D"/><stop offset="1" stop-color="#4E783B"/></linearGradient>
+    <filter id="shadow" x="-35%" y="-35%" width="170%" height="180%"><feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#315E4B" flood-opacity=".17"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <clipPath id="circle"><circle cx="160" cy="160" r="131"/></clipPath>
+    
+  </defs>
+  <circle cx="160" cy="160" r="132" fill="url(#disk)" stroke="url(#edge)" stroke-width="2"/>
+  <g clip-path="url(#circle)">
+    <g fill="#66866C" opacity=".055" filter="url(#soft)">
+      <path d="M35 235C69 191 92 153 110 106C105 165 84 213 35 235ZM49 218C36 185 34 157 43 127C47 171 63 191 49 218ZM66 192C53 159 53 127 68 94C62 140 78 167 66 192ZM81 165C112 146 138 143 157 149C121 155 111 177 81 165ZM63 198C95 173 124 176 145 182C106 187 93 209 63 198ZM46 229C78 207 104 210 125 218C92 220 72 243 46 229Z"/>
+    </g>
+    <path d="M57 91C74 64 96 50 118 46C93 67 76 92 69 115Z" fill="white" opacity=".65"/>
+    <path d="M80 55C119 30 178 29 215 43" stroke="white" stroke-width="3" opacity=".82" stroke-linecap="round"/>
+    <path d="M227 262C254 245 274 213 279 182" stroke="#A8C94D" stroke-width="6" opacity=".12" filter="url(#soft)"/>
+  </g>
+  <circle cx="160" cy="160" r="130" fill="url(#rim)"/>
+  <circle cx="160" cy="160" r="126" stroke="#FFFFFF" stroke-opacity=".75"/>
+
+  <g filter="url(#shadow)" stroke="url(#bevel)" stroke-width="3" stroke-linejoin="round">
+    <g class="motion heart">
+      <path d="M177 96C145 65 119 94 132 120C142 140 162 155 177 165C193 154 215 139 224 119C236 91 206 65 177 96Z" fill="url(#green)"/>
+      <path d="M138 107C135 90 157 84 170 99" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+      <path d="M182 153C203 137 217 123 218 111" stroke="#EAF1BD" stroke-width="2.5" stroke-linecap="round" opacity=".7"/>
+    </g>
+    <path d="M75 199L98 191C117 170 133 169 149 180L170 190H191C204 190 207 202 198 209L218 198L242 175C252 164 262 174 254 186L237 211C225 230 209 239 186 240L129 237L87 245Z" fill="url(#green)"/>
+    <path d="M86 202L104 198C120 181 132 180 145 189L168 199H191" stroke="white" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+    <path d="M143 215C165 219 185 218 199 208" stroke="#315E4B" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+    <path d="M133 230C179 237 213 230 230 210" stroke="#DDEBAF" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  </g>
+</svg>
+
