@@ -133,3 +133,6 @@ Animal tone: Leandro wants one or two blunt popular-Brazilian sentences, maximum
 
 ## Animal surprise entry — 20 September 2026
 Remove the entry confirmation and photo checkbox. Composer and starter suggestions work immediately. Sending is the affirmative action after a concise visible notice: text goes to OpenAI, and an attached own-adult photo creates a surprise humorous montage. Never upload on attachment alone. Do not reveal the costume in onboarding, photo notices, loading text or AI chat before generation. Keep the result labeled as an AI montage, the fictional product disclosure and the exit/stop controls.
+
+## Animal loading — 20 September 2026
+Show an indeterminate animated loader during photo generation, with the requested playful before/after/product copy and a brief AI humor label. Keep the costume, result heading, comparison and fictional offer hidden until both images decode successfully. Never invent percentages; honor reduced motion. Errors/cancellation stop the animation and preserve image-only retry.

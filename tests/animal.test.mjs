@@ -33,6 +33,10 @@ test(
         let care = false;
         const imageCalls = [];
         let imageFail = true;
+        let releaseImage;
+        const imageGate = new Promise((resolve) => {
+          releaseImage = resolve;
+        });
         const after = await sharp({
           create: { width: 32, height: 32, channels: 3, background: "#aa00ff" },
         })
@@ -42,6 +46,7 @@ test(
           imageCalls.push(route.request().postDataJSON());
           if (imageFail) {
             imageFail = false;
+            await imageGate;
             return route.fulfill({
               status: 502,
               contentType: "application/json",
@@ -132,12 +137,49 @@ test(
         assert.equal(calls[2].photoConsent, true);
         assert.match(calls[2].photoDataUrl, /^data:image\//);
         assert.equal(calls[2].messages.length, 3);
+        await expect(page.locator(".parody-loader")).toBeVisible();
+        await expect(page.locator(".animal-parody")).toHaveAttribute(
+          "aria-busy",
+          "true",
+        );
+        await expect(page.locator(".parody-progress")).toContainText(
+          "Vou fazer seu antes e depois com nossos produtos",
+        );
+        await expect(page.locator(".parody-result")).toBeHidden();
+        await expect(page.locator(".rebirth-card")).toBeHidden();
+        assert.doesNotMatch(
+          await page.locator(".animal-parody").innerText(),
+          /brux[ao]|palhaç[ao]|fantasia|crime artístico/i,
+        );
+        await expect(page.locator(".parody-spinner")).toHaveCSS(
+          "animation-name",
+          "none",
+        );
+        await page.emulateMedia({ reducedMotion: "no-preference" });
+        await expect(page.locator(".parody-spinner")).toHaveCSS(
+          "animation-name",
+          "parody-spin",
+        );
+        await page.locator(".animal-parody").scrollIntoViewIfNeeded();
+        await page.screenshot({ path: `/tmp/animal-loading-${width}.png` });
+        await page.emulateMedia({ reducedMotion: "reduce" });
+        releaseImage();
         await expect(page.locator(".parody-progress")).toContainText(
           "Falha de teste",
         );
+        await expect(page.locator(".parody-loader")).toBeHidden();
         await expect(page.locator("#send")).toBeEnabled();
         await page.locator(".parody-retry").click();
         await expect(page.locator(".parody-result")).toBeVisible();
+        await expect(page.locator(".sx-compare-base")).toHaveJSProperty(
+          "naturalWidth",
+          32,
+        );
+        await expect(page.locator(".parody-loader")).toBeHidden();
+        await expect(page.locator(".animal-parody")).toHaveAttribute(
+          "aria-busy",
+          "false",
+        );
         await expect(page.locator("#send")).toBeEnabled();
         assert.equal(calls.length, 3, "retry must not rerun the chat");
         assert.equal(imageCalls.length, 2);

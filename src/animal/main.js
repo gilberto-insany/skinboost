@@ -271,7 +271,7 @@ async function generateParody(original, article, initialTurn) {
   });
   async function run(turn) {
     card.loading();
-    status("Segura aí. Tô preparando a surpresa…");
+    status("Preparando seu antes e depois…");
     scroll();
     try {
       const response = await fetch("/api/simulate", {
@@ -293,7 +293,8 @@ async function generateParody(original, article, initialTurn) {
           result.error?.message || "Não consegui gerar a fantasia.",
         );
       if (turn !== generation) return;
-      card.complete(result);
+      await card.complete(result, { signal: controller.signal });
+      if (turn !== generation) return;
       comparisons.refresh();
       scroll();
     } catch (cause) {

@@ -2,9 +2,11 @@
 export function createParodyCard(parent, original, { onRetry, onOffer }) {
   const card = document.createElement("section");
   card.className = "animal-parody";
-  card.innerHTML = `<div class="parody-label">LABORATÓRIO DO DEBOCHE</div>
-    <h3>Seu antes. Meu crime artístico.</h3>
-    <p class="parody-progress" role="status">Preparando a surpresa… pode levar alguns minutos.</p>
+  card.innerHTML = `<div class="parody-label">ANTES E DEPOIS</div>
+    <h3>Deixa comigo.</h3>
+    <div class="parody-loader" aria-hidden="true"><span class="parody-spinner"></span><span class="parody-loader-dots"><i></i><i></i><i></i></span></div>
+    <p class="parody-progress" role="status">Vou fazer seu antes e depois com nossos produtos pra ver se fica bom. Segura aí…</p>
+    <p class="parody-loading-note">Montagem de humor com IA · pode levar alguns minutos.</p>
     <button type="button" class="parody-retry" hidden>Tentar gerar só o depois</button>
     <div class="parody-result" hidden>
       <figure class="sx-simulation">
@@ -27,24 +29,44 @@ export function createParodyCard(parent, original, { onRetry, onOffer }) {
   card.querySelector(".sx-compare-original").src = original;
   const progress = card.querySelector(".parody-progress");
   const retry = card.querySelector(".parody-retry");
+  const loader = card.querySelector(".parody-loader");
+  const note = card.querySelector(".parody-loading-note");
+  const title = card.querySelector("h3");
+  const label = card.querySelector(".parody-label");
   retry.addEventListener("click", onRetry);
   card.querySelector(".rebirth-copy button").addEventListener("click", onOffer);
   parent.append(card);
   return {
     loading() {
       progress.hidden = false;
+      loader.hidden = false;
+      note.hidden = false;
+      title.textContent = "Deixa comigo.";
+      label.textContent = "ANTES E DEPOIS";
       progress.textContent =
-        "Preparando a surpresa… pode levar alguns minutos.";
+        "Vou fazer seu antes e depois com nossos produtos pra ver se fica bom. Segura aí…";
+      card.querySelector(".parody-result").hidden = true;
       retry.hidden = true;
       card.setAttribute("aria-busy", "true");
     },
-    complete(result) {
+    async complete(result, { signal } = {}) {
       if (
         result.kind !== "parody" ||
         !/^data:image\/jpeg;base64,/.test(result.imageDataUrl || "")
       )
         throw new Error("A fantasia não ficou pronta. Tente novamente.");
-      card.querySelector(".sx-compare-base").src = result.imageDataUrl;
+      const after = card.querySelector(".sx-compare-base");
+      after.src = result.imageDataUrl;
+      await Promise.all([
+        after.decode(),
+        card.querySelector(".sx-compare-original").decode(),
+      ]);
+      if (signal?.aborted) throw new DOMException("Interrompido", "AbortError");
+      if (!card.isConnected) return;
+      loader.hidden = true;
+      note.hidden = true;
+      title.textContent = "Seu antes. Meu crime artístico.";
+      label.textContent = "LABORATÓRIO DO DEBOCHE";
       card.querySelector("figcaption").textContent = result.disclaimer;
       card.querySelector(".parody-punchline").textContent = result.caption;
       card.querySelector(".parody-result").hidden = false;
@@ -53,6 +75,9 @@ export function createParodyCard(parent, original, { onRetry, onOffer }) {
       card.setAttribute("aria-busy", "false");
     },
     fail(message) {
+      loader.hidden = true;
+      note.hidden = true;
+      title.textContent = "Não ficou pronto. Bora de novo?";
       progress.hidden = false;
       progress.textContent = message;
       retry.hidden = false;

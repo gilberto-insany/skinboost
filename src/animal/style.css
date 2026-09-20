@@ -726,3 +726,89 @@ textarea:focus-visible {
     font-size: 28px;
   }
 }
+
+/* Indeterminate work indicator: no invented percentages or costume previews. */
+.parody-loader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  height: 112px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #e3eacd;
+  margin: 20px 0;
+}
+.parody-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    #ffffff70 48%,
+    transparent 72%
+  );
+  transform: translateX(-100%);
+  animation: parody-shimmer 2.6s ease-in-out infinite;
+}
+.parody-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid #bbc89c;
+  border-top-color: #193b29;
+  border-right-color: #193b29;
+  border-radius: 50%;
+  animation: parody-spin 1s linear infinite;
+}
+.parody-loader-dots {
+  display: flex;
+  gap: 7px;
+}
+.parody-loader-dots i {
+  width: 7px;
+  height: 7px;
+  background: #426034;
+  border-radius: 50%;
+  animation: parody-dot 1.3s ease-in-out infinite;
+}
+.parody-loader-dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.parody-loader-dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.animal-parody .parody-loading-note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #59684a;
+  margin-top: 10px;
+}
+@keyframes parody-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes parody-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes parody-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parody-spinner,
+  .parody-loader-dots i,
+  .parody-loader::before {
+    animation: none;
+  }
+}
