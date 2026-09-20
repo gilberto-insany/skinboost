@@ -115,6 +115,20 @@
   margin: -10px;
   flex-shrink: 0;
 }
+.orb-render {
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+.orb-render > img {
+  /* Give SVG filters a larger drawing surface before reducing the glass orb. */
+  display: block;
+  width: 400%;
+  height: 400%;
+  max-width: none;
+  transform: scale(0.25);
+  transform-origin: 0 0;
+}
 .privacy-portrait {
   position: absolute;
   width: 105px;

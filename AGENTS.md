@@ -111,3 +111,5 @@ Gilberto requested a smooth dark hero overlay with no hard left edge, clean alig
 Crop the final CTA artwork exactly at the banner’s lower edge: no bottle may spill into the footer. Preserve the floating cap above the banner.
 
 Use 110px as the standard desktop section spacing, including both sides of the trust section’s content. Avoid adding extra margins on top of that spacing (especially between FAQ and final CTA). Keep smaller tablet and phone spacing.
+
+The animated glass orb should have smooth edges at its small displayed size. Keep the original SVG bytes, animation and halo; use an oversized image inside a fixed-size wrapper and downscale it without changing surrounding layout.
