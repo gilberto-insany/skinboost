@@ -1,0 +1,25 @@
+@import "./generated/index.css";
+
+/* Proposed UI roles, scoped to the Foundations review. */
+.ds-review {
+  --ui-canvas: var(--color-neutral-very-soft);
+  --ui-surface: var(--color-static-white);
+  --ui-text: var(--color-neutral-maximum);
+  --ui-text-secondary: var(--color-neutral-intense);
+  --ui-border: var(--color-neutral-light);
+  --ui-action: var(--color-primary-700);
+  --ui-action-hover: var(--color-primary-800);
+  --ui-on-action: var(--color-static-white);
+  --ui-focus: var(--color-primary-600);
+  --ui-success: var(--color-feedback-success-intense);
+  --ui-warning: var(--color-feedback-warning-intense);
+  --ui-error: var(--color-feedback-error-intense);
+  --ui-info: var(--color-feedback-info-intense);
+}
+.ds-review[data-theme="dark"] {
+  --ui-surface: var(--color-gray-900);
+  --ui-action: var(--color-primary-200);
+  --ui-action-hover: var(--color-primary-100);
+  --ui-on-action: var(--color-primary-950);
+  --ui-focus: var(--color-primary-300);
+}

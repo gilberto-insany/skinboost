@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const sourcePath = resolve(root, "design-tokens/source-figma-export.json");
@@ -96,6 +96,26 @@ function createVariableIndex(source) {
   let usesLegacyBridge = false;
   const primitives = collection(source, "_Colors Primitives").variables;
   if (!primitives.some((variable) => variable.id)) {
+    const steps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+    const expected = [
+      "primary",
+      "secondary",
+      "gray",
+      "success",
+      "warning",
+      "error",
+      "info",
+    ]
+      .flatMap((family) => steps.map((step) => `${family}/${step}`))
+      .concat(["static/white", "static/black"]);
+    if (
+      primitives.length !== expected.length ||
+      primitives.some((variable, i) => variable.name !== expected[i])
+    ) {
+      throw new Error(
+        "Legacy primitive order changed; export native IDs before regenerating tokens.",
+      );
+    }
     usesLegacyBridge = true;
     primitives.forEach((variable, offset) => {
       index.set(

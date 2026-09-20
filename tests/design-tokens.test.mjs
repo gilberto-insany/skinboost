@@ -9,6 +9,15 @@ import {
 
 const root = resolve(import.meta.dirname, "..");
 
+test("legacy alias resolution rejects reordered primitives", async () => {
+  const source = await loadTokenSource();
+  source.collections["_Colors Primitives"].variables.reverse();
+  assert.throws(
+    () => buildTokenFiles(source),
+    /Legacy primitive order changed/,
+  );
+});
+
 test("the Figma export compiles every collection and resolves semantic aliases", async () => {
   const source = await loadTokenSource();
   const { files, report } = buildTokenFiles(source);
