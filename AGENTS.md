@@ -116,3 +116,6 @@ The animated glass orb should have smooth edges at its small displayed size. Kee
 
 ## Preserve previous production — 20 September 2026
 Leandro requested the pre-final-Home production version at `/wireframe`, while the latest Home remains at `/`. Preserve the frontend snapshot from `11f0680` in `wireframe/`, including its original appearance and interactions. Its chat lives at `/wireframe/chat` and uses separate browser conversation storage. Keep shared server-side AI endpoints and original unchanged media. Maintain these routes in Vite dev/preview, Vercel and Sites; do not redirect the archive to the new Home or replace the existing Storybook routes.
+
+## Home performance — 20 September 2026
+Gilberto requested a thorough performance pass while preserving the approved visual design. Defer the scroll video until near its section and keep the poster for reduced motion. Lazy-load the lossless WebP 3D fallback, retain high-DPI 3D and animated SVG quality, scope progress writes to their controls, and suspend decorative work offscreen/hidden. Report measured asset savings separately from unmeasured Core Web Vitals.

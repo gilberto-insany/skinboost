@@ -55,7 +55,7 @@ export function initLanding({
       (el.onclick = () => {
         const p = products[+el.dataset.product];
         openDialog(
-          `<p class="eyebrow">LINHA SKINBOOST / PRODUTO CONCEITUAL</p><h2 id="dialog-title">${p[0]}</h2><p>${p[1]}<br>${p[2]}</p><img src="/media/produtos-skinboost.png" alt="Família de embalagens conceituais SkinBoost" style="border-radius:13px;margin-top:24px"/><p class="dialog-notice">Conceito de embalagem. Fórmula, ingredientes, evidências, instruções e preço ainda não definidos. Produto indisponível para compra.</p><button class="pill dark" id="product-demo">Ver exemplo de rotina ${icon("arrow-up-right")}</button>`,
+          `<p class="eyebrow">LINHA SKINBOOST / PRODUTO CONCEITUAL</p><h2 id="dialog-title">${p[0]}</h2><p>${p[1]}<br>${p[2]}</p><img src="/media/produtos-skinboost.webp" alt="Família de embalagens conceituais SkinBoost" style="border-radius:13px;margin-top:24px"/><p class="dialog-notice">Conceito de embalagem. Fórmula, ingredientes, evidências, instruções e preço ainda não definidos. Produto indisponível para compra.</p><button class="pill dark" id="product-demo">Ver exemplo de rotina ${icon("arrow-up-right")}</button>`,
         );
         $("#product-demo").onclick = () =>
           openChat(

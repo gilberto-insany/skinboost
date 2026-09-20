@@ -7,6 +7,7 @@ export function initHeroSlider({ root = document } = {}) {
   const slides = [...hero.querySelectorAll("[data-hero-slide]")];
   if (slides.length < 2) return;
   const events = new AbortController();
+  const progress = hero.querySelector(".hero-footer");
   let current = 0,
     elapsed = 0,
     focused = false;
@@ -21,7 +22,7 @@ export function initHeroSlider({ root = document } = {}) {
     hero.querySelector(".hero-metrics").hidden = current !== 1;
     hero.querySelector("[data-hero-shot]").textContent =
       `SkinBoost Shot / 0${current + 1}`;
-    hero.style.setProperty("--hero-progress", 0);
+    progress?.style.setProperty("--hero-progress", 0);
   }
   select(0);
   const clock = createVisibleClock(
@@ -29,7 +30,7 @@ export function initHeroSlider({ root = document } = {}) {
     (delta) => {
       elapsed += delta;
       if (elapsed >= 10000) select((current + 1) % slides.length);
-      hero.style.setProperty("--hero-progress", elapsed / 10000);
+      progress?.style.setProperty("--hero-progress", elapsed / 10000);
     },
     { canRun: () => !focused },
   );

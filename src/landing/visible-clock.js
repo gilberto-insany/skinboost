@@ -2,28 +2,35 @@
 export function createVisibleClock(
   element,
   onTick,
-  { canRun = () => true, onMotionChange = () => {} } = {},
+  { canRun = () => true, onMotionChange = () => {}, interval = 0 } = {},
 ) {
   const events = new AbortController();
   const motion = matchMedia("(prefers-reduced-motion: reduce)");
   let visible = false,
+    disposed = false,
     frame = 0,
     previous = 0;
   const allowed = () =>
-    visible && !document.hidden && !motion.matches && canRun();
+    !disposed && visible && !document.hidden && !motion.matches && canRun();
+  const schedule = () =>
+    interval
+      ? setTimeout(() => tick(performance.now()), interval)
+      : requestAnimationFrame(tick);
+  const cancel = () =>
+    interval ? clearTimeout(frame) : cancelAnimationFrame(frame);
   function tick(now) {
     frame = 0;
     if (!allowed()) return;
     onTick(now - previous);
     previous = now;
-    frame = requestAnimationFrame(tick);
+    if (allowed()) frame = schedule();
   }
   function sync() {
-    cancelAnimationFrame(frame);
+    cancel();
     frame = 0;
     if (allowed()) {
       previous = performance.now();
-      frame = requestAnimationFrame(tick);
+      frame = schedule();
     }
   }
   const observer = new IntersectionObserver(([entry]) => {
@@ -46,9 +53,10 @@ export function createVisibleClock(
   return {
     sync,
     destroy() {
+      disposed = true;
       events.abort();
       observer.disconnect();
-      cancelAnimationFrame(frame);
+      cancel();
     },
   };
 }

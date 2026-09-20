@@ -38,6 +38,7 @@ export function initContextTyping({ root = document } = {}) {
       render(phrase.slice(0, count));
     },
     {
+      interval: 32,
       onMotionChange: () => {
         index = 0;
         elapsed = 0;

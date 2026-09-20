@@ -40,7 +40,7 @@ export function initSteps({ root = document } = {}) {
   function select(index, announce = false) {
     current = (index + tabs.length) % tabs.length;
     elapsed = 0;
-    section.style.setProperty("--step-progress", 0);
+    tabs[current].style.setProperty("--step-progress", 0);
     tabs.forEach((tab, i) => {
       tab.classList.toggle("active", i === current);
       tab.setAttribute("aria-selected", String(i === current));
@@ -78,7 +78,7 @@ export function initSteps({ root = document } = {}) {
     (delta) => {
       elapsed += delta;
       if (elapsed >= 8000) select(current + 1);
-      section.style.setProperty("--step-progress", elapsed / 8000);
+      tabs[current].style.setProperty("--step-progress", elapsed / 8000);
     },
     {
       canRun: () => !paused && !focused,

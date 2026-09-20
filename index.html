@@ -80,6 +80,8 @@
             alt=""
             width="1681"
             height="930"
+            fetchpriority="low"
+            decoding="async"
           />
           <div class="hero-art-top"></div>
           <div class="hero-art-bottom"></div>
@@ -90,6 +92,8 @@
             alt=""
             width="1681"
             height="930"
+            fetchpriority="low"
+            decoding="async"
           />
         </div>
         <div class="hero-content">
@@ -410,7 +414,7 @@
             class="film-video"
             muted
             playsinline
-            preload="auto"
+            preload="none"
             poster="/media/manifesto-poster.jpg?v=final"
             aria-hidden="true"
             tabindex="-1"
@@ -581,8 +585,10 @@
           >
             <img
               id="bottle-fallback"
-              src="/media/produtos-skinboost.png"
+              src="/media/produtos-skinboost.webp"
               alt="Frascos SkinBoost"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <div class="product-note note-one">

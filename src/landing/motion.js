@@ -19,12 +19,36 @@ export function initMotion({ root = document } = {}) {
     let filmTween;
     let pauseFilm;
     const video = film?.querySelector(".film-video");
+    const track = film?.querySelector(".film-track");
+    const fill = track?.querySelector("span");
+    const value = film?.querySelector(".film-progress-value");
+    let lastPercent = -1;
     let progress = 0;
     let paused = false;
+    let nearFilm = false;
+    let videoRequested = video?.preload === "auto";
+    const loadVideo = () => {
+      if (!video || videoRequested || !nearFilm || document.hidden) return;
+      videoRequested = true;
+      video.preload = "auto";
+      video.load();
+    };
+    const filmObserver =
+      video &&
+      new IntersectionObserver(
+        ([entry]) => {
+          nearFilm = entry.isIntersecting;
+          loadVideo();
+          if (nearFilm) seek();
+        },
+        { rootMargin: "800px 0px" },
+      );
     // Coalesce scroll updates while the decoder finishes the previous seek.
     const seek = () => {
       if (
         paused ||
+        !nearFilm ||
+        document.hidden ||
         !video ||
         video.readyState < 1 ||
         video.seeking ||
@@ -36,6 +60,12 @@ export function initMotion({ root = document } = {}) {
     };
     video?.addEventListener("loadedmetadata", seek);
     video?.addEventListener("seeked", seek);
+    if (video) filmObserver.observe(film);
+    const visibility = () => {
+      loadVideo();
+      seek();
+    };
+    document.addEventListener("visibilitychange", visibility);
     if (film) {
       filmTween = gsap.fromTo(
         film.querySelectorAll(".film-copy h2 span"),
@@ -55,12 +85,13 @@ export function initMotion({ root = document } = {}) {
       const syncFilm = (self) => {
         progress = self.progress;
         if (paused) return;
-        const track = $(".film-track span");
-        if (track) track.style.transform = `scaleX(${progress})`;
+        if (fill) fill.style.transform = `scaleX(${progress})`;
         const percent = Math.round(progress * 100);
-        $(".film-track")?.setAttribute("aria-valuenow", String(percent));
-        const value = $(".film-progress-value");
-        if (value) value.textContent = `${percent}%`;
+        if (percent !== lastPercent) {
+          track?.setAttribute("aria-valuenow", String(percent));
+          if (value) value.textContent = `${percent}%`;
+          lastPercent = percent;
+        }
         seek();
       };
       ScrollTrigger.create({
@@ -128,6 +159,8 @@ export function initMotion({ root = document } = {}) {
       video?.removeEventListener("loadedmetadata", seek);
       video?.removeEventListener("seeked", seek);
       video?.pause();
+      filmObserver?.disconnect();
+      document.removeEventListener("visibilitychange", visibility);
     };
   });
   media.add("(prefers-reduced-motion: reduce)", () => {
