@@ -77,6 +77,10 @@ O servidor resolve IDs para títulos, páginas e URLs de um registro fechado. A 
 
 As fontes aparecem em **Fontes desta resposta**. Os arquivos contêm somente uma página cada, conservando a numeração impressa original; a apresentação integral não é publicada nesse diretório. O [manifesto](../public/sources/manifest.json) registra essa proveniência.
 
+### Continuar para o checkout de exemplo
+
+Após o comparador, um card oferece **Continuar para compra** com o nome do produto escolhido. Cleanse, Balance e Comfort usam o mesmo destino configurado por Leandro: `https://www.designengineer.com.br/oferta`. Comparações antigas sem produto mostram uma chamada genérica. O link abre uma nova aba com `noopener noreferrer`, sem parâmetros da foto, contexto ou conversa, e identifica que o destino é um exemplo da Design Engineer, não uma oferta SkinBoost. A revisão demonstrativa da seleção também oferece esse link. Históricos herdados somente para leitura e o estado de cuidado profissional não apresentam a ação de compra.
+
 Referências educativas da AAD continuam com outro papel: orientação geral de cuidados. Elas não validam os produtos conceituais nem substituem as páginas que documentam o case.
 
 ### 7. Pedir uma ilustração e comparar

@@ -147,3 +147,72 @@
     font-size: 12px;
   }
 }
+
+/* Component previews have intrinsic height: no page shell or fixed composer. */
+.sb-experience.sb-chat-component {
+  display: block;
+  width: 100%;
+  max-width: 780px;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  margin: 16px auto;
+  background: transparent;
+}
+.sb-chat-component .sx-message {
+  animation: none;
+}
+.sb-chat-component .sx-dock {
+  position: static;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: none;
+  background: transparent;
+}
+.sb-chat-component .sx-dock::before {
+  display: none;
+}
+.sb-chat-component .sx-sidebar {
+  position: static;
+  display: flex;
+  width: min(280px, 100%);
+  min-height: 530px;
+  margin: auto;
+  box-shadow: none;
+}
+.sb-chat-component[data-component="topbar"] {
+  max-width: 1000px;
+}
+.sb-chat-component .sx-top {
+  position: static;
+  width: 100%;
+}
+.sb-chat-component .sb-component-panel {
+  display: block;
+  position: static;
+  width: 100%;
+  max-width: 680px;
+  max-height: none;
+  margin: auto;
+  box-shadow: none;
+}
+.sb-chat-component > .sx-disclaimer {
+  text-align: center;
+}
+.sb-catalog-status--component {
+  background: transparent;
+  border: 0;
+  padding-bottom: 0;
+}
+.sb-catalog-status--component span {
+  display: none;
+}
+@media (max-width: 760px) {
+  .sb-chat-component .sx-message {
+    gap: 10px;
+  }
+  .sb-chat-component .sx-top {
+    padding-inline: 0;
+  }
+}

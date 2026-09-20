@@ -1,410 +1,156 @@
-import { expect, fn, waitFor } from "storybook/test";
-import { mountExperience } from "../experience.js";
+import { expect, fn } from "storybook/test";
 import {
-  createThreadState,
-  createThreadFixture,
-  sendMessage,
-  act,
-  appendUserMessage,
-  acceptAssistantResponse,
-} from "../chat/thread-state.js";
-import {
-  createAlternative,
-  recordContextChanges,
-  makeConversationNote,
-} from "../chat/conversation-tools.js";
-
-import {
-  PHOTO_CHAT_RESPONSE,
-  LIMITED_PHOTO_CHAT_RESPONSE,
-} from "../../tests/fixtures/photo-chat.mjs";
-
-let portraitPromise;
-function fixturePortrait() {
-  portraitPromise ||= fetch("/media/persona-lucas.jpg").then(
-    async (response) => {
-      if (!response.ok)
-        throw new Error("The local fictional portrait is missing.");
-      const blob = await response.blob();
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
-    },
-  );
-  return portraitPromise;
-}
-
-// Each canvas has its own instance; removal destroys event listeners and timers.
-const mounts = new Map();
-
-function stateWithOrigins(scenario = "general") {
-  const source = createThreadFixture("review", scenario);
-  let state = createThreadState();
-  for (const message of source.messages.filter(
-    (item) => item.role === "user",
-  )) {
-    const previous = { ...state.context };
-    state = sendMessage(state, message.text);
-    recordContextChanges(
-      state,
-      previous,
-      state.messages.findLast((item) => item.role === "user"),
-    );
-  }
-  return act(state, "confirm");
-}
-
-async function fixtureState(args) {
-  if (!args.fixture) return undefined;
-  if (args.fixture.startsWith("photo-")) {
-    const portrait = await fixturePortrait();
-    let state = appendUserMessage(
-      createThreadState(),
-      "Exemplo de componente com retrato fictício gerado por IA. A observação abaixo é uma fixture didática, não uma avaliação da imagem.",
-    );
-    state.photoDataUrl = portrait;
-    state.photoName = "Lucas · persona fictícia gerada por IA";
-    state.photoConsent = false;
-    state.messages.at(-1).photo = portrait;
-    state = acceptAssistantResponse(
-      state,
-      structuredClone(
-        args.fixture === "photo-limited"
-          ? LIMITED_PHOTO_CHAT_RESPONSE
-          : PHOTO_CHAT_RESPONSE,
-      ),
-    );
-    if (args.fixture === "photo-observed") {
-      // Controlled local fixture: expose the same choices without a live API.
-      state.photoConsent = true;
-      state.photoSubmitted = true;
-      state.photoAnalysisId = state.messages.at(-1).id;
-      state.awaitingPhotoProduct = true;
-      state.messages.at(-1).choices = [];
-    }
-    if (args.fixture === "photo-comparison")
-      state.messages.push({
-        id: "story-photo-comparison",
-        role: "assistant",
-        kind: "simulation",
-        text: "Demonstração do comparador: o mesmo retrato fictício aparece dos dois lados, sem alteração estética. Nenhuma imagem nova foi gerada neste exemplo.",
-        original: portrait,
-        image: portrait,
-        selectedProductId: "comfort",
-      });
-    return state;
-  }
-  const state = stateWithOrigins(args.scenario);
-  if (args.fixture === "alternative")
-    return createAlternative(state, {
-      sourceId: "story-original",
-      title: "Minha rotina original · exemplo local",
-      choice: "budget",
-    });
-  if (args.fixture === "feedback")
-    state.messages.at(-1).feedback = { reason: "Fonte insuficiente" };
-  if (args.fixture === "note")
-    state.messages.push({
-      id: "story-note",
-      role: "assistant",
-      kind: "note",
-      text: "Aqui está o resumo revisável desta conversa de demonstração.",
-      note: makeConversationNote(state),
-    });
-  return state;
-}
-
-// Only this isolated fixture replaces the audio adapter. No microphone or API.
-function demonstrationVoice({ getDraft, onDraft, onState }) {
-  let previous = "";
-  let active = false;
-  return {
-    supported: true,
-    start() {
-      previous = getDraft();
-      active = true;
-      onState({ status: "listening" });
-    },
-    stop() {
-      if (active)
-        onDraft(
-          [previous, "Quero uma rotina com poucos passos."]
-            .filter(Boolean)
-            .join(" "),
-        );
-      active = false;
-      onState({ status: "idle" });
-    },
-    cancel() {
-      active = false;
-      onDraft(previous);
-      onState({ status: "idle" });
-    },
-    handleTypedInput() {},
-    destroy() {
-      active = false;
-    },
-  };
-}
-
-function renderExperience(args) {
-  const host = document.createElement("div");
-  host.className = "sb-story-host";
-  host.dataset.initialStep = args.initialStep;
-  let instance;
-  let attached = false;
-  let stopped = false;
-  const stop = () => {
-    if (stopped) return;
-    stopped = true;
-    observer.disconnect();
-    instance?.destroy();
-    mounts.delete(host);
-  };
-  const mount = async () => {
-    if (stopped || !host.isConnected) return;
-    attached = true;
-    const state = await fixtureState(args);
-    if (stopped || !host.isConnected) return;
-    instance = mountExperience(host, {
-      initialStep: args.initialStep,
-      scenario: args.scenario,
-      liveApi: false,
-      state,
-      ...(args.voiceDemo
-        ? {
-            voiceFactory: demonstrationVoice,
-            getSaveStatus: () =>
-              "Voz demonstrativa · sem microfone nem envio de áudio",
-          }
-        : {}),
-      onClose: () => {
-        args.onClose();
-        instance?.destroy();
-        host.replaceChildren();
-        host.classList.remove("sb-experience");
-        const closed = document.createElement("div");
-        closed.className = "sb-story-close";
-        closed.innerHTML =
-          "<h2>Experiência encerrada.</h2><p>Este é o mesmo callback de fechamento usado pela página.</p>";
-        const reopen = document.createElement("button");
-        reopen.className = "pill dark";
-        reopen.textContent = "Reabrir exemplo";
-        reopen.onclick = mount;
-        closed.append(reopen);
-        host.append(closed);
-      },
-    });
-  };
-  const observer = new MutationObserver(() => {
-    if (!attached && host.isConnected) mount();
-    else if (attached && !host.isConnected) stop();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-  mounts.set(host, stop);
-  requestAnimationFrame(() => {
-    if (!attached) mount();
-  });
-  return host;
-}
+  renderChatComponent,
+  disposeDisconnectedPreviews,
+} from "./chat-component-preview.js";
 
 export default {
   id: "experiencia-jornada-guiada",
-  title: "Experiência/Conversa contínua",
+  title: "Experiência/Componentes do chat",
   tags: ["autodocs"],
-  args: { initialStep: "welcome", scenario: "general", onClose: fn() },
+  args: {
+    component: "question",
+    initialStep: "context",
+    scenario: "general",
+    onAction: fn(),
+  },
   argTypes: {
-    initialStep: {
-      control: "select",
-      options: ["welcome", "context", "routine", "cart", "checkout", "checkin"],
-      description:
-        "Ponto inicial da conversa real, com mensagens e artefatos no mesmo histórico. Não representa uma etapa de formulário.",
-    },
     scenario: {
       control: "select",
       options: ["acne", "oiliness", "general", "dry"],
-      description:
-        "Contexto de exemplo declarado na conversa, sem diagnóstico ou análise de imagem.",
+      description: "Relato declarado na fixture, sem diagnóstico.",
     },
-    onClose: { table: { disable: true } },
+    component: { table: { disable: true } },
+    initialStep: { table: { disable: true } },
     fixture: { table: { disable: true } },
-    voiceDemo: { table: { disable: true } },
+    onAction: { table: { disable: true } },
   },
-  render: renderExperience,
-  beforeEach: () => () => {
-    for (const [host, stop] of mounts) if (!host.isConnected) stop();
-  },
+  render: renderChatComponent,
+  beforeEach: () => disposeDisconnectedPreviews,
   parameters: {
+    chatComponent: true,
     docs: {
       story: { inline: false },
       description: {
         component:
-          "Chat real de src/experience.js: texto livre e sugestões acrescentam mensagens; contexto, rotina, fontes e seleção permanecem no mesmo histórico. Cada canvas tem sua própria sessão demonstrativa. Não há diagnóstico, análise de foto, pedido ou pagamento real.",
+          "Cada canvas monta somente o componente indicado, usando os mesmos templates da aplicação. Ações de navegação e envio aparecem na aba Actions: não abrem uma conversa completa nem chamam a IA. Estados de foto, voz e resposta são fixtures locais. A versão de alta fidelidade continua uma proposta em revisão.",
       },
     },
   },
 };
 
 export const BoasVindas = {
-  name: "Conversa inicial",
-  args: { initialStep: "welcome" },
+  name: "Mensagem · boas-vindas",
+  args: { component: "welcome", initialStep: "welcome" },
 };
 export const Contexto = {
-  name: "Contexto na conversa",
-  args: { initialStep: "context" },
+  name: "Contexto · resumo editável",
+  args: { component: "context", initialStep: "review" },
 };
 export const Rotina = {
-  name: "Rotina no histórico",
-  args: { initialStep: "routine" },
+  name: "Rotina · seleção explicada",
+  args: { component: "routine", initialStep: "routine" },
 };
 export const Carrinho = {
-  name: "Seleção no histórico",
-  args: { initialStep: "cart" },
+  name: "Seleção · produtos e total",
+  args: { component: "cart", initialStep: "cart" },
 };
 export const Checkout = {
-  name: "Revisão demonstrativa",
-  args: { initialStep: "checkout" },
+  name: "Checkout · revisão demonstrativa",
+  args: { component: "checkout", initialStep: "checkout" },
 };
 export const Checkin = {
-  name: "Check-in na conversa",
-  args: { initialStep: "checkin" },
+  name: "Check-in · sugestões",
+  args: { component: "checkin", initialStep: "checkin" },
 };
-
 export const Acne = {
-  name: "Cenário · acne declarada",
-  args: { initialStep: "context", scenario: "acne" },
+  name: "Pergunta · acne declarada",
+  args: { scenario: "acne" },
 };
 export const Oleosidade = {
-  name: "Cenário · oleosidade",
-  args: { initialStep: "context", scenario: "oiliness" },
+  name: "Pergunta · oleosidade",
+  args: { scenario: "oiliness" },
 };
 export const CuidadosGerais = {
-  name: "Cenário · cuidados gerais",
-  args: { initialStep: "context", scenario: "general" },
+  name: "Pergunta · cuidados gerais",
+  args: { scenario: "general" },
 };
 export const Ressecamento = {
-  name: "Cenário · ressecamento",
-  args: { initialStep: "context", scenario: "dry" },
+  name: "Pergunta · ressecamento",
+  args: { scenario: "dry" },
 };
-
 export const MensagemLivre = {
-  name: "Texto livre · histórico preservado",
-  args: { initialStep: "welcome", scenario: "general" },
-  play: async ({ canvas, userEvent }) => {
-    const log = await canvas.findByRole("log");
-    const previousIds = [...log.querySelectorAll("[data-message-id]")].map(
-      (el) => el.dataset.messageId,
-    );
-    const message =
-      "Minha pele fica oleosa ao longo do dia. Quero poucos passos.";
-    const composer = canvas.getByRole("textbox", { name: /mensagem/i });
-    await userEvent.type(composer, message);
+  name: "Compositor · texto livre",
+  args: { component: "composer" },
+  play: async ({ canvas, userEvent, args }) => {
+    const input = await canvas.findByRole("textbox", { name: "Sua mensagem" });
+    await userEvent.type(input, "Quero uma rotina com poucos passos.");
     await userEvent.click(
       canvas.getByRole("button", { name: "Enviar mensagem" }),
     );
-    await waitFor(() =>
-      expect(canvas.getByRole("log")).toHaveTextContent(message),
-    );
-    for (const id of previousIds)
-      await expect(
-        canvas.getByRole("log").querySelector(`[data-message-id="${id}"]`),
-      ).toBeInTheDocument();
-    await expect(
-      canvas.getByRole("textbox", { name: /mensagem/i }),
-    ).toBeVisible();
+    await expect(args.onAction).toHaveBeenCalledWith({
+      action: "send",
+      value: "Quero uma rotina com poucos passos.",
+    });
+    await expect(input).toHaveValue("");
   },
 };
-
 export const SugestaoComoMensagem = {
-  name: "Sugestão · resposta na conversa",
-  args: { initialStep: "context", scenario: "oiliness" },
-  play: async ({ canvas, userEvent }) => {
-    const log = await canvas.findByRole("log");
-    const previousIds = [...log.querySelectorAll("[data-message-id]")].map(
-      (el) => el.dataset.messageId,
-    );
-    const replies = canvas
-      .getAllByRole("button")
-      .filter((el) => el.hasAttribute("data-reply"));
-    const reply = replies.at(-1);
-    await expect(reply).toBeVisible();
-    const text = reply.getAttribute("data-reply");
+  name: "Sugestões · respostas rápidas",
+  args: { component: "suggestions", scenario: "oiliness" },
+  play: async ({ canvas, userEvent, args }) => {
+    const reply = (await canvas.findAllByRole("button"))[0];
+    const value = reply.dataset.reply;
     await userEvent.click(reply);
-    await waitFor(() =>
-      expect(
-        canvas.getByRole("log").querySelectorAll("[data-message-id]").length,
-      ).toBeGreaterThan(previousIds.length),
-    );
-    await expect(canvas.getByRole("log")).toHaveTextContent(text);
-    for (const id of previousIds)
-      await expect(
-        canvas.getByRole("log").querySelector(`[data-message-id="${id}"]`),
-      ).toBeInTheDocument();
+    await expect(args.onAction).toHaveBeenCalledWith({
+      action: "reply",
+      value,
+    });
   },
 };
-
 export const CarrinhoVazio = {
-  name: "Carrinho · seleção vazia",
-  args: { initialStep: "cart" },
+  name: "Seleção · remover todos os produtos",
+  args: { component: "cart", initialStep: "cart" },
   play: async ({ canvas, userEvent }) => {
-    await canvas.findAllByRole("checkbox");
-    let checked = canvas
-      .getAllByRole("checkbox")
-      .find((el) => el.checked && !el.disabled);
-    while (checked) {
-      await userEvent.click(checked);
-      checked = canvas
-        .getAllByRole("checkbox")
-        .find((el) => el.checked && !el.disabled);
-    }
+    for (const checkbox of await canvas.findAllByRole("checkbox"))
+      if (checkbox.checked) await userEvent.click(checkbox);
     await expect(
       canvas.getByRole("button", { name: /checkout/i }),
     ).toBeDisabled();
   },
 };
-
 export const OrigemDoContexto = {
   name: "Contexto · origem nas mensagens",
-  args: { initialStep: "routine", fixture: "origins" },
+  args: { component: "context", fixture: "origins" },
 };
-
 export const ResumoDaConversa = {
   name: "Resumo · notas revisáveis",
-  args: { initialStep: "routine", fixture: "note" },
+  args: { component: "note", fixture: "note" },
 };
-
 export const Alternativa = {
   name: "Outra opção · contexto herdado",
-  args: { initialStep: "routine", fixture: "alternative" },
+  args: { component: "alternative", fixture: "alternative" },
 };
-
 export const FeedbackRegistrado = {
-  name: "Feedback · registro nesta conversa",
-  args: { initialStep: "routine", fixture: "feedback" },
+  name: "Ações da resposta · feedback registrado",
+  args: { component: "feedback", fixture: "feedback" },
 };
-
 export const VozRevisavel = {
-  name: "Voz · demonstração sem áudio",
-  args: { initialStep: "welcome", voiceDemo: true },
+  name: "Compositor · ditado revisável",
+  args: { component: "composer" },
   parameters: {
     docs: {
       description: {
         story:
-          "Adaptador determinístico apenas para revisar os estados da interface. Não acessa microfone, não grava e não chama API. O texto aparece no rascunho e precisa de envio explícito.",
+          "Demonstração determinística sem acesso ao microfone ou API. O consentimento é documentado em uma história separada. Concluir preenche o rascunho, sem enviar a mensagem.",
       },
     },
   },
   play: async ({ canvas, userEvent }) => {
-    const composer = await canvas.findByRole("textbox", { name: /mensagem/i });
-    await userEvent.type(composer, "Meu rascunho inicial.");
+    const input = await canvas.findByRole("textbox", { name: "Sua mensagem" });
+    await userEvent.type(input, "Meu rascunho inicial.");
     await userEvent.click(
       canvas.getByRole("button", { name: "Ditar mensagem" }),
-    );
-    await userEvent.click(
-      canvas.getByRole("button", { name: "Ativar microfone" }),
     );
     await expect(canvas.getByRole("status")).toHaveTextContent(
       "Revise antes de enviar",
@@ -412,62 +158,33 @@ export const VozRevisavel = {
     await userEvent.click(
       canvas.getByRole("button", { name: "Concluir ditado" }),
     );
-    await expect(composer).toHaveValue(
+    await expect(input).toHaveValue(
       "Meu rascunho inicial. Quero uma rotina com poucos passos.",
     );
-    await expect(
-      canvas.getByRole("log").querySelectorAll('[data-role="user"]').length,
-    ).toBe(0);
   },
 };
-
 export const FotoObservada = {
-  name: "Foto · observações e fontes",
-  args: { fixture: "photo-observed" },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Fixture de contrato aplicada por acceptAssistantResponse. Retrato de persona fictícia; não é análise de uma pessoa. Mostra observações, escolha de produto antes da geração e fontes do PDF, sem chamar a IA. No celular, a imagem do produto fica acima do texto.",
-      },
-    },
-  },
-  play: async ({ canvas }) => {
-    await expect(
-      await canvas.findByRole("region", { name: "Observações da foto" }),
-    ).toBeVisible();
-    await expect(
-      canvas.getByRole("region", { name: "Relação com o catálogo" }),
-    ).toHaveTextContent("Qual produto você quer explorar?");
-    await expect(
-      canvas.getByRole("button", { name: "Explorar Cleanse ↗" }),
-    ).toBeVisible();
-  },
+  name: "Foto · observações",
+  args: { component: "photo-observed", fixture: "photo-observed" },
 };
 export const FotoLimitada = {
   name: "Foto · observação limitada",
-  args: { fixture: "photo-limited" },
-  play: async ({ canvas }) => {
-    await expect(await canvas.findByText("Imagem limitada")).toBeVisible();
-    await expect(
-      canvas.queryByRole("region", { name: "Relação com o catálogo" }),
-    ).not.toBeInTheDocument();
-  },
+  args: { component: "photo-limited", fixture: "photo-limited" },
 };
 export const ComparacaoIlustrativa = {
   name: "Foto · comparador ilustrativo",
-  args: { fixture: "photo-comparison" },
+  args: { component: "photo-comparison", fixture: "photo-comparison" },
   parameters: {
     docs: {
       description: {
         story:
-          "O mesmo retrato fictício ocupa os dois lados, no contexto do conceito Comfort. Este estado testa arraste direto na foto com toque ou mouse, controle por teclado e limites visíveis; não simula melhora nem afirma um resultado gerado.",
+          "Retrato fictício idêntico nos dois lados: testa arraste, toque e teclado, sem simular eficácia. O convite para compra possui uma história própria, separado do comparador.",
       },
     },
   },
   play: async ({ canvas, userEvent }) => {
     const slider = await canvas.findByRole("slider", {
-      name: "Quanto da foto original mostrar",
+      name: "Comparar na imagem",
     });
     slider.focus();
     await userEvent.keyboard("{ArrowRight}");
@@ -476,4 +193,126 @@ export const ComparacaoIlustrativa = {
       "51% da foto original",
     );
   },
+};
+export const MensagemUsuario = {
+  name: "Mensagem · pessoa",
+  args: { component: "user-message" },
+};
+export const Produto = {
+  name: "Produto · item da rotina",
+  args: { component: "product", initialStep: "routine" },
+};
+export const Ajustes = {
+  name: "Rotina · ajustes rápidos",
+  args: { component: "refine", initialStep: "routine" },
+};
+export const ConviteVisual = {
+  name: "Foto · convite para ilustração",
+  args: { component: "visual-invite", initialStep: "routine" },
+};
+export const ComparacaoValores = {
+  name: "Valores · gráfico e comparação",
+  args: { component: "price-comparison", initialStep: "routine" },
+};
+export const FonteProduto = {
+  name: "Fonte · conceito do produto",
+  args: { component: "source", initialStep: "routine" },
+};
+export const FonteEducativa = {
+  name: "Fonte · orientação educativa",
+  args: { component: "source", productId: "aad-acne" },
+};
+export const ProdutosDaFoto = {
+  name: "Foto · escolha de produto",
+  args: { component: "photo-products", fixture: "photo-observed" },
+  play: async ({ canvas, userEvent, args }) => {
+    await userEvent.click(
+      await canvas.findByRole("button", { name: "Explorar Cleanse ↗" }),
+    );
+    await expect(args.onAction).toHaveBeenCalledWith({
+      action: "select-photo-product",
+      value: "cleanse",
+    });
+  },
+};
+export const FontesDaFoto = {
+  name: "Foto · fontes da resposta",
+  args: { component: "photo-sources", fixture: "photo-observed" },
+};
+export const FotoAnexada = {
+  name: "Foto · anexo e autorização",
+  args: { component: "photo-attachment", fixture: "photo-limited" },
+};
+export const Cabecalho = {
+  name: "Navegação · cabeçalho",
+  args: { component: "topbar" },
+};
+export const Historico = {
+  name: "Navegação · conversas salvas",
+  args: { component: "sidebar" },
+};
+export const HistoricoVazio = {
+  name: "Navegação · histórico vazio",
+  args: { component: "sidebar", empty: true },
+};
+export const CompositorErro = {
+  name: "Compositor · erro e rascunho",
+  args: {
+    component: "composer",
+    error: true,
+    draft: "Quero entender minha pele.",
+  },
+};
+export const CompositorFoto = {
+  name: "Compositor · com foto",
+  args: { component: "composer", fixture: "photo-limited" },
+};
+export const DitadoAtivo = {
+  name: "Compositor · ditado em andamento",
+  args: { component: "composer", recording: true },
+};
+export const ConsentimentoVoz = {
+  name: "Voz · pedido de autorização",
+  args: { component: "voice-consent" },
+};
+export const PreparandoResposta = {
+  name: "Resposta · preparando",
+  args: { component: "thinking" },
+};
+export const RespostaProgressiva = {
+  name: "Resposta · texto em andamento",
+  args: { component: "thinking", streaming: true },
+};
+export const RespostaInterrompida = {
+  name: "Resposta · interrompida",
+  args: { component: "partial" },
+};
+export const OutrasOpcoes = {
+  name: "Outra opção · caminhos",
+  args: { component: "alternatives" },
+};
+export const ConferirInformacoes = {
+  name: "Transparência · conferir informações",
+  args: { component: "verification" },
+};
+export const FontesELimites = {
+  name: "Transparência · fontes e limites",
+  args: { component: "sources" },
+};
+export const Privacidade = {
+  name: "Transparência · sobre seus dados",
+  args: { component: "privacy" },
+};
+export const SinalizarProblema = {
+  name: "Feedback · motivos",
+  args: { component: "feedback-options" },
+};
+export const AvisoIA = {
+  name: "Transparência · aviso sobre IA",
+  args: { component: "disclaimer" },
+};
+
+export const ConviteCompra = {
+  name: "Compra · convite após ilustração",
+  args: { component: "photo-checkout", fixture: "photo-comparison" },
 };

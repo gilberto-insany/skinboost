@@ -27,7 +27,11 @@ export function makePreview(mode) {
         );
         if (context.parameters.landingCatalog)
           status.setAttribute("aria-label", "Informações do catálogo");
-        status.className = "sb-catalog-status";
+        status.className =
+          "sb-catalog-status" +
+          (context.parameters.chatComponent
+            ? " sb-catalog-status--component"
+            : "");
         const label = document.createElement("strong");
         label.textContent =
           mode === "hifi"

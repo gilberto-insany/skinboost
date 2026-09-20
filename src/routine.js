@@ -1,4 +1,6 @@
 // Pure rules for a local, fictional prototype. No model, image analysis or network.
+export const CHECKOUT_EXAMPLE_URL = "https://www.designengineer.com.br/oferta";
+
 const demoSource = (name) =>
   Object.freeze({
     title: `SkinBoost · ${name} · catálogo conceitual`,
