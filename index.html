@@ -225,19 +225,6 @@
           </div>
           <small>Dados ilustrativos do conceito.</small>
         </aside>
-        <div class="hero-slider-controls" aria-label="Controles do destaque">
-          <button data-hero-prev aria-label="Imagem anterior">
-            <i class="ph ph-arrow-left" aria-hidden="true"></i></button
-          ><button
-            data-hero-pause
-            aria-label="Pausar slider"
-            aria-pressed="false"
-          >
-            <i class="ph ph-pause" aria-hidden="true"></i></button
-          ><button data-hero-next aria-label="Próxima imagem">
-            <i class="ph ph-arrow-right" aria-hidden="true"></i></button
-          ><span class="sr-only" data-hero-status aria-live="polite"></span>
-        </div>
         <div class="hero-footer">
           <span
             ><i class="ph ph-lock-simple" aria-hidden="true"></i> Seu contexto.
@@ -285,6 +272,29 @@
           <p>
             Você conta. A gente organiza.<br />Cada escolha vem com um porquê.
           </p>
+        </div>
+        <div
+          class="steps-playback"
+          role="group"
+          aria-label="Controles das etapas"
+        >
+          <span class="steps-timing" aria-hidden="true"
+            >Cada etapa no seu tempo</span
+          >
+          <button data-step-prev aria-label="Etapa anterior">
+            <i class="ph ph-arrow-left" aria-hidden="true"></i>
+          </button>
+          <button
+            data-step-pause
+            aria-label="Pausar etapas"
+            aria-pressed="false"
+          >
+            <i class="ph ph-pause" aria-hidden="true"></i>
+          </button>
+          <button data-step-next aria-label="Próxima etapa">
+            <i class="ph ph-arrow-right" aria-hidden="true"></i>
+          </button>
+          <span class="sr-only" data-step-status aria-live="polite"></span>
         </div>
         <div class="how-grid">
           <img
@@ -466,8 +476,16 @@
               Tempo, preferências e orçamento.<br />A sua vida faz parte da
               conversa.
             </p>
-            <button class="context-prompt start">
-              O que você quer cuidar na sua pele?<img
+            <button
+              class="context-prompt start"
+              aria-label="Conversar sobre os produtos SkinBoost"
+            >
+              <span
+                class="context-typing"
+                data-context-typing
+                aria-hidden="true"
+                >Como incluir Comfort na rotina?</span
+              ><img
                 class="context-orb"
                 src="/media/figma-final/orb-glass.svg"
                 alt=""
@@ -1946,7 +1964,7 @@
         class="footer-wordmark"
         href="#inicio"
         aria-label="SkinBoost — voltar ao início"
-        >SkinBoost</a
+        ><span aria-hidden="true">SkinBoost</span></a
       >
       <div class="footer-bottom">
         <span>© 2026 SkinBoost · Projeto conceitual</span>

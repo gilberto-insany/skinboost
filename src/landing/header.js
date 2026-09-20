@@ -5,8 +5,8 @@ export function initHeader(root) {
   if (root !== document || !nav || !hero) return;
   const logo = nav.querySelector(".wordmark img");
   const desktop = window.matchMedia("(min-width: 1001px)");
-  // Include the anchor's 86px scroll padding when changing header contrast.
-  const boundary = 87;
+  // Let the original navigation scroll away before fixing it after the hero.
+  const boundary = 0;
   const update = () => {
     const solid =
       desktop.matches && hero.getBoundingClientRect().bottom <= boundary;

@@ -180,3 +180,14 @@ A auditoria WCAG encontrou contraste insuficiente em texto secundário (#707872)
 - `npm run format:check` e `git diff --check`: aprovados.
 - Revisão visual local: hero, Steps, Bento, catálogo, manifesto, Clareza, CTA e rodapé em 1440 px; orb conferido também em 390 px, sem overflow horizontal.
 - Preview local em http://127.0.0.1:4173/. Sem commit, push ou publicação nesta entrega.
+
+## Refinamento de interações — 20/09/2026
+
+Pedido posterior: retirar controles do hero, fixar menu apenas depois dele, automatizar Steps, revisar texto do vídeo, simular digitação no Bento e revelar a marca do rodapé com scroll.
+
+- Hero mantém os dois slides e 10 segundos por imagem, sem botões; foco no compositor suspende o ciclo.
+- Steps usa ciclo de 8 segundos e linha de progresso na aba ativa; clique/teclado, anterior/próxima e pausa continuam disponíveis. Foco nas abas suspende avanço para evitar mudanças durante leitura por teclado.
+- Hero, Steps e digitação usam um relógio compartilhado descartável, com suspensão fora da tela, documento oculto e movimento reduzido.
+- Bento alterna três perguntas sobre Comfort, Cleanse e Balance. O nome acessível do botão permanece constante; a digitação não dispara anúncios por caractere nem envia mensagens.
+- Vídeo: Figma 2128:1753 confirmado novamente; bloco em x=60, y=232 na referência 1440×871, largura 642, gaps 24; removido translateY herdado. Círculo de progresso alinhado ao mesmo bloco.
+- Rodapé: máscara vertical reversível via ScrollTrigger; revela a marca inteira até o fim do documento. O espaço do texto é estável durante o scroll e o modo de movimento reduzido mostra a marca inteira.

@@ -1,3 +1,5 @@
+import { initSteps } from "./steps.js";
+import { initContextTyping } from "./context-typing.js";
 import { initStories } from "./stories.js";
 import { initHeader } from "./header.js";
 import { initHeroSlider } from "./hero-slider.js";
@@ -35,69 +37,8 @@ export function initLanding({
         navToggle.setAttribute("aria-label", "Abrir menu");
       }),
   );
-  const steps = [
-    [
-      "Vamos entender você.",
-      "“Quero uma rotina simples que caiba nas minhas manhãs.”",
-      "O que você já usa hoje?",
-      "Contexto antes da escolha",
-    ],
-    [
-      "Cada escolha, explicada.",
-      "Sua preferência: começar com poucos passos.",
-      "Cleanse + Comfort · exemplo de rotina essencial",
-      "Você entende a função de cada item",
-    ],
-    [
-      "A rotina acompanha você.",
-      "“Quero ajustar o cuidado ao meu novo horário.”",
-      "O que mudou desde a última vez?",
-      "Seu próximo passo pode ser simplificar",
-    ],
-  ];
-  function selectStep(index) {
-    $$("[data-step]").forEach((el, i) => {
-      el.classList.toggle("active", i === index);
-      el.setAttribute("aria-selected", String(i === index));
-      el.tabIndex = i === index ? 0 : -1;
-    });
-    $("#step-panel").setAttribute("aria-labelledby", `step-${index}`);
-    $("#step-title").textContent = steps[index][0];
-    $("#step-text").textContent = steps[index][1];
-    $("#step-reply").textContent = steps[index][2];
-    const stepImage = $("[data-step-image]");
-    if (stepImage)
-      stepImage.src = `/media/figma-final/${["steps-0", "steps2-2", "steps3-2"][index]}.webp`;
-    $(".card-foot span").textContent = steps[index][3];
-  }
-  $$("[data-step]").forEach((el) => {
-    el.onclick = () => selectStep(+el.dataset.step);
-    el.onkeydown = (e) => {
-      if (
-        [
-          "ArrowDown",
-          "ArrowRight",
-          "ArrowUp",
-          "ArrowLeft",
-          "Home",
-          "End",
-        ].includes(e.key)
-      ) {
-        e.preventDefault();
-        const current = +el.dataset.step;
-        const index =
-          e.key === "Home"
-            ? 0
-            : e.key === "End"
-              ? 2
-              : (current +
-                  (["ArrowRight", "ArrowDown"].includes(e.key) ? 1 : 2)) %
-                3;
-        selectStep(index);
-        $(`#step-${index}`).focus();
-      }
-    };
-  });
+  const steps = initSteps({ root });
+  const contextTyping = initContextTyping({ root });
   $("#compare-range")?.addEventListener(
     "input",
     (e) => $(".comparison").style.setProperty("--split", `${e.target.value}%`),
@@ -155,6 +96,8 @@ export function initLanding({
       events.abort();
       header?.destroy();
       heroSlider?.destroy();
+      steps?.destroy();
+      contextTyping?.destroy();
       finalPanels.destroy();
       stories?.destroy();
       $$(

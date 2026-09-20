@@ -105,6 +105,24 @@ export function initMotion({ root = document } = {}) {
           toggleActions: "play none none reset",
         },
       });
+    const footer = $("#footer");
+    const wordmark = footer?.querySelector(".footer-wordmark > span");
+    if (wordmark)
+      gsap.fromTo(
+        wordmark,
+        { clipPath: "inset(0% 0% 55% 0%)" },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: footer,
+            start: "top 90%",
+            end: "max",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
     return () => {
       if (pauseFilm) toggle?.removeEventListener("click", pauseFilm);
       video?.removeEventListener("loadedmetadata", seek);
