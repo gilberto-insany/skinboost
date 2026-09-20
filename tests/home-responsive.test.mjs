@@ -58,6 +58,15 @@ test(
             captionInside:
               caption.top >= panel.top && caption.bottom <= panel.bottom,
             photosBelowText: photos.every((p) => p.top >= copy.bottom),
+            heroProportional: [
+              ...document.querySelectorAll(".hero-art > img"),
+            ].every((e) => getComputedStyle(e).objectFit === "cover"),
+            ctaProportional: [
+              ...document.querySelectorAll(".cta-art img"),
+            ].every((e) => {
+              const r = e.getBoundingClientRect();
+              return Math.abs(r.width / r.height - 2752 / 1536) < 0.01;
+            }),
             fits: [
               ...document.querySelectorAll(
                 ".nav > *, .bento > article, .catalog-feature, .catalog-items > button, .comparison",
@@ -75,6 +84,11 @@ test(
           `${width}: horizontal page overflow`,
         );
         assert.ok(layout.fits, `${width}: content outside viewport`);
+        assert.ok(
+          layout.heroProportional,
+          `${width}: hero stretches its images`,
+        );
+        assert.ok(layout.ctaProportional, `${width}: CTA stretches its images`);
         assert.ok(layout.captionInside, `${width}: step caption outside photo`);
         if (width <= 1200)
           assert.ok(

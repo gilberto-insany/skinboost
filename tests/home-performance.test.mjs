@@ -47,6 +47,7 @@ test(
         "data-hero-index",
         "0",
       );
+      await expect(page.locator("#bottle-fallback")).toBeHidden();
       await page.evaluate(() => document.fonts.ready);
       await expect(page.locator(".hero-footer")).toHaveAttribute(
         "style",
@@ -95,6 +96,13 @@ test(
         )
         .toBeLessThan(forward);
       await expect(page.locator(".nav")).toHaveCSS("position", "fixed");
+      await page.locator("#produtos").scrollIntoViewIfNeeded();
+      await expect(page.locator("#bottle-canvas")).toHaveAttribute(
+        "data-status",
+        "webgl-unavailable",
+        { timeout: 15000 },
+      );
+      await expect(page.locator("#bottle-fallback")).toBeVisible();
       await page.evaluate(() =>
         window.scrollTo({ top: 0, behavior: "instant" }),
       );

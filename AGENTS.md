@@ -119,3 +119,6 @@ Leandro requested the pre-final-Home production version at `/wireframe`, while t
 
 ## Home performance — 20 September 2026
 Gilberto requested a thorough performance pass while preserving the approved visual design. Defer the scroll video until near its section and keep the poster for reduced motion. Lazy-load the lossless WebP 3D fallback, retain high-DPI 3D and animated SVG quality, scope progress writes to their controls, and suspend decorative work offscreen/hidden. Report measured asset savings separately from unmeasured Core Web Vitals.
+
+## Branding and proportional media — 20 September 2026
+Gilberto requested a favicon and share image, proportional hero/CTA artwork, a natural mobile wrap for “Você não precisa de mais uma rotina”, and no photo before the 3D appears. Use the original logo/monogram in brand assets. Keep the 3D fallback hidden while loading and show it only on failure. Keep CTA image height intrinsic at all widths; preserve desktop intro line breaks but allow the first sentence to wrap naturally on phones. Use the current skinboost.insany.chatgpt.site address in metadata and handoff.

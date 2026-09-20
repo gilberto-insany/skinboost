@@ -1,4 +1,16 @@
 /* Final Home: preserve the desktop composition while reflowing smaller screens. */
+@media (max-width: 700px) {
+  .intro.home-final .intro-desktop-break {
+    display: none;
+  }
+  .intro.home-final h2 {
+    max-width: 16ch;
+    text-wrap: balance;
+  }
+  .intro.home-final h2 > span {
+    white-space: nowrap;
+  }
+}
 @media (max-width: 1200px) {
   .home-final.section {
     padding: var(--sb-section-spacing) 32px;

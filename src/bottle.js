@@ -96,6 +96,7 @@ export async function initBottle({ root = document, signal } = {}) {
   const fallback = root.querySelector("#bottle-fallback");
   if (!container || container.querySelector("canvas")) return;
   container.dataset.status = "initializing";
+  if (fallback) fallback.hidden = true;
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({
@@ -105,6 +106,7 @@ export async function initBottle({ root = document, signal } = {}) {
     });
   } catch (error) {
     container.dataset.status = "webgl-unavailable";
+    if (fallback) fallback.hidden = false;
     console.warn("WebGL unavailable.", error);
     return;
   }
