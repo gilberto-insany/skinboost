@@ -4,6 +4,7 @@
 @import "./landing/foundations.css";
 @import "./landing/home-final.css";
 @import "./landing/page-final.css";
+@import "./landing/responsive.css";
 .evolution-copy h2 {
   font-size: 18px;
   font-weight: 400;

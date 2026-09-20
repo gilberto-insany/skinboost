@@ -191,3 +191,9 @@ Pedido posterior: retirar controles do hero, fixar menu apenas depois dele, auto
 - Bento alterna três perguntas sobre Comfort, Cleanse e Balance. O nome acessível do botão permanece constante; a digitação não dispara anúncios por caractere nem envia mensagens.
 - Vídeo: Figma 2128:1753 confirmado novamente; bloco em x=60, y=232 na referência 1440×871, largura 642, gaps 24; removido translateY herdado. Círculo de progresso alinhado ao mesmo bloco.
 - Rodapé: máscara vertical reversível via ScrollTrigger; revela a marca inteira até o fim do documento. O espaço do texto é estável durante o scroll e o modo de movimento reduzido mostra a marca inteira.
+
+### Adaptação responsiva
+
+A Home mantém a referência desktop de 1440px e passa a reorganizar o conteúdo em 1200, 1000 e 700px. Em celulares, o Bento e o catálogo usam uma coluna; legendas das etapas ficam dentro da foto; fotos de privacidade ocupam uma área abaixo do texto; hero mantém a proporção original com contraste para leitura. Menu recolhido em tablets, alvos de toque de 44px e navegação fixa depois do hero. Vídeo, 3D, abas e revelação do rodapé preservados.
+
+Verificação de layout em 320, 390, 768, 1024 e 1440px, incluindo ausência de rolagem horizontal, limites dos cartões, legendas e imagens sem sobreposição, abertura/fechamento do menu e seleção de etapas/produtos.
