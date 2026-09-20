@@ -4,16 +4,17 @@
 SkinBoost design system. Generated CSS lives in `src/tokens/generated` and is
 updated with `npm run tokens:build`.
 
-The current export omits the IDs of primitive variables while semantic colors
-still reference opaque `VariableID` values. The compiler therefore contains a
-strict compatibility bridge for the known `26:11` through `26:89` primitive
-sequence. This bridge is temporary: a future Figma export must retain each
-variable's `id`, at which point the compiler will prefer those native IDs.
+`semantic-aliases.json` records all 65 semantic variables in Light and Dark,
+transcribed from four user-supplied screenshots listed in its evidence field.
+The compiler resolves these 130 references by primitive name, independently of
+array order or inferred IDs. Original export values are retained in the manifest
+to reject changed references on a future export until reviewed. Missing targets
+also fail generation. The screenshots confirm alias names, not native IDs or
+primitive hexadecimal values; those colors still come from the original JSON.
 
-The legacy ID sequence is inferred, not verified against native Figma IDs.
-The compiler rejects reordered primitive names, but that guard does not prove
-the inferred mapping is correct. Confirm the mapping with an ID-bearing export
-before migrating application styles.
+The screenshots show collection `02 · Semantic`; the original JSON calls it
+`1 · Semantic Colors`. The raw export is preserved, and the manifest documents
+both labels. No Figma file was modified. The old order-based ID bridge is removed.
 
 Foundations / Tokens Figma provides Light and Dark review stories in both
 catalogs. `src/tokens/functional.css` proposes UI roles scoped to `.ds-review`:

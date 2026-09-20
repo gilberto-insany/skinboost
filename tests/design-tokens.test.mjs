@@ -9,13 +9,21 @@ import {
 
 const root = resolve(import.meta.dirname, "..");
 
-test("legacy alias resolution rejects reordered primitives", async () => {
+test("named aliases preserve semantic colors when primitives are reordered", async () => {
   const source = await loadTokenSource();
+  const expected = buildTokenFiles(source).files["semantic-colors.css"];
   source.collections["_Colors Primitives"].variables.reverse();
-  assert.throws(
-    () => buildTokenFiles(source),
-    /Legacy primitive order changed/,
-  );
+  assert.equal(buildTokenFiles(source).files["semantic-colors.css"], expected);
+});
+
+test("new export aliases and missing primitives require review", async () => {
+  const source = await loadTokenSource();
+  source.collections["1 · Semantic Colors"].variables[0].values.Light =
+    "{VariableID:changed}";
+  assert.throws(() => buildTokenFiles(source), /Unverified semantic alias/);
+  const missing = await loadTokenSource();
+  missing.collections["_Colors Primitives"].variables[0].name = "renamed";
+  assert.throws(() => buildTokenFiles(missing), /Missing or invalid primitive/);
 });
 
 test("the Figma export compiles every collection and resolves semantic aliases", async () => {
@@ -27,7 +35,7 @@ test("the Figma export compiles every collection and resolves semantic aliases",
   assert.equal(report.semanticColors, 65);
   assert.equal(report.resolvedAliasCount, 130);
   assert.equal(report.dimensionTokens, 60);
-  assert.equal(report.usesLegacyBridge, true);
+  assert.equal(report.aliasVerification, "screenshots");
   assert.match(files["semantic-colors.css"], /\[data-theme="dark"\]/);
   assert.match(files["semantic-colors.css"], /--color-neutral-maximum:/);
 });

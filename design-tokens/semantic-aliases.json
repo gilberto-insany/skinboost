@@ -1,0 +1,533 @@
+{
+  "verification": "Named aliases visually confirmed in four user-supplied Figma screenshots; native IDs and primitive hex values were not verified.",
+  "observedCollection": "02 · Semantic",
+  "exportCollection": "1 · Semantic Colors",
+  "evidence": [
+    "Screenshot 2026-09-19 at 22.00.54.png",
+    "Screenshot 2026-09-19 at 22.02.47.png",
+    "Screenshot 2026-09-19 at 22.02.56.png",
+    "Screenshot 2026-09-19 at 22.03.03.png"
+  ],
+  "aliases": {
+    "static/white": {
+      "Light": "static/white",
+      "Dark": "static/white",
+      "exportValues": {
+        "Light": "{VariableID:26:88}",
+        "Dark": "{VariableID:26:88}"
+      }
+    },
+    "static/black": {
+      "Light": "static/black",
+      "Dark": "static/black",
+      "exportValues": {
+        "Light": "{VariableID:26:89}",
+        "Dark": "{VariableID:26:89}"
+      }
+    },
+    "neutral/very soft": {
+      "Light": "gray/50",
+      "Dark": "gray/950",
+      "exportValues": {
+        "Light": "{VariableID:26:33}",
+        "Dark": "{VariableID:26:43}"
+      }
+    },
+    "neutral/soft": {
+      "Light": "gray/100",
+      "Dark": "gray/900",
+      "exportValues": {
+        "Light": "{VariableID:26:34}",
+        "Dark": "{VariableID:26:42}"
+      }
+    },
+    "neutral/light": {
+      "Light": "gray/200",
+      "Dark": "gray/800",
+      "exportValues": {
+        "Light": "{VariableID:26:35}",
+        "Dark": "{VariableID:26:41}"
+      }
+    },
+    "neutral/subtle": {
+      "Light": "gray/300",
+      "Dark": "gray/700",
+      "exportValues": {
+        "Light": "{VariableID:26:36}",
+        "Dark": "{VariableID:26:40}"
+      }
+    },
+    "neutral/base": {
+      "Light": "gray/500",
+      "Dark": "gray/500",
+      "exportValues": {
+        "Light": "{VariableID:26:38}",
+        "Dark": "{VariableID:26:38}"
+      }
+    },
+    "neutral/strong": {
+      "Light": "gray/600",
+      "Dark": "gray/400",
+      "exportValues": {
+        "Light": "{VariableID:26:39}",
+        "Dark": "{VariableID:26:37}"
+      }
+    },
+    "neutral/intense": {
+      "Light": "gray/700",
+      "Dark": "gray/300",
+      "exportValues": {
+        "Light": "{VariableID:26:40}",
+        "Dark": "{VariableID:26:36}"
+      }
+    },
+    "neutral/very strong": {
+      "Light": "gray/800",
+      "Dark": "gray/200",
+      "exportValues": {
+        "Light": "{VariableID:26:41}",
+        "Dark": "{VariableID:26:35}"
+      }
+    },
+    "neutral/maximum": {
+      "Light": "gray/950",
+      "Dark": "gray/50",
+      "exportValues": {
+        "Light": "{VariableID:26:43}",
+        "Dark": "{VariableID:26:33}"
+      }
+    },
+    "brand primary/very soft": {
+      "Light": "primary/50",
+      "Dark": "primary/950",
+      "exportValues": {
+        "Light": "{VariableID:26:11}",
+        "Dark": "{VariableID:26:21}"
+      }
+    },
+    "brand primary/soft": {
+      "Light": "primary/100",
+      "Dark": "primary/900",
+      "exportValues": {
+        "Light": "{VariableID:26:12}",
+        "Dark": "{VariableID:26:20}"
+      }
+    },
+    "brand primary/light": {
+      "Light": "primary/200",
+      "Dark": "primary/800",
+      "exportValues": {
+        "Light": "{VariableID:26:13}",
+        "Dark": "{VariableID:26:19}"
+      }
+    },
+    "brand primary/subtle": {
+      "Light": "primary/300",
+      "Dark": "primary/700",
+      "exportValues": {
+        "Light": "{VariableID:26:14}",
+        "Dark": "{VariableID:26:18}"
+      }
+    },
+    "brand primary/base": {
+      "Light": "primary/500",
+      "Dark": "primary/500",
+      "exportValues": {
+        "Light": "{VariableID:26:16}",
+        "Dark": "{VariableID:26:16}"
+      }
+    },
+    "brand primary/strong": {
+      "Light": "primary/600",
+      "Dark": "primary/400",
+      "exportValues": {
+        "Light": "{VariableID:26:17}",
+        "Dark": "{VariableID:26:15}"
+      }
+    },
+    "brand primary/intense": {
+      "Light": "primary/700",
+      "Dark": "primary/300",
+      "exportValues": {
+        "Light": "{VariableID:26:18}",
+        "Dark": "{VariableID:26:14}"
+      }
+    },
+    "brand primary/very strong": {
+      "Light": "primary/800",
+      "Dark": "primary/200",
+      "exportValues": {
+        "Light": "{VariableID:26:19}",
+        "Dark": "{VariableID:26:13}"
+      }
+    },
+    "brand primary/maximum": {
+      "Light": "primary/950",
+      "Dark": "primary/50",
+      "exportValues": {
+        "Light": "{VariableID:26:21}",
+        "Dark": "{VariableID:26:11}"
+      }
+    },
+    "brand secondary/very soft": {
+      "Light": "secondary/50",
+      "Dark": "secondary/950",
+      "exportValues": {
+        "Light": "{VariableID:26:22}",
+        "Dark": "{VariableID:26:32}"
+      }
+    },
+    "brand secondary/soft": {
+      "Light": "secondary/100",
+      "Dark": "secondary/900",
+      "exportValues": {
+        "Light": "{VariableID:26:23}",
+        "Dark": "{VariableID:26:31}"
+      }
+    },
+    "brand secondary/light": {
+      "Light": "secondary/200",
+      "Dark": "secondary/800",
+      "exportValues": {
+        "Light": "{VariableID:26:24}",
+        "Dark": "{VariableID:26:30}"
+      }
+    },
+    "brand secondary/subtle": {
+      "Light": "secondary/300",
+      "Dark": "secondary/700",
+      "exportValues": {
+        "Light": "{VariableID:26:25}",
+        "Dark": "{VariableID:26:29}"
+      }
+    },
+    "brand secondary/base": {
+      "Light": "secondary/500",
+      "Dark": "secondary/500",
+      "exportValues": {
+        "Light": "{VariableID:26:27}",
+        "Dark": "{VariableID:26:27}"
+      }
+    },
+    "brand secondary/strong": {
+      "Light": "secondary/600",
+      "Dark": "secondary/400",
+      "exportValues": {
+        "Light": "{VariableID:26:28}",
+        "Dark": "{VariableID:26:26}"
+      }
+    },
+    "brand secondary/intense": {
+      "Light": "secondary/700",
+      "Dark": "secondary/300",
+      "exportValues": {
+        "Light": "{VariableID:26:29}",
+        "Dark": "{VariableID:26:25}"
+      }
+    },
+    "brand secondary/very strong": {
+      "Light": "secondary/800",
+      "Dark": "secondary/200",
+      "exportValues": {
+        "Light": "{VariableID:26:30}",
+        "Dark": "{VariableID:26:24}"
+      }
+    },
+    "brand secondary/maximum": {
+      "Light": "secondary/950",
+      "Dark": "secondary/50",
+      "exportValues": {
+        "Light": "{VariableID:26:32}",
+        "Dark": "{VariableID:26:22}"
+      }
+    },
+    "feedback success/very soft": {
+      "Light": "success/50",
+      "Dark": "success/950",
+      "exportValues": {
+        "Light": "{VariableID:26:44}",
+        "Dark": "{VariableID:26:54}"
+      }
+    },
+    "feedback success/soft": {
+      "Light": "success/100",
+      "Dark": "success/900",
+      "exportValues": {
+        "Light": "{VariableID:26:45}",
+        "Dark": "{VariableID:26:53}"
+      }
+    },
+    "feedback success/light": {
+      "Light": "success/200",
+      "Dark": "success/800",
+      "exportValues": {
+        "Light": "{VariableID:26:46}",
+        "Dark": "{VariableID:26:52}"
+      }
+    },
+    "feedback success/subtle": {
+      "Light": "success/300",
+      "Dark": "success/700",
+      "exportValues": {
+        "Light": "{VariableID:26:47}",
+        "Dark": "{VariableID:26:51}"
+      }
+    },
+    "feedback success/base": {
+      "Light": "success/500",
+      "Dark": "success/500",
+      "exportValues": {
+        "Light": "{VariableID:26:49}",
+        "Dark": "{VariableID:26:49}"
+      }
+    },
+    "feedback success/strong": {
+      "Light": "success/600",
+      "Dark": "success/400",
+      "exportValues": {
+        "Light": "{VariableID:26:50}",
+        "Dark": "{VariableID:26:48}"
+      }
+    },
+    "feedback success/intense": {
+      "Light": "success/700",
+      "Dark": "success/300",
+      "exportValues": {
+        "Light": "{VariableID:26:51}",
+        "Dark": "{VariableID:26:47}"
+      }
+    },
+    "feedback success/very strong": {
+      "Light": "success/800",
+      "Dark": "success/200",
+      "exportValues": {
+        "Light": "{VariableID:26:52}",
+        "Dark": "{VariableID:26:46}"
+      }
+    },
+    "feedback success/maximum": {
+      "Light": "success/950",
+      "Dark": "success/50",
+      "exportValues": {
+        "Light": "{VariableID:26:54}",
+        "Dark": "{VariableID:26:44}"
+      }
+    },
+    "feedback warning/very soft": {
+      "Light": "warning/50",
+      "Dark": "warning/950",
+      "exportValues": {
+        "Light": "{VariableID:26:55}",
+        "Dark": "{VariableID:26:65}"
+      }
+    },
+    "feedback warning/soft": {
+      "Light": "warning/100",
+      "Dark": "warning/900",
+      "exportValues": {
+        "Light": "{VariableID:26:56}",
+        "Dark": "{VariableID:26:64}"
+      }
+    },
+    "feedback warning/light": {
+      "Light": "warning/200",
+      "Dark": "warning/800",
+      "exportValues": {
+        "Light": "{VariableID:26:57}",
+        "Dark": "{VariableID:26:63}"
+      }
+    },
+    "feedback warning/subtle": {
+      "Light": "warning/300",
+      "Dark": "warning/700",
+      "exportValues": {
+        "Light": "{VariableID:26:58}",
+        "Dark": "{VariableID:26:62}"
+      }
+    },
+    "feedback warning/base": {
+      "Light": "warning/500",
+      "Dark": "warning/500",
+      "exportValues": {
+        "Light": "{VariableID:26:60}",
+        "Dark": "{VariableID:26:60}"
+      }
+    },
+    "feedback warning/strong": {
+      "Light": "warning/600",
+      "Dark": "warning/400",
+      "exportValues": {
+        "Light": "{VariableID:26:61}",
+        "Dark": "{VariableID:26:59}"
+      }
+    },
+    "feedback warning/intense": {
+      "Light": "warning/700",
+      "Dark": "warning/300",
+      "exportValues": {
+        "Light": "{VariableID:26:62}",
+        "Dark": "{VariableID:26:58}"
+      }
+    },
+    "feedback warning/very strong": {
+      "Light": "warning/800",
+      "Dark": "warning/200",
+      "exportValues": {
+        "Light": "{VariableID:26:63}",
+        "Dark": "{VariableID:26:57}"
+      }
+    },
+    "feedback warning/maximum": {
+      "Light": "warning/950",
+      "Dark": "warning/50",
+      "exportValues": {
+        "Light": "{VariableID:26:65}",
+        "Dark": "{VariableID:26:55}"
+      }
+    },
+    "feedback error/very soft": {
+      "Light": "error/50",
+      "Dark": "error/950",
+      "exportValues": {
+        "Light": "{VariableID:26:66}",
+        "Dark": "{VariableID:26:76}"
+      }
+    },
+    "feedback error/soft": {
+      "Light": "error/100",
+      "Dark": "error/900",
+      "exportValues": {
+        "Light": "{VariableID:26:67}",
+        "Dark": "{VariableID:26:75}"
+      }
+    },
+    "feedback error/light": {
+      "Light": "error/200",
+      "Dark": "error/800",
+      "exportValues": {
+        "Light": "{VariableID:26:68}",
+        "Dark": "{VariableID:26:74}"
+      }
+    },
+    "feedback error/subtle": {
+      "Light": "error/300",
+      "Dark": "error/700",
+      "exportValues": {
+        "Light": "{VariableID:26:69}",
+        "Dark": "{VariableID:26:73}"
+      }
+    },
+    "feedback error/base": {
+      "Light": "error/500",
+      "Dark": "error/500",
+      "exportValues": {
+        "Light": "{VariableID:26:71}",
+        "Dark": "{VariableID:26:71}"
+      }
+    },
+    "feedback error/strong": {
+      "Light": "error/600",
+      "Dark": "error/400",
+      "exportValues": {
+        "Light": "{VariableID:26:72}",
+        "Dark": "{VariableID:26:70}"
+      }
+    },
+    "feedback error/intense": {
+      "Light": "error/700",
+      "Dark": "error/300",
+      "exportValues": {
+        "Light": "{VariableID:26:73}",
+        "Dark": "{VariableID:26:69}"
+      }
+    },
+    "feedback error/very strong": {
+      "Light": "error/800",
+      "Dark": "error/200",
+      "exportValues": {
+        "Light": "{VariableID:26:74}",
+        "Dark": "{VariableID:26:68}"
+      }
+    },
+    "feedback error/maximum": {
+      "Light": "error/950",
+      "Dark": "error/50",
+      "exportValues": {
+        "Light": "{VariableID:26:76}",
+        "Dark": "{VariableID:26:66}"
+      }
+    },
+    "feedback info/very soft": {
+      "Light": "info/50",
+      "Dark": "info/950",
+      "exportValues": {
+        "Light": "{VariableID:26:77}",
+        "Dark": "{VariableID:26:87}"
+      }
+    },
+    "feedback info/soft": {
+      "Light": "info/100",
+      "Dark": "info/900",
+      "exportValues": {
+        "Light": "{VariableID:26:78}",
+        "Dark": "{VariableID:26:86}"
+      }
+    },
+    "feedback info/light": {
+      "Light": "info/200",
+      "Dark": "info/800",
+      "exportValues": {
+        "Light": "{VariableID:26:79}",
+        "Dark": "{VariableID:26:85}"
+      }
+    },
+    "feedback info/subtle": {
+      "Light": "info/300",
+      "Dark": "info/700",
+      "exportValues": {
+        "Light": "{VariableID:26:80}",
+        "Dark": "{VariableID:26:84}"
+      }
+    },
+    "feedback info/base": {
+      "Light": "info/500",
+      "Dark": "info/500",
+      "exportValues": {
+        "Light": "{VariableID:26:82}",
+        "Dark": "{VariableID:26:82}"
+      }
+    },
+    "feedback info/strong": {
+      "Light": "info/600",
+      "Dark": "info/400",
+      "exportValues": {
+        "Light": "{VariableID:26:83}",
+        "Dark": "{VariableID:26:81}"
+      }
+    },
+    "feedback info/intense": {
+      "Light": "info/700",
+      "Dark": "info/300",
+      "exportValues": {
+        "Light": "{VariableID:26:84}",
+        "Dark": "{VariableID:26:80}"
+      }
+    },
+    "feedback info/very strong": {
+      "Light": "info/800",
+      "Dark": "info/200",
+      "exportValues": {
+        "Light": "{VariableID:26:85}",
+        "Dark": "{VariableID:26:79}"
+      }
+    },
+    "feedback info/maximum": {
+      "Light": "info/950",
+      "Dark": "info/50",
+      "exportValues": {
+        "Light": "{VariableID:26:87}",
+        "Dark": "{VariableID:26:77}"
+      }
+    }
+  }
+}

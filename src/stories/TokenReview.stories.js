@@ -29,7 +29,7 @@ function renderReview(theme) {
   root.className = "ds-review";
   root.dataset.theme = theme;
   root.innerHTML = `<h1>Tokens Figma · ${theme === "light" ? "Light" : "Dark"}</h1>
-    <p>Proposta de funções para a interface. O mapa dos IDs semânticos é inferido do export legado e aguarda confirmação no Figma. Landing e chat continuam com seus estilos atuais.</p>
+    <p>Proposta de funções para a interface. Os 130 aliases Light/Dark foram confirmados por nome nos prints do Figma enviados pelo usuário. As cores hexadecimais vêm do JSON exportado; os IDs nativos não foram consultados. Landing e chat continuam com seus estilos atuais.</p>
     <h2>Funções da interface</h2><div class="ds-role-grid"></div>
     <div class="ds-example"><h2>Seu próximo passo</h2><p>Entenda cada escolha e revise seu contexto.</p><div class="ds-actions"><button type="button">Continuar</button><button type="button" disabled>Aguardando resposta</button></div><p class="ds-feedback">Informação: exemplo de aplicação dos tokens.</p></div>
     <h2>Variables do export</h2><p>215 variables. As coleções abaixo usam os valores CSS gerados, com dimensões normalizadas.</p>`;
