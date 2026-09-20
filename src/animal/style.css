@@ -212,31 +212,6 @@ textarea:focus-visible {
   line-height: 1.65;
   color: #596853;
 }
-.start-button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  border: 0;
-  border-radius: 40px;
-  background: var(--ink);
-  color: #fff;
-  padding: 17px 24px;
-  margin-top: 25px;
-  font-size: 14px;
-  font-weight: 650;
-}
-.start-button span {
-  font-size: 23px;
-  color: var(--acid);
-}
-.consent-note {
-  font-size: 10px;
-  line-height: 1.6;
-  color: #65725d;
-  max-width: 360px;
-  margin: 12px 0 0;
-}
 .animal-thread {
   padding: 30px 0 8px;
 }
@@ -483,10 +458,6 @@ textarea:focus-visible {
   .intro-copy {
     font-size: 14px;
   }
-  .start-button {
-    margin-top: 17px;
-    padding: 12px 20px;
-  }
   .composer-area {
     padding: 0 12px max(10px, env(safe-area-inset-bottom));
   }
@@ -507,9 +478,6 @@ textarea:focus-visible {
   }
   .animal-app {
     min-height: 0;
-  }
-  .consent-note {
-    font-size: 10px;
   }
   .connection-status {
     margin: 4px 8px;

@@ -6,7 +6,7 @@ import { existsSync } from "node:fs";
 import sharp from "sharp";
 
 test(
-  "Animal mobile and desktop: opt-in, real request contract, retry, photo permission and ephemeral state",
+  "Animal mobile and desktop: direct entry, surprise photo, deliberate send, retry and ephemeral state",
   { timeout: 90000 },
   async () => {
     const server = await preview({
@@ -80,7 +80,13 @@ test(
           });
         });
         await page.goto(`${base}/animal`);
-        await expect(page.locator("#animal-input")).toBeDisabled();
+        await expect(page.locator("#animal-input")).toBeEnabled();
+        await expect(page.locator("#start")).toHaveCount(0);
+        await expect(page.locator('input[type="checkbox"]')).toHaveCount(0);
+        assert.doesNotMatch(
+          await page.locator("body").innerText(),
+          /brux[ao]|palhaço/i,
+        );
         assert.equal(calls.length, 0);
         assert.ok(
           await page.evaluate(
@@ -88,7 +94,6 @@ test(
           ),
         );
         await page.screenshot({ path: `/tmp/skinboost-animal-${width}.png` });
-        await page.locator("#start").click();
         await page.locator("#animal-input").fill("Tenho sete séruns");
         await page.locator("#send").click();
         await expect(page.locator("#chat-error")).toContainText("indisponível");
@@ -111,10 +116,17 @@ test(
           buffer: image,
         });
         await expect(page.locator("#photo-preview")).toBeVisible();
-        await page.locator("#send").click();
-        await expect(page.locator("#chat-error")).toContainText("Autorize");
-        assert.equal(calls.length, 2);
-        await page.locator("#photo-consent").check();
+        await expect(page.locator("#photo-permission")).toContainText("OpenAI");
+        assert.doesNotMatch(
+          await page.locator("body").innerText(),
+          /brux[ao]|palhaço/i,
+        );
+        assert.equal(calls.length, 2, "attachment alone must not upload");
+        assert.equal(
+          imageCalls.length,
+          0,
+          "attachment alone must not generate",
+        );
         await page.locator("#send").click();
         await expect(page.locator("#photo-preview")).toBeHidden();
         assert.equal(calls[2].photoConsent, true);
@@ -165,7 +177,6 @@ test(
           buffer: image,
         });
         await expect(page.locator("#photo-preview")).toBeVisible();
-        await page.locator("#photo-consent").check();
         await page
           .locator("#animal-input")
           .fill("Não quero mais a brincadeira");
@@ -179,7 +190,8 @@ test(
           "no generation after care/withdrawal",
         );
         await page.reload();
-        await expect(page.locator("#start")).toBeVisible();
+        await expect(page.locator("#intro")).toBeVisible();
+        await expect(page.locator("#animal-input")).toBeEnabled();
         await expect(page.locator(".message")).toHaveCount(0);
         assert.equal(
           await page.locator(".animal-top a").last().getAttribute("href"),

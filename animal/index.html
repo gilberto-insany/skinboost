@@ -51,14 +51,6 @@
               Conta o que você anda aprontando.<br />Eu entro com a bronca.
               Você, com o deboche.
             </p>
-            <button class="start-button" id="start" type="button">
-              Pode zoar. Eu aguento. <span aria-hidden="true">↗</span>
-            </button>
-            <p class="consent-note">
-              Ao entrar, confirmo que sou maior de 18 e quero participar da
-              brincadeira. Com foto, ganhe um antes/depois de bruxa ou palhaço.
-              É montagem de humor, não avaliação da pele.
-            </p>
           </section>
           <section
             class="animal-thread"
@@ -69,7 +61,7 @@
             aria-relevant="additions"
             hidden
           ></section>
-          <div id="suggestions" class="suggestions" hidden>
+          <div id="suggestions" class="suggestions">
             <button type="button">Minha rotina é água e fé</button>
             <button type="button">Durmo de maquiagem</button>
             <button type="button">Comprei 7 séruns. Me julga.</button>
@@ -82,7 +74,7 @@
             Tentar novamente
           </button>
           <form id="animal-form" class="animal-composer">
-            <fieldset id="composer-controls" disabled>
+            <fieldset id="composer-controls">
               <legend class="sr-only">Sua mensagem</legend>
               <div class="photo-preview" id="photo-preview" hidden>
                 <img id="photo-image" alt="Sua foto anexada" /><span
@@ -96,11 +88,10 @@
                   ×
                 </button>
               </div>
-              <label id="photo-permission" class="photo-permission" hidden
-                ><input id="photo-consent" type="checkbox" /> Esta foto é minha,
-                sou maior de 18 e autorizo seu envio à OpenAI para a brincadeira
-                e a transformação automática em bruxa ou palhaço.</label
-              >
+              <p id="photo-permission" class="photo-permission" hidden>
+                Ao enviar, sua foto vai à OpenAI para uma montagem de humor
+                surpresa. Use sua própria foto, 18+.
+              </p>
               <label for="animal-input" class="sr-only"
                 >Conte sua confissão</label
               >
@@ -108,7 +99,7 @@
                 id="animal-input"
                 rows="2"
                 maxlength="1500"
-                placeholder="Entre na brincadeira para conversar…"
+                placeholder="Manda a foto ou confessa a cagada…"
               ></textarea>
               <div class="composer-bottom">
                 <label class="photo-button" for="animal-photo"
@@ -132,9 +123,9 @@
             </fieldset>
           </form>
           <p class="privacy-note">
-            IA pode errar. Zoação não é diagnóstico. Texto e foto autorizada vão
-            à OpenAI.<br />A conversa fica só nesta aba; ao recarregar, você
-            começa de novo.
+            Modo de zoeira · 18+. Ao enviar, você entra na brincadeira com
+            IA.<br />
+            Texto enviado à OpenAI. A conversa desta aba some ao recarregar.
           </p>
         </div>
       </main>

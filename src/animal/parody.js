@@ -4,7 +4,7 @@ export function createParodyCard(parent, original, { onRetry, onOffer }) {
   card.className = "animal-parody";
   card.innerHTML = `<div class="parody-label">LABORATÓRIO DO DEBOCHE</div>
     <h3>Seu antes. Meu crime artístico.</h3>
-    <p class="parody-progress" role="status">Preparando uma fantasia com IA… pode levar alguns minutos.</p>
+    <p class="parody-progress" role="status">Preparando a surpresa… pode levar alguns minutos.</p>
     <button type="button" class="parody-retry" hidden>Tentar gerar só o depois</button>
     <div class="parody-result" hidden>
       <figure class="sx-simulation">
@@ -34,7 +34,7 @@ export function createParodyCard(parent, original, { onRetry, onOffer }) {
     loading() {
       progress.hidden = false;
       progress.textContent =
-        "Preparando uma fantasia com IA… pode levar alguns minutos.";
+        "Preparando a surpresa… pode levar alguns minutos.";
       retry.hidden = true;
       card.setAttribute("aria-busy", "true");
     },

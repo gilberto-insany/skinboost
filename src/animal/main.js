@@ -7,7 +7,7 @@ const $ = (selector) => document.querySelector(selector);
 const input = $("#animal-input");
 const history = [];
 const comparisons = mountPhotoComparisonController($("#thread"));
-let accepted = false,
+let started = false,
   pending = false,
   preparingPhoto = false,
   photo = "",
@@ -54,7 +54,6 @@ function busy(value) {
     $("#send"),
     $("#animal-photo"),
     $("#remove-photo"),
-    $("#photo-consent"),
     $("#retry"),
   ])
     node.disabled = value;
@@ -76,7 +75,6 @@ function clearPhoto() {
   $("#photo-preview").hidden = true;
   $("#photo-permission").hidden = true;
   $("#photo-image").removeAttribute("src");
-  $("#photo-consent").checked = false;
 }
 function suggestions(choices) {
   const area = $("#suggestions");
@@ -92,16 +90,10 @@ function suggestions(choices) {
   scroll();
 }
 function begin() {
-  accepted = true;
+  started = true;
   $("#intro").hidden = true;
   $("#thread").hidden = false;
-  $("#suggestions").hidden = false;
-  $("#composer-controls").disabled = false;
-  input.placeholder = "Vai. Confessa sua rotina…";
-  row("assistant", "Entrou porque quis. Manda a foto ou confessa a cagada.");
-  input.focus();
 }
-$("#start").addEventListener("click", begin);
 $("#restart").addEventListener("click", () => {
   generation++;
   controller?.abort();
@@ -113,20 +105,20 @@ $("#restart").addEventListener("click", () => {
   status();
   $("#retry").hidden = true;
   input.value = "";
+  started = false;
+  $("#intro").hidden = false;
+  $("#thread").hidden = true;
   $("#thread").replaceChildren();
-  if (accepted) {
-    row(
-      "assistant",
-      "Zeramos a conversa. Agora entrega a próxima confissão. Eu já tô de braços cruzados.",
-    );
-    suggestions([
-      {
-        label: "Julga minha rotina",
-        value: "Quero que você julgue minha rotina",
-      },
-    ]);
-    input.focus();
-  }
+  suggestions([
+    { label: "Minha rotina é água e fé", value: "Minha rotina é água e fé" },
+    { label: "Durmo de maquiagem", value: "Durmo de maquiagem" },
+    {
+      label: "Comprei 7 séruns. Me julga.",
+      value: "Comprei 7 séruns. Me julga.",
+    },
+  ]);
+  $("#scroll-area").scrollTop = 0;
+  input.focus();
 });
 $("#remove-photo").addEventListener("click", clearPhoto);
 $("#animal-photo").addEventListener("change", async (event) => {
@@ -153,7 +145,6 @@ $("#animal-photo").addEventListener("change", async (event) => {
     $("#photo-name").textContent = file.name;
     $("#photo-preview").hidden = false;
     $("#photo-permission").hidden = false;
-    $("#photo-consent").checked = false;
   } catch {
     if (token === photoGeneration)
       error("Não consegui abrir essa foto. Tente outro arquivo.");
@@ -165,13 +156,7 @@ $("#animal-photo").addEventListener("change", async (event) => {
   }
 });
 async function send(retry = false) {
-  if (!accepted || pending || preparingPhoto) return;
-  if (photo && !$("#photo-consent").checked && !retry) {
-    error(
-      "Autorize o envio da sua foto ou remova o anexo para continuar só com texto.",
-    );
-    return;
-  }
+  if (pending || preparingPhoto) return;
   const text = retry
     ? failed?.text
     : input.value.trim() ||
@@ -180,6 +165,7 @@ async function send(retry = false) {
     input.focus();
     return;
   }
+  if (!started) begin();
   const attachment = retry ? failed.photo : photo;
   const messages = retry
     ? failed.messages
@@ -285,7 +271,7 @@ async function generateParody(original, article, initialTurn) {
   });
   async function run(turn) {
     card.loading();
-    status("Gerando seu depois de fantasia. Você pode interromper em Parar.");
+    status("Segura aí. Tô preparando a surpresa…");
     scroll();
     try {
       const response = await fetch("/api/simulate", {
