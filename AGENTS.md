@@ -109,3 +109,5 @@ Gilberto approved proceeding with responsive refinement and publication to the m
 Gilberto requested a smooth dark hero overlay with no hard left edge, clean aligned catalog typography without shadows, and the original proportional circular satisfaction seal (still marked conceptual). Match the before/after section’s beige background, flipped masked image and dark/neutral type to Figma. Keep CTA product cutouts proportional at every width and visible on phones. Rename the public Site slug from skinboost-wireframe to skinboost; preserve exact same-origin validation for the old and new URLs during migration.
 
 Crop the final CTA artwork exactly at the banner’s lower edge: no bottle may spill into the footer. Preserve the floating cap above the banner.
+
+Use 110px as the standard desktop section spacing, including both sides of the trust section’s content. Avoid adding extra margins on top of that spacing (especially between FAQ and final CTA). Keep smaller tablet and phone spacing.

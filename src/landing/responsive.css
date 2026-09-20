@@ -1,7 +1,7 @@
 /* Final Home: preserve the desktop composition while reflowing smaller screens. */
 @media (max-width: 1200px) {
   .home-final.section {
-    padding: 72px 32px;
+    padding: var(--sb-section-spacing) 32px;
   }
   .home-final.section h2 {
     font-size: clamp(36px, 4.5vw, 54px);
@@ -257,6 +257,9 @@
   }
 }
 @media (max-width: 1000px) {
+  .home-final.section {
+    padding-block: 72px;
+  }
   .nav.home-final.is-page-nav {
     position: absolute;
   }

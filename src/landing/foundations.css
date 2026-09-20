@@ -269,6 +269,7 @@
   --sb-grid-width: 1312px;
   --sb-grid-gutter: 32px;
   --sb-page-gutter: max(64px, calc((100% - 1312px) / 2));
+  --sb-section-spacing: 110px;
   --sb-style-display-d1-size: 80px;
   --sb-style-display-d1-weight: 600;
   --sb-style-display-d1-line: 1;

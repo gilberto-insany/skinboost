@@ -442,7 +442,7 @@
     letter-spacing: -0.5px;
   }
   .home-final.section {
-    padding: 110px var(--sb-page-gutter);
+    padding: var(--sb-section-spacing) var(--sb-page-gutter);
     color: #141615;
   }
   .home-final.section h2,
@@ -470,7 +470,7 @@
     margin-bottom: 40px;
   }
   .intro.home-final {
-    padding-bottom: 110px;
+    padding-bottom: var(--sb-section-spacing);
   }
   .intro.home-final .eyebrow {
     margin-bottom: 32px;
@@ -499,7 +499,7 @@
   }
   .how.home-final {
     padding-top: 0;
-    padding-bottom: 110px;
+    padding-bottom: var(--sb-section-spacing);
   }
   .how.home-final h2 {
     font-size: 64px;
@@ -1076,8 +1076,7 @@
     margin: 32px 0 0;
   }
   .trust.home-final {
-    padding-top: 0;
-    padding-bottom: 86px;
+    padding-block: var(--sb-section-spacing);
   }
   .trust.home-final .eyebrow {
     margin-bottom: 8px;
@@ -1135,7 +1134,7 @@
     line-height: 1.5;
   }
   .final-cta.home-final {
-    margin-top: 70px;
+    margin-top: 0;
     min-height: max(559px, 38.819444vw);
     padding: max(110px, 7.638889vw) var(--sb-page-gutter) 64px;
   }
