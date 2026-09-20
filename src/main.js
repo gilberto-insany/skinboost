@@ -1,3 +1,4 @@
+import "./tokens/functional.css";
 import "./styles.css";
 import "./product-story.css";
 import { openDialog, closeDialog } from "./ui/dialog.js";

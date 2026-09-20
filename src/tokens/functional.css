@@ -4,7 +4,7 @@
  * Functional UI roles. The wireframe catalog adopts them first so the live
  * landing and chat can be migrated in smaller, visually reviewed batches.
  */
-:where(.ds-review, .sb-catalog--wireframe) {
+:where(.ds-review, .sb-catalog--wireframe, .landing-theme) {
   --ui-canvas: var(--color-neutral-very-soft);
   --ui-surface: var(--color-neutral-soft);
   --ui-surface-highlight: var(--color-brand-primary-soft);

@@ -5,13 +5,13 @@
 .sb-landing-surface {
   position: relative;
   width: 100%;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ui-canvas);
+  color: var(--ui-text);
   --gutter: max(4.45vw, calc((100vw - 1440px) / 2 + 64px));
 }
 .sb-landing-surface[data-component="header"] {
   min-height: 270px;
-  background: #3b403c;
+  background: var(--color-neutral-very-strong);
 }
 .sb-landing-single-card {
   display: block;

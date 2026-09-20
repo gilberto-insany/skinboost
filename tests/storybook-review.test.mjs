@@ -542,6 +542,41 @@ test(
           { waitUntil: "networkidle" },
         );
         await page.locator('.sb-landing-surface[data-ready="true"]').waitFor();
+        assert.equal(
+          await page
+            .locator(".sb-landing-surface")
+            .evaluate((el) => getComputedStyle(el).backgroundColor),
+          id.endsWith("--cabecalho") ? "rgb(59, 64, 60)" : "rgb(245, 246, 244)",
+          `${id}: landing surface must use the semantic theme`,
+        );
+        if (await page.locator(".hero").count()) {
+          assert.equal(
+            await page
+              .locator(".hero")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(59, 64, 60)",
+          );
+          assert.equal(
+            await page
+              .locator(".send")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(49, 94, 75)",
+          );
+        }
+        if (await page.locator(".final-cta").count())
+          assert.equal(
+            await page
+              .locator(".final-cta")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(112, 120, 114)",
+          );
+        if (await page.locator("#footer").count())
+          assert.equal(
+            await page
+              .locator("#footer")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(227, 236, 228)",
+          );
         if (id.endsWith("--prompt-foto"))
           await page.getByRole("button", { name: "Remover foto" }).waitFor();
         if (
