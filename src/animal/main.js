@@ -37,7 +37,7 @@ function row(role, text, image = "") {
   if (image) {
     const img = document.createElement("img");
     img.className = "message-photo";
-    img.alt = "Foto que você enviou para a brincadeira";
+    img.alt = "Foto enviada por você";
     img.src = image;
     article.append(img);
   }
@@ -110,11 +110,14 @@ $("#restart").addEventListener("click", () => {
   $("#thread").hidden = true;
   $("#thread").replaceChildren();
   suggestions([
-    { label: "Minha rotina é água e fé", value: "Minha rotina é água e fé" },
-    { label: "Durmo de maquiagem", value: "Durmo de maquiagem" },
     {
-      label: "Comprei 7 séruns. Me julga.",
-      value: "Comprei 7 séruns. Me julga.",
+      label: "Quero cuidar da minha pele",
+      value: "Quero cuidar da minha pele",
+    },
+    { label: "Minha pele está oleosa", value: "Minha pele está oleosa" },
+    {
+      label: "Quero organizar minha rotina",
+      value: "Quero organizar minha rotina",
     },
   ]);
   $("#scroll-area").scrollTop = 0;
@@ -159,8 +162,7 @@ async function send(retry = false) {
   if (pending || preparingPhoto) return;
   const text = retry
     ? failed?.text
-    : input.value.trim() ||
-      (photo ? "Pode zoar minha foto, é uma brincadeira comigo." : "");
+    : input.value.trim() || (photo ? "O que você acha da minha pele?" : "");
   if (!text) {
     input.focus();
     return;
@@ -178,7 +180,7 @@ async function send(retry = false) {
   error();
   $("#retry").hidden = true;
   busy(true);
-  status("Preparando uma resposta sem passar pano…");
+  status("Preparando sua resposta…");
   const turn = ++generation;
   controller = new AbortController();
   let responseRow;
@@ -228,7 +230,7 @@ async function send(retry = false) {
     status(
       result.care
         ? "Brincadeira pausada. Você pode continuar no chat gentil."
-        : "Sua vez. Tem mais alguma confissão?",
+        : "Quer acrescentar mais alguma coisa?",
     );
   } catch (cause) {
     if (turn !== generation) return;
@@ -259,7 +261,7 @@ async function generateParody(original, article, initialTurn) {
       await run(turn);
       if (turn === generation) {
         busy(false);
-        status("Sua vez. Tem mais alguma confissão?");
+        status("Quer acrescentar mais alguma coisa?");
       }
     },
     onOffer: () => {

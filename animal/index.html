@@ -8,7 +8,7 @@
     />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="theme-color" content="#10291f" />
-    <title>SkinBoost Animal — skincare sem passar pano</title>
+    <title>SkinBoost — conversa sobre sua pele</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
@@ -19,21 +19,20 @@
         /></a>
         <span class="edition">EXPERIMENTO / 02</span>
         <button class="new-chat" id="restart" type="button">
-          + Nova confissão
+          + Nova conversa
         </button>
         <div class="sidebar-note">
-          <span class="claw" aria-hidden="true">///</span>
-          <p>Skincare.<br />Sem passar<br /><em>pano.</em></p>
-          <span>Você pediu sinceridade.<br />A gente perdeu a mão.</span>
+          <p>Seu cuidado<br />começa com<br /><em>uma conversa.</em></p>
+          <span>Conte o que você gostaria<br />de cuidar na sua pele.</span>
         </div>
-        <a class="normal-link" href="/chat">Prefiro o chat gentil ↗</a>
+        <a class="normal-link" href="/chat">Chat de cuidados ↗</a>
       </aside>
       <main class="animal-main">
         <header class="animal-top">
           <a href="/animal" class="mode-name"
-            >skinboost <strong>animal</strong
+            >skinboost <strong>Demo de humor</strong
             ><span class="mode-dot" aria-hidden="true"></span></a
-          ><a href="/chat">Sair da zoeira ↗</a>
+          ><a href="/chat">Chat de cuidados ↗</a>
         </header>
         <div class="animal-scroll" id="scroll-area">
           <section
@@ -42,14 +41,12 @@
             aria-labelledby="animal-title"
           >
             <div class="intro-label">
-              <span aria-hidden="true">✳</span> A IA ACORDOU SEM PACIÊNCIA
+              <span aria-hidden="true">✳</span> SUA PELE, EM CONVERSA
             </div>
-            <h1 id="animal-title">
-              Sua pele.<br />Sua rotina.<br /><em>Meu surto.</em>
-            </h1>
+            <h1 id="animal-title">Vamos entender<br />sua pele?</h1>
             <p class="intro-copy">
-              Conta o que você anda aprontando.<br />Eu entro com a bronca.
-              Você, com o deboche.
+              Conte o que você gostaria de cuidar.<br />Você pode enviar uma
+              foto para começar.
             </p>
           </section>
           <section
@@ -62,9 +59,9 @@
             hidden
           ></section>
           <div id="suggestions" class="suggestions">
-            <button type="button">Minha rotina é água e fé</button>
-            <button type="button">Durmo de maquiagem</button>
-            <button type="button">Comprei 7 séruns. Me julga.</button>
+            <button type="button">Quero cuidar da minha pele</button>
+            <button type="button">Minha pele está oleosa</button>
+            <button type="button">Quero organizar minha rotina</button>
           </div>
         </div>
         <div class="composer-area">
@@ -89,17 +86,17 @@
                 </button>
               </div>
               <p id="photo-permission" class="photo-permission" hidden>
-                Ao enviar, sua foto vai à OpenAI para uma montagem de humor
-                surpresa. Use sua própria foto, 18+.
+                Ao enviar, sua foto será processada e editada pela OpenAI. Use
+                sua própria foto, 18+.
               </p>
               <label for="animal-input" class="sr-only"
-                >Conte sua confissão</label
+                >Conte o que sua pele precisa</label
               >
               <textarea
                 id="animal-input"
                 rows="2"
                 maxlength="1500"
-                placeholder="Manda a foto ou confessa a cagada…"
+                placeholder="Conte o que sua pele precisa…"
               ></textarea>
               <div class="composer-bottom">
                 <label class="photo-button" for="animal-photo"
@@ -109,7 +106,7 @@
                   type="file"
                   accept="image/jpeg,image/png,image/webp"
                   class="sr-only"
-                /><span class="composer-hint">Pode falar. Eu tô ouvindo.</span
+                /><span class="composer-hint">No seu tempo. Do seu jeito.</span
                 ><button type="button" id="stop" hidden>Parar</button
                 ><button
                   id="send"
@@ -123,9 +120,9 @@
             </fieldset>
           </form>
           <p class="privacy-note">
-            Modo de zoeira · 18+. Ao enviar, você entra na brincadeira com
-            IA.<br />
-            Texto enviado à OpenAI. A conversa desta aba some ao recarregar.
+            Demo de humor · 18+. Ao enviar, você participa da zoeira com IA.<br />
+            Não é análise dermatológica. Texto enviado à OpenAI; conversa só
+            nesta aba.
           </p>
         </div>
       </main>

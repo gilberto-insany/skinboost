@@ -153,11 +153,11 @@ textarea:focus-visible {
 .mode-name strong {
   font-size: 12px;
   letter-spacing: 0;
-  background: var(--ink);
-  color: var(--acid);
-  border-radius: 5px;
-  padding: 4px 7px;
-  transform: rotate(-5deg);
+  background: #e8eddc;
+  color: #3e5332;
+  border-radius: 6px;
+  padding: 5px 7px;
+  font-weight: 500;
 }
 .mode-dot {
   width: 6px;
@@ -194,7 +194,7 @@ textarea:focus-visible {
   font-size: 26px;
 }
 .animal-intro h1 {
-  font-size: clamp(48px, 5.4vw, 76px);
+  font-size: clamp(40px, 4.7vw, 64px);
   line-height: 1.01;
   letter-spacing: -4px;
   font-weight: 600;
@@ -451,8 +451,8 @@ textarea:focus-visible {
     padding-top: 25px;
   }
   .animal-intro h1 {
-    font-size: 57px;
-    letter-spacing: -3px;
+    font-size: 44px;
+    letter-spacing: -2px;
     margin: 18px 0;
   }
   .intro-copy {
@@ -468,7 +468,19 @@ textarea:focus-visible {
     display: none;
   }
   .privacy-note {
-    font-size: 9px;
+    font-size: 10px;
+  }
+  .mode-name {
+    font-size: 19px;
+  }
+  .mode-name strong {
+    font-size: 10px;
+  }
+  .animal-top > a:last-child {
+    font-size: 10px;
+  }
+  .mode-dot {
+    display: none;
   }
   .message p {
     font-size: 16px;

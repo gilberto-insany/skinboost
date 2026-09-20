@@ -136,3 +136,6 @@ Remove the entry confirmation and photo checkbox. Composer and starter suggestio
 
 ## Animal loading — 20 September 2026
 Show an indeterminate animated loader during photo generation, with the requested playful before/after/product copy and a brief AI humor label. Keep the costume, result heading, comparison and fictional offer hidden until both images decode successfully. Never invent percentages; honor reduced motion. Errors/cancellation stop the animation and preserve image-only retry.
+
+## Animal neutral opening — 20 September 2026
+Use a neutral skincare-chat opening and composer: remove surto, sem paciência, confession wording and mentions of a surprise montage from pre-send UI. Keep a compact visible Demo de humor label, the processing/editing notice for OpenAI, and an exit to the care chat so the experience does not claim genuine dermatological analysis or a best-product determination. Roast behavior and the existing result remain unchanged.
