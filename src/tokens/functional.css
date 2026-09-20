@@ -5,6 +5,7 @@
  * landing and chat can be migrated in smaller, visually reviewed batches.
  */
 :where(.ds-review, .sb-catalog--wireframe, .landing-theme) {
+  --ease-ui-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ui-canvas: var(--color-neutral-very-soft);
   --ui-surface: var(--color-neutral-soft);
   --ui-surface-highlight: var(--color-brand-primary-soft);

@@ -78,12 +78,15 @@ summary:focus-visible {
 }
 button {
   transition:
-    background 0.2s,
-    transform 0.2s,
-    color 0.2s;
+    background 160ms var(--ease-ui-out, ease-out),
+    transform 160ms var(--ease-ui-out, ease-out),
+    color 160ms var(--ease-ui-out, ease-out);
 }
 button:hover {
   filter: brightness(0.94);
+}
+.landing-theme button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 .ph {
   font-size: 21px;
@@ -453,7 +456,7 @@ h1 {
   width: 100%;
   padding: 34px 17px;
   border-bottom: 1px solid var(--line);
-  color: #5c635b;
+  color: var(--ui-text-secondary);
   position: relative;
 }
 .step:last-child {
@@ -473,9 +476,9 @@ h1 {
   display: none;
 }
 .step.active {
-  color: var(--ink);
+  color: var(--ui-text);
 
-  background: var(--sage);
+  background: var(--ui-surface-highlight);
   border-radius: 4px;
 }
 .step.active p {
@@ -494,12 +497,13 @@ h1 {
   left: 10%;
   right: 10%;
   bottom: 12%;
-  background: #ede7d830;
+  background: color-mix(in srgb, var(--color-static-white) 19%, transparent);
   backdrop-filter: none;
-  border: 1px solid #ffffff50;
+  border: var(--border-sm) solid
+    color-mix(in srgb, var(--color-static-white) 31%, transparent);
   border-radius: 16px;
   padding: 27px;
-  color: white;
+  color: var(--color-static-white);
   box-shadow: 0 15px 50px #0002;
 }
 .glass-card > .tiny {
@@ -520,8 +524,8 @@ h1 {
 }
 .chat-reply {
   padding: 15px 18px;
-  background: #ffffffd9;
-  color: var(--ink);
+  background: color-mix(in srgb, var(--color-static-white) 85%, transparent);
+  color: var(--ui-text);
 
   font-size: 14px;
   border-radius: 13px 13px 13px 3px;
@@ -540,7 +544,7 @@ h1 {
   height: 230vh;
   min-height: 1500px;
 
-  background: #3b403c;
+  background: var(--color-neutral-very-strong);
 }
 .film-sticky {
   position: sticky;
@@ -548,7 +552,7 @@ h1 {
   height: 100svh;
   min-height: 650px;
   overflow: hidden;
-  color: white;
+  color: var(--color-static-white);
 }
 .film-copy {
   position: absolute;
@@ -564,7 +568,7 @@ h1 {
 }
 .film-copy h2 em {
   font-style: normal;
-  color: #d6e1c8;
+  color: var(--color-brand-primary-light);
 }
 .film-copy > p:last-child {
   margin-top: 33px;
@@ -587,7 +591,7 @@ h1 {
 }
 .film-track {
   height: 1px;
-  background: #ffffff55;
+  background: color-mix(in srgb, var(--color-static-white) 33%, transparent);
   flex: 1;
 }
 .film-track span {
@@ -595,7 +599,7 @@ h1 {
   transform: scaleX(0);
   transform-origin: left;
   height: 2px;
-  background: #fff;
+  background: var(--color-static-white);
 }
 .film-toggle .ph {
   font-size: 13px;
@@ -630,7 +634,7 @@ h1 {
   flex-direction: column;
   grid-row: span 2;
 
-  background: var(--sage);
+  background: var(--ui-surface-highlight);
 }
 .bento-context h3 {
   margin-top: 26px;
@@ -639,7 +643,7 @@ h1 {
 }
 .bento-context p {
   margin-top: 18px;
-  color: var(--muted);
+  color: var(--ui-text-secondary);
 }
 .context-tags {
   display: flex;
@@ -657,8 +661,8 @@ h1 {
 .context-tags span {
   padding: 8px 14px;
   max-width: 100%;
-  background: #fafbf6;
-  border: 1px solid #d7dfcf;
+  background: var(--ui-canvas);
+  border: var(--border-sm) solid var(--ui-border);
   box-shadow: 0 3px 5px #253b2810;
   border-radius: 30px;
 
@@ -670,13 +674,13 @@ h1 {
 .context-tags span:nth-child(even) {
   transform: rotate(3deg);
   align-self: flex-end;
-  background: #d5dfc9;
+  background: var(--color-brand-primary-light);
 }
 .context-tags span:nth-child(3n) {
   align-self: flex-start;
 }
 .bento-reason {
-  background: #eceeec;
+  background: var(--ui-surface);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -693,7 +697,7 @@ h1 {
 .bento-reason p {
   margin-top: 9px;
   max-width: 210px;
-  color: var(--muted);
+  color: var(--ui-text-secondary);
 }
 .circle-link {
   position: absolute;
@@ -701,7 +705,7 @@ h1 {
   top: 18px;
   width: 36px;
   height: 36px;
-  border: 1px solid #bdc3b9;
+  border: var(--border-sm) solid var(--ui-border);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -709,7 +713,7 @@ h1 {
 .bento-photo {
   padding: 0 !important;
   min-height: 270px;
-  background: #d9d7c6;
+  background: var(--color-neutral-light);
 }
 .bento-photo img {
   height: 100%;
@@ -729,7 +733,7 @@ h1 {
   max-width: none;
 }
 .bento-privacy {
-  background: var(--sage);
+  background: var(--ui-surface-highlight);
 }
 .bento-privacy h3 {
   margin-top: 25px;
@@ -737,7 +741,7 @@ h1 {
 }
 .bento-privacy p {
   margin-top: 12px;
-  color: #616a5b;
+  color: var(--ui-text-secondary);
 }
 .text-link {
   display: flex;
@@ -751,8 +755,8 @@ h1 {
   font-size: 15px;
 }
 .bento-checkin {
-  background: var(--ink);
-  color: #fff;
+  background: var(--color-brand-primary-maximum);
+  color: var(--color-static-white);
 }
 .bento-checkin h3 {
   font-size: 24px;
@@ -760,9 +764,10 @@ h1 {
 }
 .checkin-preview {
   margin-top: 23px;
-  background: #ffffff10;
+  background: color-mix(in srgb, var(--color-static-white) 6%, transparent);
   padding: 17px;
-  border: 1px solid #ffffff20;
+  border: var(--border-sm) solid
+    color-mix(in srgb, var(--color-static-white) 13%, transparent);
   border-radius: 12px;
 }
 .checkin-preview > span {
@@ -770,7 +775,7 @@ h1 {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: #d3dec7;
+  color: var(--color-brand-primary-light);
 }
 .checkin-preview p {
   font-size: 14px;
@@ -780,8 +785,8 @@ h1 {
   margin-top: 12px;
   padding: 9px 12px;
   border-radius: 20px;
-  background: #e1edcc;
-  color: var(--ink);
+  background: var(--color-brand-secondary-light);
+  color: var(--color-brand-primary-maximum);
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -794,8 +799,8 @@ h1 {
 .product-story {
   height: 200vh;
   min-height: 1600px;
-  background: #080b09;
-  color: #fff;
+  background: var(--color-brand-primary-maximum);
+  color: var(--color-static-white);
 }
 .product-sticky {
   position: sticky;
@@ -843,7 +848,7 @@ h1 {
   content: "";
   height: 1px;
   display: block;
-  background: #737c6e;
+  background: var(--color-neutral-strong);
   width: 100%;
   margin-bottom: 23px;
 }
@@ -853,7 +858,7 @@ h1 {
 }
 .product-note p {
   font-size: 14px;
-  color: #aeb7a7;
+  color: var(--color-brand-primary-light);
   margin-top: 17px;
 }
 .note-one {
@@ -874,14 +879,14 @@ h1 {
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #bac4b3;
+  color: var(--color-brand-primary-subtle);
   letter-spacing: 0.04em;
 }
 .product-story-footer a {
   display: flex;
   gap: 14px;
   align-items: center;
-  color: #fff;
+  color: var(--color-static-white);
 }
 .catalog {
   padding-bottom: 120px;
@@ -891,7 +896,7 @@ h1 {
   overflow: hidden;
   border-radius: 16px;
   height: 520px;
-  background: #efeee6;
+  background: var(--ui-surface);
 }
 .catalog-photo > img {
   width: 100%;
@@ -927,7 +932,7 @@ h1 {
 .catalog-items > button {
   text-align: left;
   padding: 10px 0 24px;
-  border-bottom: 1px solid #a4ae9b;
+  border-bottom: var(--border-sm) solid var(--color-neutral-base);
 }
 .catalog-items h3 {
   display: flex;
@@ -1000,7 +1005,7 @@ h1 {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  background: #d6d8cc;
+  background: var(--color-neutral-light);
 }
 .compare-half {
   position: absolute;
@@ -1016,7 +1021,7 @@ h1 {
 .compare-label {
   position: absolute;
   top: 22px;
-  background: #fffffff0;
+  background: color-mix(in srgb, var(--color-static-white) 94%, transparent);
   border-radius: 30px;
   padding: 8px 12px;
 
@@ -1035,7 +1040,7 @@ h1 {
   bottom: 0;
   left: var(--split);
   width: 2px;
-  background: #fff;
+  background: var(--color-static-white);
   pointer-events: none;
   z-index: 2;
 }
@@ -1048,8 +1053,8 @@ h1 {
   position: absolute;
   top: 50%;
   left: -20px;
-  background: #fff;
-  color: var(--ink);
+  background: var(--color-static-white);
+  color: var(--ui-text);
 }
 #compare-range {
   position: absolute;
@@ -1104,7 +1109,7 @@ h1 {
   font-size: 88px;
   line-height: 0.7;
   font-family: Georgia, serif;
-  color: #8b997e;
+  color: var(--color-brand-primary-base);
 }
 blockquote {
   font-size: clamp(24px, 2.5vw, 36px);
@@ -1354,19 +1359,23 @@ footer {
   }
 }
 dialog {
-  border: 1px solid #e4e8dc;
+  border: var(--border-sm) solid var(--ui-border);
   border-radius: 24px;
   max-width: 660px;
   width: calc(100% - 32px);
   padding: 45px;
-  background: #fbfcf7;
-  color: var(--ink);
+  background: var(--ui-canvas);
+  color: var(--ui-text);
   max-height: 90svh;
   overflow-y: auto;
   box-shadow: 0 30px 90px #0004;
 }
 dialog::backdrop {
-  background: #0b160fb0;
+  background: color-mix(
+    in srgb,
+    var(--color-brand-primary-maximum) 69%,
+    transparent
+  );
   backdrop-filter: blur(7px);
 }
 #close-dialog {
@@ -1383,7 +1392,7 @@ dialog h2 {
 }
 dialog p {
   font-size: 15px;
-  color: #64715e;
+  color: var(--ui-text-secondary);
 }
 dialog .eyebrow {
   margin: 0;
@@ -1398,12 +1407,12 @@ dialog textarea,
 dialog select {
   width: 100%;
   padding: 14px;
-  border: 1px solid #ccd5c2;
-  background: #fff;
+  border: var(--border-sm) solid var(--ui-border);
+  background: var(--color-static-white);
   border-radius: 10px;
   font: inherit;
   resize: vertical;
-  color: var(--ink);
+  color: var(--ui-text);
 }
 dialog textarea {
   min-height: 90px;
@@ -1417,7 +1426,7 @@ dialog .dialog-notice {
   line-height: 1.5;
   padding: 12px 14px;
   border-radius: 8px;
-  background: #edf1e7;
+  background: var(--ui-surface);
   margin: 20px 0;
 }
 dialog .choices {
@@ -1427,15 +1436,15 @@ dialog .choices {
   margin: 18px 0;
 }
 dialog .choice {
-  border: 1px solid #becbb0;
+  border: var(--border-sm) solid var(--ui-border);
   padding: 12px;
   border-radius: 10px;
   font-size: 12px;
 }
 dialog .choice[aria-pressed="true"] {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
+  background: var(--ui-action);
+  color: var(--ui-on-action);
+  border-color: var(--ui-action);
 }
 dialog .actions {
   display: flex;
@@ -1464,7 +1473,7 @@ dialog .actions .pill {
   margin-left: auto;
 }
 #prompt-error {
-  color: #8d352c;
+  color: var(--ui-error);
   font-size: 11px;
   margin-top: 8px;
 }
@@ -1586,7 +1595,11 @@ dialog .actions .pill {
     display: grid !important;
     width: 34px;
     height: 34px;
-    border-color: #ffffff70;
+    border-color: color-mix(
+      in srgb,
+      var(--color-static-white) 44%,
+      transparent
+    );
   }
   .nav nav {
     display: none;
@@ -1594,8 +1607,8 @@ dialog .actions .pill {
     top: 68px;
     left: 12px;
     right: 12px;
-    background: #f6f7ed;
-    color: var(--ink);
+    background: var(--ui-canvas);
+    color: var(--ui-text);
     padding: 20px;
     border-radius: 14px;
     box-shadow: 0 20px 45px #0003;
@@ -2030,7 +2043,7 @@ dialog .actions .pill {
   height: 100%;
   object-fit: contain;
   object-position: right center;
-  background: #e8e5dc;
+  background: var(--ui-surface);
 }
 @media (max-width: 700px) {
   .catalog-photo {
@@ -2056,7 +2069,7 @@ dialog .actions .pill {
   }
 }
 .bento-photo {
-  background: #e9e7dd;
+  background: var(--ui-surface);
 }
 .bento-photo img {
   position: absolute;
@@ -2119,22 +2132,22 @@ dialog .actions .pill {
 .step-placeholder {
   position: absolute;
   inset: 0;
-  background: #3b403c;
+  background: var(--color-neutral-very-strong);
 }
 .glass-card {
-  background: #96988f;
-  color: var(--ink);
-  border: 1px solid white;
+  background: var(--color-neutral-base);
+  color: var(--ui-text);
+  border: var(--border-sm) solid var(--color-static-white);
   backdrop-filter: none;
 }
 .chat-reply {
-  background: white;
+  background: var(--color-static-white);
 }
 .compare-half {
-  background: #3b403c;
+  background: var(--color-neutral-very-strong);
 }
 .before-image {
-  background: #3b403c;
+  background: var(--color-neutral-very-strong);
 }
 .wordmark img {
   width: 158px;

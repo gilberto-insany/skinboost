@@ -570,6 +570,33 @@ test(
               .evaluate((el) => getComputedStyle(el).backgroundColor),
             "rgb(112, 120, 114)",
           );
+        if (
+          (await page.locator(".bento-context").count()) &&
+          (await page.locator(".bento-reason").count()) &&
+          (await page.locator(".bento-checkin").count())
+        ) {
+          const bentoColors = await page.evaluate(() => ({
+            context: getComputedStyle(document.querySelector(".bento-context"))
+              .backgroundColor,
+            reason: getComputedStyle(document.querySelector(".bento-reason"))
+              .backgroundColor,
+            checkin: getComputedStyle(document.querySelector(".bento-checkin"))
+              .backgroundColor,
+          }));
+          assert.deepEqual(bentoColors, {
+            context: "rgb(227, 236, 228)",
+            reason: "rgb(236, 238, 236)",
+            checkin: "rgb(14, 40, 32)",
+          });
+        }
+        if (await page.locator(".story-card").count())
+          assert.equal(
+            await page
+              .locator(".story-card")
+              .first()
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(236, 238, 236)",
+          );
         if (await page.locator("#footer").count())
           assert.equal(
             await page
@@ -658,6 +685,12 @@ test(
             "",
           );
         if (await page.locator("dialog[open]").count()) {
+          assert.equal(
+            await page
+              .locator("dialog[open]")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(245, 246, 244)",
+          );
           await page.keyboard.press("Escape");
           assert.equal(await page.locator("dialog[open]").count(), 0);
         }
