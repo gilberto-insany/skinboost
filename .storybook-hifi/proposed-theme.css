@@ -8,9 +8,21 @@
   --line: #c7cbc7;
   --forest: #315e4b;
   --mist: #eeefe9;
-  font-family: 'Avenir Next', Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Avenir Next", Avenir, Helvetica, Arial, sans-serif;
 }
 .sb-experience {
   font-family: inherit;
-  --sx-muted: var(--muted);
+  --sx-canvas: var(--paper);
+  --sx-surface: #fffefa;
+  --sx-soft: var(--mist);
+  --sx-soft-highlight: var(--sage);
+  --sx-border: var(--line);
+  --sx-text: var(--ink);
+  /* Darker than the proposal's global muted tone to preserve 4.5:1 on sage. */
+  --sx-muted: #3b403c;
+  --sx-action: var(--ink);
+  --sx-action-hover: var(--forest);
+  --sx-on-action: #ffffff;
+  --sx-focus: var(--forest);
+  --sx-accent: var(--lime);
 }

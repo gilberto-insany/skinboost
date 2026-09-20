@@ -5,6 +5,7 @@ export function makeConfig(configDirectory, { landing = false } = {}) {
   return {
     stories: [
       "../src/stories/Foundations.stories.js",
+      "../src/stories/TokenReview.stories.js",
       "../src/stories/Experience.stories.js",
       ...(landing ? ["../src/stories/Landing.stories.js"] : []),
     ],

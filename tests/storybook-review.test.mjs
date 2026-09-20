@@ -192,6 +192,19 @@ test(
         );
         const frame = page.frameLocator("#storybook-preview-iframe");
         await frame.locator(".sb-foundation").waitFor();
+        const catalogColors = await frame
+          .locator(".sb-catalog")
+          .evaluate((el) => {
+            const style = getComputedStyle(el);
+            return { background: style.backgroundColor, text: style.color };
+          });
+        assert.deepEqual(
+          catalogColors,
+          mode === "wireframe"
+            ? { background: "rgb(245, 246, 244)", text: "rgb(20, 22, 21)" }
+            : { background: "rgb(248, 245, 237)", text: "rgb(24, 62, 49)" },
+          `${mode} must keep its own catalog theme`,
+        );
         if (id === "tipografia") {
           const family = await frame
             .locator(".sb-catalog")
@@ -201,13 +214,21 @@ test(
             mode === "wireframe" ? /Manrope Variable/ : /Avenir Next/,
           );
         }
-        if (id === "botoes")
+        if (id === "botoes") {
           assert.equal(
             await frame
               .getByRole("button", { name: "Aguardando resposta" })
               .isDisabled(),
             true,
           );
+          assert.equal(
+            await frame
+              .getByRole("button", { name: "Continuar" })
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            mode === "wireframe" ? "rgb(49, 94, 75)" : "rgb(24, 62, 49)",
+            `${mode} primary action must use its own functional color`,
+          );
+        }
       }
       await page.screenshot({
         path: resolve(artifacts, `${mode}-manager.png`),
@@ -261,6 +282,11 @@ test(
         await page.locator('.sb-chat-component[data-ready="true"]').waitFor();
         const host = page.locator(".sb-chat-component");
         const component = await host.getAttribute("data-component");
+        assert.equal(
+          await host.evaluate((el) => getComputedStyle(el).color),
+          mode === "wireframe" ? "rgb(20, 22, 21)" : "rgb(24, 62, 49)",
+          `${mode}: isolated components must use their catalog text token`,
+        );
         assert.equal(
           await host
             .locator(".sx-chat,.sx-thread,.sx-scroll,.sx-history-scrim")
@@ -339,6 +365,22 @@ test(
           1,
           `${id}: exactly one named component`,
         );
+        if (component === "composer") {
+          assert.equal(
+            await host
+              .locator(".sx-composer")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            mode === "wireframe" ? "rgb(255, 255, 255)" : "rgb(255, 254, 250)",
+            `${mode}: composer surface must remain theme-aware`,
+          );
+          assert.equal(
+            await host
+              .locator(".sx-send")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            mode === "wireframe" ? "rgb(49, 94, 75)" : "rgb(24, 62, 49)",
+            `${mode}: send action must remain theme-aware`,
+          );
+        }
         if (id.endsWith("--carrinho-vazio"))
           await page.waitForFunction(
             () => document.querySelector('[data-action="checkout"]')?.disabled,
@@ -521,6 +563,68 @@ test(
           { waitUntil: "networkidle" },
         );
         await page.locator('.sb-landing-surface[data-ready="true"]').waitFor();
+        assert.equal(
+          await page
+            .locator(".sb-landing-surface")
+            .evaluate((el) => getComputedStyle(el).backgroundColor),
+          id.endsWith("--cabecalho") ? "rgb(59, 64, 60)" : "rgb(245, 246, 244)",
+          `${id}: landing surface must use the semantic theme`,
+        );
+        if (await page.locator(".hero").count()) {
+          assert.equal(
+            await page
+              .locator(".hero")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(59, 64, 60)",
+          );
+          assert.equal(
+            await page
+              .locator(".send")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(49, 94, 75)",
+          );
+        }
+        if (await page.locator(".final-cta").count())
+          assert.equal(
+            await page
+              .locator(".final-cta")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(112, 120, 114)",
+          );
+        if (
+          (await page.locator(".bento-context").count()) &&
+          (await page.locator(".bento-reason").count()) &&
+          (await page.locator(".bento-checkin").count())
+        ) {
+          const bentoColors = await page.evaluate(() => ({
+            context: getComputedStyle(document.querySelector(".bento-context"))
+              .backgroundColor,
+            reason: getComputedStyle(document.querySelector(".bento-reason"))
+              .backgroundColor,
+            checkin: getComputedStyle(document.querySelector(".bento-checkin"))
+              .backgroundColor,
+          }));
+          assert.deepEqual(bentoColors, {
+            context: "rgb(227, 236, 228)",
+            reason: "rgb(236, 238, 236)",
+            checkin: "rgb(14, 40, 32)",
+          });
+        }
+        if (await page.locator(".story-card").count())
+          assert.equal(
+            await page
+              .locator(".story-card")
+              .first()
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(236, 238, 236)",
+          );
+        if (await page.locator("#footer").count())
+          assert.equal(
+            await page
+              .locator("#footer")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(227, 236, 228)",
+          );
         if (id.endsWith("--prompt-foto"))
           await page.getByRole("button", { name: "Remover foto" }).waitFor();
         if (
@@ -602,6 +706,12 @@ test(
             "",
           );
         if (await page.locator("dialog[open]").count()) {
+          assert.equal(
+            await page
+              .locator("dialog[open]")
+              .evaluate((el) => getComputedStyle(el).backgroundColor),
+            "rgb(245, 246, 244)",
+          );
           await page.keyboard.press("Escape");
           assert.equal(await page.locator("dialog[open]").count(), 0);
         }

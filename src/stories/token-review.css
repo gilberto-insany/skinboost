@@ -1,0 +1,106 @@
+.ds-review {
+  background: var(--ui-canvas);
+  color: var(--ui-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-text-lg);
+  line-height: 1.5;
+  padding: var(--space-24);
+  border-radius: var(--radius-3xl);
+  overflow-wrap: anywhere;
+}
+.ds-review h1 {
+  font-size: clamp(28px, 4vw, var(--font-size-heading-h2));
+  line-height: 1.2;
+}
+.ds-review h2 {
+  font-size: var(--font-size-heading-h5);
+  margin: var(--space-24) 0 var(--space-16);
+}
+.ds-review p {
+  color: var(--ui-text-secondary);
+  margin: var(--space-12) 0;
+}
+.ds-role-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--space-16);
+}
+.ds-role,
+.ds-example {
+  background: var(--ui-surface);
+  border: var(--border-sm) solid var(--ui-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-16);
+}
+.ds-swatch {
+  height: 64px;
+  border: var(--border-sm) solid var(--ui-border);
+  border-radius: var(--radius-xl);
+}
+.ds-review code {
+  font-size: var(--font-size-text-sm);
+}
+.ds-example {
+  margin: var(--space-24) 0;
+}
+.ds-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+}
+.ds-review button {
+  background: var(--ui-action);
+  color: var(--ui-on-action);
+  padding: var(--space-12) var(--space-24);
+  border-radius: var(--radius-full);
+  font: inherit;
+}
+.ds-review button:hover:not(:disabled) {
+  background: var(--ui-action-hover);
+  filter: none;
+}
+.ds-review button:disabled {
+  opacity: var(--opacity-op-50);
+  cursor: not-allowed;
+}
+.ds-review :is(button, summary):focus-visible {
+  outline: var(--border-lg) solid var(--ui-focus);
+  outline-offset: 4px;
+}
+.ds-review .ds-feedback {
+  color: var(--ui-info);
+}
+.ds-review details {
+  padding: var(--space-16) 0;
+  border-bottom: var(--border-sm) solid var(--ui-border);
+}
+.ds-review summary {
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+}
+.ds-review dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+}
+.ds-review dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+.ds-chip {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: var(--border-sm) solid var(--ui-border);
+}
+@media (max-width: 500px) {
+  .ds-review {
+    padding: var(--space-16);
+  }
+  .ds-review dl {
+    grid-template-columns: 1fr;
+  }
+}
