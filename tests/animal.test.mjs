@@ -30,6 +30,37 @@ test(
           calls = [];
         page.on("pageerror", (e) => errors.push(e.message));
         let fail = true;
+        let care = false;
+        const imageCalls = [];
+        let imageFail = true;
+        const after = await sharp({
+          create: { width: 32, height: 32, channels: 3, background: "#aa00ff" },
+        })
+          .jpeg()
+          .toBuffer();
+        await page.route("**/api/simulate", async (route) => {
+          imageCalls.push(route.request().postDataJSON());
+          if (imageFail) {
+            imageFail = false;
+            return route.fulfill({
+              status: 502,
+              contentType: "application/json",
+              body: JSON.stringify({
+                error: { message: "Falha de teste na imagem" },
+              }),
+            });
+          }
+          return route.fulfill({
+            status: 200,
+            contentType: "application/json",
+            body: JSON.stringify({
+              kind: "parody",
+              imageDataUrl: `data:image/jpeg;base64,${after.toString("base64")}`,
+              caption: "Até esse depois ficou melhor, pô.",
+              disclaimer: "Montagem de humor. Não é resultado de skincare.",
+            }),
+          });
+        });
         await page.route("**/api/chat", async (route) => {
           calls.push(route.request().postDataJSON());
           if (fail) {
@@ -45,7 +76,7 @@ test(
           return route.fulfill({
             status: 200,
             contentType: "text/event-stream",
-            body: `data: ${JSON.stringify({ type: "delta", text: "Sete séruns" })}\n\ndata: ${JSON.stringify({ type: "complete", result: { text: "Sete séruns e nenhuma rotina. Seu banheiro virou uma startup: muito investimento, zero execução.", choices: [], ready: false, care: false } })}\n\n`,
+            body: `data: ${JSON.stringify({ type: "delta", text: "Sete séruns" })}\n\ndata: ${JSON.stringify({ type: "complete", result: { text: "Sete séruns e nenhuma rotina. Seu banheiro virou uma startup: muito investimento, zero execução.", choices: [], ready: false, care } })}\n\n`,
           });
         });
         await page.goto(`${base}/animal`);
@@ -89,9 +120,64 @@ test(
         assert.equal(calls[2].photoConsent, true);
         assert.match(calls[2].photoDataUrl, /^data:image\//);
         assert.equal(calls[2].messages.length, 3);
+        await expect(page.locator(".parody-progress")).toContainText(
+          "Falha de teste",
+        );
+        await expect(page.locator("#send")).toBeEnabled();
+        await page.locator(".parody-retry").click();
+        await expect(page.locator(".parody-result")).toBeVisible();
+        await expect(page.locator("#send")).toBeEnabled();
+        assert.equal(calls.length, 3, "retry must not rerun the chat");
+        assert.equal(imageCalls.length, 2);
+        assert.equal(imageCalls[0].mode, "animal");
+        assert.equal(imageCalls[0].parodyConsent, true);
+        assert.deepEqual(imageCalls[0], imageCalls[1]);
+        const handle = page.locator("[data-photo-handle]");
+        await handle.focus();
+        await handle.press("End");
+        await expect(handle).toHaveAttribute("aria-valuenow", "100");
+        const stage = page.locator("[data-photo-drag]");
+        const bounds = await stage.boundingBox();
+        await page.mouse.move(
+          bounds.x + bounds.width / 2,
+          bounds.y + bounds.height / 2,
+        );
+        await page.mouse.down();
+        await page.mouse.move(
+          bounds.x + bounds.width * 0.25,
+          bounds.y + bounds.height / 2,
+        );
+        await page.mouse.up();
+        await expect(handle).toHaveAttribute("aria-valuenow", /^2[45]$/);
+        await expect(page.locator(".rebirth-copy")).toContainText(
+          "NASCER DE NOVO",
+        );
         await page.screenshot({
-          path: `/tmp/skinboost-animal-chat-${width}.png`,
+          path: `/tmp/skinboost-animal-parody-${width}.png`,
         });
+        await page.locator(".rebirth-copy button").click();
+        await expect(page.locator("#send")).toBeEnabled();
+        assert.match(calls.at(-1).messages.at(-1).text, /NASCER DE NOVO/);
+        care = true;
+        await page.locator("#animal-photo").setInputFiles({
+          name: "test.png",
+          mimeType: "image/png",
+          buffer: image,
+        });
+        await expect(page.locator("#photo-preview")).toBeVisible();
+        await page.locator("#photo-consent").check();
+        await page
+          .locator("#animal-input")
+          .fill("Não quero mais a brincadeira");
+        await page.locator("#send").click();
+        await expect(page.locator("#connection-status")).toContainText(
+          "Brincadeira pausada",
+        );
+        assert.equal(
+          imageCalls.length,
+          2,
+          "no generation after care/withdrawal",
+        );
         await page.reload();
         await expect(page.locator("#start")).toBeVisible();
         await expect(page.locator(".message")).toHaveCount(0);

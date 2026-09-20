@@ -527,3 +527,234 @@ textarea:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+.animal-parody {
+  margin-top: 24px;
+  border: 1px solid #c3cfb2;
+  border-radius: 22px;
+  padding: 22px;
+  background: #eff2e6;
+}
+.parody-label,
+.parody-labels {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #435824;
+}
+.animal-parody h3 {
+  font-size: 24px;
+  letter-spacing: -1px;
+  margin: 10px 0 18px;
+}
+.animal-parody .parody-progress {
+  font-size: 14px;
+}
+.parody-retry {
+  margin-top: 12px;
+  border: 1px solid #8fa371;
+  border-radius: 20px;
+  padding: 12px 16px;
+  background: #fff;
+}
+.animal-parody .sx-simulation {
+  margin: 0;
+}
+.parody-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.animal-parody .sx-photo-compare {
+  position: relative;
+  width: 100%;
+  max-width: var(--photo-max-width, 100%);
+  aspect-ratio: var(--photo-ratio, 1);
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #e1e7d8;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: ew-resize;
+}
+.animal-parody .sx-photo-compare > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.animal-parody .sx-compare-original {
+  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+.animal-parody .sx-compare-handle {
+  position: absolute;
+  left: var(--reveal);
+  top: 0;
+  bottom: 0;
+  width: 44px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+.animal-parody .sx-compare-handle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #fff;
+  box-shadow: 0 0 5px #0005;
+}
+.animal-parody .sx-compare-handle b {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--acid);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  font-size: 23px;
+  box-shadow: 0 2px 12px #0003;
+}
+.animal-parody .sx-compare-handle:focus-visible b {
+  outline: 3px solid #10291f;
+  outline-offset: 3px;
+}
+.parody-watermark {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  pointer-events: none;
+  background: #10291fe6;
+  color: #fff;
+  font-size: 8px;
+  letter-spacing: 0.07em;
+  padding: 5px 7px;
+  border-radius: 5px;
+}
+.parody-range {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 15px 0 10px;
+  font-size: 12px;
+}
+.parody-range input {
+  accent-color: #385934;
+  width: 45%;
+  min-height: 44px;
+}
+.animal-parody figcaption {
+  font-size: 10px;
+  line-height: 1.6;
+  color: #58664e;
+}
+.animal-parody .parody-punchline {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 22px 0;
+}
+.rebirth-card {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  background: #10291f;
+  color: #f8f9f3;
+  padding: 24px;
+  border-radius: 16px;
+}
+.rebirth-bottle {
+  position: relative;
+  flex-shrink: 0;
+  width: 94px;
+  height: 154px;
+  padding: 22px 10px 10px;
+  margin-top: 16px;
+  border-radius: 16px 16px 20px 20px;
+  background: linear-gradient(100deg, #bdd052, #e9ff98 45%, #acc348);
+  color: #173016;
+  text-align: center;
+  box-shadow: 5px 10px 20px #0003;
+  transform: rotate(-6deg);
+}
+.rebirth-bottle::before {
+  content: "";
+  position: absolute;
+  width: 52px;
+  height: 24px;
+  left: 21px;
+  top: -19px;
+  border-radius: 7px 7px 0 0;
+  background: #5d7238;
+}
+.rebirth-bottle span {
+  font-size: 12px;
+  letter-spacing: -1px;
+}
+.rebirth-bottle strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.1;
+  margin: 20px 0;
+}
+.rebirth-bottle small {
+  font-size: 7px;
+}
+.rebirth-copy > span {
+  color: var(--acid);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+.rebirth-copy h4 {
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: -1px;
+  margin: 10px 0;
+}
+.rebirth-copy p {
+  font-size: 13px;
+  color: #e4eadb;
+  line-height: 1.6;
+}
+.rebirth-copy button {
+  background: var(--acid);
+  border: 0;
+  border-radius: 24px;
+  padding: 13px 18px;
+  color: #10291f;
+  margin: 15px 0 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.rebirth-copy > small {
+  display: block;
+  font-size: 9px;
+  line-height: 1.6;
+  color: #ccd8bc;
+}
+@media (max-width: 700px) {
+  .animal-parody {
+    padding: 14px;
+  }
+  .animal-parody h3 {
+    font-size: 21px;
+  }
+  .rebirth-card {
+    padding: 22px 16px;
+    gap: 18px;
+    flex-direction: column;
+    text-align: center;
+  }
+  .rebirth-copy h4 {
+    font-size: 28px;
+  }
+}

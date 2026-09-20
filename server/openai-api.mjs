@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { CATALOG } from "../src/routine.js";
 import { consumeResponseStream } from "./chat-stream.mjs";
-import { ANIMAL_INSTRUCTIONS } from "./animal-persona.mjs";
+import { ANIMAL_INSTRUCTIONS, animalImagePrompt } from "./animal-persona.mjs";
 import {
   GROUNDING_CONTEXT,
   GROUNDED_PRODUCTS,
@@ -674,7 +674,7 @@ export function createOpenAIService({
           "Esta solicitação precisa partir do site SkinBoost.",
         );
       const body = await readJson(request);
-      let chat, photo, concern, selectedProduct;
+      let chat, photo, concern, selectedProduct, parodyStyle;
       if (route === "voice-session") {
         if (body.consent !== true)
           fail(
@@ -693,19 +693,36 @@ export function createOpenAIService({
             "Autorize o envio da foto para criar a ilustração.",
           );
         photo = validatePhotoDataUrl(body.photoDataUrl);
-        selectedProduct = GROUNDED_PRODUCTS.find(
-          (product) => product.id === body.selectedProductId,
-        );
-        if (!selectedProduct)
-          fail(
-            400,
-            "product_selection_required",
-            "Escolha Cleanse, Balance ou Comfort antes de criar a ilustração.",
+        if (
+          body.mode !== undefined &&
+          !["normal", "animal"].includes(body.mode)
+        )
+          fail(400, "invalid_mode", "Escolha um modo de conversa válido.");
+        if (body.mode === "animal") {
+          if (body.humorConsent !== true || body.parodyConsent !== true)
+            fail(
+              400,
+              "parody_consent_required",
+              "Autorize a transformação de fantasia da sua própria foto de adulto.",
+            );
+          if (!["witch", "clown"].includes(body.parodyStyle))
+            fail(400, "invalid_parody_style", "Escolha uma fantasia válida.");
+          parodyStyle = body.parodyStyle;
+        } else {
+          selectedProduct = GROUNDED_PRODUCTS.find(
+            (product) => product.id === body.selectedProductId,
           );
-        concern =
-          body.concern === undefined
-            ? "Uma aparência superficial de pele mais uniforme, preservando a pessoa e a textura natural."
-            : text(body.concern, 600, "preocupação");
+          if (!selectedProduct)
+            fail(
+              400,
+              "product_selection_required",
+              "Escolha Cleanse, Balance ou Comfort antes de criar a ilustração.",
+            );
+          concern =
+            body.concern === undefined
+              ? "Uma aparência superficial de pele mais uniforme, preservando a pessoa e a textura natural."
+              : text(body.concern, 600, "preocupação");
+        }
       }
       const key = env.OPENAI_API_KEY?.trim();
       if (!key)
@@ -805,7 +822,19 @@ export function createOpenAIService({
                 type: "json_schema",
                 name: "skinboost_conversation",
                 strict: true,
-                schema: CHAT_SCHEMA,
+                schema:
+                  chat.mode === "animal"
+                    ? {
+                        ...CHAT_SCHEMA,
+                        properties: {
+                          ...CHAT_SCHEMA.properties,
+                          text: {
+                            ...CHAT_SCHEMA.properties.text,
+                            maxLength: 280,
+                          },
+                        },
+                      }
+                    : CHAT_SCHEMA,
               },
             },
           },
@@ -853,7 +882,9 @@ export function createOpenAIService({
         {
           model: imageModel,
           images: [{ image_url: prepared.imageDataUrl }],
-          prompt: imagePrompt(concern, selectedProduct, prepared),
+          prompt: parodyStyle
+            ? animalImagePrompt(parodyStyle, prepared)
+            : imagePrompt(concern, selectedProduct, prepared),
           n: 1,
           size: prepared.size,
           quality: "medium",
@@ -896,6 +927,23 @@ export function createOpenAIService({
       const comparison = await finishComparisonPhoto(imageBytes, prepared);
       if (signal?.aborted)
         fail(499, "cancelled", "A solicitação foi interrompida.");
+      if (parodyStyle)
+        return response(200, {
+          ...comparison,
+          kind: "parody",
+          parodyStyle,
+          label: "FANTASIA COM IA · É ZOEIRA",
+          disclaimer:
+            "Montagem de humor. Não representa sua aparência real, resultado de skincare ou efeito de produto. O alinhamento da IA pode variar.",
+          caption:
+            "Olha aí: até esse depois ficou melhor que o antes. Tu tá detonado, pô. Só o NASCER DE NOVO pra essa obra. 😂",
+          selectedProduct: {
+            id: "nascer-de-novo",
+            name: "NASCER DE NOVO",
+            status: "fictional_parody",
+          },
+          sources: [],
+        });
       return response(200, {
         ...comparison,
         selectedProduct: {

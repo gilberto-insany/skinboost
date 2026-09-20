@@ -1,9 +1,12 @@
 import "./style.css";
 import { preparePhoto } from "../chat/photo.js";
 import { readChatResponse } from "../chat/response-stream.js";
+import { mountPhotoComparisonController } from "../chat/photo-comparison.js";
+import { createParodyCard } from "./parody.js";
 const $ = (selector) => document.querySelector(selector);
 const input = $("#animal-input");
 const history = [];
+const comparisons = mountPhotoComparisonController($("#thread"));
 let accepted = false,
   pending = false,
   preparingPhoto = false,
@@ -95,10 +98,7 @@ function begin() {
   $("#suggestions").hidden = false;
   $("#composer-controls").disabled = false;
   input.placeholder = "Vai. Confessa sua rotina…";
-  row(
-    "assistant",
-    "Entrou porque quis, hein. Conta sua rotina. Se for só água e esperança, já adianto: a esperança tá fazendo hora extra.",
-  );
+  row("assistant", "Entrou porque quis. Manda a foto ou confessa a cagada.");
   input.focus();
 }
 $("#start").addEventListener("click", begin);
@@ -233,6 +233,11 @@ async function send(retry = false) {
     if (history.length > 30) history.splice(0, history.length - 30);
     failed = null;
     clearPhoto();
+    if (attachment && !result.care) {
+      suggestions([]);
+      await generateParody(attachment, responseRow.article, turn);
+      if (turn !== generation) return;
+    }
     suggestions(result.choices || []);
     status(
       result.care
@@ -256,6 +261,67 @@ async function send(retry = false) {
     }
   }
 }
+
+async function generateParody(original, article, initialTurn) {
+  const style = Math.random() < 0.5 ? "witch" : "clown";
+  const card = createParodyCard(article, original, {
+    onRetry: async () => {
+      if (pending || preparingPhoto || !article.isConnected) return;
+      busy(true);
+      controller = new AbortController();
+      const turn = ++generation;
+      await run(turn);
+      if (turn === generation) {
+        busy(false);
+        status("Sua vez. Tem mais alguma confissão?");
+      }
+    },
+    onOffer: () => {
+      if (pending) return;
+      input.value =
+        "Me oferece o produto de brincadeira NASCER DE NOVO. Quero esse milagre fictício.";
+      send();
+    },
+  });
+  async function run(turn) {
+    card.loading();
+    status("Gerando seu depois de fantasia. Você pode interromper em Parar.");
+    scroll();
+    try {
+      const response = await fetch("/api/simulate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          mode: "animal",
+          humorConsent: true,
+          parodyConsent: true,
+          consent: true,
+          photoDataUrl: original,
+          parodyStyle: style,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok)
+        throw new Error(
+          result.error?.message || "Não consegui gerar a fantasia.",
+        );
+      if (turn !== generation) return;
+      card.complete(result);
+      comparisons.refresh();
+      scroll();
+    } catch (cause) {
+      if (turn !== generation) return;
+      card.fail(
+        cause.name === "AbortError"
+          ? "Transformação interrompida. Sua conversa foi preservada."
+          : cause.message,
+      );
+    }
+  }
+  await run(initialTurn);
+}
+
 $("#animal-form").addEventListener("submit", (event) => {
   event.preventDefault();
   send();
@@ -278,4 +344,5 @@ window.addEventListener("pagehide", () => {
   generation++;
   controller?.abort();
   photoGeneration++;
+  comparisons.destroy();
 });
