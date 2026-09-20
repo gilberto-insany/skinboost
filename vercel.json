@@ -17,6 +17,14 @@
   ],
   "rewrites": [
     {
+      "source": "/wireframe",
+      "destination": "/wireframe/index.html"
+    },
+    {
+      "source": "/wireframe/chat",
+      "destination": "/wireframe/index.html"
+    },
+    {
       "source": "/chat",
       "destination": "/index.html"
     }

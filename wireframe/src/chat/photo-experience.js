@@ -1,0 +1,123 @@
+import { CATALOG, CHECKOUT_EXAMPLE_URL } from "../routine.js";
+const esc = (value = "") =>
+  String(value).replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+const pages = new Set([6, 7, 13, 26]);
+export const safePhoto = (value) =>
+  typeof value === "string" &&
+  /^data:image\/(?:jpeg|png|webp);base64,[a-z0-9+/=]+$/i.test(value);
+const strings = (value) =>
+  Array.isArray(value)
+    ? value
+        .filter((v) => typeof v === "string")
+        .slice(0, 8)
+        .map((v) => v.slice(0, 1600))
+    : [];
+export function photoResponseFields(result) {
+  const analysis = result?.photoAnalysis;
+  const sources = (Array.isArray(result?.sources) ? result.sources : [])
+    .filter((s) => pages.has(s.page) && s.id === `skinboost-p${s.page}`)
+    .map((s) => ({
+      id: s.id,
+      page: s.page,
+      title: String(s.title || "Apresentação SkinBoost"),
+      url: `/sources/skinboost-page-${s.page}.pdf`,
+    }));
+  const sourceIds = new Set(sources.map((s) => s.id));
+  const productMatches = result?.care
+    ? []
+    : (Array.isArray(result?.productMatches) ? result.productMatches : [])
+        .filter(
+          (p) =>
+            CATALOG.some((c) => c.id === p.productId) &&
+            typeof p.reason === "string",
+        )
+        .slice(0, 3)
+        .map((p) => ({
+          productId: p.productId,
+          reason: p.reason.slice(0, 1600),
+          limitation:
+            "O PDF apresenta conceitos de produtos. Fórmulas e alegações de eficácia ainda não foram desenvolvidas.",
+          sourceIds: strings(p.sourceIds).filter((id) => sourceIds.has(id)),
+        }))
+        .filter((p) => p.sourceIds.includes("skinboost-p13"));
+  if (!analysis || !["observed", "limited"].includes(analysis.status))
+    return sources.length || productMatches.length
+      ? { sources, productMatches }
+      : {};
+  return {
+    photoAnalysis: {
+      status: analysis.status,
+      summary: String(analysis.summary || "").slice(0, 1600),
+      observations: strings(analysis.observations),
+      limitations: strings(analysis.limitations),
+      confirmationQuestion: String(analysis.confirmationQuestion || "").slice(
+        0,
+        600,
+      ),
+    },
+    productMatches,
+    sources,
+  };
+}
+export function photoRequestIntent(text) {
+  const value = String(text || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+  return {
+    analysis:
+      /analis|avalie|avaliar|observe|o que.*(?:foto|imagem)|minha (?:foto|imagem)/.test(
+        value,
+      ),
+    simulation:
+      /simulacao|simular|(?:gerar|gere|criar|crie) (?:uma )?imagem|antes\s*(?:e|\/)\s*depois|ver como.*ficar/.test(
+        value,
+      ),
+  };
+}
+export function renderPhotoEvidence(message, { canSimulate = false } = {}) {
+  const {
+    photoAnalysis: a,
+    productMatches: matches = [],
+    sources = [],
+  } = photoResponseFields(message);
+  if (!a && !matches.length) return "";
+  const links = sources
+    .map(
+      (s) =>
+        `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.title)} <span>p. ${s.page} ↗</span></a>`,
+    )
+    .join("");
+  return `${a ? `<section class="sx-photo-analysis" aria-label="Observações da foto"><div class="sx-photo-heading"><span class="sx-photo-symbol" aria-hidden="true">✧</span><div><span class="sx-card-eyebrow">SUA FOTO, COM CONTEXTO</span><h3>${a.status === "limited" ? "Vamos melhorar essa observação?" : "O que consigo observar"}</h3></div><span class="sx-observation-tag">${a.status === "limited" ? "Imagem limitada" : "Para confirmar com você"}</span></div><p>${esc(a.summary)}</p>${a.observations.length ? `<ul class="sx-observations">${a.observations.map((o) => `<li>${esc(o)}</li>`).join("")}</ul>` : ""}<details class="sx-photo-limits"><summary>O que esta foto não confirma</summary>${a.limitations.map((l) => `<p>${esc(l)}</p>`).join("")}<p>Observações de aparência não são diagnóstico nem indicação de tratamento.</p></details></section>` : ""}${
+    matches.length
+      ? `<section class="sx-photo-products" aria-label="Relação com o catálogo"><span class="sx-card-eyebrow">DO SEU PEDIDO AO CATÁLOGO</span><h3>Qual produto você quer explorar?</h3><p class="sx-footnote">A relação abaixo explica o protótipo. Ainda não comprova adequação à sua pele.</p>${matches
+          .map((m) => {
+            const p = CATALOG.find((p) => p.id === m.productId);
+            return `<article class="sx-photo-product"><img src="/media/produtos-skinboost.png" alt="Linha conceitual SkinBoost" loading="lazy"><div><span class="sx-kicker">${esc(p.category)} · etapa ilustrativa</span><h4>${esc(p.name)}</h4><p>${esc(m.reason)}</p><a href="/sources/skinboost-page-13.pdf" target="_blank" rel="noopener">Ver conceito no PDF · p. 13 ↗</a>${canSimulate ? `<button type="button" class="sx-button sx-secondary sx-product-choice" data-action="select-photo-product" data-product-id="${p.id}">Explorar ${esc(p.name)} ↗</button>` : ""}</div></article>`;
+          })
+          .join(
+            "",
+          )}<p class="sx-evidence-note">${esc(matches[0].limitation)}</p></section>`
+      : ""
+  }${links ? `<details class="sx-photo-sources"><summary>Fontes desta resposta · ${sources.length}</summary>${links}</details>` : ""}${canSimulate && matches.length ? `<p class="sx-photo-question">Escolha um produto acima ou escreva o nome dele. Vou explicar a relação com seu pedido e criar uma ilustração para comparar com sua foto, sem prever o efeito do produto.</p>` : a?.confirmationQuestion && !message.text?.includes(a.confirmationQuestion) ? `<p class="sx-photo-question">${esc(a.confirmationQuestion)}</p>` : ""}`;
+}
+export function renderPhotoComparison(
+  message,
+  { canCheckout = !message.inherited } = {},
+) {
+  if (!safePhoto(message.original) || !safePhoto(message.image)) return "";
+  const product = CATALOG.find((item) => item.id === message.selectedProductId);
+  const context = product
+    ? `Comparação ilustrativa para explorar ${esc(product.name)}. Não prevê o efeito do produto.`
+    : "A imagem criada não prevê resultados de produtos.";
+  const checkout = canCheckout
+    ? `<section class="sx-photo-checkout" aria-label="Próximo passo para compra"><span class="sx-card-eyebrow">SEU PRÓXIMO PASSO</span><h3>${product ? `Quer continuar com ${esc(product.name)}?` : "Quer continuar com sua seleção SkinBoost?"}</h3>${product ? `<span class="sx-checkout-product">${esc(product.category)} · ${esc(product.volume)}</span>` : ""}<p>Continue para conferir os detalhes da compra. Se ainda tiver dúvidas, podemos conversar por aqui.</p><a class="sx-button sx-primary" data-example-checkout href="${CHECKOUT_EXAMPLE_URL}" target="_blank" rel="noopener noreferrer">Continuar para compra <span aria-hidden="true">↗</span><span class="sr-only"> — checkout de exemplo, abre em nova aba</span></a><small>Checkout de exemplo da Design Engineer. Não é uma oferta de produtos SkinBoost.</small></section>`
+    : "";
+  return `<figure class="sx-simulation" data-photo-comparison="${esc(message.id || "")}"><div class="sx-comparison-heading"><span class="sx-card-eyebrow">EXPLORAÇÃO VISUAL</span><h3>Original e possibilidade ilustrada</h3><p>${context} Arraste sobre a imagem ou use o controle abaixo.</p></div><div class="sx-compare-labels"><span>Original</span><span>Ilustração com IA</span></div><div class="sx-photo-compare" data-photo-drag style="--reveal:50%"><img class="sx-compare-base" src="${message.image}" alt="Possibilidade ilustrativa criada por IA, não é previsão de tratamento" draggable="false"><img class="sx-compare-original" src="${message.original}" alt="Foto original enviada por você" draggable="false"><span class="sx-compare-handle" data-photo-handle role="slider" tabindex="0" aria-label="Comparar na imagem" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% da foto original"><b aria-hidden="true">↔</b></span></div><label class="sx-comparison-control"><span>Comparar original e ilustração</span><input type="range" min="0" max="100" value="50" data-photo-compare aria-label="Quanto da foto original mostrar" aria-valuetext="50% da foto original"><span aria-hidden="true">↔</span></label><figcaption>ILUSTRAÇÃO COM IA · NÃO É PREVISÃO<br>Sem prazo ou resultado garantido. Não demonstra o efeito de nenhum produto nem mede melhora clínica. <a href="/sources/skinboost-page-26.pdf" target="_blank" rel="noopener">Critérios da comparação · p. 26 ↗</a></figcaption></figure>${checkout}`;
+}

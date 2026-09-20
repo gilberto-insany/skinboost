@@ -1,0 +1,84 @@
+/* Deep green product stage, matched by the WebGL transmission background. */
+.product-story {
+  background: #0e2820;
+  color: #f4f2e8;
+  height: 240vh;
+  min-height: 1700px;
+}
+.product-sticky {
+  min-height: min(750px, 100svh);
+  background: #0e2820;
+}
+.product-head .eyebrow {
+  color: #cbd6c5;
+}
+.product-note::before {
+  background: #668174;
+}
+.product-note p {
+  color: #c3d0c3;
+}
+.product-story-footer {
+  color: #c3d0c3;
+  z-index: 2;
+}
+.product-story-footer a {
+  color: #f4f2e8;
+}
+#bottle-fallback {
+  mix-blend-mode: normal;
+}
+@media (max-width: 700px) {
+  .product-story {
+    height: 220svh;
+    min-height: 1500px;
+  }
+  .product-sticky {
+    height: 100svh;
+    min-height: 760px;
+  }
+  .product-head {
+    top: 36px;
+  }
+  .product-head h2 {
+    font-size: clamp(34px, 9.8vw, 44px);
+  }
+  .product-head .eyebrow {
+    margin-bottom: 16px;
+    font-size: 9px;
+  }
+  #bottle-canvas {
+    top: 175px;
+    bottom: 205px;
+  }
+  #bottle-fallback {
+    width: 78%;
+    height: 100%;
+    top: 0;
+    right: 11%;
+  }
+  .product-note {
+    top: auto;
+    bottom: 76px;
+  }
+  .product-note h3 {
+    font-size: 18px;
+  }
+  .product-note p {
+    font-size: 11px;
+    margin-top: 10px;
+  }
+  .product-story-footer {
+    bottom: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-story {
+    height: auto;
+    min-height: 0;
+  }
+  .product-sticky {
+    position: relative;
+    height: 900px;
+  }
+}

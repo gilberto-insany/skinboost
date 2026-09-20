@@ -147,7 +147,9 @@ export function createSitesWorker(fetchBackend = fetch) {
       )
         return response;
       const indexUrl = new URL(request.url);
-      indexUrl.pathname = "/index.html";
+      indexUrl.pathname = /^\/wireframe(?:\/chat)?\/?$/.test(url.pathname)
+        ? "/wireframe/index.html"
+        : "/index.html";
       indexUrl.search = "";
       return env.ASSETS.fetch(new Request(indexUrl, request));
     },

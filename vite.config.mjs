@@ -2,8 +2,23 @@ import { defineConfig } from "vite";
 import { resolve } from "node:path";
 import { handleNodeRequest } from "./server/openai-api.mjs";
 
+function wireframeRoutes(server) {
+  server.middlewares.use((request, response, next) => {
+    const [pathname, query] = (request.url || "").split("?");
+    if (/^\/wireframe(?:\/chat)?\/?$/.test(pathname)) {
+      request.url = "/wireframe/index.html" + (query ? `?${query}` : "");
+    }
+    next();
+  });
+}
+
 export default defineConfig({
   plugins: [
+    {
+      name: "skinboost-wireframe-routes",
+      configureServer: wireframeRoutes,
+      configurePreviewServer: wireframeRoutes,
+    },
     {
       name: "skinboost-local-api",
       configureServer(server) {
@@ -22,6 +37,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, "index.html"),
+        wireframe: resolve(import.meta.dirname, "wireframe/index.html"),
         brandbook: resolve(import.meta.dirname, "brandbook.html"),
       },
     },

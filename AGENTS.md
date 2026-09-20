@@ -113,3 +113,6 @@ Crop the final CTA artwork exactly at the banner’s lower edge: no bottle may s
 Use 110px as the standard desktop section spacing, including both sides of the trust section’s content. Avoid adding extra margins on top of that spacing (especially between FAQ and final CTA). Keep smaller tablet and phone spacing.
 
 The animated glass orb should have smooth edges at its small displayed size. Keep the original SVG bytes, animation and halo; use an oversized image inside a fixed-size wrapper and downscale it without changing surrounding layout.
+
+## Preserve previous production — 20 September 2026
+Leandro requested the pre-final-Home production version at `/wireframe`, while the latest Home remains at `/`. Preserve the frontend snapshot from `11f0680` in `wireframe/`, including its original appearance and interactions. Its chat lives at `/wireframe/chat` and uses separate browser conversation storage. Keep shared server-side AI endpoints and original unchanged media. Maintain these routes in Vite dev/preview, Vercel and Sites; do not redirect the archive to the new Home or replace the existing Storybook routes.

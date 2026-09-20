@@ -1,0 +1,221 @@
+.story-gallery {
+  display: flex;
+  gap: 16px;
+  min-height: 420px;
+}
+.story-card {
+  display: flex;
+  flex: 1 1 0%;
+  min-width: 0;
+  overflow: hidden;
+  background: #e6e9e3;
+  transition: flex-grow 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.story-card.is-active {
+  flex-grow: 5;
+}
+.story-photo {
+  position: relative;
+  flex: 0 0 min(13vw, 190px);
+  width: min(13vw, 190px);
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  border-radius: 0;
+  background: #3b403c;
+  color: white;
+}
+.story-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 38%;
+  filter: saturate(0.65);
+  transition:
+    filter 0.4s,
+    transform 0.65s;
+}
+.story-photo:hover img,
+.is-active .story-photo img {
+  filter: saturate(1);
+}
+.story-photo:hover img {
+  transform: scale(1.04);
+}
+.story-photo::after {
+  content: "";
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(transparent, #121f21b3);
+  pointer-events: none;
+}
+.story-photo-label {
+  position: absolute;
+  z-index: 1;
+  bottom: 24px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.story-photo-symbol {
+  font-size: 23px;
+  font-weight: 400;
+}
+.story-photo:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: -5px;
+}
+.story-panel {
+  flex: 1;
+  min-width: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.is-active .story-panel {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.45s 0.15s;
+}
+.story-panel-content {
+  width: 100%;
+  height: 100%;
+  min-width: 300px;
+  padding: 36px clamp(24px, 3vw, 48px) 28px;
+  display: flex;
+  flex-direction: column;
+}
+.story-panel .quote-mark {
+  font-size: 64px;
+}
+.story-panel blockquote {
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  margin: 32px 0 24px;
+}
+.story-author {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+.story-author strong {
+  font-weight: 500;
+}
+.story-author span {
+  color: var(--muted);
+}
+.story-progress {
+  height: 2px;
+  background: #c8d0be;
+  margin: auto 0 20px;
+  flex-shrink: 0;
+  position: relative;
+  top: 0;
+}
+.story-author + .story-progress {
+  margin-top: 32px;
+}
+.story-progress span {
+  display: block;
+  height: 100%;
+  background: var(--brand);
+  transform-origin: left;
+  transform: scaleX(var(--story-progress, 0));
+}
+.story-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  font-size: 9px;
+  line-height: 1.6;
+  margin-top: auto;
+}
+.story-caption > span:last-child {
+  white-space: nowrap;
+}
+@media (max-width: 900px) {
+  .story-gallery {
+    gap: 10px;
+  }
+  .story-card.is-active {
+    flex-grow: 6;
+  }
+  .story-photo {
+    flex-basis: 13vw;
+    width: 13vw;
+  }
+  .story-photo-label {
+    left: 12px;
+    right: 12px;
+    font-size: 12px;
+  }
+  .story-photo-symbol {
+    display: none;
+  }
+  .story-panel-content {
+    padding: 28px 24px 24px;
+    min-width: 240px;
+  }
+}
+@media (max-width: 650px) {
+  .story-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 0;
+  }
+  .story-card {
+    display: contents;
+  }
+  .story-photo {
+    grid-row: 1;
+    width: 100%;
+    height: 155px;
+  }
+  .story-photo img {
+    object-position: 50% 28%;
+  }
+  .story-photo-label {
+    bottom: 14px;
+  }
+  .is-active .story-photo {
+    outline: 3px solid var(--brand);
+    outline-offset: -3px;
+  }
+  .story-panel {
+    display: none;
+  }
+  .is-active .story-panel {
+    display: block;
+    grid-row: 2;
+    grid-column: 1 / -1;
+    background: #e6e9e3;
+  }
+  .story-panel-content {
+    min-width: 0;
+    min-height: 340px;
+    padding: 28px 24px;
+  }
+  .story-panel blockquote {
+    font-size: 24px;
+    margin-top: 24px;
+  }
+  .story-caption {
+    font-size: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-card,
+  .story-photo img,
+  .story-panel,
+  .is-active .story-panel {
+    transition: none;
+  }
+}
