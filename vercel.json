@@ -17,6 +17,10 @@
   ],
   "rewrites": [
     {
+      "source": "/animal",
+      "destination": "/animal/index.html"
+    },
+    {
       "source": "/wireframe",
       "destination": "/wireframe/index.html"
     },

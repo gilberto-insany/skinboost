@@ -12,7 +12,7 @@ for (const script of ['build', 'build:storybook:wireframe', 'build:storybook:hif
   if (result.status !== 0) process.exit(result.status || 1);
 }
 for (const output of [
-  'dist/client/index.html', 'dist/client/wireframe/index.html', 'dist/client/brandbook.html',
+  'dist/client/index.html', 'dist/client/animal/index.html', 'dist/client/wireframe/index.html', 'dist/client/brandbook.html',
   'dist/client/storybook/wireframe/index.html', 'dist/client/storybook/wireframe/iframe.html',
   'dist/client/storybook/alta-fidelidade/index.html', 'dist/client/storybook/alta-fidelidade/iframe.html',
   'dist/server/index.js', 'dist/.openai/hosting.json',

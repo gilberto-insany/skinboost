@@ -1392,3 +1392,80 @@ test("care responses deterministically discard product matches before adding the
     );
   }
 });
+
+test("Animal requires explicit humor consent and separate photo consent before any provider request", async () => {
+  const { service, calls } = harness();
+  const body = {
+    mode: "animal",
+    messages: [{ role: "user", text: "Julga minha rotina" }],
+    context: {},
+  };
+  errorIs(await service("chat", request(body)), 400, "humor_consent_required");
+  errorIs(
+    await service(
+      "chat",
+      request({ ...body, humorConsent: true, photoDataUrl: photo }),
+    ),
+    400,
+    "photo_consent_required",
+  );
+  errorIs(
+    await service("chat", request({ ...body, mode: "custom" })),
+    400,
+    "invalid_mode",
+  );
+  assert.equal(calls.length, 0);
+});
+
+test("Animal uses its fixed persona, removes clinical/commercial output and leaves normal requests unchanged", async () => {
+  const { service, calls } = harness({
+    result: providerOutput({
+      ...PHOTO_CHAT_PROVIDER_RESULT,
+      context: { ...nullPatch(), ...fullContext },
+      ready: true,
+    }),
+  });
+  const body = {
+    messages: [{ role: "user", text: "Tenho sete séruns" }],
+    context: fullContext,
+    photoDataUrl: photo,
+    photoConsent: true,
+  };
+  const animal = await service(
+    "chat",
+    request({ ...body, mode: "animal", humorConsent: true }),
+  );
+  assert.equal(animal.status, 200);
+  assert.deepEqual(animal.body.context, {});
+  assert.equal(animal.body.ready, false);
+  assert.equal(animal.body.photoAnalysis.status, "not_provided");
+  assert.deepEqual(animal.body.productMatches, []);
+  assert.deepEqual(animal.body.sources, []);
+  assert.match(calls[0].body.instructions, /SkinBoost Animal/);
+  assert.match(JSON.stringify(calls[0].body.input), /input_image/);
+  const normal = await service("chat", request(body));
+  assert.equal(normal.status, 200);
+  assert.equal(normal.body.productMatches.length, 2);
+  assert.equal(normal.body.photoAnalysis.status, "observed");
+  assert.doesNotMatch(calls[1].body.instructions, /SkinBoost Animal/);
+});
+
+test("Animal preserves a care response when the person wants the roast to stop", async () => {
+  const { service } = harness({
+    result: providerOutput(
+      output({ text: "Parei. Podemos continuar no chat gentil.", care: true }),
+    ),
+  });
+  const result = await service(
+    "chat",
+    request({
+      mode: "animal",
+      humorConsent: true,
+      messages: [{ role: "user", text: "Para, isso me deixou mal" }],
+      context: {},
+    }),
+  );
+  assert.equal(result.status, 200);
+  assert.equal(result.body.care, true);
+  assert.equal(result.body.text, "Parei. Podemos continuar no chat gentil.");
+});

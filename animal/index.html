@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#10291f" />
+    <title>SkinBoost Animal — skincare sem passar pano</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="animal-app">
+      <aside class="animal-sidebar">
+        <a class="brand" href="/" aria-label="SkinBoost início"
+          ><img src="/media/figma/logo-green.svg" alt="skinboost"
+        /></a>
+        <span class="edition">EXPERIMENTO / 02</span>
+        <button class="new-chat" id="restart" type="button">
+          + Nova confissão
+        </button>
+        <div class="sidebar-note">
+          <span class="claw" aria-hidden="true">///</span>
+          <p>Skincare.<br />Sem passar<br /><em>pano.</em></p>
+          <span>Você pediu sinceridade.<br />A gente perdeu a mão.</span>
+        </div>
+        <a class="normal-link" href="/chat">Prefiro o chat gentil ↗</a>
+      </aside>
+      <main class="animal-main">
+        <header class="animal-top">
+          <a href="/animal" class="mode-name"
+            >skinboost <strong>animal</strong
+            ><span class="mode-dot" aria-hidden="true"></span></a
+          ><a href="/chat">Sair da zoeira ↗</a>
+        </header>
+        <div class="animal-scroll" id="scroll-area">
+          <section
+            class="animal-intro"
+            id="intro"
+            aria-labelledby="animal-title"
+          >
+            <div class="intro-label">
+              <span aria-hidden="true">✳</span> A IA ACORDOU SEM PACIÊNCIA
+            </div>
+            <h1 id="animal-title">
+              Sua pele.<br />Sua rotina.<br /><em>Meu surto.</em>
+            </h1>
+            <p class="intro-copy">
+              Conta o que você anda aprontando.<br />Eu entro com a bronca.
+              Você, com o deboche.
+            </p>
+            <button class="start-button" id="start" type="button">
+              Pode zoar. Eu aguento. <span aria-hidden="true">↗</span>
+            </button>
+            <p class="consent-note">
+              Ao entrar, confirmo que sou maior de 18 e quero participar da
+              brincadeira. Humor, não avaliação da pele.
+            </p>
+          </section>
+          <section
+            class="animal-thread"
+            id="thread"
+            role="log"
+            aria-label="Conversa no modo Animal"
+            aria-live="polite"
+            aria-relevant="additions"
+            hidden
+          ></section>
+          <div id="suggestions" class="suggestions" hidden>
+            <button type="button">Minha rotina é água e fé</button>
+            <button type="button">Durmo de maquiagem</button>
+            <button type="button">Comprei 7 séruns. Me julga.</button>
+          </div>
+        </div>
+        <div class="composer-area">
+          <p id="connection-status" role="status" class="connection-status"></p>
+          <p id="chat-error" role="alert" class="chat-error" hidden></p>
+          <button id="retry" type="button" class="retry" hidden>
+            Tentar novamente
+          </button>
+          <form id="animal-form" class="animal-composer">
+            <fieldset id="composer-controls" disabled>
+              <legend class="sr-only">Sua mensagem</legend>
+              <div class="photo-preview" id="photo-preview" hidden>
+                <img id="photo-image" alt="Sua foto anexada" /><span
+                  id="photo-name"
+                ></span
+                ><button
+                  type="button"
+                  id="remove-photo"
+                  aria-label="Remover foto"
+                >
+                  ×
+                </button>
+              </div>
+              <label id="photo-permission" class="photo-permission" hidden
+                ><input id="photo-consent" type="checkbox" /> Esta foto é minha,
+                sou maior de 18 e autorizo seu envio à OpenAI para a
+                brincadeira.</label
+              >
+              <label for="animal-input" class="sr-only"
+                >Conte sua confissão</label
+              >
+              <textarea
+                id="animal-input"
+                rows="2"
+                maxlength="1500"
+                placeholder="Entre na brincadeira para conversar…"
+              ></textarea>
+              <div class="composer-bottom">
+                <label class="photo-button" for="animal-photo"
+                  ><span aria-hidden="true">＋</span> Foto opcional</label
+                ><input
+                  id="animal-photo"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  class="sr-only"
+                /><span class="composer-hint">Pode falar. Eu tô ouvindo.</span
+                ><button type="button" id="stop" hidden>Parar</button
+                ><button
+                  id="send"
+                  class="send-button"
+                  type="submit"
+                  aria-label="Enviar mensagem"
+                >
+                  ↑
+                </button>
+              </div>
+            </fieldset>
+          </form>
+          <p class="privacy-note">
+            IA pode errar. Zoação não é diagnóstico. Texto e foto autorizada vão
+            à OpenAI.<br />A conversa fica só nesta aba; ao recarregar, você
+            começa de novo.
+          </p>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/src/animal/main.js"></script>
+  </body>
+</html>
