@@ -25,7 +25,7 @@ Estado documentado em 18/09/2026. A experiência ativa é uma conversa contínua
 | `src/chat/response-stream.js` | Leitura do SSE da aplicação e da alternativa JSON; texto parcial separado do resultado final. |
 | `src/routine.js` | Catálogo e seleção demonstrativa com orçamento, itens já usados e limites explícitos. |
 
-Os módulos anteriores `src/chat/conversation.js` e `src/chat/chat.js` permanecem como histórico de evolução e têm testes próprios. Não descrevem o controlador ativo. A conversa atual aproveita dados declarados e pede esclarecimentos pertinentes, em vez de impor a antiga sequência fixa. Corrigir uma preferência preserva o restante do contexto; uma proposta alterada passa por nova revisão.
+`src/chat/conversation.js` preserva regras puras da etapa anterior e continua coberto por testes. O renderer e a folha de estilos antigos (`src/chat/chat.js` e `src/chat/chat.css`) foram removidos depois que a ausência de imports foi confirmada. A conversa atual aproveita dados declarados e pede esclarecimentos pertinentes, em vez de impor a antiga sequência fixa. Corrigir uma preferência preserva o restante do contexto; uma proposta alterada passa por nova revisão.
 
 ## Contrato do servidor
 

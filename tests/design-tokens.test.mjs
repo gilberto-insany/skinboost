@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { test } from "node:test";
 import {
@@ -68,4 +68,32 @@ test("checked-in generated token files are current", async () => {
     );
     assert.equal(actual, expected, `${name} must be regenerated`);
   }
+});
+
+test("the active application stays on semantic tokens without the legacy chat shell", async () => {
+  const [main, styles, checkin] = await Promise.all([
+    readFile(resolve(root, "src/main.js"), "utf8"),
+    readFile(resolve(root, "src/styles.css"), "utf8"),
+    readFile(resolve(root, "src/ui/checkin.js"), "utf8"),
+  ]);
+
+  assert.match(main, /import "\.\/tokens\/functional\.css";/);
+  for (const alias of [
+    "ink",
+    "muted",
+    "paper",
+    "sage",
+    "lime",
+    "line",
+    "brand",
+    "brand-strong",
+  ])
+    assert.match(
+      styles,
+      new RegExp(`--${alias}: var\\(--color-`),
+      `${alias} must remain backed by a generated token`,
+    );
+  assert.doesNotMatch(checkin, /style=/);
+  await assert.rejects(access(resolve(root, "src/chat/chat.js")));
+  await assert.rejects(access(resolve(root, "src/chat/chat.css")));
 });

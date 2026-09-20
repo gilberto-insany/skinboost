@@ -7,23 +7,20 @@
   min-height: 134px;
 }
 :root {
-  --ink: #121f21;
-
-  --muted: #5f6b62;
-  --paper: #fbfbf7;
-
-  --sage: #e3ece4;
-
-  --lime: #e5f2bc;
-
-  --line: #d9ddda;
+  /* Compatibility aliases for older landing selectors. Keep them token-backed. */
+  --ink: var(--color-neutral-maximum);
+  --muted: var(--color-neutral-intense);
+  --paper: var(--color-neutral-very-soft);
+  --sage: var(--color-brand-primary-soft);
+  --lime: var(--color-brand-secondary-light);
+  --line: var(--color-neutral-light);
 
   font-family: "Manrope Variable", Arial, sans-serif;
   color: var(--ink);
   background: var(--paper);
   font-synthesis: none;
-  --brand: #66866c;
-  --brand-strong: #4d7058;
+  --brand: var(--color-brand-primary-base);
+  --brand-strong: var(--color-brand-primary-strong);
   --gutter: max(4.45vw, calc((100vw - 1440px) / 2 + 64px));
 }
 * {
@@ -73,7 +70,8 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 summary:focus-visible {
-  outline: var(--border-lg) solid var(--ui-focus, #819953);
+  outline: var(--border-lg) solid
+    var(--ui-focus, var(--color-brand-primary-strong));
   outline-offset: var(--space-4, 4px);
 }
 button {
@@ -998,7 +996,7 @@ h1 {
   color: var(--ui-on-action, white);
 }
 .outline {
-  border: var(--border-sm) solid var(--ui-border, #bac2b3);
+  border: var(--border-sm) solid var(--ui-border, var(--color-neutral-subtle));
 }
 .comparison {
   height: 570px;
@@ -1100,7 +1098,7 @@ h1 {
 .icon-btn {
   width: 42px;
   height: 42px;
-  border: var(--border-sm) solid var(--ui-border, #bfc7b7);
+  border: var(--border-sm) solid var(--ui-border, var(--color-neutral-subtle));
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -1445,6 +1443,14 @@ dialog .choice[aria-pressed="true"] {
   background: var(--ui-action);
   color: var(--ui-on-action);
   border-color: var(--ui-action);
+}
+dialog .checkin-optional {
+  color: var(--ui-text-secondary);
+}
+dialog .checkin-footnote {
+  margin-top: 20px;
+  color: var(--ui-text-secondary);
+  font-size: 11px;
 }
 dialog .actions {
   display: flex;

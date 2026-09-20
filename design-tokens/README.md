@@ -23,4 +23,8 @@ product mappings, not additional variables exported from Figma. Action colors
 use primary 700/white in Light and primary 200/primary 950 in Dark.
 Line-height and responsive layout remain review-specific CSS decisions.
 The original identity stories remain available as the implementation baseline.
-The application does not import the new token styles yet.
+The application imports these tokens through `src/main.js`. The landing uses
+the `--ui-*` functional roles, while the continuous chat maps the same semantic
+source to scoped `--sx-*` roles. Compatibility aliases in `src/styles.css` are
+token-backed; the disconnected legacy chat renderer and stylesheet were removed.
+See `docs/design-token-migration-audit.md` for the final mapping and exceptions.
