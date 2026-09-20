@@ -104,3 +104,6 @@ Hero images must preserve their original aspect ratios at all viewport widths. U
 
 ## Responsive final Home — 20 September 2026
 Gilberto approved proceeding with responsive refinement and publication to the main Site and GitHub. Keep desktop composition at 1440px. Use a single-column Bento below 700px, two columns through tablet, readable overlay captions, non-overlapping privacy portraits, proportional hero imagery with a dark text scrim, and 44px touch controls. The header becomes solid/fixed after the hero on phones and tablets too. Preserve the video, 3D, tabs, typing and footer reveal with reduced-motion alternatives.
+
+## Final banner corrections — 20 September 2026
+Gilberto requested a smooth dark hero overlay with no hard left edge, clean aligned catalog typography without shadows, and the original proportional circular satisfaction seal (still marked conceptual). Match the before/after section’s beige background, flipped masked image and dark/neutral type to Figma. Keep CTA product cutouts proportional at every width and visible on phones. Rename the public Site slug from skinboost-wireframe to skinboost; preserve exact same-origin validation for the old and new URLs during migration.

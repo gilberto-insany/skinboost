@@ -255,9 +255,6 @@
   .home-final .product-miniatures {
     flex-wrap: wrap;
   }
-  .home-final .cta-art {
-    opacity: 0.45;
-  }
 }
 @media (max-width: 1000px) {
   .nav.home-final.is-page-nav {
@@ -608,11 +605,7 @@
     width: 90px;
     height: 90px;
   }
-  .home-final .concept-seal span:first-child,
-  .home-final .concept-seal span:last-child {
-    font-size: 8px;
-    letter-spacing: 1px;
-  }
+
   .home-final .catalog-claim-note {
     left: 24px;
     right: 24px;
@@ -678,13 +671,30 @@
     font-size: 15px;
   }
   .final-cta.home-final {
-    padding: 72px 24px;
+    padding: 72px 24px 300px;
+    overflow: hidden;
   }
   .final-cta.home-final h2 {
     font-size: clamp(36px, 10vw, 48px);
   }
   .final-cta.home-final .cta-art {
-    opacity: 0.25;
+    top: auto;
+    bottom: 0;
+    height: 250px;
+    opacity: 1;
+  }
+  .final-cta.home-final .cta-art-left {
+    width: 180px;
+    top: auto;
+    bottom: -20px;
+  }
+  .final-cta.home-final .cta-art-right {
+    width: 280px;
+    top: auto;
+    bottom: -20px;
+  }
+  .final-cta.home-final .cta-art-mask img {
+    mask-image: linear-gradient(transparent, black 22%);
   }
   .final-cta.home-final .cta-assurances {
     align-items: center;
@@ -765,5 +775,31 @@
     display: flex;
     align-items: center;
     min-height: 44px;
+  }
+}
+
+/* One inset keeps catalog titles, metrics and notes on the same vertical axis. */
+.catalog.home-final {
+  --catalog-copy-inset: 51px;
+}
+.catalog.home-final .catalog-caption,
+.catalog.home-final .catalog-feature-copy,
+.catalog.home-final .catalog-claim-note {
+  left: var(--catalog-copy-inset);
+  text-shadow: none;
+}
+@media (max-width: 1200px) {
+  .catalog.home-final {
+    --catalog-copy-inset: 32px;
+  }
+}
+@media (max-width: 1000px) {
+  .catalog.home-final {
+    --catalog-copy-inset: 28px;
+  }
+}
+@media (max-width: 700px) {
+  .catalog.home-final {
+    --catalog-copy-inset: 24px;
   }
 }

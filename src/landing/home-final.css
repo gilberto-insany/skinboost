@@ -34,7 +34,7 @@
 .hero-final .hero-art-bottom {
   background: linear-gradient(to top, #1b1c1680, transparent 266px);
 }
-.hero-final .hero-art-right {
+.hero-final .hero-art > .hero-art-right {
   left: auto;
   width: 26.805556%;
   background: linear-gradient(to right, transparent 18.135%, #1b1c16 171.11%);

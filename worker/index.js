@@ -1,7 +1,10 @@
 // Sites serves the same frontend as GitHub. Its existing Node/Sharp AI backend
 // remains on Vercel; secrets and provider calls stay in that backend.
 const BACKEND = "https://skinboost-design-review.vercel.app";
-const SITE_ORIGIN = "https://skinboost-wireframe.insany.chatgpt.site";
+const SITE_ORIGINS = new Set([
+  "https://skinboost.insany.chatgpt.site",
+  "https://skinboost-wireframe.insany.chatgpt.site",
+]);
 const ROUTES = new Set([
   "/api/status",
   "/api/chat",
@@ -60,8 +63,8 @@ export function createSitesWorker(fetchBackend = fetch) {
           return error(405, "method_not_allowed", "Método não permitido.");
         if (
           !status &&
-          (url.origin !== SITE_ORIGIN ||
-            request.headers.get("origin") !== SITE_ORIGIN)
+          (!SITE_ORIGINS.has(url.origin) ||
+            request.headers.get("origin") !== url.origin)
         )
           return error(
             403,

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createSitesWorker } from "../worker/index.js";
-const origin = "https://skinboost-wireframe.insany.chatgpt.site";
+const origin = "https://skinboost.insany.chatgpt.site";
 const request = (headers = {}, body = "{}") =>
   new Request(origin + "/api/chat", {
     method: "POST",
@@ -85,4 +85,29 @@ test("gateway propagates rate-limit feedback and sanitizes network failures and 
     assert.equal(response.status, 502);
     assert.ok(!(await response.text()).includes("sensitive"));
   }
+});
+
+test("slug migration accepts each exact same-origin Site and rejects crossed aliases", async () => {
+  let calls = 0;
+  const worker = createSitesWorker(async () => {
+    calls++;
+    return Response.json({ ok: true });
+  });
+  const previous = "https://skinboost-wireframe.insany.chatgpt.site";
+  for (const site of [origin, previous]) {
+    const response = await worker.fetch(
+      new Request(site + "/api/chat", {
+        method: "POST",
+        headers: { origin: site, "content-type": "application/json" },
+        body: "{}",
+      }),
+      {},
+    );
+    assert.equal(response.status, 200);
+  }
+  assert.equal(
+    (await worker.fetch(request({ origin: previous }), {})).status,
+    403,
+  );
+  assert.equal(calls, 2);
 });

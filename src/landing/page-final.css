@@ -177,16 +177,20 @@
   left: 51px;
   bottom: auto;
   color: white;
+  max-width: none;
+  text-shadow: none;
+  text-align: left;
 }
-.catalog-caption h3 {
+.catalog-feature .catalog-caption h3 {
   font: 600 28px/1.2 var(--sb-font-heading);
   letter-spacing: -1px;
 }
-.catalog-caption > span {
+.catalog-feature .catalog-caption > span {
   display: block;
   font-size: 14px;
   line-height: 1.5;
   margin-top: 16px;
+  letter-spacing: -0.5px;
 }
 .catalog-feature-copy {
   position: absolute;
@@ -239,27 +243,21 @@
   bottom: 62px;
   width: 128px;
   height: 128px;
-  border: 1px solid #ffffff30;
-  border-radius: 50%;
-  background: #ffffff10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
-.concept-seal span:first-child,
-.concept-seal span:last-child {
-  font-size: 9px;
-  letter-spacing: 4px;
-  margin: 8px 0;
+.concept-seal img {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
-.concept-seal strong {
-  font-size: 26px;
-  font-weight: 500;
-  line-height: 1;
-}
-.concept-seal span {
-  font-size: 13px;
+.home-final .concept-seal > span {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font: 400 8px/1.5 var(--sb-font-body);
+  letter-spacing: 1px;
+  margin: 0;
 }
 .catalog-claim-note {
   position: absolute;
@@ -267,7 +265,7 @@
   bottom: 20px;
   font-size: 10px;
   color: #fff;
-  text-shadow: 0 1px 6px #000;
+  text-shadow: none;
 }
 .compare-people {
   display: flex;
@@ -301,6 +299,52 @@
 .home-final .comparison .compare-half::after {
   display: none;
 }
+.evolution.home-final {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f1eadf;
+  color: #141615;
+}
+.evolution.home-final::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -0.555556%;
+  width: 102.152778%;
+  height: 100%;
+  z-index: -1;
+  background: url("/media/figma-final/compare-0.webp") center / cover;
+  transform: scaleX(-1);
+  mask: url("/media/figma-final/compare-4.svg") 0 0 / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.evolution.home-final .evolution-copy h2 {
+  color: #141615;
+}
+.evolution.home-final .eyebrow {
+  color: #3b403c;
+}
+.evolution.home-final .evolution-copy > p:not(.eyebrow) {
+  color: #707872;
+  max-width: none;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.evolution.home-final .evolution-copy small {
+  color: #707872;
+  max-width: none;
+  line-height: 1.5;
+}
+.evolution.home-final .evolution-copy > .pill {
+  background: #a8c94d;
+  color: #141615;
+}
+.evolution.home-final .compare-label {
+  color: white;
+  background: #3b403c33;
+  backdrop-filter: blur(6px);
+}
 .trust-icon {
   width: 64px;
   height: 64px;
@@ -312,7 +356,17 @@
   overflow: visible;
   isolation: isolate;
 }
+.final-cta.home-final h2 {
+  color: #e3ece4;
+}
+.final-cta.home-final h2 span {
+  color: white;
+}
+.final-cta.home-final .eyebrow {
+  color: #c7d8c9;
+}
 .cta-art {
+  container-type: inline-size;
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -323,8 +377,9 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 105%;
-  width: 29.65%;
+  height: auto;
+  aspect-ratio: 427 / 587;
+  width: 29.652778%;
   overflow: hidden;
 }
 .cta-art-left img {
@@ -338,9 +393,10 @@
 .cta-art-right {
   position: absolute;
   right: 0;
-  top: -12.5%;
-  height: 117.5%;
-  width: 48%;
+  top: -4.861111cqw;
+  height: auto;
+  aspect-ratio: 691 / 657;
+  width: 47.986111%;
   overflow: hidden;
 }
 .cta-art-right img {
@@ -879,7 +935,7 @@
     grid-template-columns: 525px minmax(0, 638px);
     justify-content: space-between;
     gap: 40px;
-    background: #f1eadf url("/media/figma-final/compare-0.webp") center/cover;
+    background: #f1eadf;
   }
   .evolution.home-final .evolution-copy {
     display: flex;
@@ -895,7 +951,7 @@
   }
   .evolution.home-final .evolution-copy > p:not(.eyebrow) {
     font-size: 18px;
-    color: #606a63;
+    color: #707872;
     margin-top: 24px;
   }
   .evolution.home-final .evolution-copy > p br {
@@ -911,7 +967,7 @@
   .evolution.home-final .evolution-copy small {
     margin-top: 24px;
     font-size: 14px;
-    color: #606a63;
+    color: #707872;
   }
   .evolution.home-final .comparison {
     height: 570px;
@@ -1078,8 +1134,8 @@
   }
   .final-cta.home-final {
     margin-top: 70px;
-    min-height: 559px;
-    padding: 110px var(--sb-page-gutter) 64px;
+    min-height: max(559px, 38.819444vw);
+    padding: max(110px, 7.638889vw) var(--sb-page-gutter) 64px;
   }
   .final-cta.home-final .eyebrow {
     margin-bottom: 32px;
