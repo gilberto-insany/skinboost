@@ -149,17 +149,17 @@ export const Cobertura = {
   render: () => {
     const root = foundation(
       "Uma experiência, dois catálogos.",
-      "Os estados abaixo usam mountExperience, a mesma implementação da página. Este inventário acompanha os componentes; não duplica a lógica da jornada.",
+      "48 histórias do chat usam os mesmos templates da página, com um componente por canvas. Navegação, compositor e mensagens têm exemplos próprios. Ações entre componentes aparecem na aba Actions.",
     );
     const table = document.createElement("table");
     table.className = "sb-state-table";
     table.innerHTML = `<thead><tr><th scope="col">Estado</th><th scope="col">Componentes reais</th><th scope="col">O que verificar</th></tr></thead><tbody>
-      <tr><th scope="row">Conversa</th><td>Histórico e composer persistente</td><td>Texto livre, teclado e mensagens preservadas</td></tr>
+      <tr><th scope="row">Conversa</th><td>Cabeçalho, histórico e compositor isolados</td><td>Texto livre, teclado e callbacks de cada componente</td></tr>
       <tr><th scope="row">Contexto</th><td>Mensagens, esclarecimentos e sugestões</td><td>Acne declarada, oleosidade, cuidado geral e ressecamento</td></tr>
-      <tr><th scope="row">Proposta</th><td>Resumo e cards no histórico</td><td>Confirmar, corrigir e comparar sem perder a conversa</td></tr>
-      <tr><th scope="row">Fontes</th><td>Referências e limites no fluxo</td><td>Fonte educacional não equivale a endosso de produto</td></tr>
+      <tr><th scope="row">Proposta</th><td>Resumo e cartões em histórias separadas</td><td>Seleção, correção e comparação no componente correspondente</td></tr>
+      <tr><th scope="row">Fontes</th><td>Referências e limites isolados</td><td>Fonte educacional não equivale a endosso de produto</td></tr>
       <tr><th scope="row">Seleção</th><td>Checkboxes, total e revisão</td><td>Remoção, seleção vazia e ausência de cobrança real</td></tr>
-      <tr><th scope="row">Check-in</th><td>Relato e próxima resposta</td><td>Continuidade da sessão, sem previsão clínica</td></tr>
+      <tr><th scope="row">Check-in</th><td>Relato e próxima resposta</td><td>Callbacks das sugestões, sem previsão clínica</td></tr>
     </tbody>`;
     root.append(table);
     return root;

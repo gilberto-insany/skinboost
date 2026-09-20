@@ -53,7 +53,7 @@ function check(name, passed, details = {}) {
 }
 const shell = () => page.locator(".composer-shell");
 const thread = () => page.locator(".sx-thread");
-const rows = () => thread().locator("[data-message-id]");
+const rows = () => thread().locator(":scope > [data-message-id]");
 const composer = () => page.locator('[data-form="message"]');
 const action = (name) => shell().locator(`[data-action="${name}"]`).last();
 const ids = () =>
@@ -251,18 +251,16 @@ async function buildPlan() {
 async function layout(stage, { bottom = false } = {}) {
   if (bottom)
     await thread().evaluate((el) => {
-      let node = el;
-      while (node && node !== document.body) {
-        if (node.scrollHeight > node.clientHeight + 2)
-          node.scrollTop = node.scrollHeight;
-        node = node.parentElement;
-      }
+      // Scroll the conversation region, as a person would. Programmatically
+      // scrolling overflow:hidden ancestors moves the fixed composer offscreen.
+      const scroll = el.closest(".sx-scroll");
+      scroll.scrollTop = scroll.scrollHeight;
     });
   await frame();
   const metrics = await shell().evaluate((el) => {
     const form = el.querySelector('[data-form="message"]'),
       input = el.querySelector("#sx-message"),
-      messages = el.querySelectorAll(".sx-thread [data-message-id]");
+      messages = el.querySelectorAll(".sx-thread > [data-message-id]");
     const last = messages[messages.length - 1]?.getBoundingClientRect(),
       f = form?.getBoundingClientRect(),
       t = input?.getBoundingClientRect();

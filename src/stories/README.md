@@ -1,42 +1,40 @@
-# SkinBoost — dois catálogos, uma implementação
+# SkinBoost — componentes isolados, dois catálogos
 
-Os Storybooks compartilham os stories de fundamentos e conversa e o mesmo `mountExperience` da página. A landing atual tem stories exclusivos no wireframe, extraídos diretamente de `index.html` pelos controladores compartilhados. Cada canvas recebe uma instância independente e chama `destroy()` ao sair. As histórias não usam o histórico salvo da pessoa no aplicativo. Não há componente fictício paralelo.
+Cada história do chat monta somente o componente que ela nomeia. Mensagens e cartões não trazem o histórico lateral, o cabeçalho, o compositor nem mensagens anteriores. Esses elementos de navegação têm histórias próprias. Não há aplicativo inteiro oculto por CSS ou montado fora da tela.
 
-| Catálogo        | Status              | Fonte visual                                                                 | Comando independente                | Saída                                    |
-| --------------- | ------------------- | ---------------------------------------------------------------------------- | ----------------------------------- | ---------------------------------------- |
-| Wireframe       | Implementado        | `src/styles.css` + `src/experience.css`                                      | `npm run build:storybook:wireframe` | `dist/client/storybook/wireframe/`       |
-| Alta fidelidade | Proposta em revisão | Mesma UI + `.storybook-hifi/proposed-theme.css`, baseado em `brandbook.html` | `npm run build:storybook:hifi`      | `dist/client/storybook/alta-fidelidade/` |
+A aplicação e os catálogos compartilham os templates de `src/chat/experience-components.js`, os cartões de `photo-experience.js` e o controlador de comparação de imagens. `src/experience.js` monta o chat completo; `chat-component-preview.js` é apenas o adaptador do Storybook, com fixtures locais e callbacks apresentados em Actions. Não é uma segunda implementação da jornada.
 
-`npm run storybook:wireframe` usa a porta 6006; `npm run storybook:hifi`, 6007. `npm run build:review` compila o site primeiro e os dois catálogos depois, preservando o empacotamento Sites. Vercel publica `dist/client`.
+| Catálogo        | Identidade                                                                 | Comando                       | URL publicada                 |
+| --------------- | -------------------------------------------------------------------------- | ----------------------------- | ----------------------------- |
+| Wireframe       | Componentes implementados por Gilberto e Leandro; Manrope e tokens do site | `npm run storybook:wireframe` | `/storybook/wireframe/`       |
+| Alta fidelidade | Proposta do brandbook em revisão; Avenir com fallback local                | `npm run storybook:hifi`      | `/storybook/alta-fidelidade/` |
 
-## Limites da proposta
+A alta fidelidade não é apresentada como identidade final aprovada. Os dois temas usam o mesmo inventário de componentes do chat. A landing atual permanece apenas no wireframe.
 
-Alta fidelidade não significa identidade final aprovada. A proposta aplica cores e a família tipográfica do brandbook sem mudar os tokens da página. Avenir Next/Avenir são fontes locais, com fallback Helvetica/Arial; nenhuma fonte proprietária foi copiada. Produtos e o frasco 3D da página são preservados. As referências de pessoas e pele da landing continuam placeholders; qualquer simulação visual no chat deve ser identificada como ilustração, nunca como previsão clínica ou antes/depois comprovado.
+## Inventário do chat
 
-O catálogo Wireframe acompanha a identidade implementada, incluindo a atualização do Figma integrada em 19 de setembro: Manrope Variable distribuída pelo pacote local, texto `#121f21`, superfície `#fbfbf7` e sálvia `#e3ece4`. O nome da rota foi preservado; ela não congela a versão antiga em Arial. O tema proposto continua isolado com Avenir Next e texto `#183e31`.
+48 histórias por tema, mantendo os identificadores anteriores para preservar links:
 
-## Atualização
+- Mensagem inicial, mensagem da pessoa e perguntas de acne declarada, oleosidade, cuidados gerais e ressecamento.
+- Respostas rápidas, check-in, resposta em preparação, texto progressivo e resposta interrompida.
+- Contexto revisável, origem nas mensagens e notas da conversa.
+- Rotina, produto individual, ajustes, fontes educativas e de produto, comparação de valores, seleção e checkout de exemplo.
+- Observações da foto, imagem limitada, escolha de produto, fontes, anexo com autorização, convite visual e comparador.
+- Compositor de texto, erro com rascunho, foto anexada e ditado em andamento/revisável; autorização de voz separada.
+- Cabeçalho, histórico com conversas e histórico vazio.
+- Opções alternativas, contexto herdado, feedback registrado e motivos de feedback.
+- Aviso de IA, conferência de informações, fontes e limites, privacidade.
 
-Mudanças de comportamento são feitas no controlador real. Mudanças nos estados da API devem atualizar `Experience.stories.js`. Novos componentes devem ser exportados da implementação para serem usados diretamente, nunca reconstruídos dentro do catálogo. Em ambas as versões, verificar teclado, foco, viewport móvel, conteúdo longo, erros, estado vazio e movimento reduzido. O addon de acessibilidade fica disponível nos dois catálogos.
+Os templates são os mesmos da página. Ações que exigiriam outro componente ou uma conversa completa disparam callbacks na aba Actions, sem substituir o canvas por outra página. Seleção de produtos, detalhes expansíveis, estados de feedback, edição do rascunho, ditado demonstrativo e arraste do comparador permanecem interativos dentro do componente.
 
-Os pontos iniciais são `welcome`, `context`, `routine`, `cart`, `checkout` e `checkin`: representam uma conversa com mensagens e artefatos, não etapas de um formulário. Os cenários `acne`, `oiliness`, `general` e `dry` são relatos declarados para exemplificar respostas. As sugestões acrescentam mensagens e o composer permanece disponível. Não existe pagamento real, diagnóstico ou previsão de resultado clínico.
+## Fixtures e limites
 
-## Demonstração e serviço de IA
+Cada montagem recebe estado independente, sem ler ou escrever conversas da pessoa. Não chama endpoints de IA, acessa microfone ou envia fotos. Voz usa texto determinístico; consentimento tem história própria. O retrato de Lucas é fictício e aparece igual nos dois lados do comparador: não é prova de tratamento ou resultado de produto. Preços e checkout são exemplos identificados como tais.
 
-Os cenários de revisão usam `mountExperience(..., { liveApi: false })`: são determinísticos e locais, sem chamadas aos endpoints de IA. Uma experiência com OpenAI depende de configuração no servidor; a presença do código não comprova que o serviço esteja conectado. Chaves não pertencem ao navegador, aos argumentos dos stories nem aos arquivos públicos. Sem configuração, o modo demonstração deve continuar identificado e utilizável. No `/chat`, `liveApi: true` permite verificar a configuração do servidor em `/api/status`; sem configuração, a interface usa a demonstração identificada. No modo conectado, as mensagens levam o histórico recente. A foto somente acompanha a conversa e a solicitação de ilustração com autorização explícita ativa. Simulação visual de rosto deve ser apresentada como ilustração, sem prometer o resultado de uma rotina.
-
-## Histórico do aplicativo
-
-No `/chat`, conversas e fotos são guardadas localmente no navegador e podem ser retomadas pela lista lateral, também acessível pelo menu móvel. Criar uma nova conversa preserva as anteriores. Excluir uma conversa remove a cópia local; não remove conteúdo já processado pelo provedor. Não existe sincronização entre dispositivos. A persistência pertence ao adaptador da página: os stories mantêm seus exemplos isolados para que uma revisão não altere conversas reais salvas.
+O aplicativo `/chat` continua com conversa completa, histórico persistido localmente, consentimento, API no servidor e as interações da jornada. Chaves e dados reais não pertencem aos stories. O adaptador descarta listeners, observadores e controladores ao desmontar.
 
 ## Verificação
 
-Depois do build, `npm run test:storybook` serve apenas os arquivos compilados em um servidor local temporário e verifica as duas URLs finais. Exercita os pontos iniciais e os cenários de acne declarada, oleosidade, cuidados gerais e ressecamento. Verifica texto livre, sugestões como mensagens, preservação do histórico, composer persistente e seleção vazia, além de isolamento de instância, foco, viewport de 390 px e axe. O relatório, quatro screenshots móveis e duas capturas do manager ficam em `qa/storybook/` (fora do Git). O teste usa o Chrome local no macOS, um executável informado por `STORYBOOK_CHROME`, ou o Chromium instalado pelo Playwright em outros ambientes.
+`npm run build:review` compila o aplicativo e ambos os catálogos em `dist/client`. Depois, `npm run test:storybook` percorre **todos os IDs de stories do chat** em ambos os temas, verifica a ausência de elementos estranhos ao componente inclusive no DOM, interações, temas, ausência de chamadas de API, acessibilidade e layouts desktop/móvel. Relatório e capturas ficam em `qa/storybook/`, fora do Git. O tipo MIME da fixture JPEG é preservado no servidor de teste.
 
-Configuração baseada na [documentação do Storybook](https://storybook.js.org/docs/configure), com [diretórios estáticos](https://storybook.js.org/docs/api/main-config/main-config-static-dirs) e [configuração estática da Vercel](https://vercel.com/docs/project-configuration/vercel-json). Não é necessário usar Sites para revisar ou publicar estes builds.
-
-## Estados adicionados a partir do roteiro
-
-Origem do contexto, resumo revisável, alternativa e feedback usam o controlador real e `conversation-tools.js`. A proveniência é registrada reproduzindo mensagens da fixture; não atribui um campo a uma fala inventada. O estado de voz usa um adaptador determinístico apenas nesse story, com aviso visível de que não acessa microfone nem envia áudio. Seu play termina com o rascunho revisável, sem autoenvio. Todos os demais exemplos mantêm `liveApi: false`. O catálogo cobre 21 cenários de conversa por tema, incluindo foto observada, imagem limitada e comparação ilustrativa. Os exemplos de foto usam respostas controladas e retrato fictício; não são prova de geração ou de eficácia.
-
-O wireframe também tem 34 estados da landing: página inteira, cabeçalho, prompt e anexo, introdução, três abas, manifesto, cinco cards bento, frasco 3D real, catálogo e seus produtos, comparador, relatos, confiança, FAQ, chamada final, rodapé e diálogos. GSAP, Three e os listeners são descartados ao trocar a instância; `tests/landing-lifecycle.test.mjs` cobre a montagem repetida. A landing não foi apresentada como alta fidelidade final.
+A jornada completa é verificada separadamente no aplicativo por `scripts/check-experience.mjs`; não se usa mais um Storybook de componente como teste de ponta a ponta do chat. `tests/storybook-review.test.mjs` também conserva a revisão dos fundamentos e das 34 histórias da landing. Para regressões de chat com API e voz controladas, usar `scripts/check-chat-upgrades.mjs` contra o servidor Vite.

@@ -16,6 +16,8 @@ const types = {
   ".css": "text/css",
   ".json": "application/json",
   ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
   ".svg": "image/svg+xml",
   ".webp": "image/webp",
   ".woff2": "font/woff2",
@@ -54,6 +56,12 @@ before(async () => {
       const pathname = decodeURIComponent(
         new URL(req.url, "http://localhost").pathname,
       );
+      // Chromium requests the origin favicon even for a standalone iframe.
+      if (pathname === "/favicon.ico") {
+        res.writeHead(204);
+        res.end();
+        return;
+      }
       let file = resolve(output, `.${pathname}`);
       if (file !== output && !file.startsWith(output + sep))
         throw new Error("Outside build");
@@ -211,106 +219,151 @@ test(
 );
 
 test(
-  "continuous conversation states work at deployed subpaths, with keyboard access, mobile layout and accessibility",
-  { timeout: 120000 },
+  "every chat story isolates its named component in both themes on desktop and mobile",
+  { timeout: 300000 },
   async () => {
     const report = [];
     for (const mode of ["wireframe", "alta-fidelidade"]) {
+      const index = await (
+        await fetch(`${origin}/storybook/${mode}/index.json`)
+      ).json();
+      const ids = Object.values(index.entries)
+        .filter(
+          (entry) =>
+            entry.type === "story" &&
+            entry.id.startsWith("experiencia-jornada-guiada--"),
+        )
+        .map((entry) => entry.id);
+      assert.ok(
+        ids.length >= 48,
+        "All previous stories and individual chat components are covered",
+      );
       const context = await browser.newContext({
         viewport: { width: 1365, height: 1050 },
         reducedMotion: "reduce",
       });
       const page = await context.newPage();
-      const errors = [];
-      const apiRequests = [];
+      const errors = [],
+        apiRequests = [];
       page.on("pageerror", (error) => errors.push(error.message));
+      page.on("console", (message) => {
+        if (message.type() === "error") errors.push(message.text());
+      });
       page.on("request", (request) => {
         if (new URL(request.url()).pathname.startsWith("/api/"))
           apiRequests.push(request.url());
       });
-      const story = (id) =>
-        `${origin}/storybook/${mode}/iframe.html?id=experiencia-jornada-guiada--${id}&viewMode=story`;
-      for (const id of [
-        "boas-vindas",
-        "contexto",
-        "rotina",
-        "carrinho",
-        "checkout",
-        "checkin",
-        "acne",
-        "oleosidade",
-        "cuidados-gerais",
-        "ressecamento",
-        "mensagem-livre",
-        "sugestao-como-mensagem",
-        "carrinho-vazio",
-        "origem-do-contexto",
-        "resumo-da-conversa",
-        "alternativa",
-        "feedback-registrado",
-        "voz-revisavel",
-        "foto-observada",
-        "foto-limitada",
-        "comparacao-ilustrativa",
-      ]) {
-        await page.goto(story(id), { waitUntil: "networkidle" });
-        await page.getByRole("log").waitFor();
-        await page.locator(".sb-experience #sx-message").waitFor();
-        if (id === "mensagem-livre") {
-          await page.waitForFunction(() =>
-            document
-              .querySelector('[role="log"]')
-              ?.textContent.includes(
-                "Minha pele fica oleosa ao longo do dia. Quero poucos passos.",
-              ),
-          );
-        }
-        if (id === "carrinho-vazio")
+      for (const id of ids) {
+        await page.goto(
+          `${origin}/storybook/${mode}/iframe.html?id=${id}&viewMode=story`,
+          { waitUntil: "networkidle" },
+        );
+        await page.locator('.sb-chat-component[data-ready="true"]').waitFor();
+        const host = page.locator(".sb-chat-component");
+        const component = await host.getAttribute("data-component");
+        assert.equal(
+          await host
+            .locator(".sx-chat,.sx-thread,.sx-scroll,.sx-history-scrim")
+            .count(),
+          0,
+          `${id}: no application frame even when hidden`,
+        );
+        assert.equal(
+          await host.locator(".sx-sidebar").count(),
+          component === "sidebar" ? 1 : 0,
+          `${id}: sidebar only in its own story`,
+        );
+        assert.equal(
+          await host.locator(".sx-top").count(),
+          component === "topbar" ? 1 : 0,
+          `${id}: header only in its own story`,
+        );
+        assert.equal(
+          await host.locator(".sx-composer").count(),
+          component === "composer" ? 1 : 0,
+          `${id}: composer only in its own story`,
+        );
+        assert.equal(
+          await host.locator(".sx-dock").count(),
+          component === "composer" ? 1 : 0,
+        );
+        assert.ok(
+          (await host.innerText()).trim().length > 15,
+          `${id}: populated component`,
+        );
+        assert.equal(await host.locator("dialog[open]").count(), 0);
+        const expected = {
+          welcome: ".sx-message",
+          question: ".sx-message",
+          "user-message": ".sx-user",
+          suggestions: ".sx-chip-row",
+          context: ".sx-context-card",
+          routine: ".sx-routine",
+          product: ".sx-product",
+          refine: ".sx-refine",
+          "visual-invite": ".sx-visual-invite",
+          cart: ".sx-card",
+          checkout: ".sx-checkout",
+          "price-comparison": ".sx-comparison-table",
+          source: ".sx-source-card",
+          checkin: ".sx-chip-row",
+          note: ".sx-note-text",
+          alternative: ".sx-inherited",
+          feedback: ".sx-response-tools",
+          privacy: ".sx-card",
+          "photo-observed": ".sx-photo-analysis",
+          "photo-limited": ".sx-photo-analysis",
+          "photo-products": ".sx-photo-products",
+          "photo-sources": ".sx-photo-sources",
+          "photo-comparison": ".sx-simulation",
+          "photo-checkout": ".sx-photo-checkout",
+          "photo-attachment": ".sx-file",
+          topbar: ".sx-top",
+          sidebar: ".sx-sidebar",
+          composer: ".sx-composer",
+          thinking: ".sx-thinking",
+          partial: ".sx-message",
+          alternatives: ".sx-alternative-options",
+          verification: ".sx-verify-list",
+          sources: ".sx-source-links",
+          "voice-consent": ".sx-voice-orbit",
+          "feedback-options": ".sx-feedback-options",
+          disclaimer: ".sx-disclaimer",
+        };
+        assert.ok(
+          expected[component],
+          `${id}: component is covered by the isolation audit`,
+        );
+        assert.equal(
+          await host.locator(expected[component]).count(),
+          1,
+          `${id}: exactly one named component`,
+        );
+        if (id.endsWith("--carrinho-vazio"))
           await page.waitForFunction(
             () => document.querySelector('[data-action="checkout"]')?.disabled,
           );
-        if (id === "voz-revisavel") {
+        if (id.endsWith("--voz-revisavel"))
           await page.waitForFunction(
             () =>
               document.querySelector("#sx-message")?.value ===
               "Meu rascunho inicial. Quero uma rotina com poucos passos.",
           );
-          assert.equal(await page.locator('[data-role="user"]').count(), 0);
-          assert.match(
-            await page.locator("[data-save-status]").innerText(),
-            /sem microfone nem envio de áudio/,
+        if (id.endsWith("--comparacao-ilustrativa"))
+          await page.waitForFunction(
+            () =>
+              document
+                .querySelector('[role="slider"]')
+                ?.getAttribute("aria-valuetext") === "51% da foto original",
           );
-        }
-        if (id === "resumo-da-conversa")
-          assert.match(
-            await page.locator(".sx-note-text").innerText(),
-            /não é diagnóstico nem prescrição/,
-          );
-        if (id === "alternativa")
-          assert.match(
-            await page.getByRole("log").innerText(),
-            /conversa original continua guardada/,
-          );
-        const accessibility = await auditAccessibility(page);
-        const violations = accessibility.violations.map((v) => ({
-          id: v.id,
-          impact: v.impact,
-          help: v.help,
-          targets: v.nodes.map((n) => n.target),
-        }));
-        const ink = await page.evaluate(() =>
-          getComputedStyle(document.documentElement)
-            .getPropertyValue("--ink")
-            .trim(),
+        if (id.endsWith("--origem-do-contexto"))
+          assert.ok((await host.locator(".sx-origin").count()) > 0);
+        const family = await host.evaluate(
+          (el) => getComputedStyle(el).fontFamily,
         );
-        assert.equal(ink, mode === "wireframe" ? "#121f21" : "#183e31");
-        const experienceFamily = await page
-          .locator(".sb-experience")
-          .evaluate((el) => getComputedStyle(el).fontFamily);
         assert.match(
-          experienceFamily,
+          family,
           mode === "wireframe" ? /Manrope Variable/ : /Avenir Next/,
-          `${mode}: the actual conversation must use the catalog theme`,
         );
         const label = await page
           .locator(".sb-catalog-status strong")
@@ -319,124 +372,120 @@ test(
           label,
           mode === "wireframe" ? /implementada/ : /proposta em revisão/,
         );
-        await page.locator("#sx-message").focus();
-        await page.keyboard.press("Tab");
-        const focusInside = await page.evaluate(() =>
-          Boolean(document.activeElement.closest(".sb-experience")),
-        );
-        await page.setViewportSize({ width: 390, height: 844 });
-        const overflow = await page.evaluate(
+        const accessibility = await auditAccessibility(page);
+        const violations = accessibility.violations.map((v) => ({
+          id: v.id,
+          impact: v.impact,
+          targets: v.nodes.map((n) => n.target),
+        }));
+        const desktopOverflow = await page.evaluate(
           () => document.documentElement.scrollWidth > innerWidth + 1,
         );
-        if (["boas-vindas", "rotina"].includes(id))
+        await page.setViewportSize({ width: 390, height: 844 });
+        const mobileOverflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth + 1,
+        );
+        assert.ok(await host.isVisible(), `${id}: visible on mobile`);
+        if (
+          [
+            "acne",
+            "rotina",
+            "cabecalho",
+            "historico",
+            "mensagem-livre",
+            "comparacao-ilustrativa",
+          ].some((s) => id.endsWith("--" + s))
+        ) {
           await page.screenshot({
-            path: resolve(artifacts, `${mode}-${id}-mobile.png`),
+            path: resolve(artifacts, `${mode}-${id.split("--")[1]}-mobile.png`),
             fullPage: true,
           });
-        await page.setViewportSize({ width: 1365, height: 1050 });
+        }
         report.push({
           mode,
-          story: id,
+          id,
+          component,
           violations,
-          focusInside,
-          mobileOverflow: overflow,
+          desktopOverflow,
+          mobileOverflow,
         });
+        await page.setViewportSize({ width: 1365, height: 1050 });
       }
-      // A new story instance must not inherit the previous canvas selection.
-      await page.goto(story("carrinho"), { waitUntil: "networkidle" });
+      // A new selection instance must not inherit the emptied previous story.
+      await page.goto(
+        `${origin}/storybook/${mode}/iframe.html?id=experiencia-jornada-guiada--carrinho&viewMode=story`,
+        { waitUntil: "networkidle" },
+      );
       assert.ok((await page.locator("[data-cart-item]:checked").count()) > 0);
       assert.deepEqual(errors, [], `${mode}: runtime errors`);
-      assert.deepEqual(
-        apiRequests,
-        [],
-        `${mode}: stories must remain local demonstrations`,
-      );
+      assert.deepEqual(apiRequests, [], `${mode}: no API requests`);
       await context.close();
     }
     await writeFile(
       resolve(artifacts, "review.json"),
       JSON.stringify(report, null, 2),
     );
-    const failures = report.filter(
-      (row) => row.violations.length || !row.focusInside || row.mobileOverflow,
-    );
     assert.deepEqual(
-      failures,
+      report.filter(
+        (row) =>
+          row.violations.length || row.desktopOverflow || row.mobileOverflow,
+      ),
       [],
-      "Inspect qa/storybook/review.json for accessibility/layout findings.",
+      "Inspect qa/storybook/review.json",
     );
   },
 );
 
 test(
-  "freeform messages and suggested replies retain the conversation in both catalogs",
+  "isolated components preserve selection, source disclosure and touch comparison",
   { timeout: 60000 },
   async () => {
     for (const mode of ["wireframe", "alta-fidelidade"]) {
       const page = await browser.newPage({
-        viewport: { width: 1280, height: 950 },
+        viewport: { width: 390, height: 844 },
+        hasTouch: true,
         reducedMotion: "reduce",
       });
-      await page.goto(
-        `${origin}/storybook/${mode}/iframe.html?id=experiencia-jornada-guiada--boas-vindas&viewMode=story`,
-        { waitUntil: "networkidle" },
+      const open = async (id) => {
+        await page.goto(
+          `${origin}/storybook/${mode}/iframe.html?id=experiencia-jornada-guiada--${id}&viewMode=story`,
+          { waitUntil: "networkidle" },
+        );
+        await page.locator('.sb-chat-component[data-ready="true"]').waitFor();
+      };
+      await open("carrinho");
+      for (const checkbox of await page.locator("[data-cart-item]").all())
+        await checkbox.uncheck();
+      assert.ok(
+        await page.getByRole("button", { name: /checkout/i }).isDisabled(),
       );
-      await page.getByRole("log").waitFor();
-      const messageIds = () =>
-        page
-          .locator(".sx-thread [data-message-id]")
-          .evaluateAll((elements) =>
-            elements.map((el) => el.dataset.messageId),
-          );
-      const initial = await messageIds();
-      const messages = [
-        "Minha pele fica oleosa ao longo do dia. Quero poucos passos.",
-        "Já uso um limpador e prefiro gastar até R$ 150.",
-      ];
-      for (const message of messages) {
-        await page.locator("#sx-message").fill(message);
-        await page.getByRole("button", { name: "Enviar mensagem" }).click();
-        await page.waitForFunction(
-          (text) =>
-            document.querySelector('[role="log"]')?.textContent.includes(text),
-          message,
-        );
-        await page.waitForFunction(
-          () => !document.querySelector("#sx-message")?.disabled,
-        );
-        const ids = await messageIds();
-        for (const id of initial)
-          assert.ok(
-            ids.includes(id),
-            `${mode}: original message ${id} disappeared`,
-          );
-        assert.ok(
-          await page.locator("#sx-message").isVisible(),
-          `${mode}: composer disappeared`,
-        );
-      }
-      for (const text of messages)
-        assert.ok((await page.getByRole("log").innerText()).includes(text));
-      const beforeSuggestion = await messageIds();
-      const reply = page.locator("button[data-reply]").last();
-      await reply.waitFor();
-      const replyText = await reply.getAttribute("data-reply");
-      await reply.click();
-      await page.waitForFunction(
-        (count) =>
-          document.querySelectorAll(".sx-thread [data-message-id]").length >
-          count,
-        beforeSuggestion.length,
+      await page.locator("[data-cart-item]").first().check();
+      assert.ok(
+        await page.getByRole("button", { name: /checkout/i }).isEnabled(),
       );
-      const afterSuggestion = await messageIds();
-      for (const id of beforeSuggestion)
-        assert.ok(
-          afterSuggestion.includes(id),
-          `${mode}: message ${id} disappeared after suggestion`,
-        );
-      assert.ok((await page.getByRole("log").innerText()).includes(replyText));
-      for (const text of messages)
-        assert.ok((await page.getByRole("log").innerText()).includes(text));
+      await open("origem-do-contexto");
+      await page.locator(".sx-origin summary").first().click();
+      assert.ok(
+        await page.locator(".sx-origin blockquote").first().isVisible(),
+      );
+      await open("comparacao-ilustrativa");
+      const stage = page.locator(".sx-photo-compare");
+      const box = await stage.boundingBox();
+      await page.touchscreen.tap(
+        box.x + box.width * 0.75,
+        box.y + box.height / 2,
+      );
+      assert.ok(
+        Number(await page.locator("[data-photo-compare]").inputValue()) > 65,
+      );
+      assert.equal(await page.locator("[data-example-checkout]").count(), 0);
+      await open("convite-compra");
+      assert.equal(await page.locator(".sx-simulation").count(), 0);
+      const cta = page.locator("[data-example-checkout]");
+      assert.equal(
+        await cta.getAttribute("href"),
+        "https://www.designengineer.com.br/oferta",
+      );
       await page.close();
     }
   },
