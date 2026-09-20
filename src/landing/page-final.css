@@ -372,6 +372,8 @@
   z-index: -1;
   pointer-events: none;
   overflow: visible;
+  /* Keep the floating cap above the banner, but crop bottles at its bottom. */
+  clip-path: inset(-20% 0 0);
 }
 .cta-art-left {
   position: absolute;
